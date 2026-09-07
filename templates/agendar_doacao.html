@@ -1,0 +1,469 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+    <title>Agendar Doação - Sangue Bom</title>
+
+</head>
+
+<body>
+
+    <main>
+
+        <h1>Agendar Doação</h1>
+
+        <p>
+            Em poucos passos você salva até 4 vidas
+        </p>
+
+        <p>
+            ① Hemocentro → ② Data & Hora → ③ Confirmar
+        </p>
+
+
+        <!-- ================================= -->
+        <!-- ETAPA 1 - ESCOLHER HEMOCENTRO -->
+        <!-- ================================= -->
+
+        <section>
+
+            <h2>Escolha o Hemocentro</h2>
+
+
+            <!-- HEMOCENTRO DE BRASÍLIA -->
+
+            <div>
+
+                <h3>Hemocentro de Brasília – HBDF</h3>
+
+                <p>
+                    📍 SGAN 604/605, Brasília – DF
+                </p>
+
+                <p>
+                    🕐 07h–18h (seg–sex) | 07h–13h (sáb)
+                </p>
+
+                <button type="button">
+                    Escolher
+                </button>
+
+            </div>
+
+
+            <!-- HEMOCENTRO DE TAGUATINGA -->
+
+            <div>
+
+                <h3>Hemocentro de Taguatinga</h3>
+
+                <p>
+                    📍 CNB 10, Conjunto A, Taguatinga – DF
+                </p>
+
+                <p>
+                    🕐 07h–18h (seg–sex)
+                </p>
+
+                <button type="button">
+                    Escolher
+                </button>
+
+            </div>
+
+
+            <!-- HEMOCENTRO DO GAMA -->
+
+            <div>
+
+                <h3>Hemocentro do Gama</h3>
+
+                <p>
+                    📍 QD 01, Setor Central, Gama – DF
+                </p>
+
+                <p>
+                    🕐 07h–17h (seg–sex)
+                </p>
+
+                <button type="button">
+                    Escolher
+                </button>
+
+            </div>
+
+
+            <!-- HEMOCENTRO DE SOBRADINHO -->
+
+            <div>
+
+                <h3>Hemocentro de Sobradinho</h3>
+
+                <p>
+                    📍 QD 03, Área Especial, Sobradinho – DF
+                </p>
+
+                <p>
+                    🕐 07h–17h (seg–sex)
+                </p>
+
+                <button type="button">
+                    Escolher
+                </button>
+
+            </div>
+
+
+            <br><br>
+
+
+            <!-- PRÓXIMO -->
+
+            <button type="button">
+                Próximo →
+            </button>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- ETAPA 2 - DATA E HORÁRIO -->
+        <!-- ================================= -->
+
+        <section>
+
+            <div>
+
+                <h2>Data e Horário</h2>
+
+
+                <!-- TIPO DE DOAÇÃO -->
+
+                <h3>Tipo de doação</h3>
+
+                <button type="button">
+                    Sangue Total
+                </button>
+
+                <button type="button">
+                    Plaquetas
+                </button>
+
+                <button type="button">
+                    Plasma
+                </button>
+
+                <button type="button">
+                    Hemácias
+                </button>
+
+
+                <!-- DATA -->
+
+                <h3>Data</h3>
+
+                <input type="date">
+
+
+                <!-- HORÁRIO -->
+
+                <h3>Horário</h3>
+
+                <button type="button">07:00</button>
+
+                <button type="button">07:30</button>
+
+                <button type="button">08:00</button>
+
+                <button type="button">08:30</button>
+
+                <button type="button">09:00</button>
+
+                <button type="button">09:30</button>
+
+                <button type="button">10:00</button>
+
+                <button type="button">10:30</button>
+
+                <button type="button">11:00</button>
+
+                <button type="button">11:30</button>
+
+                <button type="button">13:00</button>
+
+                <button type="button">13:30</button>
+
+                <button type="button">14:00</button>
+
+                <button type="button">14:30</button>
+
+                <button type="button">15:00</button>
+
+                <button type="button">15:30</button>
+
+                <button type="button">16:00</button>
+
+                <button type="button">16:30</button>
+
+                <button type="button">17:00</button>
+
+                <button type="button">17:30</button>
+
+
+                <br><br>
+
+
+                <!-- BOTÕES -->
+
+                <button type="button">
+                    ← Voltar
+                </button>
+
+                <button type="button">
+                    Próximo →
+                </button>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- LATERAL - ANTES DE DOAR -->
+            <!-- ================================= -->
+
+            <aside>
+
+                <h2>💡 Antes de doar</h2>
+
+                <p>
+                    ✓ Beba bastante água
+                </p>
+
+                <p>
+                    ✓ Não vá em jejum
+                </p>
+
+                <p>
+                    ✓ Durma pelo menos 6 horas
+                </p>
+
+                <p>
+                    ✓ Evite bebidas alcoólicas
+                </p>
+
+                <p>
+                    ✓ Não fume antes da doação
+                </p>
+
+            </aside>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- INFORMAÇÃO SOBRE A DOAÇÃO -->
+        <!-- ================================= -->
+
+        <section>
+
+            <h2>🩸 Uma doação = 4 vidas</h2>
+
+            <p>
+                Seu sangue pode ajudar até 4 pessoas diferentes
+                após a triagem e separação dos componentes.
+            </p>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- ETAPA 3 - CONFIRMAR -->
+        <!-- ================================= -->
+
+        <section>
+
+            <h2>Confirmar Agendamento</h2>
+
+            <p>
+                Confira os dados antes de confirmar sua doação.
+            </p>
+
+
+            <h3>🏥 Hemocentro</h3>
+
+            <p>
+                Hemocentro de Brasília – HBDF
+            </p>
+
+
+            <h3>📍 Endereço</h3>
+
+            <p>
+                SGAN 604/605, Brasília – DF
+            </p>
+
+
+            <h3>📅 Data</h3>
+
+            <p>
+                Data escolhida
+            </p>
+
+
+            <h3>🕐 Horário</h3>
+
+            <p>
+                Horário escolhido
+            </p>
+
+
+            <h3>🩸 Tipo de doação</h3>
+
+            <p>
+                Tipo de doação escolhido
+            </p>
+
+
+            <br>
+
+
+            <button type="button">
+                ← Voltar
+            </button>
+
+            <button type="button">
+                Confirmar Doação 🩸
+            </button>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- AGENDAMENTO CONFIRMADO -->
+        <!-- ================================= -->
+
+        <section>
+
+            <h2>✅ Agendamento Confirmado!</h2>
+
+            <p>
+                Seu agendamento foi realizado com sucesso!
+            </p>
+
+
+            <div>
+
+                <p>
+                    📅 <strong>Data:</strong>
+                    Data escolhida
+                </p>
+
+                <p>
+                    🕐 <strong>Horário:</strong>
+                    Horário escolhido
+                </p>
+
+                <p>
+                    🏥 <strong>Local:</strong>
+                    Hemocentro escolhido
+                </p>
+
+                <p>
+                    🩸 <strong>Tipo:</strong>
+                    Tipo de doação escolhido
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <p>
+                    💡 Beba bastante água, não vá em jejum
+                    e durma bem antes da doação!
+                </p>
+
+            </div>
+
+
+            <button type="button">
+                Fazer outro agendamento
+            </button>
+
+        </section>
+
+    </main>
+
+     <!-- LATERAL DIREITA -->
+    <!--
+        Está embaixo do main no HTML.
+        O CSS depois vai colocar essa parte do lado direito.
+    -->
+
+    <aside>
+
+        <!-- PRÓXIMA DOAÇÃO -->
+        <section>
+
+            <p>Próxima doação disponível</p>
+
+            <h2>
+                Você pode doar! ✅
+            </h2>
+
+            <p>
+                3 doações • 12 vidas
+            </p>
+
+        </section>
+
+
+        <!-- MENSAGEM -->
+        <section>
+
+            <h3>
+                💗 Sua atitude pode salvar até 4 vidas!
+            </h3>
+
+            <p>
+                Doe sangue. Doe vida.
+            </p>
+
+            <p>
+                Seja sangue bom!
+            </p>
+
+        </section>
+
+
+        <!-- CAMPANHA -->
+        <section>
+        <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
+            <h3>
+                Participe das campanhas e faça a diferença.
+            </h3>
+
+            <a href="campanhas.html">
+                Ver campanhas
+            </a>
+
+        </section>
+
+
+        <!-- BOTÃO DE DÚVIDAS -->
+        <button type="button">
+            ?
+        </button>
+
+    </aside>
+
+           <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>
