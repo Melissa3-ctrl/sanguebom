@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Sangue Bom</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <main>
+
+        <h1>❤️ Sangue Bom</h1>
+
+        <h2>Entrar na sua conta</h2>
+
+        <p>
+            Entre para agendar sua doação e acompanhar seus agendamentos.
+        </p>
+
+        {% if erro %}
+            <p>{{ erro }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="email">E-mail:</label>
+            <br>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                required
+            >
+
+            <br><br>
+
+            <label for="senha">Senha:</label>
+            <br>
+
+            <input
+                type="password"
+                name="senha"
+                id="senha"
+                placeholder="Digite sua senha"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">
+                Entrar
+            </button>
+        </form>
+
+        <br>
+
+        <p>
+            Ainda não possui cadastro?
+        </p>
+
+        <a href="{% url 'cadastro' %}">
+            Criar minha conta
+        </a>
+
+    </main>
+
+</body>
+</html>

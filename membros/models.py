@@ -1,7 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Doador(models.Model):
+
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
     nome = models.CharField(max_length=100)
     email = models.EmailField()
     telefone = models.CharField(max_length=20)
@@ -13,6 +22,7 @@ class Doador(models.Model):
 
 
 class Hemocentro(models.Model):
+
     nome = models.CharField(max_length=100)
     endereco = models.CharField(max_length=200)
     bairro = models.CharField(max_length=100)
@@ -31,10 +41,28 @@ class Hemocentro(models.Model):
 
 
 class Agendamento(models.Model):
-    doador = models.ForeignKey(Doador, on_delete=models.CASCADE)
-    hemocentro = models.ForeignKey(Hemocentro, on_delete=models.CASCADE)
+
+    doador = models.ForeignKey(
+        Doador,
+        on_delete=models.CASCADE
+    )
+
+    hemocentro = models.ForeignKey(
+        Hemocentro,
+        on_delete=models.CASCADE
+    )
+
+    base = models.CharField(
+        max_length=100
+    )
+
     data = models.DateField()
+
     horario = models.TimeField()
+
+    tipo_doacao = models.CharField(
+        max_length=30
+    )
 
     def __str__(self):
         return f"{self.doador.nome} - {self.data}"

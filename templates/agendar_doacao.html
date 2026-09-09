@@ -4,11 +4,14 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+
     <title>Agendar Doação - Sangue Bom</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 
@@ -28,19 +31,25 @@
 
 
         <!-- ================================= -->
-        <!-- ETAPA 1 - ESCOLHER HEMOCENTRO -->
+        <!-- ETAPA 1 - ESCOLHER BASE -->
         <!-- ================================= -->
 
         <section>
 
-            <h2>Escolha o Hemocentro</h2>
+            <h2>Escolha a Base para Doação</h2>
+
+            <p>
+                O atendimento é realizado pela
+                <strong>Fundação Hemocentro de Brasília</strong>.
+                Escolha uma das bases disponíveis para atendimento.
+            </p>
 
 
-            <!-- HEMOCENTRO DE BRASÍLIA -->
+            <!-- BASE BRASÍLIA -->
 
             <div>
 
-                <h3>Hemocentro de Brasília – HBDF</h3>
+                <h3>Base Brasília – HBDF</h3>
 
                 <p>
                     📍 SGAN 604/605, Brasília – DF
@@ -57,11 +66,11 @@
             </div>
 
 
-            <!-- HEMOCENTRO DE TAGUATINGA -->
+            <!-- BASE TAGUATINGA -->
 
             <div>
 
-                <h3>Hemocentro de Taguatinga</h3>
+                <h3>Base Taguatinga</h3>
 
                 <p>
                     📍 CNB 10, Conjunto A, Taguatinga – DF
@@ -78,11 +87,11 @@
             </div>
 
 
-            <!-- HEMOCENTRO DO GAMA -->
+            <!-- BASE GAMA -->
 
             <div>
 
-                <h3>Hemocentro do Gama</h3>
+                <h3>Base Gama</h3>
 
                 <p>
                     📍 QD 01, Setor Central, Gama – DF
@@ -99,11 +108,11 @@
             </div>
 
 
-            <!-- HEMOCENTRO DE SOBRADINHO -->
+            <!-- BASE SOBRADINHO -->
 
             <div>
 
-                <h3>Hemocentro de Sobradinho</h3>
+                <h3>Base Sobradinho</h3>
 
                 <p>
                     📍 QD 03, Área Especial, Sobradinho – DF
@@ -120,10 +129,8 @@
             </div>
 
 
-            <br><br>
-
-
-            <!-- PRÓXIMO -->
+            <br>
+            <br>
 
             <button type="button">
                 Próximo →
@@ -168,55 +175,100 @@
 
                 <h3>Data</h3>
 
-                <input type="date">
+                <input
+                    type="date"
+                    name="data"
+                    id="data"
+                >
 
 
                 <!-- HORÁRIO -->
 
                 <h3>Horário</h3>
 
-                <button type="button">07:00</button>
+                <button type="button">
+                    07:00
+                </button>
 
-                <button type="button">07:30</button>
+                <button type="button">
+                    07:30
+                </button>
 
-                <button type="button">08:00</button>
+                <button type="button">
+                    08:00
+                </button>
 
-                <button type="button">08:30</button>
+                <button type="button">
+                    08:30
+                </button>
 
-                <button type="button">09:00</button>
+                <button type="button">
+                    09:00
+                </button>
 
-                <button type="button">09:30</button>
+                <button type="button">
+                    09:30
+                </button>
 
-                <button type="button">10:00</button>
+                <button type="button">
+                    10:00
+                </button>
 
-                <button type="button">10:30</button>
+                <button type="button">
+                    10:30
+                </button>
 
-                <button type="button">11:00</button>
+                <button type="button">
+                    11:00
+                </button>
 
-                <button type="button">11:30</button>
+                <button type="button">
+                    11:30
+                </button>
 
-                <button type="button">13:00</button>
+                <button type="button">
+                    13:00
+                </button>
 
-                <button type="button">13:30</button>
+                <button type="button">
+                    13:30
+                </button>
 
-                <button type="button">14:00</button>
+                <button type="button">
+                    14:00
+                </button>
 
-                <button type="button">14:30</button>
+                <button type="button">
+                    14:30
+                </button>
 
-                <button type="button">15:00</button>
+                <button type="button">
+                    15:00
+                </button>
 
-                <button type="button">15:30</button>
+                <button type="button">
+                    15:30
+                </button>
 
-                <button type="button">16:00</button>
+                <button type="button">
+                    16:00
+                </button>
 
-                <button type="button">16:30</button>
+                <button type="button">
+                    16:30
+                </button>
 
-                <button type="button">17:00</button>
+                <button type="button">
+                    17:00
+                </button>
 
-                <button type="button">17:30</button>
+                <button type="button">
+                    17:30
+                </button>
 
 
-                <br><br>
+                <br>
+                <br>
 
 
                 <!-- BOTÕES -->
@@ -294,17 +346,17 @@
             </p>
 
 
-            <h3>🏥 Hemocentro</h3>
+            <h3>🏥 Hemocentro responsável</h3>
 
             <p>
-                Hemocentro de Brasília – HBDF
+                Fundação Hemocentro de Brasília
             </p>
 
 
-            <h3>📍 Endereço</h3>
+            <h3>📍 Base escolhida</h3>
 
             <p>
-                SGAN 604/605, Brasília – DF
+                Base escolhida
             </p>
 
 
@@ -359,23 +411,52 @@
             <div>
 
                 <p>
-                    📅 <strong>Data:</strong>
+
+                    📅
+                    <strong>Data:</strong>
+
                     Data escolhida
+
                 </p>
 
+
                 <p>
-                    🕐 <strong>Horário:</strong>
+
+                    🕐
+                    <strong>Horário:</strong>
+
                     Horário escolhido
+
                 </p>
 
-                <p>
-                    🏥 <strong>Local:</strong>
-                    Hemocentro escolhido
-                </p>
 
                 <p>
-                    🩸 <strong>Tipo:</strong>
+
+                    🏥
+                    <strong>Hemocentro:</strong>
+
+                    Fundação Hemocentro de Brasília
+
+                </p>
+
+
+                <p>
+
+                    📍
+                    <strong>Base:</strong>
+
+                    Base escolhida
+
+                </p>
+
+
+                <p>
+
+                    🩸
+                    <strong>Tipo:</strong>
+
                     Tipo de doação escolhido
+
                 </p>
 
             </div>
@@ -384,8 +465,10 @@
             <div>
 
                 <p>
+
                     💡 Beba bastante água, não vá em jejum
                     e durma bem antes da doação!
+
                 </p>
 
             </div>
@@ -399,18 +482,21 @@
 
     </main>
 
-     <!-- LATERAL DIREITA -->
-    <!--
-        Está embaixo do main no HTML.
-        O CSS depois vai colocar essa parte do lado direito.
-    -->
+
+    <!-- ================================= -->
+    <!-- LATERAL DIREITA -->
+    <!-- ================================= -->
 
     <aside>
 
+
         <!-- PRÓXIMA DOAÇÃO -->
+
         <section>
 
-            <p>Próxima doação disponível</p>
+            <p>
+                Próxima doação disponível
+            </p>
 
             <h2>
                 Você pode doar! ✅
@@ -424,6 +510,7 @@
 
 
         <!-- MENSAGEM -->
+
         <section>
 
             <h3>
@@ -442,13 +529,19 @@
 
 
         <!-- CAMPANHA -->
+
         <section>
-        <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
+
+            <img
+                src="{% static 'img/campanha.jpeg' %}"
+                alt="Campanha"
+            >
+
             <h3>
                 Participe das campanhas e faça a diferença.
             </h3>
 
-            <a href="campanhas.html">
+            <a href="{% url 'campanhas' %}">
                 Ver campanhas
             </a>
 
@@ -456,13 +549,15 @@
 
 
         <!-- BOTÃO DE DÚVIDAS -->
+
         <button type="button">
             ?
         </button>
 
     </aside>
 
-           <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
 
 </body>
 
