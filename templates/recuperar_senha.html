@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recuperar Senha - Sangue Bom</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+    <main>
+
+        <h1>❤️ Sangue Bom</h1>
+
+        <h2>Recuperar senha</h2>
+
+        <p>
+            Digite seu e-mail e cadastre uma nova senha.
+        </p>
+
+
+        {% if erro %}
+
+            <p>
+                {{ erro }}
+            </p>
+
+        {% endif %}
+
+
+        {% if sucesso %}
+
+            <p>
+                {{ sucesso }}
+            </p>
+
+            <br>
+
+            <a href="{% url 'login' %}">
+                Voltar para o login
+            </a>
+
+        {% else %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="email">
+                    E-mail:
+                </label>
+
+                <br>
+
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Digite seu e-mail"
+                    value="{{ email|default:'' }}"
+                    required
+                >
+
+                <br><br>
+
+
+                <label for="nova_senha">
+                    Nova senha:
+                </label>
+
+                <br>
+
+                <input
+                    type="password"
+                    name="nova_senha"
+                    id="nova_senha"
+                    placeholder="Digite sua nova senha"
+                    required
+                >
+
+                <br><br>
+
+
+                <label for="confirmar_senha">
+                    Confirmar nova senha:
+                </label>
+
+                <br>
+
+                <input
+                    type="password"
+                    name="confirmar_senha"
+                    id="confirmar_senha"
+                    placeholder="Digite a senha novamente"
+                    required
+                >
+
+                <br><br>
+
+
+                <button type="submit">
+                    Alterar senha
+                </button>
+
+            </form>
+
+
+            <br>
+
+
+            <a href="{% url 'login' %}">
+                ← Voltar para o login
+            </a>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

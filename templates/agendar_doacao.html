@@ -6,7 +6,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Agendar Doação - Sangue Bom</title>
@@ -31,368 +30,533 @@
 
 
         <!-- ================================= -->
-        <!-- ETAPA 1 - ESCOLHER BASE -->
+        <!-- FORMULÁRIO DO AGENDAMENTO -->
         <!-- ================================= -->
 
-        <section>
+        <form method="POST">
 
-            <h2>Escolha a Base para Doação</h2>
-
-            <p>
-                O atendimento é realizado pela
-                <strong>Fundação Hemocentro de Brasília</strong>.
-                Escolha uma das bases disponíveis para atendimento.
-            </p>
-
-
-            <!-- BASE BRASÍLIA -->
-
-            <div>
-
-                <h3>Base Brasília – HBDF</h3>
-
-                <p>
-                    📍 SGAN 604/605, Brasília – DF
-                </p>
-
-                <p>
-                    🕐 07h–18h (seg–sex) | 07h–13h (sáb)
-                </p>
-
-                <button type="button">
-                    Escolher
-                </button>
-
-            </div>
-
-
-            <!-- BASE TAGUATINGA -->
-
-            <div>
-
-                <h3>Base Taguatinga</h3>
-
-                <p>
-                    📍 CNB 10, Conjunto A, Taguatinga – DF
-                </p>
-
-                <p>
-                    🕐 07h–18h (seg–sex)
-                </p>
-
-                <button type="button">
-                    Escolher
-                </button>
-
-            </div>
-
-
-            <!-- BASE GAMA -->
-
-            <div>
-
-                <h3>Base Gama</h3>
-
-                <p>
-                    📍 QD 01, Setor Central, Gama – DF
-                </p>
-
-                <p>
-                    🕐 07h–17h (seg–sex)
-                </p>
-
-                <button type="button">
-                    Escolher
-                </button>
-
-            </div>
-
-
-            <!-- BASE SOBRADINHO -->
-
-            <div>
-
-                <h3>Base Sobradinho</h3>
-
-                <p>
-                    📍 QD 03, Área Especial, Sobradinho – DF
-                </p>
-
-                <p>
-                    🕐 07h–17h (seg–sex)
-                </p>
-
-                <button type="button">
-                    Escolher
-                </button>
-
-            </div>
-
-
-            <br>
-            <br>
-
-            <button type="button">
-                Próximo →
-            </button>
-
-        </section>
-
-
-        <!-- ================================= -->
-        <!-- ETAPA 2 - DATA E HORÁRIO -->
-        <!-- ================================= -->
-
-        <section>
-
-            <div>
-
-                <h2>Data e Horário</h2>
-
-
-                <!-- TIPO DE DOAÇÃO -->
-
-                <h3>Tipo de doação</h3>
-
-                <button type="button">
-                    Sangue Total
-                </button>
-
-                <button type="button">
-                    Plaquetas
-                </button>
-
-                <button type="button">
-                    Plasma
-                </button>
-
-                <button type="button">
-                    Hemácias
-                </button>
-
-
-                <!-- DATA -->
-
-                <h3>Data</h3>
-
-                <input
-                    type="date"
-                    name="data"
-                    id="data"
-                >
-
-
-                <!-- HORÁRIO -->
-
-                <h3>Horário</h3>
-
-                <button type="button">
-                    07:00
-                </button>
-
-                <button type="button">
-                    07:30
-                </button>
-
-                <button type="button">
-                    08:00
-                </button>
-
-                <button type="button">
-                    08:30
-                </button>
-
-                <button type="button">
-                    09:00
-                </button>
-
-                <button type="button">
-                    09:30
-                </button>
-
-                <button type="button">
-                    10:00
-                </button>
-
-                <button type="button">
-                    10:30
-                </button>
-
-                <button type="button">
-                    11:00
-                </button>
-
-                <button type="button">
-                    11:30
-                </button>
-
-                <button type="button">
-                    13:00
-                </button>
-
-                <button type="button">
-                    13:30
-                </button>
-
-                <button type="button">
-                    14:00
-                </button>
-
-                <button type="button">
-                    14:30
-                </button>
-
-                <button type="button">
-                    15:00
-                </button>
-
-                <button type="button">
-                    15:30
-                </button>
-
-                <button type="button">
-                    16:00
-                </button>
-
-                <button type="button">
-                    16:30
-                </button>
-
-                <button type="button">
-                    17:00
-                </button>
-
-                <button type="button">
-                    17:30
-                </button>
-
-
-                <br>
-                <br>
-
-
-                <!-- BOTÕES -->
-
-                <button type="button">
-                    ← Voltar
-                </button>
-
-                <button type="button">
-                    Próximo →
-                </button>
-
-            </div>
+            {% csrf_token %}
 
 
             <!-- ================================= -->
-            <!-- LATERAL - ANTES DE DOAR -->
+            <!-- ETAPA 1 - ESCOLHER BASE -->
             <!-- ================================= -->
 
-            <aside>
+            <section>
 
-                <h2>💡 Antes de doar</h2>
-
-                <p>
-                    ✓ Beba bastante água
-                </p>
+                <h2>Escolha a Base para Doação</h2>
 
                 <p>
-                    ✓ Não vá em jejum
+                    O atendimento é realizado pela
+                    <strong>Fundação Hemocentro de Brasília</strong>.
+                    Escolha uma das bases disponíveis para atendimento.
                 </p>
+
+
+                <!-- BASES VINDO DO BANCO DE DADOS -->
+
+                {% if hemocentros %}
+
+                    {% for hemocentro in hemocentros %}
+
+                        <div>
+
+                            <h3>
+                                {{ hemocentro.nome }}
+                            </h3>
+
+                            <p>
+                                📍
+                                {{ hemocentro.endereco }},
+                                {{ hemocentro.cidade }} – DF
+                            </p>
+
+                            <p>
+                                🕐
+                                {{ hemocentro.horario_abertura|time:"H:i" }}
+                                –
+                                {{ hemocentro.horario_fechamento|time:"H:i" }}
+                            </p>
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="hemocentro"
+                                    value="{{ hemocentro.id }}"
+                                    required
+                                >
+
+                                Escolher esta base
+
+                            </label>
+
+                        </div>
+
+                        <br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>
+                        Nenhuma base de atendimento está disponível no momento.
+                    </p>
+
+                {% endif %}
+
 
                 <p>
-                    ✓ Durma pelo menos 6 horas
+                    Selecione uma base para continuar.
                 </p>
+
+            </section>
+
+
+            <!-- ================================= -->
+            <!-- ETAPA 2 - DATA E HORÁRIO -->
+            <!-- ================================= -->
+
+            <section>
+
+                <div>
+
+                    <h2>Data e Horário</h2>
+
+
+                    <!-- TIPO DE DOAÇÃO -->
+
+                    <h3>Tipo de doação</h3>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="tipo_doacao"
+                            value="Sangue total"
+                            required
+                        >
+
+                        Sangue Total
+
+                    </label>
+
+                    <br>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="tipo_doacao"
+                            value="Plaquetas"
+                        >
+
+                        Plaquetas
+
+                    </label>
+
+                    <br>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="tipo_doacao"
+                            value="Plasma"
+                        >
+
+                        Plasma
+
+                    </label>
+
+                    <br>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="tipo_doacao"
+                            value="Hemácias"
+                        >
+
+                        Hemácias
+
+                    </label>
+
+
+                    <!-- DATA -->
+
+                    <h3>Data</h3>
+
+                    <input
+                        type="date"
+                        name="data"
+                        id="data"
+                        required
+                    >
+
+
+                    <!-- HORÁRIO -->
+
+                    <h3>Horário</h3>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="07:00"
+                            required
+                        >
+
+                        07:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="07:30"
+                        >
+
+                        07:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="08:00"
+                        >
+
+                        08:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="08:30"
+                        >
+
+                        08:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="09:00"
+                        >
+
+                        09:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="09:30"
+                        >
+
+                        09:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="10:00"
+                        >
+
+                        10:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="10:30"
+                        >
+
+                        10:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="11:00"
+                        >
+
+                        11:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="11:30"
+                        >
+
+                        11:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="13:00"
+                        >
+
+                        13:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="13:30"
+                        >
+
+                        13:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="14:00"
+                        >
+
+                        14:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="14:30"
+                        >
+
+                        14:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="15:00"
+                        >
+
+                        15:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="15:30"
+                        >
+
+                        15:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="16:00"
+                        >
+
+                        16:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="16:30"
+                        >
+
+                        16:30
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="17:00"
+                        >
+
+                        17:00
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="horario"
+                            value="17:30"
+                        >
+
+                        17:30
+
+                    </label>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- LATERAL - ANTES DE DOAR -->
+                <!-- ================================= -->
+
+                <aside>
+
+                    <h2>💡 Antes de doar</h2>
+
+                    <p>
+                        ✓ Beba bastante água
+                    </p>
+
+                    <p>
+                        ✓ Não vá em jejum
+                    </p>
+
+                    <p>
+                        ✓ Durma pelo menos 6 horas
+                    </p>
+
+                    <p>
+                        ✓ Evite bebidas alcoólicas
+                    </p>
+
+                    <p>
+                        ✓ Não fume antes da doação
+                    </p>
+
+                </aside>
+
+            </section>
+
+
+            <!-- ================================= -->
+            <!-- INFORMAÇÃO SOBRE A DOAÇÃO -->
+            <!-- ================================= -->
+
+            <section>
+
+                <h2>🩸 Uma doação = 4 vidas</h2>
 
                 <p>
-                    ✓ Evite bebidas alcoólicas
+                    Seu sangue pode ajudar até 4 pessoas diferentes
+                    após a triagem e separação dos componentes.
                 </p>
+
+            </section>
+
+
+            <!-- ================================= -->
+            <!-- ETAPA 3 - CONFIRMAR -->
+            <!-- ================================= -->
+
+            <section>
+
+                <h2>Confirmar Agendamento</h2>
 
                 <p>
-                    ✓ Não fume antes da doação
+                    Confira os dados antes de confirmar sua doação.
                 </p>
 
-            </aside>
 
-        </section>
+                <h3>🏥 Hemocentro responsável</h3>
 
-
-        <!-- ================================= -->
-        <!-- INFORMAÇÃO SOBRE A DOAÇÃO -->
-        <!-- ================================= -->
-
-        <section>
-
-            <h2>🩸 Uma doação = 4 vidas</h2>
-
-            <p>
-                Seu sangue pode ajudar até 4 pessoas diferentes
-                após a triagem e separação dos componentes.
-            </p>
-
-        </section>
+                <p>
+                    Fundação Hemocentro de Brasília
+                </p>
 
 
-        <!-- ================================= -->
-        <!-- ETAPA 3 - CONFIRMAR -->
-        <!-- ================================= -->
+                <h3>📍 Base escolhida</h3>
 
-        <section>
-
-            <h2>Confirmar Agendamento</h2>
-
-            <p>
-                Confira os dados antes de confirmar sua doação.
-            </p>
+                <p>
+                    A base selecionada acima será utilizada
+                    no seu agendamento.
+                </p>
 
 
-            <h3>🏥 Hemocentro responsável</h3>
+                <h3>📅 Data</h3>
 
-            <p>
-                Fundação Hemocentro de Brasília
-            </p>
-
-
-            <h3>📍 Base escolhida</h3>
-
-            <p>
-                Base escolhida
-            </p>
+                <p>
+                    A data selecionada acima será utilizada
+                    no seu agendamento.
+                </p>
 
 
-            <h3>📅 Data</h3>
+                <h3>🕐 Horário</h3>
 
-            <p>
-                Data escolhida
-            </p>
-
-
-            <h3>🕐 Horário</h3>
-
-            <p>
-                Horário escolhido
-            </p>
+                <p>
+                    O horário selecionado acima será utilizado
+                    no seu agendamento.
+                </p>
 
 
-            <h3>🩸 Tipo de doação</h3>
+                <h3>🩸 Tipo de doação</h3>
 
-            <p>
-                Tipo de doação escolhido
-            </p>
-
-
-            <br>
+                <p>
+                    O tipo de doação selecionado acima será utilizado
+                    no seu agendamento.
+                </p>
 
 
-            <button type="button">
-                ← Voltar
-            </button>
+                <br>
 
-            <button type="button">
-                Confirmar Doação 🩸
-            </button>
 
-        </section>
+                <!-- BOTÃO QUE REALMENTE ENVIA PARA O DJANGO -->
+
+                <button type="submit">
+                    Confirmar Doação 🩸
+                </button>
+
+            </section>
+
+        </form>
 
 
         <!-- ================================= -->
@@ -404,79 +568,14 @@
             <h2>✅ Agendamento Confirmado!</h2>
 
             <p>
-                Seu agendamento foi realizado com sucesso!
+                Seu agendamento será confirmado após o envio
+                dos dados.
             </p>
 
-
-            <div>
-
-                <p>
-
-                    📅
-                    <strong>Data:</strong>
-
-                    Data escolhida
-
-                </p>
-
-
-                <p>
-
-                    🕐
-                    <strong>Horário:</strong>
-
-                    Horário escolhido
-
-                </p>
-
-
-                <p>
-
-                    🏥
-                    <strong>Hemocentro:</strong>
-
-                    Fundação Hemocentro de Brasília
-
-                </p>
-
-
-                <p>
-
-                    📍
-                    <strong>Base:</strong>
-
-                    Base escolhida
-
-                </p>
-
-
-                <p>
-
-                    🩸
-                    <strong>Tipo:</strong>
-
-                    Tipo de doação escolhido
-
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <p>
-
-                    💡 Beba bastante água, não vá em jejum
-                    e durma bem antes da doação!
-
-                </p>
-
-            </div>
-
-
-            <button type="button">
-                Fazer outro agendamento
-            </button>
+            <p>
+                Após confirmar, você será direcionado
+                para a página de seus agendamentos.
+            </p>
 
         </section>
 
@@ -556,8 +655,6 @@
 
     </aside>
 
-
-    <script src="{% static 'js/script.js' %}"></script>
 
 </body>
 

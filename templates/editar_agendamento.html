@@ -4,12 +4,14 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Editar Agendamento - Sangue Bom</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
@@ -18,43 +20,32 @@
 
         <h1>Editar Agendamento</h1>
 
-        <p>Altere os dados do agendamento.</p>
+        <p>
+            Altere os dados do seu agendamento.
+        </p>
 
         <form method="POST">
 
             {% csrf_token %}
 
             <!-- DOADOR -->
-            <label for="doador">
-                Doador:
-            </label>
 
-            <select name="doador" id="doador" required>
-
-                {% for doador in doadores %}
-
-                    <option
-                        value="{{ doador.id }}"
-                        {% if doador.id == agendamento.doador.id %}
-                            selected
-                        {% endif %}
-                    >
-                        {{ doador.nome }}
-                    </option>
-
-                {% endfor %}
-
-            </select>
-
-            <br><br>
-
+            <p>
+                <strong>Doador:</strong>
+                {{ agendamento.doador.nome }}
+            </p>
 
             <!-- HEMOCENTRO -->
+
             <label for="hemocentro">
                 Hemocentro:
             </label>
 
-            <select name="hemocentro" id="hemocentro" required>
+            <select
+                name="hemocentro"
+                id="hemocentro"
+                required
+            >
 
                 {% for hemocentro in hemocentros %}
 
@@ -73,13 +64,17 @@
 
             <br><br>
 
-
             <!-- TIPO DE DOAÇÃO -->
+
             <label for="tipo_doacao">
                 Tipo de Doação:
             </label>
 
-            <select name="tipo_doacao" id="tipo_doacao" required>
+            <select
+                name="tipo_doacao"
+                id="tipo_doacao"
+                required
+            >
 
                 <option
                     value="Sangue total"
@@ -108,12 +103,21 @@
                     Plasma
                 </option>
 
+                <option
+                    value="Hemácias"
+                    {% if agendamento.tipo_doacao == "Hemácias" %}
+                        selected
+                    {% endif %}
+                >
+                    Hemácias
+                </option>
+
             </select>
 
             <br><br>
 
-
             <!-- DATA -->
+
             <label for="data">
                 Data:
             </label>
@@ -128,8 +132,8 @@
 
             <br><br>
 
-
             <!-- HORÁRIO -->
+
             <label for="horario">
                 Horário:
             </label>
@@ -144,8 +148,8 @@
 
             <br><br>
 
-
             <!-- BOTÃO SALVAR -->
+
             <button type="submit">
                 💾 Salvar Alterações
             </button>

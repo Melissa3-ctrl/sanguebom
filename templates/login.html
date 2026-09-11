@@ -2,13 +2,16 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login - Sangue Bom</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
@@ -24,13 +27,22 @@
         </p>
 
         {% if erro %}
-            <p>{{ erro }}</p>
+
+            <p>
+                {{ erro }}
+            </p>
+
         {% endif %}
 
+
         <form method="POST">
+
             {% csrf_token %}
 
-            <label for="email">E-mail:</label>
+            <label for="email">
+                E-mail:
+            </label>
+
             <br>
 
             <input
@@ -43,7 +55,11 @@
 
             <br><br>
 
-            <label for="senha">Senha:</label>
+
+            <label for="senha">
+                Senha:
+            </label>
+
             <br>
 
             <input
@@ -56,16 +72,31 @@
 
             <br><br>
 
+
             <button type="submit">
                 Entrar
             </button>
+
         </form>
 
+
         <br>
+
+
+        <!-- ESQUECI MINHA SENHA -->
+
+        <a href="{% url 'recuperar_senha' %}">
+            Esqueci minha senha
+        </a>
+
+
+        <br><br>
+
 
         <p>
             Ainda não possui cadastro?
         </p>
+
 
         <a href="{% url 'cadastro' %}">
             Criar minha conta
@@ -74,4 +105,5 @@
     </main>
 
 </body>
+
 </html>
