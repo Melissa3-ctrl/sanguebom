@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
 from .models import Doador, Hemocentro, Agendamento
 
 
@@ -44,6 +43,7 @@ def locais_para_doar(request):
 
 @login_required(login_url='login')
 def meu_perfil(request):
+
     doador = get_object_or_404(
         Doador,
         usuario=request.user
@@ -71,6 +71,7 @@ def cadastro(request):
 
         # Verifica se o e-mail já existe
         if User.objects.filter(username=email).exists():
+
             return render(request, 'cadastrar.html', {
                 'erro': 'Este e-mail já está cadastrado.'
             })
@@ -130,6 +131,48 @@ def login_view(request):
 
 
 # =========================================================
+# RECUPERAR SENHA
+# =========================================================
+
+def recuperar_senha(request):
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        nova_senha = request.POST.get('nova_senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
+
+        # Verifica se o e-mail está cadastrado
+        usuario = User.objects.filter(
+            username=email
+        ).first()
+
+        if usuario is None:
+
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'Este e-mail não está cadastrado.'
+            })
+
+        # Verifica se as senhas são iguais
+        if nova_senha != confirmar_senha:
+
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'As senhas não são iguais.',
+                'email': email
+            })
+
+        # Altera a senha usando o método seguro do Django
+        usuario.set_password(nova_senha)
+        usuario.save()
+
+        return render(request, 'recuperar_senha.html', {
+            'sucesso': 'Senha alterada com sucesso!'
+        })
+
+    return render(request, 'recuperar_senha.html')
+
+
+# =========================================================
 # LOGOUT
 # =========================================================
 
@@ -147,7 +190,7 @@ def logout_view(request):
 @login_required(login_url='login')
 def agendar_doacao(request):
 
-    # Descobre automaticamente qual doador está logado
+    # Descobre o doador que está logado
     doador = get_object_or_404(
         Doador,
         usuario=request.user
@@ -160,14 +203,20 @@ def agendar_doacao(request):
         horario = request.POST.get('horario')
         tipo_doacao = request.POST.get('tipo_doacao')
 
+        # Busca o hemocentro escolhido
         hemocentro = get_object_or_404(
             Hemocentro,
-            id=hemocentro_id
+            id=hemocentro_id,
+            ativo=True
         )
 
+        # Cria o agendamento
+        # A base recebe automaticamente o nome
+        # do hemocentro escolhido
         Agendamento.objects.create(
             doador=doador,
             hemocentro=hemocentro,
+            base=hemocentro.nome,
             data=data,
             horario=horario,
             tipo_doacao=tipo_doacao
@@ -175,6 +224,7 @@ def agendar_doacao(request):
 
         return redirect('listar_agendamentos')
 
+    # Busca somente hemocentros ativos
     hemocentros = Hemocentro.objects.filter(
         ativo=True
     )
@@ -192,11 +242,13 @@ def agendar_doacao(request):
 @login_required(login_url='login')
 def listar_agendamentos(request):
 
+    # Descobre o doador logado
     doador = get_object_or_404(
         Doador,
         usuario=request.user
     )
 
+    # Mostra somente os agendamentos desse doador
     agendamentos = Agendamento.objects.filter(
         doador=doador
     )
@@ -213,11 +265,13 @@ def listar_agendamentos(request):
 @login_required(login_url='login')
 def editar_agendamento(request, id):
 
+    # Descobre o doador logado
     doador = get_object_or_404(
         Doador,
         usuario=request.user
     )
 
+    # Busca somente o agendamento desse doador
     agendamento = get_object_or_404(
         Agendamento,
         id=id,
@@ -226,26 +280,33 @@ def editar_agendamento(request, id):
 
     if request.method == 'POST':
 
-        agendamento.hemocentro_id = request.POST.get(
-            'hemocentro'
+        hemocentro_id = request.POST.get('hemocentro')
+        data = request.POST.get('data')
+        horario = request.POST.get('horario')
+        tipo_doacao = request.POST.get('tipo_doacao')
+
+        # Busca o novo hemocentro
+        hemocentro = get_object_or_404(
+            Hemocentro,
+            id=hemocentro_id,
+            ativo=True
         )
 
-        agendamento.data = request.POST.get(
-            'data'
-        )
+        # Atualiza os dados
+        agendamento.hemocentro = hemocentro
 
-        agendamento.horario = request.POST.get(
-            'horario'
-        )
+        # Atualiza a base automaticamente
+        agendamento.base = hemocentro.nome
 
-        agendamento.tipo_doacao = request.POST.get(
-            'tipo_doacao'
-        )
+        agendamento.data = data
+        agendamento.horario = horario
+        agendamento.tipo_doacao = tipo_doacao
 
         agendamento.save()
 
         return redirect('listar_agendamentos')
 
+    # Busca somente hemocentros ativos
     hemocentros = Hemocentro.objects.filter(
         ativo=True
     )
@@ -263,11 +324,14 @@ def editar_agendamento(request, id):
 @login_required(login_url='login')
 def excluir_agendamento(request, id):
 
+    # Descobre o doador
     doador = get_object_or_404(
         Doador,
         usuario=request.user
     )
 
+    # Busca somente um agendamento
+    # que pertence ao usuário logado
     agendamento = get_object_or_404(
         Agendamento,
         id=id,
