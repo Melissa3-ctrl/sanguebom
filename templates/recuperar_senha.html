@@ -22,10 +22,6 @@
 
         <h2>Recuperar senha</h2>
 
-        <p>
-            Digite seu e-mail e cadastre uma nova senha.
-        </p>
-
 
         {% if erro %}
 
@@ -48,26 +44,42 @@
                 Voltar para o login
             </a>
 
-        {% else %}
+
+        {% elif codigo_enviado %}
+
+            <p>
+                {{ mensagem }}
+            </p>
+
+            <p>
+                Digite o código de 6 dígitos enviado para seu e-mail.
+            </p>
 
 
-            <form method="POST">
+            <form method="POST" action="{% url 'validar_codigo' %}">
 
                 {% csrf_token %}
 
 
-                <label for="email">
-                    E-mail:
+                <input
+                    type="hidden"
+                    name="email"
+                    value="{{ email }}"
+                >
+
+
+                <label for="codigo">
+                    Código de recuperação:
                 </label>
 
                 <br>
 
                 <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Digite seu e-mail"
-                    value="{{ email|default:'' }}"
+                    type="text"
+                    name="codigo"
+                    id="codigo"
+                    placeholder="Digite o código"
+                    maxlength="6"
                     required
                 >
 
@@ -109,20 +121,59 @@
 
 
                 <button type="submit">
-                    Alterar senha
+                    Confirmar código e alterar senha
                 </button>
 
             </form>
 
 
-            <br>
+        {% else %}
 
 
-            <a href="{% url 'login' %}">
-                ← Voltar para o login
-            </a>
+            <p>
+                Digite seu e-mail para receber um código de recuperação.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="email">
+                    E-mail:
+                </label>
+
+                <br>
+
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Digite seu e-mail"
+                    value="{{ email|default:'' }}"
+                    required
+                >
+
+                <br><br>
+
+
+                <button type="submit">
+                    Enviar código
+                </button>
+
+            </form>
+
 
         {% endif %}
+
+
+        <br>
+
+
+        <a href="{% url 'login' %}">
+            ← Voltar para o login
+        </a>
 
     </main>
 

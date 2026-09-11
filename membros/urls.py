@@ -51,6 +51,12 @@ urlpatterns = [
     ),
 
     path(
+        'validar_codigo/',
+        views.validar_codigo,
+        name='validar_codigo'
+    ),
+
+    path(
         'logout/',
         views.logout_view,
         name='logout'
@@ -117,5 +123,4 @@ urlpatterns = [
         views.excluir_agendamento,
         name='excluir_agendamento'
     ),
-
 ]

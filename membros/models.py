@@ -66,3 +66,13 @@ class Agendamento(models.Model):
 
     def __str__(self):
         return f"{self.doador.nome} - {self.data}"
+
+
+class CodigoRecuperacao(models.Model):
+    email = models.EmailField()
+    codigo = models.CharField(max_length=6)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+    

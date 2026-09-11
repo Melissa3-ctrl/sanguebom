@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Doador, Hemocentro, Agendamento
+from django.core.mail import send_mail
+from django.utils import timezone
+import random
+
+from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
 
 
 # =========================================================
@@ -43,7 +47,6 @@ def locais_para_doar(request):
 
 @login_required(login_url='login')
 def meu_perfil(request):
-
     doador = get_object_or_404(
         Doador,
         usuario=request.user
@@ -131,7 +134,7 @@ def login_view(request):
 
 
 # =========================================================
-# RECUPERAR SENHA
+# RECUPERAR SENHA - ENVIAR CÓDIGO
 # =========================================================
 
 def recuperar_senha(request):
@@ -139,8 +142,6 @@ def recuperar_senha(request):
     if request.method == 'POST':
 
         email = request.POST.get('email')
-        nova_senha = request.POST.get('nova_senha')
-        confirmar_senha = request.POST.get('confirmar_senha')
 
         # Verifica se o e-mail está cadastrado
         usuario = User.objects.filter(
@@ -153,23 +154,110 @@ def recuperar_senha(request):
                 'erro': 'Este e-mail não está cadastrado.'
             })
 
+        # Gera um código aleatório de 6 números
+        codigo = str(random.randint(100000, 999999))
+
+        # Remove códigos anteriores desse e-mail
+        CodigoRecuperacao.objects.filter(
+            email=email
+        ).delete()
+
+        # Salva o novo código no banco
+        CodigoRecuperacao.objects.create(
+            email=email,
+            codigo=codigo
+        )
+
+        # Envia o código para o e-mail
+        send_mail(
+            'Código para recuperação de senha - Sangue Bom',
+            f'Seu código para recuperar a senha é: {codigo}\n\n'
+            'Esse código é válido para a recuperação da sua senha.',
+            None,
+            [email],
+            fail_silently=False,
+        )
+
+        return render(request, 'recuperar_senha.html', {
+            'email': email,
+            'codigo_enviado': True,
+            'mensagem': 'Um código de recuperação foi enviado para seu e-mail.'
+        })
+
+    return render(request, 'recuperar_senha.html')
+
+
+# =========================================================
+# VALIDAR CÓDIGO E ALTERAR SENHA
+# =========================================================
+
+def validar_codigo(request):
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        codigo_digitado = request.POST.get('codigo')
+        nova_senha = request.POST.get('nova_senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
+
+        # Procura o código salvo
+        codigo_recuperacao = CodigoRecuperacao.objects.filter(
+            email=email,
+            codigo=codigo_digitado
+        ).first()
+
+        if codigo_recuperacao is None:
+
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'Código inválido ou incorreto.',
+                'email': email,
+                'codigo_enviado': True
+            })
+
+        # Verifica se o código expirou
+        tempo_passado = timezone.now() - codigo_recuperacao.criado_em
+
+        if tempo_passado.total_seconds() > 600:
+
+            codigo_recuperacao.delete()
+
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'Este código expirou. Solicite um novo código.',
+                'email': email
+            })
+
         # Verifica se as senhas são iguais
         if nova_senha != confirmar_senha:
 
             return render(request, 'recuperar_senha.html', {
                 'erro': 'As senhas não são iguais.',
-                'email': email
+                'email': email,
+                'codigo_enviado': True
             })
 
-        # Altera a senha usando o método seguro do Django
+        # Procura o usuário
+        usuario = User.objects.filter(
+            username=email
+        ).first()
+
+        if usuario is None:
+
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'Usuário não encontrado.'
+            })
+
+        # Altera a senha
         usuario.set_password(nova_senha)
         usuario.save()
 
+        # Apaga o código depois de usar
+        codigo_recuperacao.delete()
+
         return render(request, 'recuperar_senha.html', {
-            'sucesso': 'Senha alterada com sucesso!'
+            'sucesso': 'Senha alterada com sucesso! Você já pode fazer login.'
         })
 
-    return render(request, 'recuperar_senha.html')
+    return redirect('recuperar_senha')
 
 
 # =========================================================
