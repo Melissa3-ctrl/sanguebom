@@ -1,942 +1,425 @@
 {% load static %}
-
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
-     <a href="javascript:history.back()" class="btn-voltar">
-        ← Voltar
-    </a>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <title>Cadastro de Doador - SangueBom</title>
-
+    <title>Cadastro de Doador - Sangue Bom</title>
 </head>
+<body class="pagina-cadastro">
 
-<body>
+    <div class="cadastro-container">
 
-<main class="container">
-
-    <!-- CABEÇALHO -->
-
-    <header class="cabecalho">
-
-        <h1>Cadastro de Doador</h1>
-
-        <p>
-            Crie sua conta e comece a salvar vidas
-        </p>
-
-    </header>
-
-
-    <!-- ETAPAS -->
-
-    <div class="etapas">
-
-        <div class="etapa {% if etapa == '1' %}ativa{% endif %}">
-
-            <div class="numero">1</div>
-
-            <span>
-                Dados Pessoais
-            </span>
-
-        </div>
-
-        <div class="linha"></div>
-
-        <div class="etapa {% if etapa == '2' %}ativa{% endif %}">
-
-            <div class="numero">2</div>
-
-            <span>
-                Contato & Local
-            </span>
-
-        </div>
-
-        <div class="linha"></div>
-
-        <div class="etapa {% if etapa == '3' %}ativa{% endif %}">
-
-            <div class="numero">3</div>
-
-            <span>
-                Confirmação
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- ERRO -->
-
-    {% if erro %}
-
-    <div class="erro">
-        {{ erro }}
-    </div>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         ETAPA 1
-         ===================================================== -->
-
-    {% if etapa == '1' %}
-
-    <section
-        id="etapa1"
-        class="conteudo ativo"
-    >
-
-        <div class="formulario">
-
-            <h2>Informações pessoais</h2>
-
-            <form method="POST">
-
-                {% csrf_token %}
-
-                <input
-                    type="hidden"
-                    name="etapa"
-                    value="1"
-                >
-
-
-                <!-- NOME -->
-
-                <div class="campo">
-
-                    <label for="nome">
-                        Nome completo *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Seu nome completo"
-                        value="{{ dados.nome }}"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- EMAIL -->
-
-                <div class="campo">
-
-                    <label for="email">
-                        E-mail *
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="seu@email.com"
-                        value="{{ dados.email }}"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- CPF -->
-
-                <div class="campo">
-
-                    <label for="cpf">
-                        CPF *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="cpf"
-                        name="cpf"
-                        placeholder="000.000.000-00"
-                        value="{{ dados.cpf }}"
-                        maxlength="14"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- DATA + SEXO -->
-
-                <div class="duas-colunas">
-
-                    <div class="campo">
-
-                        <label for="nascimento">
-                            Data de Nascimento *
-                        </label>
-
-                        <input
-                            type="date"
-                            id="nascimento"
-                            name="data_nascimento"
-                            value="{{ dados.data_nascimento }}"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="campo">
-
-                        <label for="sexo">
-                            Sexo biológico *
-                        </label>
-
-                        <select
-                            id="sexo"
-                            name="sexo"
-                            required
-                        >
-
-                            <option value="">
-                                Selecionar...
-                            </option>
-
-                            <option
-                                value="Feminino"
-                                {% if dados.sexo == "Feminino" %}selected{% endif %}
-                            >
-                                Feminino
-                            </option>
-
-                            <option
-                                value="Masculino"
-                                {% if dados.sexo == "Masculino" %}selected{% endif %}
-                            >
-                                Masculino
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TIPO SANGUÍNEO -->
-
-                <div class="campo">
-
-                    <label for="sangue">
-                        Tipo Sanguíneo
-                    </label>
-
-                    <select
-                        id="sangue"
-                        name="tipo_sanguineo"
-                    >
-
-                        <option value="">
-                            Não sei / Não informar
-                        </option>
-
-                        <option
-                            value="A+"
-                            {% if dados.tipo_sanguineo == "A+" %}selected{% endif %}
-                        >
-                            A+
-                        </option>
-
-                        <option
-                            value="A-"
-                            {% if dados.tipo_sanguineo == "A-" %}selected{% endif %}
-                        >
-                            A-
-                        </option>
-
-                        <option
-                            value="B+"
-                            {% if dados.tipo_sanguineo == "B+" %}selected{% endif %}
-                        >
-                            B+
-                        </option>
-
-                        <option
-                            value="B-"
-                            {% if dados.tipo_sanguineo == "B-" %}selected{% endif %}
-                        >
-                            B-
-                        </option>
-
-                        <option
-                            value="AB+"
-                            {% if dados.tipo_sanguineo == "AB+" %}selected{% endif %}
-                        >
-                            AB+
-                        </option>
-
-                        <option
-                            value="AB-"
-                            {% if dados.tipo_sanguineo == "AB-" %}selected{% endif %}
-                        >
-                            AB-
-                        </option>
-
-                        <option
-                            value="O+"
-                            {% if dados.tipo_sanguineo == "O+" %}selected{% endif %}
-                        >
-                            O+
-                        </option>
-
-                        <option
-                            value="O-"
-                            {% if dados.tipo_sanguineo == "O-" %}selected{% endif %}
-                        >
-                            O-
-                        </option>
-
-                    </select>
-
-                    <small>
-                        Pode ser informado depois no seu perfil
-                    </small>
-
-                </div>
-
-
-                <!-- BOTÃO -->
-
-                <button
-                    type="submit"
-                    id="continuar1"
-                >
-                    Continuar →
-                </button>
-
-            </form>
-
-        </div>
-
-    </section>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         ETAPA 2
-         ===================================================== -->
-
-    {% if etapa == '2' %}
-
-    <section
-        id="etapa2"
-        class="conteudo ativo"
-    >
-
-        <div class="formulario">
-
-            <h2>Contato e localização</h2>
-
-            <form method="POST">
-
-                {% csrf_token %}
-
-                <input
-                    type="hidden"
-                    name="etapa"
-                    value="2"
-                >
-
-
-                <!-- TELEFONE -->
-
-                <div class="campo">
-
-                    <label for="telefone">
-                        Telefone / WhatsApp *
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="telefone"
-                        name="telefone"
-                        placeholder="(61) 99999-9999"
-                        value="{{ dados.telefone }}"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- ESTADO -->
-
-                <div class="campo">
-
-                    <label for="estado">
-                        Estado *
-                    </label>
-
-                    <select
-                        id="estado"
-                        name="estado"
-                        required
-                    >
-
-                        <option value="">
-                            Selecionar...
-                        </option>
-
-                        {% for sigla, nome in estados %}
-
-                        <option
-                            value="{{ sigla }}"
-                            {% if dados.estado == sigla %}selected{% endif %}
-                        >
-                            {{ nome }} - {{ sigla }}
-                        </option>
-
-                        {% endfor %}
-
-                    </select>
-
-                </div>
-
-
-                <!-- CIDADE -->
-
-                <div class="campo">
-
-                    <label for="cidade">
-                        Cidade *
-                    </label>
-
-                    <select
-                        id="cidade"
-                        name="cidade"
-                        required
-                    >
-
-                        <option value="">
-                            Selecionar...
-                        </option>
-
-                        {% for cidade in cidades %}
-
-                        <option
-                            value="{{ cidade }}"
-                            {% if dados.cidade == cidade %}selected{% endif %}
-                        >
-                            {{ cidade }}
-                        </option>
-
-                        {% endfor %}
-
-                    </select>
-
-                </div>
-
-
-                <!-- BOTÕES -->
-
-                <div class="botoes">
-
-                    <a href="{% url 'cadastro' %}?etapa=1">
-                        ← Voltar
-                    </a>
-
-                    <button
-                        type="submit"
-                        name="acao"
-                        value="continuar"
-                    >
-                        Continuar →
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </section>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         ETAPA 3
-         ===================================================== -->
-
-    {% if etapa == '3' %}
-
-    <section
-        id="etapa3"
-        class="conteudo ativo"
-    >
-
-        <div class="formulario">
-
-            <h2>Revisão e confirmação</h2>
-
-
-            <!-- RESUMO -->
-
-            <div class="resumo">
-
-                <h3>SEUS DADOS</h3>
-
-                <div class="dados">
-
-                    <div>
-
-                        <strong>Nome</strong>
-
-                        <p>
-                            {{ dados.nome }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>E-mail</strong>
-
-                        <p>
-                            {{ dados.email }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>CPF</strong>
-
-                        <p>
-                            {{ dados.cpf }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Nascimento</strong>
-
-            <strong>Nascimento</strong>
-
-                        <p>
-                     {{ dados.data_nascimento }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Sexo</strong>
-
-                        <p>
-                            {{ dados.sexo }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Tipo sanguíneo</strong>
-
-                        <p>
-
-                            {% if dados.tipo_sanguineo %}
-
-                                {{ dados.tipo_sanguineo }}
-
-                            {% else %}
-
-                                Não informado
-
-                            {% endif %}
-
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Telefone</strong>
-
-                        <p>
-                            {{ dados.telefone }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Cidade</strong>
-
-                        <p>
-                            {{ dados.cidade }}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Estado</strong>
-
-                        <p>
-                            {{ dados.estado }}
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <a href="{% url 'cadastro' %}?etapa=1">
-                    Editar dados
-                </a>
-
-            </div>
-
-
-            <!-- SENHA -->
-
-            <form method="POST">
-
-                {% csrf_token %}
-
-                <input
-                    type="hidden"
-                    name="etapa"
-                    value="3"
-                >
-
-
-                <!-- CRIAR SENHA -->
-
-                <div class="campo">
-
-                    <label for="senha">
-                        Criar senha *
-                    </label>
-
-                    <div class="campo-senha">
-
-                        <input
-                            type="password"
-                            id="senha"
-                            name="senha"
-                            placeholder="Digite sua senha"
-                            required
-                        >
-
-                        <button
-                  type="button"
-                   class="botao-mostrar-senha"
-                       onclick="mostrarSenha()"
-                          >
-                        Mostrar
-                           </button>
-
-                    </div>
-
-                    <small>
-                        Use pelo menos 8 caracteres.
-                    </small>
-
-                </div>
-
-
-                <!-- CONFIRMAR SENHA -->
-
-                <div class="campo">
-
-                    <label for="confirmarSenha">
-                        Confirmar senha *
-                    </label>
-
-                    <div class="campo-senha">
-
-                        <input
-                            type="password"
-                            id="confirmarSenha"
-                            name="confirmar_senha"
-                            placeholder="Digite sua senha novamente"
-                            required
-                        >
-
-                         <button
-                     type="button"
-                    class="botao-mostrar-senha"
-                        onclick="mostrarSenha()"
-                             >
-                            Mostrar
-                     </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TERMOS -->
-
-                <div class="termos">
-
-                    <label>
-
-                        <input
-                            type="checkbox"
-                            name="termos"
-                            required
-                        >
-
-                        Li e aceito os Termos de Uso do
-                        SangueBom e confirmo que as
-                        informações fornecidas são verdadeiras.
-
-                    </label>
-
-
-                    <label>
-
-                        <input
-                            type="checkbox"
-                            name="lgpd"
-                            required
-                        >
-
-                        Autorizo o uso dos meus dados pessoais
-                        para fins de gestão de doações,
-                        conforme a LGPD.
-
-                    </label>
-
-                </div>
-
-
-                <!-- BOTÕES -->
-
-                <div class="botoes">
-
-                    <a href="{% url 'cadastro' %}?etapa=2">
-                        ← Voltar
-                    </a>
-
-                    <button
-                        type="submit"
-                        id="finalizar"
-                    >
-                        Finalizar Cadastro 💧
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </section>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         SUCESSO
-         ===================================================== -->
-
-    {% if cadastro_concluido %}
-
-    <section
-        id="etapa4"
-        class="sucesso"
-    >
-
-        <div class="caixa-sucesso">
-
-            <div class="icone-sucesso">
-                💧
-            </div>
-
-            <h1>
-                Cadastro realizado com sucesso!
-            </h1>
-
-            <p>
-
-                Bem-vindo ao SangueBom,
-
-                <strong>
-                    {{ nome_final }}
-                </strong>!
-
-                Seu cadastro foi realizado com sucesso.
-
-            </p>
-
-            <a href="{% url 'agendar_doacao' %}">
-                🗓️ Agendar minha primeira doação
-            </a>
-
-        </div>
-
-    </section>
-
-    {% endif %}
-
-</main>
-
-
-<!-- =====================================================
-     CAMPANHA
-     ===================================================== -->
-
-<aside class="lateral-direita">
-
-    <section>
-
-        <img
-            src="{% static 'img/campanha.jpeg' %}"
-            alt="Campanha"
-        >
-
-        <h3>
-            Participe das campanhas e faça a diferença.
-        </h3>
-
-        <a href="{% url 'campanhas' %}">
-            Ver campanhas
+        <!-- VOLTAR -->
+        <a href="javascript:history.back()" class="btn-voltar">
+            ← Voltar
         </a>
 
-    </section>
+        <!-- CABEÇALHO -->
+        <header class="cadastro-cabecalho">
+            <h1>❤️ Cadastro de Doador</h1>
+            <p>Crie sua conta e comece a salvar vidas</p>
+        </header>
 
-</aside>
+        <!-- ETAPAS -->
+        <div class="etapas">
+            <div class="etapa {% if etapa == '1' %}ativa{% endif %}">
+                <div class="numero">1</div>
+                <span>Dados Pessoais</span>
+            </div>
 
+            <div class="linha"></div>
 
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
+            <div class="etapa {% if etapa == '2' %}ativa{% endif %}">
+                <div class="numero">2</div>
+                <span>Contato & Local</span>
+            </div>
 
-/*
-=========================================================
-CIDADES POR ESTADO
-=========================================================
-*/
+            <div class="linha"></div>
 
-const cidadesPorEstado = {
+            <div class="etapa {% if etapa == '3' %}ativa{% endif %}">
+                <div class="numero">3</div>
+                <span>Confirmação</span>
+            </div>
+        </div>
 
-    "DF": [
-        "Brasília"
-    ],
+        <!-- ERRO -->
+        {% if erro %}
+            <div class="cadastro-erro">
+                ⚠️ {{ erro }}
+            </div>
+        {% endif %}
 
-    "GO": [
-        "Águas Lindas de Goiás",
-        "Anápolis",
-        "Aparecida de Goiânia",
-        "Catalão",
-        "Formosa",
-        "Goiânia",
-        "Luziânia",
-        "Planaltina",
-        "Valparaíso de Goiás"
-    ],
+        <!-- =====================================================
+             ETAPA 1 - DADOS PESSOAIS
+             ===================================================== -->
+        {% if etapa == '1' %}
+            <section class="cadastro-form">
+                <h2>Informações pessoais</h2>
 
-    "MG": [
-        "Belo Horizonte",
-        "Uberlândia",
-        "Contagem",
-        "Juiz de Fora"
-    ],
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="etapa" value="1">
 
-    "SP": [
-        "São Paulo",
-        "Campinas",
-        "Santos",
-        "Guarulhos"
-    ],
+                    <div class="campo">
+                        <label for="nome">Nome completo *</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Seu nome completo"
+                            value="{{ dados.nome }}"
+                            required
+                        >
+                    </div>
 
-    "RJ": [
-        "Rio de Janeiro",
-        "Niterói",
-        "Duque de Caxias"
-    ]
+                    <div class="campo">
+                        <label for="email">E-mail *</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="seu@email.com"
+                            value="{{ dados.email }}"
+                            required
+                        >
+                    </div>
 
-};
+                    <div class="campo">
+                        <label for="cpf">CPF *</label>
+                        <input
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            placeholder="000.000.000-00"
+                            value="{{ dados.cpf }}"
+                            maxlength="14"
+                            required
+                        >
+                    </div>
 
+                    <div class="duas-colunas">
+                        <div class="campo">
+                            <label for="nascimento">Data de Nascimento *</label>
+                            <input
+                                type="date"
+                                id="nascimento"
+                                name="data_nascimento"
+                                value="{{ dados.data_nascimento }}"
+                                required
+                            >
+                        </div>
 
-/*
-=========================================================
-ATUALIZAR CIDADES AUTOMATICAMENTE
-=========================================================
-*/
+                        <div class="campo">
+                            <label for="sexo">Sexo biológico *</label>
+                            <select id="sexo" name="sexo" required>
+                                <option value="">Selecionar...</option>
+                                <option value="Feminino" {% if dados.sexo == "Feminino" %}selected{% endif %}>Feminino</option>
+                                <option value="Masculino" {% if dados.sexo == "Masculino" %}selected{% endif %}>Masculino</option>
+                            </select>
+                        </div>
+                    </div>
 
-const estado = document.getElementById("estado");
+                    <div class="campo">
+                        <label for="sangue">Tipo Sanguíneo</label>
+                        <select id="sangue" name="tipo_sanguineo">
+                            <option value="">Não sei / Não informar</option>
+                            <option value="A+" {% if dados.tipo_sanguineo == "A+" %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if dados.tipo_sanguineo == "A-" %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if dados.tipo_sanguineo == "B+" %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if dados.tipo_sanguineo == "B-" %}selected{% endif %}>B-</option>
+                            <option value="AB+" {% if dados.tipo_sanguineo == "AB+" %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if dados.tipo_sanguineo == "AB-" %}selected{% endif %}>AB-</option>
+                            <option value="O+" {% if dados.tipo_sanguineo == "O+" %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if dados.tipo_sanguineo == "O-" %}selected{% endif %}>O-</option>
+                        </select>
+                        <small>Pode ser informado depois no seu perfil</small>
+                    </div>
 
-const cidade = document.getElementById("cidade");
+                    <button type="submit" class="btn-continuar">
+                        Continuar →
+                    </button>
+                </form>
+            </section>
+        {% endif %}
 
+        <!-- =====================================================
+             ETAPA 2 - CONTATO E LOCALIZAÇÃO
+             ===================================================== -->
+        {% if etapa == '2' %}
+            <section class="cadastro-form">
+                <h2>Contato e localização</h2>
 
-if (estado && cidade) {
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="etapa" value="2">
 
-    estado.addEventListener("change", function() {
+                    <div class="campo">
+                        <label for="telefone">Telefone / WhatsApp *</label>
+                        <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="(61) 99999-9999"
+                            value="{{ dados.telefone }}"
+                            required
+                        >
+                    </div>
 
-        const siglaEstado = this.value;
+                    <div class="campo">
+                        <label for="estado">Estado *</label>
+                        <select id="estado" name="estado" required>
+                            <option value="">Selecionar...</option>
+                            {% for sigla, nome in estados %}
+                                <option value="{{ sigla }}" {% if dados.estado == sigla %}selected{% endif %}>
+                                    {{ nome }} - {{ sigla }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
+                    <div class="campo">
+                        <label for="cidade">Cidade *</label>
+                        <select id="cidade" name="cidade" required>
+                            <option value="">Selecionar...</option>
+                            {% for cidade in cidades %}
+                                <option value="{{ cidade }}" {% if dados.cidade == cidade %}selected{% endif %}>
+                                    {{ cidade }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-        // Limpa a cidade atual
+                    <div class="botoes-cadastro">
+                        <a href="{% url 'cadastro' %}?etapa=1" class="btn-voltar-cadastro">
+                            ← Voltar
+                        </a>
+                        <button type="submit" name="acao" value="continuar" class="btn-continuar">
+                            Continuar →
+                        </button>
+                    </div>
+                </form>
+            </section>
+        {% endif %}
 
-        cidade.innerHTML = `
-            <option value="">
-                Selecionar...
-            </option>
-        `;
+        <!-- =====================================================
+             ETAPA 3 - CONFIRMAÇÃO
+             ===================================================== -->
+        {% if etapa == '3' %}
+            <section class="cadastro-form">
+                <h2>Revisão e confirmação</h2>
 
+                <!-- RESUMO -->
+                <div class="resumo-cadastro">
+                    <h3>SEUS DADOS</h3>
 
-        // Pega as cidades do estado
+                    <div class="dados-cadastro">
+                        <div>
+                            <strong>Nome</strong>
+                            <p>{{ dados.nome }}</p>
+                        </div>
+                        <div>
+                            <strong>E-mail</strong>
+                            <p>{{ dados.email }}</p>
+                        </div>
+                        <div>
+                            <strong>CPF</strong>
+                            <p>{{ dados.cpf }}</p>
+                        </div>
+                        <div>
+                            <strong>Nascimento</strong>
+                            <p>{{ dados.data_nascimento }}</p>
+                        </div>
+                        <div>
+                            <strong>Sexo</strong>
+                            <p>{{ dados.sexo }}</p>
+                        </div>
+                        <div>
+                            <strong>Tipo sanguíneo</strong>
+                            <p>
+                                {% if dados.tipo_sanguineo %}
+                                    {{ dados.tipo_sanguineo }}
+                                {% else %}
+                                    Não informado
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div>
+                            <strong>Telefone</strong>
+                            <p>{{ dados.telefone }}</p>
+                        </div>
+                        <div>
+                            <strong>Cidade</strong>
+                            <p>{{ dados.cidade }}</p>
+                        </div>
+                        <div>
+                            <strong>Estado</strong>
+                            <p>{{ dados.estado }}</p>
+                        </div>
+                    </div>
 
-        const listaCidades =
-            cidadesPorEstado[siglaEstado] || [];
+                    <a href="{% url 'cadastro' %}?etapa=1" class="link-editar">
+                        ✏️ Editar dados
+                    </a>
+                </div>
 
+                <!-- SENHA -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="etapa" value="3">
 
-        // Adiciona as cidades
+                    <div class="campo">
+                        <label for="senha">Criar senha *</label>
+                        <div class="campo-senha">
+                            <input
+                                type="password"
+                                id="senha"
+                                name="senha"
+                                placeholder="Digite sua senha"
+                                required
+                            >
+                            <button type="button" class="btn-olho" onclick="mostrarSenha('senha', this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <small>Use pelo menos 8 caracteres.</small>
+                    </div>
 
-        listaCidades.forEach(function(nomeCidade) {
+                    <div class="campo">
+                        <label for="confirmarSenha">Confirmar senha *</label>
+                        <div class="campo-senha">
+                            <input
+                                type="password"
+                                id="confirmarSenha"
+                                name="confirmar_senha"
+                                placeholder="Digite sua senha novamente"
+                                required
+                            >
+                            <button type="button" class="btn-olho" onclick="mostrarSenha('confirmarSenha', this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
 
-            const option =
-                document.createElement("option");
+                    <div class="termos">
+                        <label>
+                            <input type="checkbox" name="termos" required>
+                            Li e aceito os Termos de Uso do Sangue Bom e confirmo que as informações fornecidas são verdadeiras.
+                        </label>
 
-            option.value = nomeCidade;
+                        <label>
+                            <input type="checkbox" name="lgpd" required>
+                            Autorizo o uso dos meus dados pessoais para fins de gestão de doações, conforme a LGPD.
+                        </label>
+                    </div>
 
-            option.textContent = nomeCidade;
+                    <div class="botoes-cadastro">
+                        <a href="{% url 'cadastro' %}?etapa=2" class="btn-voltar-cadastro">
+                            ← Voltar
+                        </a>
+                        <button type="submit" class="btn-continuar">
+                            Finalizar Cadastro 💧
+                        </button>
+                    </div>
+                </form>
+            </section>
+        {% endif %}
 
-            cidade.appendChild(option);
+        <!-- =====================================================
+             SUCESSO
+             ===================================================== -->
+        {% if cadastro_concluido %}
+            <section class="cadastro-sucesso">
+                <div class="caixa-sucesso">
+                    <div class="icone-sucesso">💧</div>
+                    <h1>Cadastro realizado com sucesso!</h1>
+                    <p>
+                        Bem-vindo ao Sangue Bom, <strong>{{ nome_final }}</strong>!
+                        Seu cadastro foi realizado com sucesso.
+                    </p>
+                    <a href="{% url 'agendar_doacao' %}" class="btn-continuar">
+                        🗓️ Agendar minha primeira doação
+                    </a>
+                </div>
+            </section>
+        {% endif %}
 
-        });
+    </div>
 
-    });
+    <!-- =====================================================
+         SCRIPT: MÁSCARA CPF, SENHA E CIDADES
+         ===================================================== -->
+    <script>
+        // =========================
+        // MOSTRAR/OCULTAR SENHA
+        // =========================
+        function mostrarSenha(idInput, botao) {
+            const input = document.getElementById(idInput);
 
-}
+            const svgOlhoAberto = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            `;
 
-</script>
+            const svgOlhoCortado = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            `;
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                botao.innerHTML = svgOlhoAberto;
+            } else {
+                input.type = 'password';
+                botao.innerHTML = svgOlhoCortado;
+            }
+        }
+
+        // =========================
+        // CIDADES POR ESTADO
+        // =========================
+        const cidadesPorEstado = {
+            "DF": ["Brasília"],
+            "GO": [
+                "Águas Lindas de Goiás", "Anápolis", "Aparecida de Goiânia",
+                "Catalão", "Formosa", "Goiânia", "Luziânia",
+                "Planaltina", "Valparaíso de Goiás"
+            ],
+            "MG": ["Belo Horizonte", "Uberlândia", "Contagem", "Juiz de Fora"],
+            "SP": ["São Paulo", "Campinas", "Santos", "Guarulhos"],
+            "RJ": ["Rio de Janeiro", "Niterói", "Duque de Caxias"]
+        };
+
+        const estado = document.getElementById("estado");
+        const cidade = document.getElementById("cidade");
+
+        if (estado && cidade) {
+            estado.addEventListener("change", function () {
+                const siglaEstado = this.value;
+                cidade.innerHTML = '<option value="">Selecionar...</option>';
+
+                const listaCidades = cidadesPorEstado[siglaEstado] || [];
+
+                listaCidades.forEach(function (nomeCidade) {
+                    const option = document.createElement("option");
+                    option.value = nomeCidade;
+                    option.textContent = nomeCidade;
+                    cidade.appendChild(option);
+                });
+            });
+        }
+    </script>
 
 </body>
-
 </html>

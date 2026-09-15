@@ -1,156 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<>
-    
-<!-- ========================= -->
-<!-- FUNDAÇÃO HEMOCENTRO DE BRASÍLIA -->
-<!-- ========================= -->
+{% extends 'base.html' %}
+{% load static %}
 
-<section>
+{% block content %}
 
-    <h2>
-        🏥 Fundação Hemocentro de Brasília
-    </h2>
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 
-    <p>
-        📍 SMHN Quadra 03, Conjunto A, Bloco 03,
-        Asa Norte – Brasília - DF
-    </p>
+    <h1>📍 Locais para Doar</h1>
+    <p>Encontre o hemocentro mais próximo de você e agende sua doação.</p>
 
-    <p>
-        🕐 Seg–Sex: 07h15–18h
-    </p>
+    <!-- ========================= -->
+    <!-- FUNDAÇÃO HEMOCENTRO DE BRASÍLIA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Fundação Hemocentro de Brasília</h2>
+        <p>📍 SMHN Quadra 03, Conjunto A, Bloco 03, Asa Norte – Brasília - DF</p>
+        <p>🕐 Seg–Sex: 07h15–18h</p>
+        <p>📞 (61) 3327-4413</p>
+        <p>✉️ contato@hemocentro.df.gov.br</p>
 
-    <p>
-        📞 (61) 3327-4413
-    </p>
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Fundação+Hemocentro+de+Brasília,+SMHN+Quadra+03,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
 
-    <p>
-        ✉️ contato@hemocentro.df.gov.br
-    </p>
+        <br><br>
 
-    <h3>
-        📍 Localização
-    </h3>
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
 
-    <iframe
-        src="https://www.google.com/maps?q=Fundação+Hemocentro+de+Brasília,+SMHN+Quadra+03,+Brasília+-+DF&output=embed"
-        width="100%"
-        height="250"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-    </iframe>
+    <!-- ========================= -->
+    <!-- BASE DE ATENDIMENTO – TAGUATINGA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Base de atendimento – Taguatinga</h2>
+        <p>📍 Área Especial nº 24, Setor C Norte – Hospital Regional de Taguatinga, Brasília - DF</p>
+        <p>🕐 08h–18h</p>
+        <p>✉️ taguatinga@hemocentro.com</p>
 
-    <br><br>
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Hospital+Regional+de+Taguatinga,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
 
-    <a href="{% url 'agendar_doacao' %}">
-        <button type="button">
-            Agendar aqui
-        </button>
-    </a>
+        <br><br>
 
-</section>
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
 
+    <!-- ========================= -->
+    <!-- BASE DE ATENDIMENTO – GAMA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Base de atendimento – Gama</h2>
+        <p>📍 Área Especial nº 01, Setor Central – Hospital Regional do Gama, Brasília - DF</p>
+        <p>🕐 08h–18h</p>
+        <p>✉️ gama@hemocentro.com</p>
 
-<!-- ========================= -->
-<!-- BASE DE ATENDIMENTO – TAGUATINGA -->
-<!-- ========================= -->
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Hospital+Regional+do+Gama,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
 
-<section>
+        <br><br>
 
-    <h2>
-        🏥 Base de atendimento – Taguatinga
-    </h2>
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
 
-    <p>
-        📍 Área Especial nº 24, Setor C Norte –
-        Hospital Regional de Taguatinga,
-        Brasília - DF
-    </p>
-
-    <p>
-        🕐 08h–18h
-    </p>
-
-    <p>
-        ✉️ taguatinga@hemocentro.com
-    </p>
-
-    <h3>
-        📍 Localização
-    </h3>
-
-    <iframe
-        src="https://www.google.com/maps?q=Hospital+Regional+de+Taguatinga,+Brasília+-+DF&output=embed"
-        width="100%"
-        height="250"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-    </iframe>
-
-    <br><br>
-
-    <a href="{% url 'agendar_doacao' %}">
-        <button type="button">
-            Agendar aqui
-        </button>
-    </a>
-
-</section>
-
-
-<!-- ========================= -->
-<!-- BASE DE ATENDIMENTO – GAMA -->
-<!-- ========================= -->
-
-<section>
-
-    <h2>
-        🏥 Base de atendimento – Gama
-    </h2>
-
-    <p>
-        📍 Área Especial nº 01, Setor Central –
-        Hospital Regional do Gama,
-        Brasília - DF
-    </p>
-
-    <p>
-        🕐 08h–18h
-    </p>
-
-    <p>
-        ✉️ gama@hemocentro.com
-    </p>
-
-    <h3>
-        📍 Localização
-    </h3>
-
-    <iframe
-        src="https://www.google.com/maps?q=Hospital+Regional+do+Gama,+Brasília+-+DF&output=embed"
-        width="100%"
-        height="250"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-    </iframe>
-
-    <br><br>
-
-    <a href="{% url 'agendar_doacao' %}">
-        <button type="button">
-            Agendar aqui
-        </button>
-    </a>
-
-</section>
-</body>
-</html>
+{% endblock %}

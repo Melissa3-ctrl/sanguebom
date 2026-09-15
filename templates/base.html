@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Sangue Bom</title>
+</head>
+<body>
+
+    <!-- ========================= -->
+    <!-- TOPO -->
+    <!-- ========================= -->
+    <header>
+        <h2>🚨 Estoque O- crítico</h2>
+        <h2>🔔</h2>
+
+        {% if user.is_authenticated %}
+            <h2>👤 Olá, {{ user.username }}! 👋</h2>
+            <a href="{% url 'logout' %}">🚪 Sair</a>
+        {% else %}
+            <h2>👤 Olá, visitante! 👋</h2>
+            <a href="{% url 'login' %}">🔐 Entrar</a>
+        {% endif %}
+    </header>
+
+    <!-- ========================= -->
+    <!-- CONTAINER PRINCIPAL (3 COLUNAS) -->
+    <!-- ========================= -->
+    <div class="app-container">
+
+        <!-- MENU LATERAL ESQUERDO -->
+        <aside class="lateral-esquerda">
+
+            <!-- Botão ☰ Menu (só aparece no mobile) -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-label">
+                <span class="menu-icone">☰</span>
+            </label>
+
+            <!-- LOGO -->
+            <div class="logo-menu">
+                <div class="logo-icone">🩸</div>
+                <div class="logo-texto">
+                    <strong>SANGUE</strong>
+                    <strong>BOM</strong>
+                </div>
+            </div>
+
+            <!-- NAVEGAÇÃO -->
+            <nav class="menu-nav">
+                <a href="{% url 'home' %}" class="menu-item ativo">
+                    <span class="menu-item-icone">🏠</span>
+                    <span class="menu-item-texto">Início</span>
+                </a>
+                <a href="{% url 'quero_doar' %}" class="menu-item">
+                    <span class="menu-item-icone">💧</span>
+                    <span class="menu-item-texto">Quero doar</span>
+                </a>
+                <a href="{% url 'locais_para_doar' %}" class="menu-item">
+                    <span class="menu-item-icone">📍</span>
+                    <span class="menu-item-texto">Locais para doar</span>
+                </a>
+                <a href="{% url 'agendar_doacao' %}" class="menu-item">
+                    <span class="menu-item-icone">📅</span>
+                    <span class="menu-item-texto">Agendar doação</span>
+                </a>
+                <a href="{% url 'tipos_sanguineos' %}" class="menu-item">
+                    <span class="menu-item-icone">💧</span>
+                    <span class="menu-item-texto">Tipos sanguíneos</span>
+                </a>
+                <a href="{% url 'campanhas' %}" class="menu-item">
+                    <span class="menu-item-icone">♡</span>
+                    <span class="menu-item-texto">Campanhas</span>
+                </a>
+                <a href="{% url 'beneficios' %}" class="menu-item">
+                    <span class="menu-item-icone">🎁</span>
+                    <span class="menu-item-texto">Benefícios</span>
+                </a>
+                <a href="{% url 'duvidas' %}" class="menu-item">
+                    <span class="menu-item-icone">❓</span>
+                    <span class="menu-item-texto">Dúvidas</span>
+                </a>
+            </nav>
+
+            <!-- DADOS PROTEGIDOS -->
+            <div class="dados-protegidos">
+                <div class="dados-protegidos-icone">🛡️</div>
+                <div class="dados-protegidos-texto">
+                    <strong>Seus dados protegidos</strong>
+                    <p>Ambiente seguro e em conformidade com a LGPD.</p>
+                </div>
+            </div>
+
+            <!-- BOTÃO SAIR / ENTRAR -->
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn-sair">
+                    <span class="btn-sair-icone">↪</span>
+                    <span>Sair</span>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-sair">
+                    <span class="btn-sair-icone">↪</span>
+                    <span>Entrar</span>
+                </a>
+            {% endif %}
+
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- LATERAL DIREITA -->
+        <aside class="lateral-direita">
+
+            <!-- ESTOQUE DE SANGUE -->
+            <section>
+                <h2>Estoque de sangue</h2>
+                <p>Hoje</p>
+                <div class="estoque">
+                    <div class="tipo-sangue"><h3>A+</h3><p>🟢 Adequado</p></div>
+                    <div class="tipo-sangue"><h3>A-</h3><p>🟠 Atenção</p></div>
+                    <div class="tipo-sangue"><h3>B+</h3><p>🟢 Adequado</p></div>
+                    <div class="tipo-sangue"><h3>B-</h3><p>🟠 Atenção</p></div>
+                    <div class="tipo-sangue"><h3>AB+</h3><p>🟢 Adequado</p></div>
+                    <div class="tipo-sangue"><h3>AB-</h3><p>🟠 Atenção</p></div>
+                    <div class="tipo-sangue"><h3>O+</h3><p>🟢 Adequado</p></div>
+                    <div class="tipo-sangue"><h3>O-</h3><p>🔴 Crítico</p></div>
+                </div>
+            </section>
+
+            <!-- PRÓXIMA DOAÇÃO -->
+            <section class="doacao">
+                <h3>Próxima doação disponível</h3>
+                {% if proximo_agendamento %}
+                    <h2>Você tem um agendamento! 📅</h2>
+                    <p><strong>{{ proximo_agendamento.hemocentro.nome }}</strong></p>
+                    <p>📅 {{ proximo_agendamento.data|date:"d/m/Y" }}</p>
+                    <p>🕐 {{ proximo_agendamento.horario|time:"H:i" }}</p>
+                    <p>🩸 {{ proximo_agendamento.tipo_doacao }}</p>
+                {% else %}
+                    <h2>Você pode doar! ✅</h2>
+                    <p>3 doações &nbsp; • &nbsp; 12 vidas</p>
+                {% endif %}
+            </section>
+
+            <!-- MENSAGEM -->
+            <section class="mensagem">
+                <h3>💗 Sua atitude pode salvar até 4 vidas!</h3>
+                <p>Doe sangue. Doe vida.<br>Seja sangue bom!</p>
+            </section>
+
+            <!-- CAMPANHA -->
+            <section class="campanha">
+                <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha de doação de sangue">
+                <h3>Participe das campanhas e faça a diferença.</h3>
+                <a href="{% url 'campanhas' %}">Ver campanhas</a>
+            </section>
+
+        </aside>
+
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

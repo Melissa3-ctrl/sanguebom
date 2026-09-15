@@ -1,126 +1,161 @@
 {% load static %}
-
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login - Sangue Bom</title>
-
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
 </head>
+<body class="pagina-login">
 
-<body>
+    <div class="login-container">
 
-     <a href="javascript:history.back()" class="btn-voltar">
-        ← Voltar
-    </a>
+        <!-- AVISO DE URGÊNCIA -->
+        <div class="aviso-urgente">
+            🚨 Estoque O- em nível crítico na sua região
+        </div>
 
-    <main>
+        <!-- FAIXA VERMELHA SUPERIOR -->
+        <div class="login-faixa">
+            <h1>❤️ Sangue Bom</h1>
+            <p>Sua doação salva até 4 vidas</p>
+        </div>
 
-        <h1>❤️ Sangue Bom</h1>
+        <!-- CORPO DO CARD -->
+        <div class="login-corpo">
 
-        <h2>Entrar na sua conta</h2>
+            <a href="{% url 'home' %}" class="btn-voltar-login">← Voltar</a>
 
-        <p>
-            Entre para agendar sua doação e acompanhar seus agendamentos.
-        </p>
-
-        {% if erro %}
-
-            <p>
-                {{ erro }}
+            <h2 class="login-titulo">Entrar na sua conta</h2>
+            <p class="login-subtitulo">
+                Entre para agendar sua doação e acompanhar seus agendamentos.
             </p>
 
-        {% endif %}
+            {% if erro %}
+                <div class="login-erro">
+                    ⚠️ {{ erro }}
+                </div>
+            {% endif %}
 
+            <form method="POST" class="login-form">
+                {% csrf_token %}
 
-        <form method="POST">
+                <!-- CAMPO E-MAIL -->
+                <div class="campo-login">
+                    <label for="email">E-mail:</label>
+                    <div class="campo-input">
+                        <span class="icone">✉️</span>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
 
-            {% csrf_token %}
+                <!-- CAMPO SENHA -->
+                <div class="campo-login">
+                    <label for="senha">Senha:</label>
+                    <div class="campo-input campo-senha">
+                        <span class="icone">🔒</span>
+                        <input
+                            type="password"
+                            name="senha"
+                            id="senha"
+                            placeholder="Digite sua senha"
+                            required
+                        >
+                        <button type="button" class="btn-olho" onclick="mostrarSenha()" aria-label="Mostrar senha">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
+                <!-- BOTÃO ENTRAR -->
+                <button type="submit" class="btn-entrar">
+                    🔓 Entrar
+                </button>
+            </form>
 
-            <label for="email">
-                E-mail:
-            </label>
+            <div class="login-links">
+                <a href="{% url 'recuperar_senha' %}" class="link-esqueci">
+                    🔑 Esqueci minha senha
+                </a>
 
-            <br>
+                <div class="separador-login">
+                    <span>Ainda não possui cadastro?</span>
+                </div>
 
-            <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Digite seu e-mail"
-                required
-            >
+                <a href="{% url 'cadastro' %}" class="btn-criar-conta">
+                    ✨ Criar minha conta
+                </a>
+            </div>
 
-            <br><br>
+            <!-- DEPOIMENTO -->
+            <div class="depoimento">
+                💬 "Depois que comecei a doar, percebi o quanto é simples salvar vidas. Recomendo a todos!"
+                <strong>— Maria Clara, doadora há 3 anos</strong>
+            </div>
 
+        </div>
 
-            <label for="senha">
-                Senha:
-            </label>
+        <!-- MINI-CARDS DE DESTAQUE -->
+        <div class="login-destaques">
+            <div class="destaque-item">
+                <strong>1</strong>
+                doação = 4 vidas
+            </div>
+            <div class="destaque-item">
+                <strong>🔒</strong>
+                LGPD &amp; Seguro
+            </div>
+            <div class="destaque-item">
+                <strong>🆓</strong>
+                100% Gratuito
+            </div>
+        </div>
 
-            <br>
-     <div>
-            <input
-                type="password"
-                name="senha"
-                id="senha"
-                placeholder="Digite sua senha"
-                required
-            >
+        <!-- RODAPÉ -->
+        <div class="login-rodape">
+            🔒 Ambiente seguro e protegido &nbsp;•&nbsp;
+            <a href="{% url 'home' %}">Voltar ao início</a>
+        </div>
 
-            <button
-         type="button"
-         class="botao-mostrar-senha"
-         onclick="mostrarSenha()"
-              >
-          Mostrar
-         </button>
-   </div>
+    </div>
 
-            <br><br>
+    <script>
+        function mostrarSenha() {
+            const input = document.getElementById('senha');
+            const botao = document.querySelector('.btn-olho');
 
-
-            <button type="submit">
-                Entrar
-            </button>
-
-        </form>
-
-
-        <br>
-
-
-        <!-- ESQUECI MINHA SENHA -->
-
-        <a href="{% url 'recuperar_senha' %}">
-            Esqueci minha senha
-        </a>
-
-
-        <br><br>
-
-
-        <p>
-            Ainda não possui cadastro?
-        </p>
-
-
-        <a href="{% url 'cadastro' %}">
-            Criar minha conta
-        </a>
-
-    </main>
-        
+            if (input.type === 'password') {
+                // Senha visível → mostra olho ABERTO
+                input.type = 'text';
+                botao.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                `;
+            } else {
+                // Senha oculta → mostra olho CORTADO
+                input.type = 'password';
+                botao.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                `;
+            }
+        }
+    </script>
 
 </body>
-
 </html>
