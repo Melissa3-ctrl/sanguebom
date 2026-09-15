@@ -1,11 +1,13 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Recuperar Senha - Sangue Bom</title>
@@ -16,12 +18,43 @@
 
 <body>
 
-    <main>
+<main>
 
-        <h1>❤️ Sangue Bom</h1>
+    <h1>❤️ Sangue Bom</h1>
 
-        <h2>Recuperar senha</h2>
+    <h2>Recuperar senha</h2>
 
+
+    <!-- =====================================================
+         SENHA ALTERADA COM SUCESSO
+         ===================================================== -->
+
+    {% if sucesso %}
+
+        <p>
+            {{ sucesso }}
+        </p>
+
+        <br>
+
+        <a href="{% url 'login' %}">
+            Voltar para o login
+        </a>
+
+
+    <!-- =====================================================
+         CÓDIGO VALIDADO
+         ===================================================== -->
+
+    {% elif codigo_validado %}
+
+        <p>
+            <strong>Código confirmado com sucesso! ✅</strong>
+        </p>
+
+        <p>
+            Agora você pode criar uma nova senha.
+        </p>
 
         {% if erro %}
 
@@ -32,150 +65,189 @@
         {% endif %}
 
 
-        {% if sucesso %}
+        <form method="POST" action="{% url 'alterar_senha' %}">
 
-            <p>
-                {{ sucesso }}
-            </p>
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="email"
+                value="{{ email }}"
+            >
+
+            <input
+                type="hidden"
+                name="codigo"
+                value="{{ codigo }}"
+            >
+
+
+            <label for="nova_senha">
+                Nova senha:
+            </label>
 
             <br>
 
-            <a href="{% url 'login' %}">
-                Voltar para o login
-            </a>
+            <input
+                type="password"
+                name="nova_senha"
+                id="nova_senha"
+                placeholder="Digite sua nova senha"
+                autocomplete="new-password"
+                required
+            >
+
+            <span>👁️</span>
+
+            <br><br>
 
 
-        {% elif codigo_enviado %}
+            <label for="confirmar_senha">
+                Confirmar nova senha:
+            </label>
 
-            <p>
-                {{ mensagem }}
-            </p>
+            <br>
 
-            <p>
-                Digite o código de 6 dígitos enviado para seu e-mail.
-            </p>
+            <input
+                type="password"
+                name="confirmar_senha"
+                id="confirmar_senha"
+                placeholder="Digite sua senha novamente"
+                autocomplete="new-password"
+                required
+            >
 
+            <span>👁️</span>
 
-            <form method="POST" action="{% url 'validar_codigo' %}">
-
-                {% csrf_token %}
-
-
-                <input
-                    type="hidden"
-                    name="email"
-                    value="{{ email }}"
-                >
+            <br><br>
 
 
-                <label for="codigo">
-                    Código de recuperação:
-                </label>
+            <button type="submit">
+                Alterar senha
+            </button>
 
-                <br>
-
-                <input
-                    type="text"
-                    name="codigo"
-                    id="codigo"
-                    placeholder="Digite o código"
-                    maxlength="6"
-                    required
-                >
-
-                <br><br>
+        </form>
 
 
-                <label for="nova_senha">
-                    Nova senha:
-                </label>
+    <!-- =====================================================
+         CÓDIGO ENVIADO
+         ===================================================== -->
 
-                <br>
+    {% elif codigo_enviado %}
 
-                <input
-                    type="password"
-                    name="nova_senha"
-                    id="nova_senha"
-                    placeholder="Digite sua nova senha"
-                    required
-                >
+        <p>
+            {{ mensagem }}
+        </p>
 
-                <br><br>
-
-
-                <label for="confirmar_senha">
-                    Confirmar nova senha:
-                </label>
-
-                <br>
-
-                <input
-                    type="password"
-                    name="confirmar_senha"
-                    id="confirmar_senha"
-                    placeholder="Digite a senha novamente"
-                    required
-                >
-
-                <br><br>
-
-
-                <button type="submit">
-                    Confirmar código e alterar senha
-                </button>
-
-            </form>
-
-
-        {% else %}
-
+        {% if erro %}
 
             <p>
-                Digite seu e-mail para receber um código de recuperação.
+                {{ erro }}
             </p>
 
+        {% endif %}
 
-            <form method="POST">
-
-                {% csrf_token %}
-
-
-                <label for="email">
-                    E-mail:
-                </label>
-
-                <br>
-
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Digite seu e-mail"
-                    value="{{ email|default:'' }}"
-                    required
-                >
-
-                <br><br>
+        <p>
+            Digite o código de 6 dígitos enviado para seu e-mail.
+        </p>
 
 
-                <button type="submit">
-                    Enviar código
-                </button>
+        <form method="POST" action="{% url 'validar_codigo' %}">
 
-            </form>
+            {% csrf_token %}
 
+            <input
+                type="hidden"
+                name="email"
+                value="{{ email }}"
+            >
+
+
+            <label for="codigo">
+                Código de verificação:
+            </label>
+
+            <br>
+
+            <input
+                type="text"
+                name="codigo"
+                id="codigo"
+                placeholder="Digite os 6 dígitos"
+                maxlength="6"
+                minlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                pattern="[0-9]{6}"
+                required
+            >
+
+            <br><br>
+
+
+            <button type="submit">
+                Validar código
+            </button>
+
+        </form>
+
+
+    <!-- =====================================================
+         PRIMEIRA TELA - E-MAIL
+         ===================================================== -->
+
+    {% else %}
+
+        {% if erro %}
+
+            <p>
+                {{ erro }}
+            </p>
 
         {% endif %}
 
 
-        <br>
+        <p>
+            Digite seu e-mail para receber um código de verificação.
+        </p>
 
 
-        <a href="{% url 'login' %}">
-            ← Voltar para o login
-        </a>
+        <form method="POST" action="{% url 'recuperar_senha' %}">
 
-    </main>
+            {% csrf_token %}
+
+
+            <label for="email">
+                E-mail:
+            </label>
+
+            <br>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                value="{{ email|default:'' }}"
+                autocomplete="email"
+                required
+            >
+
+            <br><br>
+
+
+            <button type="submit">
+                Enviar código
+            </button>
+
+        </form>
+
+    {% endif %}
+
+
+    <br>
+
+</main>
 
 </body>
 

@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 
@@ -54,6 +55,12 @@ urlpatterns = [
         'validar_codigo/',
         views.validar_codigo,
         name='validar_codigo'
+    ),
+
+    path(
+        'alterar_senha/',
+        views.alterar_senha,
+        name='alterar_senha'
     ),
 
     path(
@@ -123,4 +130,5 @@ urlpatterns = [
         views.excluir_agendamento,
         name='excluir_agendamento'
     ),
+
 ]

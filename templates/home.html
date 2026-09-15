@@ -1,13 +1,19 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>Sangue Bom</title>
+
 </head>
 
 <body>
@@ -19,14 +25,19 @@
 
     <header>
 
-        <h2>🚨 Estoque O- em nível crítico na sua região</h2>
+        <h2>
+            🚨 Estoque O- em nível crítico na sua região
+        </h2>
 
-        <h2>🔔</h2>
+        <h2>
+            🔔
+        </h2>
 
-        <h2>👤 Olá, visitante! 👋</h2>
+        <h2>
+            👤 Olá, visitante! 👋
+        </h2>
 
     </header>
-
 
 
     <!-- ========================= -->
@@ -35,40 +46,42 @@
 
     <aside>
 
-        <h1>❤️ Sangue Bom</h1>
+        <h1>
+            ❤️ Sangue Bom
+        </h1>
 
 
         <nav>
 
-            <a href="#">
+            <a href="{% url 'home' %}">
                 🏠 Início
             </a>
 
-            <a href="quero-doar.html">
+            <a href="{% url 'quero_doar' %}">
                 🩸 Quero doar
             </a>
 
-            <a href="locais-para-doar.html">
+            <a href="{% url 'locais_para_doar' %}">
                 📍 Locais para doar
             </a>
 
-            <a href="agendar-doacao.html">
+            <a href="{% url 'agendar_doacao' %}">
                 📅 Agendar doação
             </a>
 
-            <a href="tipos-sanguineos.html">
+            <a href="{% url 'tipos_sanguineos' %}">
                 🩸 Tipos sanguíneos
             </a>
 
-            <a href="campanhas.html">
+            <a href="{% url 'campanhas' %}">
                 ♡ Campanhas
             </a>
 
-            <a href="beneficios.html">
+            <a href="{% url 'beneficios' %}">
                 🎁 Benefícios
             </a>
 
-            <a href="duvidas.html">
+            <a href="{% url 'duvidas' %}">
                 ❓ Dúvidas
             </a>
 
@@ -88,12 +101,11 @@
         </div>
 
 
-        <a href="#">
+        <a href="{% url 'logout' %}">
             🚪 Sair
         </a>
 
     </aside>
-
 
 
     <!-- ========================= -->
@@ -101,7 +113,6 @@
     <!-- ========================= -->
 
     <main>
-
 
 
         <!-- ========================= -->
@@ -171,7 +182,6 @@
                 </div>
 
 
-
                 <!-- TEXTO DO BANNER -->
 
                 <div class="conteudo-banner">
@@ -192,9 +202,11 @@
                     <p class="descricao">
 
                         O Sangue Bom conecta você aos hemocentros mais próximos,
+
                         <br>
 
                         avisa quando seu tipo é urgente e recompensa cada doação.
+
                         <br>
 
                         Simples, rápido, com impacto real.
@@ -205,7 +217,7 @@
                     <div class="botoes-banner">
 
                         <a
-                            href="#"
+                            href="{% url 'agendar_doacao' %}"
                             class="botao-doar"
                         >
                             🩸 &nbsp; Quero doar agora
@@ -221,7 +233,6 @@
                     </div>
 
                 </div>
-
 
 
                 <!-- FOTO DO BANNER -->
@@ -253,7 +264,6 @@
         </section>
 
 
-
         <!-- ========================= -->
         <!-- PRINCIPAIS FUNÇÕES -->
         <!-- ========================= -->
@@ -281,7 +291,6 @@
                 </div>
 
 
-
                 <div class="card">
 
                     <h3>
@@ -293,7 +302,6 @@
                     </p>
 
                 </div>
-
 
 
                 <div class="card">
@@ -309,7 +317,6 @@
                 </div>
 
 
-
                 <div class="card">
 
                     <h3>
@@ -323,7 +330,6 @@
                 </div>
 
 
-
                 <div class="card">
 
                     <h3>
@@ -335,7 +341,6 @@
                     </p>
 
                 </div>
-
 
 
                 <div class="card">
@@ -353,7 +358,6 @@
             </div>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -381,12 +385,15 @@
                     <p>
 
                         23 anos
+
                         <br>
 
                         Hospital Santa Maria
+
                         <br>
 
                         Brasília - DF
+
                         <br>
 
                         🔴 Urgente
@@ -400,7 +407,6 @@
                 </div>
 
 
-
                 <!-- MARIA CLARA -->
 
                 <div class="card">
@@ -412,12 +418,15 @@
                     <p>
 
                         7 anos
+
                         <br>
 
                         Hospital da Criança
+
                         <br>
 
                         Brasília - DF
+
                         <br>
 
                         🟠 Atenção
@@ -431,7 +440,6 @@
                 </div>
 
 
-
                 <!-- CARLOS ALBERTO -->
 
                 <div class="card">
@@ -443,12 +451,15 @@
                     <p>
 
                         45 anos
+
                         <br>
 
                         Hospital Regional
+
                         <br>
 
                         Brasília - DF
+
                         <br>
 
                         🟢 Disponível
@@ -465,9 +476,7 @@
 
         </section>
 
-
     </main>
-
 
 
     <!-- ========================= -->
@@ -508,7 +517,6 @@
                 </div>
 
 
-
                 <div class="tipo-sangue">
 
                     <h3>
@@ -520,7 +528,6 @@
                     </p>
 
                 </div>
-
 
 
                 <div class="tipo-sangue">
@@ -536,7 +543,6 @@
                 </div>
 
 
-
                 <div class="tipo-sangue">
 
                     <h3>
@@ -548,7 +554,6 @@
                     </p>
 
                 </div>
-
 
 
                 <div class="tipo-sangue">
@@ -564,7 +569,6 @@
                 </div>
 
 
-
                 <div class="tipo-sangue">
 
                     <h3>
@@ -576,7 +580,6 @@
                     </p>
 
                 </div>
-
 
 
                 <div class="tipo-sangue">
@@ -592,7 +595,6 @@
                 </div>
 
 
-
                 <div class="tipo-sangue">
 
                     <h3>
@@ -605,10 +607,10 @@
 
                 </div>
 
+
             </div>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -632,7 +634,6 @@
         </section>
 
 
-
         <!-- ========================= -->
         <!-- MENSAGEM -->
         <!-- ========================= -->
@@ -644,13 +645,16 @@
             </h3>
 
             <p>
+
                 Doe sangue. Doe vida.
+
                 <br>
+
                 Seja sangue bom!
+
             </p>
 
         </section>
-
 
 
         <!-- ========================= -->
@@ -668,7 +672,7 @@
                 Participe das campanhas e faça a diferença.
             </h3>
 
-            <a href="campanhas.html">
+            <a href="{% url 'campanhas' %}">
                 Ver campanhas
             </a>
 
@@ -676,7 +680,6 @@
 
 
     </aside>
-
 
 
     <!-- ========================= -->
@@ -689,3 +692,4 @@
 </body>
 
 </html>
+```
