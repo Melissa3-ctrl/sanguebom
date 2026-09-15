@@ -87,17 +87,24 @@
             </label>
 
             <br>
+    
+        <div>  
+        <input
+        type="password"
+        name="senha"
+        id="senha"
+        placeholder="Digite sua senha"
+    >
 
-            <input
-                type="password"
-                name="nova_senha"
-                id="nova_senha"
-                placeholder="Digite sua nova senha"
-                autocomplete="new-password"
-                required
-            >
+    <button
+        type="button"
+        class="botao-mostrar-senha"
+        onclick="mostrarSenha()"
+    >
+        Mostrar
+    </button>
 
-            <span>👁️</span>
+          </div>
 
             <br><br>
 
@@ -117,14 +124,13 @@
                 required
             >
 
-            <span>👁️</span>
-
-            <br><br>
-
-
-            <button type="submit">
-                Alterar senha
-            </button>
+         <button
+        type="button"
+        class="botao-mostrar-senha"
+        onclick="mostrarSenha()"
+       >
+        Mostrar
+       </button>
 
         </form>
 
@@ -248,6 +254,9 @@
     <br>
 
 </main>
+   
+  <script src="{% static 'js/script.js' %}"></script>
+
 
 </body>
 

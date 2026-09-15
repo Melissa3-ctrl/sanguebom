@@ -10,6 +10,9 @@
 </head>
 
 <body>
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
 
     <header>
         <h1>🔔 Notificações</h1>
@@ -44,8 +47,9 @@
                     Participe das campanhas de doação e faça a diferença.
                 </p>
 
-                <a href="campanhas.html">Ver campanha</a>
-            </article>
+            <a href="{% url 'campanhas' %}">
+                Ver campanhas
+           </a>
 
             <article>
                 <h3>✅ Agendamento confirmado</h3>

@@ -10,6 +10,9 @@
 </head>
 
 <body>
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
 
     <main>
 
@@ -448,74 +451,377 @@
 
 
     </main>
-    <!-- LATERAL DIREITA -->
-    <!--
-        Está embaixo do main no HTML.
-        O CSS depois vai colocar essa parte do lado direito.
-    -->
+     <aside class="lateral-direita">
 
-    <aside>
 
-        <!-- PRÓXIMA DOAÇÃO -->
+            <!-- =================================================
+                 ESTOQUE DE SANGUE
+                 ================================================= -->
+
+            <section>
+
+                <h2>
+                    Estoque de sangue
+                </h2>
+
+                <p>
+                    Hoje
+                </p>
+
+
+                <div class="estoque">
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            A+
+                        </h3>
+
+                        <p>
+                            🟢 Adequado
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            A-
+                        </h3>
+
+                        <p>
+                            🟠 Atenção
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            B+
+                        </h3>
+
+                        <p>
+                            🟢 Adequado
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            B-
+                        </h3>
+
+                        <p>
+                            🟠 Atenção
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            AB+
+                        </h3>
+
+                        <p>
+                            🟢 Adequado
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            AB-
+                        </h3>
+
+                        <p>
+                            🟠 Atenção
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            O+
+                        </h3>
+
+                        <p>
+                            🟢 Adequado
+                        </p>
+
+                    </div>
+
+
+                    <div class="tipo-sangue">
+
+                        <h3>
+                            O-
+                        </h3>
+
+                        <p>
+                            🔴 Crítico
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PRÓXIMA DOAÇÃO
+                 ================================================= -->
+
+            <section class="doacao">
+
+                <h3>
+                    Próxima doação disponível
+                </h3>
+
+
+                {% if proximo_agendamento %}
+
+                    <h2>
+                        Você tem um agendamento! 📅
+                    </h2>
+
+                    <p>
+                        <strong>
+                            {{ proximo_agendamento.hemocentro.nome }}
+                        </strong>
+                    </p>
+
+                    <p>
+                        📅
+                        {{ proximo_agendamento.data|date:"d/m/Y" }}
+                    </p>
+
+                    <p>
+                        🕐
+                        {{ proximo_agendamento.horario|time:"H:i" }}
+                    </p>
+
+                    <p>
+                        🩸
+                        {{ proximo_agendamento.tipo_doacao }}
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+
+          <aside class="lateral-direita">
+
+
+        <!-- ========================= -->
+        <!-- ESTOQUE DE SANGUE -->
+        <!-- ========================= -->
+
         <section>
 
-            <p>Próxima doação disponível</p>
+            <h2>
+                Estoque de sangue
+            </h2>
+
+            <p>
+                Hoje
+            </p>
+
+
+            <div class="estoque">
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        A+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        A-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        B+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        B-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        AB+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        AB-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        O+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        O-
+                    </h3>
+
+                    <p>
+                        🔴 Crítico
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PRÓXIMA DOAÇÃO -->
+        <!-- ========================= -->
+
+        <section class="doacao">
+
+            <h3>
+                Próxima doação disponível
+            </h3>
 
             <h2>
                 Você pode doar! ✅
             </h2>
 
             <p>
-                3 doações • 12 vidas
+                3 doações &nbsp; • &nbsp; 12 vidas
             </p>
 
         </section>
 
 
+        <!-- ========================= -->
         <!-- MENSAGEM -->
-        <section>
+        <!-- ========================= -->
+
+        <section class="mensagem">
 
             <h3>
                 💗 Sua atitude pode salvar até 4 vidas!
             </h3>
 
             <p>
-                Doe sangue. Doe vida.
-            </p>
 
-            <p>
+                Doe sangue. Doe vida.
+
+                <br>
+
                 Seja sangue bom!
+
             </p>
 
         </section>
 
 
+        <!-- ========================= -->
         <!-- CAMPANHA -->
-        <section>
-            <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
+        <!-- ========================= -->
 
+        <section class="campanha">
+
+            <img
+                src="{% static 'img/campanha.jpeg' %}"
+                alt="Campanha de doação de sangue"
+            >
 
             <h3>
                 Participe das campanhas e faça a diferença.
             </h3>
 
-            <a href="campanhas.html">
+            <a href="{% url 'campanhas' %}">
                 Ver campanhas
             </a>
 
         </section>
 
 
-        <!-- BOTÃO DE DÚVIDAS -->
-        <button type="button">
-            ?
-        </button>
-
     </aside>
 
      <script src="{% static 'js/script.js' %}"></script>
-
-</body>
 
 </body>
 

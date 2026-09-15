@@ -6,6 +6,10 @@
 
 <head>
 
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,10 +62,6 @@
             <section id="etapa1" class="card-etapa">
 
                 <div class="card-conteudo">
-
-                    <span>
-                        ETAPA 1
-                    </span>
 
                     <h2>
                        
@@ -145,10 +145,6 @@
             <section id="etapa2" class="card-etapa">
 
                 <div class="card-conteudo">
-
-                    <span>
-                        ETAPA 2
-                    </span>
 
                     <h2>
                         Data e Horário
@@ -365,9 +361,6 @@
 
                 <div class="card-conteudo">
 
-                    <span>
-                        ETAPA 3
-                    </span>
 
                     <h2>
                         Confirmar Agendamento
@@ -696,47 +689,203 @@
             </section>
 
 
-            <!-- =================================================
-                 MENSAGEM
-                 ================================================= -->
-
-            <section class="mensagem">
-
-                <h3>
-                    💗 Sua atitude pode salvar até 4 vidas!
-                </h3>
-
-                <p>
-                    Doe sangue. Doe vida.
-                    <br>
-                    Seja sangue bom!
-                </p>
-
-            </section>
+          <aside class="lateral-direita">
 
 
-            <!-- =================================================
-                 CAMPANHA
-                 ================================================= -->
+        <!-- ========================= -->
+        <!-- ESTOQUE DE SANGUE -->
+        <!-- ========================= -->
 
-            <section class="campanha">
+        <section>
 
-                <img
-                    src="{% static 'img/campanha.jpeg' %}"
-                    alt="Campanha de doação de sangue"
-                >
+            <h2>
+                Estoque de sangue
+            </h2>
 
-                <h3>
-                    Participe das campanhas e faça a diferença.
-                </h3>
+            <p>
+                Hoje
+            </p>
 
-                <a href="{% url 'campanhas' %}">
-                    Ver campanhas
-                </a>
 
-            </section>
+            <div class="estoque">
 
-        </aside>
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        A+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        A-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        B+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        B-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        AB+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        AB-
+                    </h3>
+
+                    <p>
+                        🟠 Atenção
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        O+
+                    </h3>
+
+                    <p>
+                        🟢 Adequado
+                    </p>
+
+                </div>
+
+
+                <div class="tipo-sangue">
+
+                    <h3>
+                        O-
+                    </h3>
+
+                    <p>
+                        🔴 Crítico
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PRÓXIMA DOAÇÃO -->
+        <!-- ========================= -->
+
+        <section class="doacao">
+
+            <h3>
+                Próxima doação disponível
+            </h3>
+
+            <h2>
+                Você pode doar! ✅
+            </h2>
+
+            <p>
+                3 doações &nbsp; • &nbsp; 12 vidas
+            </p>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- MENSAGEM -->
+        <!-- ========================= -->
+
+        <section class="mensagem">
+
+            <h3>
+                💗 Sua atitude pode salvar até 4 vidas!
+            </h3>
+
+            <p>
+
+                Doe sangue. Doe vida.
+
+                <br>
+
+                Seja sangue bom!
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- CAMPANHA -->
+        <!-- ========================= -->
+
+        <section class="campanha">
+
+            <img
+                src="{% static 'img/campanha.jpeg' %}"
+                alt="Campanha de doação de sangue"
+            >
+
+            <h3>
+                Participe das campanhas e faça a diferença.
+            </h3>
+
+            <a href="{% url 'campanhas' %}">
+                Ver campanhas
+            </a>
+
+        </section>
+
+
+    </aside>
 
     </main>
 

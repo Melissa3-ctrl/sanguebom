@@ -6,6 +6,10 @@
 
 <head>
 
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -532,8 +536,10 @@
 
                         <strong>Nascimento</strong>
 
+            <strong>Nascimento</strong>
+
                         <p>
-                            {{ dados.data_nascimento }}
+                     {{ dados.data_nascimento }}
                         </p>
 
                     </div>
@@ -645,12 +651,12 @@
                         >
 
                         <button
-                            type="button"
-                            onclick="mostrarSenha('senha', this)"
-                            aria-label="Mostrar senha"
-                        >
-                            👁️
-                        </button>
+                  type="button"
+                   class="botao-mostrar-senha"
+                       onclick="mostrarSenha()"
+                          >
+                        Mostrar
+                           </button>
 
                     </div>
 
@@ -679,13 +685,13 @@
                             required
                         >
 
-                        <button
-                            type="button"
-                            onclick="mostrarSenha('confirmarSenha', this)"
-                            aria-label="Mostrar senha"
-                        >
-                            👁️
-                        </button>
+                         <button
+                     type="button"
+                    class="botao-mostrar-senha"
+                        onclick="mostrarSenha()"
+                             >
+                            Mostrar
+                     </button>
 
                     </div>
 
@@ -829,39 +835,6 @@
 <!-- =====================================================
      JAVASCRIPT
      ===================================================== -->
-
-<script>
-
-function mostrarSenha(id, botao) {
-
-    const campo = document.getElementById(id);
-
-    if (campo.type === "password") {
-
-        campo.type = "text";
-
-        botao.textContent = "🙈";
-
-        botao.setAttribute(
-            "aria-label",
-            "Ocultar senha"
-        );
-
-    } else {
-
-        campo.type = "password";
-
-        botao.textContent = "👁️";
-
-        botao.setAttribute(
-            "aria-label",
-            "Mostrar senha"
-        );
-
-    }
-
-}
-
 
 /*
 =========================================================

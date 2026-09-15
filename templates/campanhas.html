@@ -18,6 +18,10 @@
 
 <body>
 
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
+
     <main>
 
         <h1>
@@ -452,57 +456,6 @@
         </section>
 
 
-        <!-- ========================= -->
-        <!-- MENSAGEM -->
-        <!-- ========================= -->
-
-        <section class="mensagem">
-
-            <h3>
-                💗 Sua atitude pode salvar até 4 vidas!
-            </h3>
-
-            <p>
-                Doe sangue. Doe vida.
-                <br>
-                Seja sangue bom!
-            </p>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- CAMPANHA -->
-        <!-- ========================= -->
-
-        <section class="campanha">
-
-            <img
-                src="{% static 'img/campanha.jpeg' %}"
-                alt="Campanha de doação de sangue"
-            >
-
-            <h3>
-                Participe das campanhas e faça a diferença.
-            </h3>
-
-            <a href="{% url 'campanhas' %}">
-                Ver campanhas
-            </a>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- BOTÃO DE DÚVIDAS -->
-        <!-- ========================= -->
-
-        <a href="{% url 'duvidas' %}">
-            ?
-        </a>
-
-
-    </aside>
 
 
     <script src="{% static 'js/script.js' %}"></script>
