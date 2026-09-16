@@ -135,8 +135,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# 👇 A pasta static fica DENTRO do app "membros"
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'membros' / 'static',
 ]
 
 
@@ -162,14 +163,7 @@ LOGOUT_REDIRECT_URL = 'login'
 # CONFIGURAÇÃO DE E-MAIL
 # =========================================================
 
-# ⚠️ IMPORTANTE:
-# Deixei o modo CONSOLE ativado para você testar a recuperação
-# de senha sem precisar configurar e-mail real.
-# O código de verificação vai aparecer no TERMINAL onde o
-# runserver está rodando.
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # ---------------------------------------------------------
 # QUANDO FOR USAR E-MAIL REAL, DESCOMENTE ESSAS LINHAS

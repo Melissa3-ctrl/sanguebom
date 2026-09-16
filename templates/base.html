@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Sangue Bom</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
+    <title>{% block title %}Sangue Bom{% endblock %}</title>
 </head>
 <body>
 
@@ -17,7 +18,15 @@
         <h2>🔔</h2>
 
         {% if user.is_authenticated %}
-            <h2>👤 Olá, {{ user.username }}! 👋</h2>
+            <h2>👤 Olá,
+                {% if user.doador %}
+                    {{ user.doador.nome }}
+                {% elif user.first_name %}
+                    {{ user.first_name }}
+                {% else %}
+                    {{ user.username }}
+                {% endif %}! 👋
+            </h2>
             <a href="{% url 'logout' %}">🚪 Sair</a>
         {% else %}
             <h2>👤 Olá, visitante! 👋</h2>
@@ -94,17 +103,19 @@
             </div>
 
             <!-- BOTÃO SAIR / ENTRAR -->
-            {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="btn-sair">
-                    <span class="btn-sair-icone">↪</span>
-                    <span>Sair</span>
-                </a>
-            {% else %}
-                <a href="{% url 'login' %}" class="btn-sair">
-                    <span class="btn-sair-icone">↪</span>
-                    <span>Entrar</span>
-                </a>
-            {% endif %}
+            <div class="area-btn-sair">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn-sair">
+                        <span class="btn-sair-icone">↪</span>
+                        <span>Sair</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn-sair">
+                        <span class="btn-sair-icone">↪</span>
+                        <span>Entrar</span>
+                    </a>
+                {% endif %}
+            </div>
 
         </aside>
 
