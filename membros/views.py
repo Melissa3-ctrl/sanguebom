@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.utils import timezone
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
+from .emails import enviar_email_agendamento    # 👈 NOVO IMPORT
 
 
 # =========================================================
@@ -450,7 +451,8 @@ def agendar_doacao(request):
 
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
-        Agendamento.objects.create(
+        # Salva em variável pra poder enviar email
+        agendamento = Agendamento.objects.create(
             doador=doador,
             hemocentro=hemocentro,
             base=hemocentro.nome,
@@ -458,6 +460,12 @@ def agendar_doacao(request):
             horario=horario,
             tipo_doacao=tipo_doacao
         )
+
+        # 🎯 ENVIA E-MAIL (doador + hemocentro)
+        try:
+            enviar_email_agendamento(doador, agendamento)
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
 
         return redirect('listar_agendamentos')
 
@@ -514,6 +522,12 @@ def editar_agendamento(request, id):
         agendamento.horario = horario
         agendamento.tipo_doacao = tipo_doacao
         agendamento.save()
+
+        # 🎯 ENVIA E-MAIL DE ATUALIZAÇÃO
+        try:
+            enviar_email_agendamento(doador, agendamento)
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
 
         return redirect('listar_agendamentos')
 
