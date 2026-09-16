@@ -1,284 +1,93 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Campanhas</title>
-
-</head>
-
-<body>
-
-    <main>
-
-        <h1>Campanhas</h1>
-
-        <p>
-            Participe das campanhas ativas e faça ainda mais diferença.
-        </p>
-
-
-        <!-- CAMPANHAS -->
-
-        <section>
-
-
-            <!-- CAMPANHA 1 -->
-
-            <article>
-
-                <h2>🩸</h2>
-
-                <span>Ativa</span>
-
-                <h3>Doe Sangue, Salve Vidas</h3>
-
-                <p>
-                    Campanha permanente do HemoDF.
-                    Qualquer tipo sanguíneo é bem-vindo.
-                    Venha contribuir!
-                </p>
-
-                <p>
-                    📍 Todos os hemocentros do DF
-                </p>
-
-                <p>
-                    📅 Todo o ano
-                </p>
-
-                <a href="agendar-doacao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-            <!-- CAMPANHA 2 -->
-
-            <article>
-
-                <h2>💗</h2>
-
-                <span>Em breve</span>
-
-                <h3>Campanha do Dia dos Namorados</h3>
-
-                <p>
-                    Doe sangue com quem você ama.
-                    Casais que doarem juntos ganham
-                    desconto em restaurantes parceiros.
-                </p>
-
-                <p>
-                    📍 HBDF e Taguatinga
-                </p>
-
-                <p>
-                    📅 Junho
-                </p>
-
-                <a href="agendar-doacao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-            <!-- CAMPANHA 3 -->
-
-            <article>
-
-                <h2>🌟</h2>
-
-                <span>Ativa</span>
-
-                <h3>Doador Nota 10</h3>
-
-                <p>
-                    Doadores regulares com 3+ doações no semestre
-                    recebem certificado e brindes exclusivos.
-                </p>
-
-                <p>
-                    📍 Todos os hemocentros
-                </p>
-
-                <p>
-                    📅 Jan–Jun 2025
-                </p>
-
-                <a href="agendar-doacao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-            <!-- CAMPANHA 4 -->
-
-            <article>
-
-                <h2>🏥</h2>
-
-                <span>Urgente</span>
-
-                <h3>SOS Hospital de Base</h3>
-
-                <p>
-                    O Hospital de Base está com estoque crítico
-                    de O− e B−. Sua doação é urgentemente necessária!
-                </p>
-
-                <p>
-                    📍 Hospital de Base – DF
-                </p>
-
-                <p>
-                    📅 Imediato
-                </p>
-
-                <a href="agendar-doacao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-            <!-- CAMPANHA 5 -->
-
-            <article>
-
-                <h2>🎓</h2>
-
-                <span>Ativa</span>
-
-                <h3>Doe Sangue Universitário</h3>
-
-                <p>
-                    Parceria com universidades do DF.
-                    Estudantes doadores recebem horas complementares.
-                </p>
-
-                <p>
-                    📍 UnB, UCB, IESB e parceiras
-                </p>
-
-                <p>
-                    📅 2025
-                </p>
-
-                <a href="agendar-doao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-            <!-- CAMPANHA 6 -->
-
-            <article>
-
-                <h2>👶</h2>
-
-                <span>Ativa</span>
-
-                <h3>Sangue para Neonatal</h3>
-
-                <p>
-                    Bebês prematuros e recém-nascidos com condições
-                    críticas precisam de doações frequentes.
-                </p>
-
-                <p>
-                    📍 Hospital da Criança – DF
-                </p>
-
-                <p>
-                    📅 Contínua
-                </p>
-
-                <a href="agendar-doacao.html">
-                    <button type="button">Participar</button>
-                </a>
-
-            </article>
-
-
-        </section>
-
-    </main>
-
-
-    <!-- LATERAL DIREITA -->
-    <!--
-        Está embaixo do main no HTML.
-        O CSS depois vai colocar essa parte do lado direito.
-    -->
-
-    <aside>
-
-        <!-- PRÓXIMA DOAÇÃO -->
-        <section>
-
-            <p>Próxima doação disponível</p>
-
-            <h2>
-                Você pode doar! ✅
-            </h2>
-
-            <p>
-                3 doações • 12 vidas
-            </p>
-
-        </section>
-
-
-        <!-- MENSAGEM -->
-        <section>
-
-            <h3>
-                💗 Sua atitude pode salvar até 4 vidas!
-            </h3>
-
-            <p>
-                Doe sangue. Doe vida.
-            </p>
-
-            <p>
-                Seja sangue bom!
-            </p>
-
-        </section>
-
-
-        <!-- CAMPANHA -->
-        <section>
-
-             <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
-            <h3>
-                Participe das campanhas e faça a diferença.
-            </h3>
-
-            <a href="campanhas.html">
-                Ver campanhas
+{% block content %}
+
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+
+    <h1>Campanhas</h1>
+    <p>Participe das campanhas ativas e faça ainda mais diferença.</p>
+
+    <section>
+
+        <!-- CAMPANHA 1 -->
+        <article class="card">
+            <h2>🩸</h2>
+            <span>Ativa</span>
+            <h3>Doe Sangue, Salve Vidas</h3>
+            <p>Campanha permanente de incentivo à doação de sangue. Qualquer tipo sanguíneo é bem-vindo. Venha contribuir!</p>
+            <p>📍 Fundação Hemocentro de Brasília</p>
+            <p>📅 Durante todo o ano</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
             </a>
+        </article>
 
-        </section>
+        <!-- CAMPANHA 2 -->
+        <article class="card">
+            <h2>💗</h2>
+            <span>Em breve</span>
+            <h3>Doe com Quem Você Ama</h3>
+            <p>Incentive alguém especial a participar da doação de sangue e transforme esse momento em uma atitude de solidariedade.</p>
+            <p>📍 Taguatinga e Gama</p>
+            <p>📅 Próxima campanha</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
+            </a>
+        </article>
 
+        <!-- CAMPANHA 3 -->
+        <article class="card">
+            <h2>🌟</h2>
+            <span>Ativa</span>
+            <h3>Doador Nota 10</h3>
+            <p>Valorize sua participação na doação de sangue e incentive outros doadores a fazerem parte dessa corrente do bem.</p>
+            <p>📍 Locais de atendimento participantes</p>
+            <p>📅 Durante o ano</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
+            </a>
+        </article>
 
-        <!-- BOTÃO DE DÚVIDAS -->
-        <button type="button">
-            ?
-        </button>
+        <!-- CAMPANHA 4 -->
+        <article class="card">
+            <h2>🚨</h2>
+            <span>Urgente</span>
+            <h3>Doe Quando o Estoque Estiver Crítico</h3>
+            <p>Alguns tipos sanguíneos podem entrar em situação crítica. Sua doação pode ajudar a reforçar os estoques e atender quem precisa.</p>
+            <p>📍 Fundação Hemocentro de Brasília</p>
+            <p>📅 Enquanto houver necessidade</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
+            </a>
+        </article>
 
-    </aside>
-      <script src="{% static 'js/script.js' %}"></script>
+        <!-- CAMPANHA 5 -->
+        <article class="card">
+            <h2>🎓</h2>
+            <span>Ativa</span>
+            <h3>Doe Sangue, Compartilhe Solidariedade</h3>
+            <p>Uma campanha de conscientização para incentivar jovens e estudantes a conhecerem a importância da doação de sangue.</p>
+            <p>📍 Brasília, Taguatinga e Gama</p>
+            <p>📅 Durante o ano</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
+            </a>
+        </article>
 
-</body>
+        <!-- CAMPANHA 6 -->
+        <article class="card">
+            <h2>👶</h2>
+            <span>Ativa</span>
+            <h3>Sangue para Quem Precisa</h3>
+            <p>Crianças, adultos e pacientes em situações delicadas podem precisar de transfusões. Cada doação faz parte dessa corrente de cuidado.</p>
+            <p>📍 Locais de atendimento participantes</p>
+            <p>📅 Contínua</p>
+            <a href="{% url 'agendar_doacao' %}">
+                <button type="button">Participar</button>
+            </a>
+        </article>
 
-</html>
+    </section>
+
+{% endblock %}

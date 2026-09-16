@@ -1,213 +1,76 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
 
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Quero Doar - Sangue Bom</title>
 </head>
+=======
+{% block content %}
+>>>>>>> melissa
 
-<body>
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 
-    <main>
-
+    <section>
         <h1>🩸 Quero Doar</h1>
-
-        <p>
-            Sua doação pode fazer a diferença na vida de até 4 pessoas.
-            Doe sangue e ajude quem precisa!
-        </p>
-
-
-        <section>
-
-            <h2>❤️ Por que doar sangue?</h2>
-
-            <p>
-                A doação de sangue é um ato voluntário que pode ajudar
-                pessoas em situações de emergência, cirurgias,
-                tratamentos e outras necessidades médicas.
-            </p>
-
-            <p>
-                Uma única doação pode beneficiar até 4 pessoas após
-                a separação dos componentes do sangue.
-            </p>
-
-        </section>
-
-
-        <section>
-
-            <h2>👤 Quem pode doar?</h2>
-
-            <ul>
-                <li>Ter idade entre 16 e 69 anos;</li>
-                <li>Ter pelo menos 50 kg;</li>
-                <li>Estar em boas condições de saúde;</li>
-                <li>Apresentar documento oficial com foto;</li>
-                <li>Estar alimentado e bem hidratado.</li>
-            </ul>
-
-        </section>
-
-
-        <section>
-
-            <h2>✅ Requisitos para doar</h2>
-
-            <ul>
-                <li>✓ Estar saudável;</li>
-                <li>✓ Ter dormido pelo menos 6 horas;</li>
-                <li>✓ Não estar em jejum;</li>
-                <li>✓ Evitar alimentos muito gordurosos antes da doação;</li>
-                <li>✓ Beber bastante água;</li>
-                <li>✓ Evitar bebidas alcoólicas antes da doação;</li>
-                <li>✓ Levar um documento oficial com foto.</li>
-            </ul>
-
-            <p>
-                A equipe de saúde fará uma triagem antes da doação
-                para verificar se você está apto naquele momento.
-            </p>
-
-        </section>
-
-
-        <section>
-
-            <h2>🩸 Tipos sanguíneos</h2>
-
-            <p>
-                Conheça os principais tipos sanguíneos:
-            </p>
-
-            <ul>
-                <li><strong>O+</strong></li>
-                <li><strong>O−</strong></li>
-                <li><strong>A+</strong></li>
-                <li><strong>A−</strong></li>
-                <li><strong>B+</strong></li>
-                <li><strong>B−</strong></li>
-                <li><strong>AB+</strong></li>
-                <li><strong>AB−</strong></li>
-            </ul>
-
-        </section>
-
-
-        <section>
-
-            <h2>💡 Antes de doar</h2>
-
-            <p>✓ Beba bastante água</p>
-            <p>✓ Não vá em jejum</p>
-            <p>✓ Durma pelo menos 6 horas</p>
-            <p>✓ Evite bebidas alcoólicas</p>
-            <p>✓ Não fume antes da doação</p>
-
-        </section>
-
-
-        <section>
-
-            <h2>❤️ Uma doação = até 4 vidas</h2>
-
-            <p>
-                Seu sangue pode ajudar até 4 pessoas diferentes
-                após a triagem e separação dos componentes.
-            </p>
-
-        </section>
-
-
-        <section>
-
-            <h2>📅 Pronto para doar?</h2>
-
-            <p>
-                Escolha um hemocentro, uma data e um horário
-                para realizar sua doação.
-            </p>
-
-            <a href="agendar-doacao.html">
-                <button type="button">
-                    Agendar minha doação 🩸
-                </button>
-            </a>
-
-        </section>
-
-    </main>
-    <!-- LATERAL DIREITA -->
-    <!--
-        Está embaixo do main no HTML.
-        O CSS depois vai colocar essa parte do lado direito.
-    -->
-
-    <aside>
-
-        <!-- PRÓXIMA DOAÇÃO -->
-        <section>
-
-            <p>Próxima doação disponível</p>
-
-            <h2>
-                Você pode doar! ✅
-            </h2>
-
-            <p>
-                3 doações • 12 vidas
-            </p>
-
-        </section>
-
-
-        <!-- MENSAGEM -->
-        <section>
-
-            <h3>
-                💗 Sua atitude pode salvar até 4 vidas!
-            </h3>
-
-            <p>
-                Doe sangue. Doe vida.
-            </p>
-
-            <p>
-                Seja sangue bom!
-            </p>
-
-        </section>
-
-
-        <!-- CAMPANHA -->
-        <section>
-
-          <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
-            <h3>
-                Participe das campanhas e faça a diferença.
-            </h3>
-
-            <a href="campanhas.html">
-                Ver campanhas
-            </a>
-
-        </section>
-
-
-        <!-- BOTÃO DE DÚVIDAS -->
-        <button type="button">
-            ?
-        </button>
-
-    </aside>
-
-       <script src="{% static 'js/script.js' %}"></script>
-
-</body>
-</body>
-
-</html>
+        <p>Sua doação pode fazer a diferença na vida de até 4 pessoas. Doe sangue e ajude quem precisa!</p>
+    </section>
+
+    <section>
+        <h2>❤️ Por que doar sangue?</h2>
+        <p>A doação de sangue é um ato voluntário que pode ajudar pessoas em situações de emergência, cirurgias, tratamentos e outras necessidades médicas.</p>
+        <p>Uma única doação pode beneficiar até 4 pessoas após a separação dos componentes do sangue.</p>
+    </section>
+
+    <section>
+        <h2>👤 Quem pode doar?</h2>
+        <ul>
+            <li>Ter idade entre 16 e 69 anos;</li>
+            <li>Ter pelo menos 50 kg;</li>
+            <li>Estar em boas condições de saúde;</li>
+            <li>Apresentar documento oficial com foto;</li>
+            <li>Estar alimentado e bem hidratado.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>✅ Requisitos para doar</h2>
+        <p>✓ Estar saudável;</p>
+        <p>✓ Ter dormido pelo menos 6 horas;</p>
+        <p>✓ Não estar em jejum;</p>
+        <p>✓ Evitar alimentos muito gordurosos antes da doação;</p>
+        <p>✓ Beber bastante água;</p>
+        <p>✓ Evitar bebidas alcoólicas antes da doação;</p>
+        <p>✓ Levar um documento oficial com foto.</p>
+        <p><em>A equipe de saúde fará uma triagem antes da doação para verificar se você está apto naquele momento.</em></p>
+    </section>
+
+    <section>
+        <h2>🩸 Tipos sanguíneos</h2>
+        <p>Conheça os principais tipos sanguíneos: O+, O−, A+, A−, B+, B−, AB+, AB−</p>
+    </section>
+
+    <section>
+        <h2>💡 Antes de doar</h2>
+        <p>✓ Beba bastante água</p>
+        <p>✓ Não vá em jejum</p>
+        <p>✓ Durma pelo menos 6 horas</p>
+        <p>✓ Evite bebidas alcoólicas</p>
+        <p>✓ Não fume antes da doação</p>
+    </section>
+
+    <section>
+        <h2>❤️ Uma doação = até 4 vidas</h2>
+        <p>Seu sangue pode ajudar até 4 pessoas diferentes após a triagem e separação dos componentes.</p>
+    </section>
+
+    <section>
+        <h2>📅 Pronto para doar?</h2>
+        <p>Escolha um hemocentro, uma data e um horário para realizar sua doação.</p>
+        <a href="{% url 'agendar_doacao' %}" class="botao-doar">Agendar minha doação 🩸</a>
+    </section>
+
+{% endblock %}

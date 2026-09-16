@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+<<<<<<< HEAD
 
 <head>
 
@@ -97,10 +98,85 @@
 
                 <br>
 
+=======
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Sangue Bom</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<main>
+
+    <h1>❤️ Sangue Bom</h1>
+    <h2>Recuperar senha</h2>
+
+    <!-- =====================================================
+         SENHA ALTERADA COM SUCESSO
+         ===================================================== -->
+    {% if sucesso %}
+        <p>{{ sucesso }}</p>
+        <br>
+        <a href="{% url 'login' %}">Voltar para o login</a>
+
+    <!-- =====================================================
+         CÓDIGO VALIDADO — CRIAR NOVA SENHA
+         ===================================================== -->
+    {% elif codigo_validado %}
+        <p><strong>Código confirmado com sucesso! ✅</strong></p>
+        <p>Agora você pode criar uma nova senha.</p>
+
+        {% if erro %}
+            <p>{{ erro }}</p>
+        {% endif %}
+
+        <form method="POST" action="{% url 'alterar_senha' %}">
+            {% csrf_token %}
+
+            <input type="hidden" name="email" value="{{ email }}">
+            <input type="hidden" name="codigo" value="{{ codigo }}">
+
+            <!-- NOVA SENHA -->
+            <label for="senha">Nova senha:</label>
+            <br>
+
+            <div class="campo-senha">
+                <input
+                    type="password"
+                    name="nova_senha"
+                    id="senha"
+                    placeholder="Mínimo 8 caracteres"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+                <button
+                    type="button"
+                    class="btn-olho"
+                    onclick="mostrarSenha('senha', this)"
+                    aria-label="Mostrar senha"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <br><br>
+
+            <!-- CONFIRMAR SENHA -->
+            <label for="confirmar_senha">Confirmar nova senha:</label>
+            <br>
+
+            <div class="campo-senha">
+>>>>>>> melissa
                 <input
                     type="password"
                     name="confirmar_senha"
                     id="confirmar_senha"
+<<<<<<< HEAD
                     placeholder="Digite a senha novamente"
                     required
                 >
@@ -128,4 +204,133 @@
 
 </body>
 
+=======
+                    placeholder="Digite novamente"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+                <button
+                    type="button"
+                    class="btn-olho"
+                    onclick="mostrarSenha('confirmar_senha', this)"
+                    aria-label="Mostrar senha"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <br><br>
+
+            <button type="submit">Salvar nova senha</button>
+        </form>
+
+    <!-- =====================================================
+         CÓDIGO ENVIADO — DIGITAR CÓDIGO
+         ===================================================== -->
+    {% elif codigo_enviado %}
+        <p>{{ mensagem }}</p>
+
+        {% if erro %}
+            <p>{{ erro }}</p>
+        {% endif %}
+
+        <p>Digite o código de 6 dígitos enviado para seu e-mail.</p>
+
+        <form method="POST" action="{% url 'validar_codigo' %}">
+            {% csrf_token %}
+
+            <input type="hidden" name="email" value="{{ email }}">
+
+            <label for="codigo">Código de verificação:</label>
+            <br>
+
+            <input
+                type="text"
+                name="codigo"
+                id="codigo"
+                placeholder="Digite os 6 dígitos"
+                maxlength="6"
+                minlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                pattern="[0-9]{6}"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">Validar código</button>
+        </form>
+
+    <!-- =====================================================
+         PRIMEIRA TELA — E-MAIL
+         ===================================================== -->
+    {% else %}
+        {% if erro %}
+            <p>{{ erro }}</p>
+        {% endif %}
+
+        <p>Digite seu e-mail para receber um código de verificação.</p>
+
+        <form method="POST" action="{% url 'recuperar_senha' %}">
+            {% csrf_token %}
+
+            <label for="email">E-mail:</label>
+            <br>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                value="{{ email|default:'' }}"
+                autocomplete="email"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">Enviar código</button>
+        </form>
+    {% endif %}
+
+    <br>
+
+</main>
+
+<script src="{% static 'js/script.js' %}"></script>
+
+<script>
+    /* ==========================================
+       MOSTRAR / OCULTAR SENHA
+       ========================================== */
+    function mostrarSenha(idInput, botao) {
+        const input = document.getElementById(idInput);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            botao.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            `;
+        } else {
+            input.type = 'password';
+            botao.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            `;
+        }
+    }
+</script>
+
+</body>
+>>>>>>> melissa
 </html>

@@ -8,6 +8,22 @@ urlpatterns = [
     # PÁGINAS DO SITE
     # =========================================================
 
+<<<<<<< HEAD
+=======
+    # Raiz abre a home direto
+    path(
+        '',
+        views.home,
+        name='home'
+    ),
+
+    path(
+        'home/',
+        views.home,
+        name='home'
+    ),
+
+>>>>>>> melissa
     path(
         'quero_doar/',
         views.quero_doar,
@@ -27,12 +43,15 @@ urlpatterns = [
     ),
 
     path(
+<<<<<<< HEAD
         'home/',
         views.home,
         name='home'
     ),
 
     path(
+=======
+>>>>>>> melissa
         'cadastro/',
         views.cadastro,
         name='cadastro'
@@ -51,6 +70,21 @@ urlpatterns = [
     ),
 
     path(
+<<<<<<< HEAD
+=======
+        'validar_codigo/',
+        views.validar_codigo,
+        name='validar_codigo'
+    ),
+
+    path(
+        'alterar_senha/',
+        views.alterar_senha,
+        name='alterar_senha'
+    ),
+
+    path(
+>>>>>>> melissa
         'logout/',
         views.logout_view,
         name='logout'

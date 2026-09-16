@@ -1,211 +1,129 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Dúvidas Frequentes</title>
-</head>
-<body>
-    <main>
+{% block content %}
 
-        <h1>Dúvidas Frequentes</h1>
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 
-        <p>
-            Encontre respostas para as perguntas mais comuns sobre doação de sangue.
-        </p>
+    <h1>Dúvidas Frequentes</h1>
+    <p>Encontre respostas para as perguntas mais comuns sobre doação de sangue.</p>
 
-<nav>
-    <a href="#todas">Todas</a>
-    <a href="#quem-pode-doar">👨‍🦰 Quem pode doar?</a>
-    <a href="#sobre-doacao">🩸 Sobre a doação</a>
-    <a href="#tipos-sanguineos">🔬 Tipos sanguíneos</a>
-    <a href="#beneficios">🏆 Benefícios</a>
-    <a href="#agendamento">🗓️ Agendamento</a>
-</nav>
+    <nav>
+        <a href="#todas">Todas</a>
+        <a href="#quem-pode-doar">👨‍🦰 Quem pode doar?</a>
+        <a href="#sobre-doacao">🩸 Sobre a doação</a>
+        <a href="#tipos-sanguineos">🔬 Tipos sanguíneos</a>
+        <a href="#beneficios">🏆 Benefícios</a>
+        <a href="#agendamento">🗓️ Agendamento</a>
+    </nav>
 
+    <section id="todas">
+        <!-- Todas as dúvidas -->
+    </section>
 
-<section id="todas">
-    <!-- Todas as dúvidas -->
-</section>
+    <section id="quem-pode-doar">
+        <h2>👨‍🦰 Quem pode doar?</h2>
 
+        <article>
+            <h3>Qual a idade mínima e máxima para doação?</h3>
+            <p>Entre 16 e 69 anos.</p>
+        </article>
 
-<section id="quem-pode-doar">
-    <h2>👨‍🦰 Quem pode doar?</h2>
+        <article>
+            <h3>Qual o peso mínimo?</h3>
+            <p>O doador deve pesar no mínimo 50 kg.</p>
+        </article>
 
-    <article>
-        <h3>Qual a idade mínima e máxima para doação?</h3>
-        <p>Entre 16 e 69 anos...</p>
-    </article>
+        <article>
+            <h3>Grávidas podem doar?</h3>
+            <p>Não. A doação é contraindicada durante a gravidez.</p>
+        </article>
 
-    <article>
-        <h3>Qual o peso mínimo?</h3>
-        <p>O doador deve pesar no mínimo 50 kg.</p>
-    </article>
+        <article>
+            <h3>Quem tomou vacina pode doar?</h3>
+            <p>Depende da vacina.</p>
+        </article>
+    </section>
 
-    <article>
-        <h3>Grávidas podem doar?</h3>
-        <p>Não. A doação é contraindicada durante a gravidez.</p>
-    </article>
+    <section id="sobre-doacao">
+        <h2>🩸 Sobre a doação</h2>
 
-    <article>
-        <h3>Quem tomou vacina pode doar?</h3>
-        <p>Depende da vacina.</p>
-    </article>
-</section>
+        <article>
+            <h3>Posso comer antes de doar?</h3>
+            <p>Sim! É obrigatório não estar em jejum.</p>
+        </article>
 
+        <article>
+            <h3>Qual o intervalo entre doações?</h3>
+            <p>Homens: 60 dias. Mulheres: 90 dias.</p>
+        </article>
 
-<section id="sobre-doacao">
-    <h2>🩸 Sobre a doação</h2>
+        <article>
+            <h3>Quanto tempo dura o processo?</h3>
+            <p>A doação dura em média 10 minutos.</p>
+        </article>
 
-    <article>
-        <h3>Posso comer antes de doar?</h3>
-        <p>Sim! É obrigatório não estar em jejum.</p>
-    </article>
+        <article>
+            <h3>Dói?</h3>
+            <p>A picada é rápida e causa apenas um leve desconforto.</p>
+        </article>
+    </section>
 
-    <article>
-        <h3>Qual o intervalo entre doações?</h3>
-        <p>Homens: 60 dias. Mulheres: 90 dias.</p>
-    </article>
+    <section id="tipos-sanguineos">
+        <h2>🔬 Tipos sanguíneos</h2>
 
-    <article>
-        <h3>Quanto tempo dura o processo?</h3>
-        <p>A doação dura em média 10 minutos.</p>
-    </article>
+        <article>
+            <h3>Qual tipo sanguíneo é mais raro?</h3>
+            <p>O tipo AB- é um dos mais raros.</p>
+        </article>
 
-    <article>
-        <h3>Dói?</h3>
-        <p>A picada é rápida e causa apenas um leve desconforto.</p>
-    </article>
-</section>
+        <article>
+            <h3>O que é o fator Rh?</h3>
+            <p>É uma característica relacionada às hemácias.</p>
+        </article>
 
+        <article>
+            <h3>Posso receber sangue de qualquer tipo?</h3>
+            <p>Não. Cada tipo possui compatibilidades específicas.</p>
+        </article>
+    </section>
 
-<section id="tipos-sanguineos">
-    <h2>🔬 Tipos sanguíneos</h2>
+    <section id="beneficios">
+        <h2>🏆 Benefícios</h2>
 
-    <article>
-        <h3>Qual tipo sanguíneo é mais raro?</h3>
-        <p>O tipo AB- é um dos mais raros.</p>
-    </article>
+        <article>
+            <h3>Quais benefícios tenho ao doar?</h3>
+            <p>Doadores regulares podem ter benefícios específicos.</p>
+        </article>
 
-    <article>
-        <h3>O que é o fator Rh?</h3>
-        <p>É uma característica relacionada às hemácias.</p>
-    </article>
+        <article>
+            <h3>Como funciona o sistema de benefícios?</h3>
+            <p>O histórico de doações pode ser acompanhado pelo perfil.</p>
+        </article>
 
-    <article>
-        <h3>Posso receber sangue de qualquer tipo?</h3>
-        <p>Não. Cada tipo possui compatibilidades específicas.</p>
-    </article>
-</section>
+        <article>
+            <h3>Como comprovo meu status de doador?</h3>
+            <p>O certificado pode ser emitido pelo hemocentro.</p>
+        </article>
+    </section>
 
+    <section id="agendamento">
+        <h2>🗓️ Agendamento</h2>
 
-<section id="beneficios">
-    <h2>🏆 Benefícios</h2>
+        <article>
+            <h3>Preciso agendar ou posso ir espontaneamente?</h3>
+            <p>É possível ir sem agendamento em alguns locais.</p>
+        </article>
 
-    <article>
-        <h3>Quais benefícios tenho ao doar?</h3>
-        <p>Doadores regulares podem ter benefícios específicos.</p>
-    </article>
+        <article>
+            <h3>Posso cancelar ou reagendar?</h3>
+            <p>Sim, é possível cancelar ou reagendar.</p>
+        </article>
 
-    <article>
-        <h3>Como funciona o sistema de benefícios?</h3>
-        <p>O histórico de doações pode ser acompanhado pelo perfil.</p>
-    </article>
+        <article>
+            <h3>O que levar no dia da doação?</h3>
+            <p>Leve um documento de identidade com foto.</p>
+        </article>
+    </section>
 
-    <article>
-        <h3>Como comprovo meu status de doador?</h3>
-        <p>O certificado pode ser emitido pelo hemocentro.</p>
-    </article>
-</section>
-
-
-<section id="agendamento">
-    <h2>🗓️ Agendamento</h2>
-
-    <article>
-        <h3>Preciso agendar ou posso ir espontaneamente?</h3>
-        <p>É possível ir sem agendamento em alguns locais.</p>
-    </article>
-
-    <article>
-        <h3>Posso cancelar ou reagendar?</h3>
-        <p>Sim, é possível cancelar ou reagendar.</p>
-    </article>
-
-    <article>
-        <h3>O que levar no dia da doação?</h3>
-        <p>Leve um documento de identidade com foto.</p>
-    </article>
-</section>
-
-
-<!-- LATERAL DIREITA -->
-    <!--
-        Está embaixo do main no HTML.
-        O CSS depois vai colocar essa parte do lado direito.
-    -->
-
-    <aside>
-
-        <!-- PRÓXIMA DOAÇÃO -->
-        <section>
-
-            <p>Próxima doação disponível</p>
-
-            <h2>
-                Você pode doar! ✅
-            </h2>
-
-            <p>
-                3 doações • 12 vidas
-            </p>
-
-        </section>
-
-
-        <!-- MENSAGEM -->
-        <section>
-
-            <h3>
-                💗 Sua atitude pode salvar até 4 vidas!
-            </h3>
-
-            <p>
-                Doe sangue. Doe vida.
-            </p>
-
-            <p>
-                Seja sangue bom!
-            </p>
-
-        </section>
-
-
-        <!-- CAMPANHA -->
-        <section>
-
-            <img src="{% static 'img/campanha.jpeg' %}" alt="Campanha">
-            <h3>
-                Participe das campanhas e faça a diferença.
-            </h3>
-
-            <a href="campanhas.html">
-                Ver campanhas
-            </a>
-
-        </section>
-
-
-        <!-- BOTÃO DE DÚVIDAS -->
-        <button type="button">
-            ?
-        </button>
-
-    </aside>
-  <script src="{% static 'js/script.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}

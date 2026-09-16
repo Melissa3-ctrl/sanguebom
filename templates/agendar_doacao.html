@@ -1,8 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block content %}
 
+<<<<<<< HEAD
 <head>
 
     <meta charset="UTF-8">
@@ -17,13 +18,20 @@
 <body>
 
     <main>
+=======
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+>>>>>>> melissa
 
+    <header class="agendamento-cabecalho">
         <h1>Agendar Doação</h1>
+        <p>Em poucos passos você salva até 4 vidas ❤️</p>
+        <p>① Hemocentro → ② Data e Horário → ③ Confirmar</p>
+    </header>
 
-        <p>
-            Em poucos passos você salva até 4 vidas
-        </p>
+    <form method="POST">
+        {% csrf_token %}
 
+<<<<<<< HEAD
         <p>
             ① Hemocentro → ② Data & Hora → ③ Confirmar
         </p>
@@ -519,8 +527,104 @@
                     A base selecionada acima será utilizada
                     no seu agendamento.
                 </p>
+=======
+        <!-- ETAPA 1 - ESCOLHER BASE -->
+        <section id="etapa1" class="card-etapa">
+            <div class="card-conteudo">
+                <h2>Escolha o local onde deseja realizar sua doação.</h2>
+                <p>Escolha uma das bases disponíveis.</p>
 
+                <div class="bases-container">
+                    {% if hemocentros %}
+                        {% for hemocentro in hemocentros %}
+                            <div class="card-base">
+                                <h3>{{ hemocentro.nome }}</h3>
+                                <p>📍 {{ hemocentro.endereco }}, {{ hemocentro.cidade }} – DF</p>
+                                <p>🕐 {{ hemocentro.horario_abertura|time:"H:i" }} – {{ hemocentro.horario_fechamento|time:"H:i" }}</p>
+                                <label>
+                                    <input type="radio" name="hemocentro" value="{{ hemocentro.id }}" required>
+                                    Escolher esta base
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Nenhuma base de atendimento está disponível no momento.</p>
+                    {% endif %}
+                </div>
 
+                <p>Selecione uma base para continuar.</p>
+            </div>
+        </section>
+
+        <!-- ETAPA 2 - DATA E HORÁRIO -->
+        <section id="etapa2" class="card-etapa">
+            <div class="card-conteudo">
+                <h2>Data e Horário</h2>
+
+                <!-- TIPO DE DOAÇÃO -->
+                <div class="campo-agendamento">
+                    <h3>🩸 Tipo de doação</h3>
+                    <label>
+                        <input type="radio" name="tipo_doacao" value="Sangue total" required>
+                        Sangue Total
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo_doacao" value="Plaquetas">
+                        Plaquetas
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo_doacao" value="Plasma">
+                        Plasma
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo_doacao" value="Hemácias">
+                        Hemácias
+                    </label>
+                </div>
+
+                <!-- DATA -->
+                <div class="campo-agendamento">
+                    <h3>📅 Data</h3>
+                    <input type="date" name="data" id="data" required>
+                </div>
+
+                <!-- HORÁRIO -->
+                <div class="campo-agendamento">
+                    <h3>🕐 Horário</h3>
+                    <div class="horarios">
+                        <label><input type="radio" name="horario" value="07:00" required> 07:00</label>
+                        <label><input type="radio" name="horario" value="07:30"> 07:30</label>
+                        <label><input type="radio" name="horario" value="08:00"> 08:00</label>
+                        <label><input type="radio" name="horario" value="08:30"> 08:30</label>
+                        <label><input type="radio" name="horario" value="09:00"> 09:00</label>
+                        <label><input type="radio" name="horario" value="09:30"> 09:30</label>
+                        <label><input type="radio" name="horario" value="10:00"> 10:00</label>
+                        <label><input type="radio" name="horario" value="10:30"> 10:30</label>
+                        <label><input type="radio" name="horario" value="11:00"> 11:00</label>
+                        <label><input type="radio" name="horario" value="11:30"> 11:30</label>
+                        <label><input type="radio" name="horario" value="13:00"> 13:00</label>
+                        <label><input type="radio" name="horario" value="13:30"> 13:30</label>
+                        <label><input type="radio" name="horario" value="14:00"> 14:00</label>
+                        <label><input type="radio" name="horario" value="14:30"> 14:30</label>
+                        <label><input type="radio" name="horario" value="15:00"> 15:00</label>
+                        <label><input type="radio" name="horario" value="15:30"> 15:30</label>
+                        <label><input type="radio" name="horario" value="16:00"> 16:00</label>
+                        <label><input type="radio" name="horario" value="16:30"> 16:30</label>
+                        <label><input type="radio" name="horario" value="17:00"> 17:00</label>
+                        <label><input type="radio" name="horario" value="17:30"> 17:30</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+>>>>>>> melissa
+
+        <!-- ETAPA 3 - CONFIRMAÇÃO -->
+        <section id="etapa3" class="card-etapa">
+            <div class="card-conteudo">
+                <h2>Confirmar Agendamento</h2>
+                <p>Confira os dados antes de confirmar sua doação.</p>
+
+<<<<<<< HEAD
                 <h3>📅 Data</h3>
 
                 <p>
@@ -577,10 +681,54 @@
                 para a página de seus agendamentos.
             </p>
 
+=======
+                <div class="resumo-agendamento">
+                    <div>
+                        <h3>🏥 Hemocentro responsável</h3>
+                        <p>Fundação Hemocentro de Brasília</p>
+                    </div>
+                    <div>
+                        <h3>📍 Base escolhida</h3>
+                        <p>A base selecionada será utilizada no seu agendamento.</p>
+                    </div>
+                    <div>
+                        <h3>📅 Data</h3>
+                        <p>A data selecionada será utilizada no seu agendamento.</p>
+                    </div>
+                    <div>
+                        <h3>🕐 Horário</h3>
+                        <p>O horário selecionado será utilizado no seu agendamento.</p>
+                    </div>
+                    <div>
+                        <h3>🩸 Tipo de doação</h3>
+                        <p>O tipo de doação selecionado será utilizado no seu agendamento.</p>
+                    </div>
+                </div>
+
+                <div class="orientacoes-doacao">
+                    <h3>💡 Antes de doar</h3>
+                    <ul>
+                        <li>✓ Beba bastante água</li>
+                        <li>✓ Não vá em jejum</li>
+                        <li>✓ Durma pelo menos 6 horas</li>
+                        <li>✓ Evite bebidas alcoólicas</li>
+                        <li>✓ Não fume antes da doação</li>
+                    </ul>
+                </div>
+
+                <div class="impacto-doacao">
+                    <h3>🩸 Uma doação = até 4 vidas</h3>
+                    <p>Seu sangue pode ajudar até 4 pessoas diferentes após a triagem e separação dos componentes.</p>
+                </div>
+
+                <button type="submit">Confirmar Doação 🩸</button>
+            </div>
+>>>>>>> melissa
         </section>
 
-    </main>
+    </form>
 
+<<<<<<< HEAD
 
     <!-- ================================= -->
     <!-- LATERAL DIREITA -->
@@ -659,3 +807,6 @@
 </body>
 
 </html>
+=======
+{% endblock %}
+>>>>>>> melissa

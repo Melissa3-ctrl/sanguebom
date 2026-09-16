@@ -5,16 +5,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+=======
+    <link rel="stylesheet" href="{% static 'css/stylecss' %}">
+>>>>>>> melissa
     <title>Notificações - Sangue Bom</title>
 </head>
 
 <body>
+     <a href="javascript:history.back()" class="btn-voltar">
+        ← Voltar
+    </a>
 
     <header>
         <h1>🔔 Notificações</h1>
 
-        <a href="index.html">🏠 Início</a>
+        <a href="home">🏠 Início</a>
     </header>
 
 
@@ -44,8 +51,9 @@
                     Participe das campanhas de doação e faça a diferença.
                 </p>
 
-                <a href="campanhas.html">Ver campanha</a>
-            </article>
+            <a href="{% url 'campanhas' %}">
+                Ver campanhas
+           </a>
 
             <article>
                 <h3>✅ Agendamento confirmado</h3>

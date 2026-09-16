@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,18 +15,39 @@
     <title>Locais para Doar</title>
 
 </head>
+=======
 
-<body>
+{% block content %}
+>>>>>>> melissa
 
-    <main>
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 
-        <h1>Locais para Doar</h1>
+    <h1>📍 Locais para Doar</h1>
+    <p>Encontre o hemocentro mais próximo de você e agende sua doação.</p>
 
-        <p>
-            Hemocentros do Distrito Federal — encontre o mais perto de você
-        </p>
+    <!-- ========================= -->
+    <!-- FUNDAÇÃO HEMOCENTRO DE BRASÍLIA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Fundação Hemocentro de Brasília</h2>
+        <p>📍 SMHN Quadra 03, Conjunto A, Bloco 03, Asa Norte – Brasília - DF</p>
+        <p>🕐 Seg–Sex: 07h15–18h</p>
+        <p>📞 (61) 3327-4413</p>
+        <p>✉️ contato@hemocentro.df.gov.br</p>
 
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Fundação+Hemocentro+de+Brasília,+SMHN+Quadra+03,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
 
+        <br><br>
+
+<<<<<<< HEAD
         <!-- HEMOCENTRO DE BRASÍLIA -->
 
         <section>
@@ -200,14 +223,40 @@
             </a>
 
         </section>
+=======
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
+>>>>>>> melissa
 
+    <!-- ========================= -->
+    <!-- BASE DE ATENDIMENTO – TAGUATINGA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Base de atendimento – Taguatinga</h2>
+        <p>📍 Área Especial nº 24, Setor C Norte – Hospital Regional de Taguatinga, Brasília - DF</p>
+        <p>🕐 08h–18h</p>
+        <p>✉️ taguatinga@hemocentro.com</p>
 
-        <!-- HEMONÚCLEO DO PLANO PILOTO -->
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Hospital+Regional+de+Taguatinga,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
 
-        <section>
+        <br><br>
 
-            <h2>🏥 Hemonúcleo do Plano Piloto</h2>
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
 
+<<<<<<< HEAD
             <p>
                 📍 SGAS 613/614, Brasília – DF
             </p>
@@ -323,3 +372,32 @@
 </body>
 
 </html>
+=======
+    <!-- ========================= -->
+    <!-- BASE DE ATENDIMENTO – GAMA -->
+    <!-- ========================= -->
+    <section>
+        <h2>🏥 Base de atendimento – Gama</h2>
+        <p>📍 Área Especial nº 01, Setor Central – Hospital Regional do Gama, Brasília - DF</p>
+        <p>🕐 08h–18h</p>
+        <p>✉️ gama@hemocentro.com</p>
+
+        <h3>📍 Localização</h3>
+        <iframe
+            src="https://www.google.com/maps?q=Hospital+Regional+do+Gama,+Brasília+-+DF&output=embed"
+            width="100%"
+            height="250"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+
+        <br><br>
+
+        <a href="{% url 'agendar_doacao' %}">
+            <button type="button">Agendar aqui</button>
+        </a>
+    </section>
+
+{% endblock %}
+>>>>>>> melissa

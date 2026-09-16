@@ -1,103 +1,116 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
 
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Meu Perfil - SangueBom</title>
 </head>
+=======
+{% block content %}
+>>>>>>> melissa
 
-<body>
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 
-    <main>
+    <!-- ========================= -->
+    <!-- CABEÇALHO DO PERFIL -->
+    <!-- ========================= -->
+    <section class="perfil-header">
+        <h1>👤 Meu Perfil</h1>
+        <p class="perfil-nome">{{ doador.nome }}</p>
+        <p class="perfil-info">🩸 Tipo sanguíneo: <strong>{{ doador.tipo_sanguineo }}</strong></p>
+        <p class="perfil-info">✉️ {{ doador.email }}</p>
+        {% if doador.telefone %}
+            <p class="perfil-info">📞 {{ doador.telefone }}</p>
+        {% endif %}
+    </section>
 
-        <header>
-            <div>
-                <a href="cadastro.html">← Voltar</a>
+    <!-- ========================= -->
+    <!-- CARDS DE RESUMO -->
+    <!-- ========================= -->
+    <section>
+        <div class="cards">
+
+            <div class="card">
+                <h3>📅 Próxima doação</h3>
+                {% if proximo_agendamento %}
+                    <p>
+                        <strong>{{ proximo_agendamento.hemocentro.nome }}</strong>
+                    </p>
+                    <p>
+                        📅 {{ proximo_agendamento.data|date:"d/m/Y" }}<br>
+                        🕐 {{ proximo_agendamento.horario|time:"H:i" }}<br>
+                        🩸 {{ proximo_agendamento.tipo_doacao }}
+                    </p>
+                {% else %}
+                    <p>✅ Liberado!</p>
+                    <p>Você ainda não tem agendamentos futuros. Já pode doar 😊</p>
+                {% endif %}
             </div>
-            <h1>Meu Perfil</h1>
-            <p>Águas Lindas de Goiás – GO</p>
-        </header>
 
-        <section>
-
-            <div>
-                <h2>PRÓXIMA DOAÇÃO</h2>
-                <p>Liberado!</p>
-                <p>Você já pode doar 😊</p>
+            <div class="card">
+                <h3>🩸 Minhas doações</h3>
+                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
+                    {{ total_agendamentos }}
+                </p>
+                <p>Agendamentos realizados</p>
             </div>
 
-            <div>
-                <h2>BENEFÍCIOS VIP</h2>
-                <p>0/2</p>
-                <p>Doações nos últimos 12 meses</p>
-            </div>
-
-            <div>
-                <h2>SEU IMPACTO</h2>
-                <p>12</p>
+            <div class="card">
+                <h3>💗 Seu impacto</h3>
+                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
+                    {{ total_agendamentos|add:0|floatformat:0|add:0 }}x4
+                </p>
                 <p>vidas potencialmente salvas</p>
-                <p>1.350 ml</p>
-                <p>de sangue doado</p>
             </div>
 
-        </section>
+        </div>
+    </section>
 
-        <section>
-            <div>
-                <h2>Histórico de Doações</h2>
-                <a href="agendar-doacao.html">
-                    <button>+ Nova doação</button>
-                </a>
-            </div>
+    <!-- ========================= -->
+    <!-- HISTÓRICO DE AGENDAMENTOS -->
+    <!-- ========================= -->
+    <section>
+        <div class="perfil-secao-header">
+            <h2>📋 Histórico de Agendamentos</h2>
+            <a href="{% url 'agendar_doacao' %}" class="botao-doar">
+                + Nova doação
+            </a>
+        </div>
 
-            <div>
-                <div>
-                    <div>
-                        <strong>Hemocentro de Taguatinga</strong>
-                        <span>Plaquetas</span>
-                        <span>22 de jan. de 2025</span>
+        {% if agendamentos %}
+            <div class="perfil-lista">
+                {% for agendamento in agendamentos %}
+                    <div class="perfil-item">
+                        <div class="perfil-item-info">
+                            <strong>{{ agendamento.hemocentro.nome }}</strong>
+                            <span>
+                                🩸 {{ agendamento.tipo_doacao }}
+                            </span>
+                            <span>
+                                📅 {{ agendamento.data|date:"d/m/Y" }}
+                                às {{ agendamento.horario|time:"H:i" }}
+                            </span>
+                        </div>
+
+                        <div class="perfil-item-botoes">
+                            <a href="{% url 'editar_agendamento' agendamento.id %}" class="btn-editar">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'excluir_agendamento' agendamento.id %}" class="btn-excluir">
+                                🗑️ Excluir
+                            </a>
+                        </div>
                     </div>
-                    <span>Última</span>
-                </div>
-
-                <div>
-                    <div>
-                        <strong>Hemocentro de Brasília – HBDF</strong>
-                        <span>Sangue Total</span>
-                        <span>18 de set. de 2024</span>
-                    </div>
-                </div>
-
-                <div>
-                    <div>
-                        <strong>Hemocentro de Brasília – HBDF</strong>
-                        <span>Sangue Total</span>
-                        <span>10 de jun. de 2024</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-        </section>
+        {% else %}
+            <p class="perfil-vazio">
+                Você ainda não possui agendamentos registrados.
+            </p>
+        {% endif %}
+    </section>
 
-        <section>
-            <h2>Agendamentos</h2>
-
-            <div>
-                <div>
-                    <strong>Hemocentro do Gama</strong>
-                    <span>sábado, 9 de julho às 07:30</span>
-                </div>
-                <span>Confirmado</span>
-            </div>
-        </section>
-
-    </main>
-
-     <script src="{% static 'js/script.js' %}"></script>
-
-</body>
-</body>
-
-</html>
+{% endblock %}

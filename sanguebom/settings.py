@@ -1,23 +1,29 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# =========================================================
+# CONFIGURAÇÕES PRINCIPAIS
+# =========================================================
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sua-chave-aqui'
+# Lê do .env se existir, senão usa fallback (dev)
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-sua-chave-aqui')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Lê DEBUG do .env (padrão True em dev)
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Lê ALLOWED_HOSTS do .env (separado por vírgula)
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
 
-# Application definition
+# =========================================================
+# APLICATIVOS
+# =========================================================
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,10 +32,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'membros',
 ]
 
+
+# =========================================================
+# MIDDLEWARE
+# =========================================================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -42,19 +51,24 @@ MIDDLEWARE = [
 ]
 
 
+# =========================================================
+# URLS
+# =========================================================
+
 ROOT_URLCONF = 'sanguebom.urls'
 
+
+# =========================================================
+# TEMPLATES
+# =========================================================
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-
         'DIRS': [
             BASE_DIR / 'templates',
         ],
-
         'APP_DIRS': True,
-
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -66,11 +80,16 @@ TEMPLATES = [
 ]
 
 
+# =========================================================
+# SERVIDOR
+# =========================================================
+
 WSGI_APPLICATION = 'sanguebom.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# =========================================================
+# BANCO DE DADOS
+# =========================================================
 
 DATABASES = {
     'default': {
@@ -80,8 +99,9 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+# =========================================================
+# VALIDAÇÃO DE SENHA
+# =========================================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,8 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# =========================================================
+# IDIOMA E HORÁRIO
+# =========================================================
 
 LANGUAGE_CODE = 'pt-br'
 
@@ -111,17 +132,51 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# =========================================================
+# ARQUIVOS ESTÁTICOS
+# =========================================================
 
 STATIC_URL = 'static/'
 
+# A pasta static fica DENTRO do app "membros"
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'membros' / 'static',
 ]
 
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# =========================================================
+# CONFIGURAÇÃO PADRÃO DO BANCO
+# =========================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =========================================================
+# AUTENTICAÇÃO
+# =========================================================
+
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'agendar_doacao'
+
+LOGOUT_REDIRECT_URL = 'login'
+
+
+# =========================================================
+# CONFIGURAÇÃO DE E-MAIL (ATIVO - Gmail SMTP)
+# =========================================================
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# ---------------------------------------------------------
+# PARA VOLTAR AO MODO CONSOLE (dev), COMENTE O BLOCO ACIMA
+# E DESCOMENTE A LINHA ABAIXO:
+# ---------------------------------------------------------
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
