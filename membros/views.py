@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils import timezone
+from django.conf import settings
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
-from .emails import enviar_email_agendamento    # 👈 NOVO IMPORT
+from .emails import enviar_email_agendamento
 
 
 # =========================================================
@@ -140,13 +141,9 @@ def cadastro(request):
 
     cidades = cidades_por_estado.get(dados.get('estado'), [])
 
-    # =====================================================
-    # POST
-    # =====================================================
     if request.method == 'POST':
         etapa_post = request.POST.get('etapa', '1')
 
-        # ---------- ETAPA 1 ----------
         if etapa_post == '1':
             dados['nome'] = request.POST.get('nome', '')
             dados['email'] = request.POST.get('email', '')
@@ -165,7 +162,6 @@ def cadastro(request):
             request.session['cadastro_dados'] = dados
             return redirect('/cadastro/?etapa=2')
 
-        # ---------- ETAPA 2 ----------
         elif etapa_post == '2':
             dados['telefone'] = request.POST.get('telefone', '')
             dados['estado'] = request.POST.get('estado', '')
@@ -195,7 +191,6 @@ def cadastro(request):
                     })
                 return redirect('/cadastro/?etapa=3')
 
-        # ---------- ETAPA 3 ----------
         elif etapa_post == '3':
             senha = request.POST.get('senha', '')
             confirmar_senha = request.POST.get('confirmar_senha', '')
@@ -240,9 +235,6 @@ def cadastro(request):
             request.session.pop('cadastro_dados', None)
             return redirect('login')
 
-    # =====================================================
-    # GET
-    # =====================================================
     return render(request, 'cadastrar.html', {
         'etapa': etapa,
         'dados': dados,
@@ -283,6 +275,85 @@ def logout_view(request):
 
 
 # =========================================================
+# FUNÇÃO AUXILIAR: E-MAIL DE CÓDIGO BONITO
+# =========================================================
+
+def enviar_email_codigo(email, codigo, assunto):
+    """Envia e-mail com código de verificação (HTML bonito)"""
+
+    mensagem_texto = f'''Ola!
+
+Seu codigo de verificacao e:
+
+    {codigo}
+
+Este codigo e valido por 10 minutos.
+
+Equipe Sangue Bom ❤️
+'''
+
+    mensagem_html = f'''
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="margin:0; padding:0; font-family:Arial, sans-serif; background:#fcf9f2;">
+
+    <div style="max-width:600px; margin:0 auto; background:white; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+
+        <div style="background:linear-gradient(135deg, #b30000, #7a0000); padding:35px 30px; text-align:center; color:white;">
+            <h1 style="margin:0; font-size:28px;">🩸 Sangue Bom</h1>
+            <p style="margin:10px 0 0 0; opacity:0.9; font-size:14px;">Recuperacao de senha</p>
+        </div>
+
+        <div style="padding:40px 30px;">
+
+            <h2 style="color:#b30000; margin-top:0; font-size:22px;">Ola! 👋</h2>
+
+            <p style="color:#555; font-size:16px; line-height:1.6;">
+                Use o codigo abaixo para confirmar sua identidade:
+            </p>
+
+            <div style="background:#fcf9f2; border:2px dashed #b30000; border-radius:12px; padding:25px; text-align:center; margin:30px 0;">
+                <p style="margin:0; color:#b30000; font-size:13px; letter-spacing:2px; text-transform:uppercase;">Seu codigo</p>
+                <p style="margin:10px 0 0 0; color:#b30000; font-size:42px; font-weight:bold; letter-spacing:8px; font-family:'Courier New', monospace;">{codigo}</p>
+            </div>
+
+            <p style="color:#888; font-size:14px; text-align:center;">
+                ⏱️ Este codigo e valido por <strong>10 minutos</strong>
+            </p>
+
+            <div style="background:#fff3cd; border-left:4px solid #ffc107; padding:15px; border-radius:8px; margin-top:25px;">
+                <p style="margin:0; color:#856404; font-size:13px;">
+                    ⚠️ <strong>Importante:</strong> Se voce nao solicitou, ignore este e-mail.
+                </p>
+            </div>
+
+        </div>
+
+        <div style="background:#7a0000; color:rgba(255,255,255,0.8); padding:20px; text-align:center; font-size:13px;">
+            <p style="margin:5px 0;">Doe sangue. Doe vida. 🩸</p>
+            <p style="margin:10px 0 0 0; opacity:0.7;">Equipe Sangue Bom ❤️</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
+'''
+
+    email_msg = EmailMultiAlternatives(
+        subject=assunto,
+        body=mensagem_texto,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[email]
+    )
+    email_msg.attach_alternative(mensagem_html, "text/html")
+    email_msg.send(fail_silently=False)
+
+
+# =========================================================
 # RECUPERAR SENHA - ENVIAR CÓDIGO
 # =========================================================
 
@@ -302,39 +373,23 @@ def recuperar_senha(request):
         CodigoRecuperacao.objects.filter(email=email).delete()
         CodigoRecuperacao.objects.create(email=email, codigo=codigo)
 
-        send_mail(
-            'Código de verificação - Sangue Bom',
-            f'''Olá!
-
-Recebemos uma solicitação para recuperação de senha da sua conta no Sangue Bom.
-
-Seu código de verificação é:
-
-{codigo}
-
-Digite esse código na página de recuperação de senha para confirmar sua solicitação.
-
-Importante: este código é válido por 10 minutos.
-
-Atenciosamente,
-Equipe Sangue Bom ❤️
-''',
-            None,
-            [email],
-            fail_silently=False,
+        enviar_email_codigo(
+            email,
+            codigo,
+            '🩸 Seu código de verificação - Sangue Bom'
         )
 
         return render(request, 'recuperar_senha.html', {
             'email': email,
             'codigo_enviado': True,
-            'mensagem': 'Um código de verificação foi enviado para seu e-mail.'
+            'mensagem': 'Um código de verificação foi enviado para seu e-mail. Verifique também a caixa de spam.'
         })
 
     return render(request, 'recuperar_senha.html')
 
 
 # =========================================================
-# VALIDAR CÓDIGO
+# VALIDAR CÓDIGO (SEM BLOQUEIO - VALIDA NA HORA)
 # =========================================================
 
 def validar_codigo(request):
@@ -354,6 +409,7 @@ def validar_codigo(request):
                 'codigo_enviado': True
             })
 
+        # ⏱️ SÓ VERIFICA EXPIRAÇÃO (10 minutos)
         tempo_passado = timezone.now() - codigo_recuperacao.criado_em
 
         if tempo_passado.total_seconds() > 600:
@@ -363,6 +419,7 @@ def validar_codigo(request):
                 'email': email
             })
 
+        # ✅ VALIDA NA HORA
         return render(request, 'recuperar_senha.html', {
             'email': email,
             'codigo': codigo_digitado,
@@ -374,7 +431,7 @@ def validar_codigo(request):
 
 
 # =========================================================
-# REENVIAR CÓDIGO (NOVO)
+# REENVIAR CÓDIGO (BLOQUEADO 60s)
 # =========================================================
 
 def reenviar_codigo(request):
@@ -389,7 +446,6 @@ def reenviar_codigo(request):
                 'email': email
             })
 
-        # Verifica o último código criado
         ultimo_codigo = CodigoRecuperacao.objects.filter(email=email).first()
 
         if ultimo_codigo:
@@ -405,29 +461,15 @@ def reenviar_codigo(request):
                     'codigo_enviado': True
                 })
 
-        # Gera novo código
         codigo = str(random.randint(100000, 999999))
 
         CodigoRecuperacao.objects.filter(email=email).delete()
         CodigoRecuperacao.objects.create(email=email, codigo=codigo)
 
-        send_mail(
-            'Novo código de verificação - Sangue Bom',
-            f'''Olá!
-
-Você solicitou um novo código de verificação.
-
-Seu novo código é:
-
-{codigo}
-
-Este código é válido por 10 minutos.
-
-Equipe Sangue Bom ❤️
-''',
-            None,
-            [email],
-            fail_silently=False,
+        enviar_email_codigo(
+            email,
+            codigo,
+            '🔄 Novo código de verificação - Sangue Bom'
         )
 
         return render(request, 'recuperar_senha.html', {
@@ -479,6 +521,14 @@ def alterar_senha(request):
                 'codigo_validado': True
             })
 
+        if len(nova_senha) < 8:
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'A senha deve ter pelo menos 8 caracteres.',
+                'email': email,
+                'codigo': codigo,
+                'codigo_validado': True
+            })
+
         usuario = User.objects.filter(username=email).first()
 
         if usuario is None:
@@ -517,7 +567,6 @@ def agendar_doacao(request):
 
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
-        # Salva em variável pra poder enviar email
         agendamento = Agendamento.objects.create(
             doador=doador,
             hemocentro=hemocentro,
@@ -527,7 +576,6 @@ def agendar_doacao(request):
             tipo_doacao=tipo_doacao
         )
 
-        # 🎯 ENVIA E-MAIL (doador + hemocentro)
         try:
             enviar_email_agendamento(doador, agendamento)
         except Exception as e:
@@ -589,7 +637,6 @@ def editar_agendamento(request, id):
         agendamento.tipo_doacao = tipo_doacao
         agendamento.save()
 
-        # 🎯 ENVIA E-MAIL DE ATUALIZAÇÃO
         try:
             enviar_email_agendamento(doador, agendamento)
         except Exception as e:

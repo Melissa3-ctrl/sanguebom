@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Senha - Sangue Bom</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- 🩸 FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
+
 </head>
 <body>
 
@@ -21,7 +25,6 @@
     {% if sucesso %}
         <p>{{ sucesso }}</p>
         <br>
-        <a href="{% url 'login' %}">Voltar para o login</a>
 
     <!-- =====================================================
          CÓDIGO VALIDADO — CRIAR NOVA SENHA
