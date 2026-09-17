@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-/* ========================= */
-/* CONFIGURAÇÕES GERAIS      */
-/* ========================= */
-
-=======
 /* =========================================================
    RESET E CONFIGURAÇÕES GERAIS
    ========================================================= */
->>>>>>> melissa
 * {
     margin: 0;
     padding: 0;
@@ -15,168 +8,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-<<<<<<< HEAD
-body {
-    background-color: #f5f0eb;
-    display: grid;
-    grid-template-columns: 260px 1fr 300px;
-    grid-template-rows: auto 1fr;
-    gap: 20px;
-    padding: 20px;
-    min-height: 100vh;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* ========================= */
-/* TOPO / HEADER            */
-/* ========================= */
-
-header {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, #8b0000, #cc0000);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
-}
-
-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-header h2:first-child {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 8px 18px;
-    border-radius: 30px;
-    font-size: 14px;
-}
-
-/* ========================= */
-/* MENU LATERAL ESQUERDO    */
-/* ========================= */
-
-aside:first-of-type {
-    background: white;
-    border-radius: 20px;
-    padding: 25px 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-}
-
-aside:first-of-type h1 {
-    color: #8b0000;
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-aside nav {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 25px;
-}
-
-aside nav a {
-    padding: 12px 16px;
-    border-radius: 12px;
-    color: #4a4a4a;
-    font-weight: 500;
-    font-size: 15px;
-    transition: all 0.2s ease;
-}
-
-aside nav a:hover {
-    background: #fdf0ed;
-    color: #8b0000;
-    padding-left: 22px;
-}
-
-.dados-protegidos {
-    background: #f8f4f0;
-    border-radius: 14px;
-    padding: 18px;
-    margin: 10px 0 20px;
-    border-left: 4px solid #8b0000;
-}
-
-.dados-protegidos h3 {
-    color: #8b0000;
-    font-size: 15px;
-    margin-bottom: 4px;
-}
-
-.dados-protegidos p {
-    color: #666;
-    font-size: 13px;
-}
-
-aside:first-of-type > a:last-child {
-    margin-top: auto;
-    padding: 12px;
-    text-align: center;
-    background: #f0f0f0;
-    border-radius: 12px;
-    color: #555;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-aside:first-of-type > a:last-child:hover {
-    background: #8b0000;
-    color: white;
-}
-
-/* ========================= */
-/* CONTEÚDO PRINCIPAL       */
-/* ========================= */
-
-main {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-/* --- BANNER --- */
-
-.banner {
-    background: linear-gradient(135deg, #8b0000, #cc0000);
-    border-radius: 24px;
-    padding: 40px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    min-height: 380px;
-    position: relative;
-    overflow: hidden;
-}
-
-.icone-banner {
-    flex: 0 0 170px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.gota svg {
-    display: block;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.2));
-=======
 html, body {
     width: 100%;
     overflow-x: hidden;
@@ -249,7 +80,6 @@ header a:hover {
     flex-direction: column;
     position: sticky;
     top: 15px;
-    /* 👇 ALTURA MÍNIMA pra empurrar o botão pra baixo */
     min-height: calc(100vh - 120px);
 }
 
@@ -378,8 +208,8 @@ header a:hover {
    ÁREA DO BOTÃO SAIR / ENTRAR
    ========================================================= */
 .area-btn-sair {
-    margin-top: auto;          /* 👈 empurra pro fim */
-    padding-top: 30px;         /* espaço mínimo acima */
+    margin-top: auto;
+    padding-top: 30px;
 }
 
 .btn-sair {
@@ -432,47 +262,10 @@ main {
     position: relative;
     overflow: hidden;
     gap: 20px;
->>>>>>> melissa
 }
 
 .conteudo-banner {
     flex: 1;
-<<<<<<< HEAD
-    padding: 0 30px;
-}
-
-.conteudo-banner h1 {
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-}
-
-.conteudo-banner .subtitulo {
-    font-size: 16px;
-    opacity: 0.85;
-    margin-bottom: 12px;
-}
-
-.conteudo-banner h2 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.conteudo-banner h2 span {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 2px 12px;
-    border-radius: 30px;
-    display: inline-block;
-}
-
-.conteudo-banner .descricao {
-    font-size: 15px;
-    opacity: 0.9;
-    line-height: 1.6;
-    margin-bottom: 20px;
-=======
     z-index: 2;
 }
 
@@ -501,84 +294,10 @@ main {
     line-height: 1.5;
     margin-bottom: 20px;
     opacity: 0.9;
->>>>>>> melissa
 }
 
 .botoes-banner {
     display: flex;
-<<<<<<< HEAD
-    gap: 14px;
-}
-
-.botoes-banner a {
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
-
-.botao-doar {
-    background: white;
-    color: #8b0000;
-}
-
-.botao-doar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
-
-.botao-preciso {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-.botao-preciso:hover {
-    background: rgba(255, 255, 255, 0.35);
-}
-
-.lado-direito {
-    flex: 0 0 200px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.circulo {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.circulo-1 {
-    width: 250px;
-    height: 250px;
-    top: -60px;
-    right: -30px;
-}
-
-.circulo-2 {
-    width: 180px;
-    height: 180px;
-    bottom: -40px;
-    right: 20px;
-}
-
-.foto-banner {
-    position: relative;
-    z-index: 1;
-}
-
-.foto-banner img {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-=======
     gap: 12px;
     flex-wrap: wrap;
 }
@@ -631,90 +350,10 @@ main {
     object-fit: cover;
     border-radius: 50%;
     border: 5px solid rgba(255,255,255,0.2);
->>>>>>> melissa
 }
 
 .salve-vidas {
     position: absolute;
-<<<<<<< HEAD
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    color: #8b0000;
-    padding: 6px 18px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 13px;
-    white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
-
-/* --- SEÇÃO PRINCIPAIS FUNÇÕES --- */
-
-main > section:not(:first-child) h2 {
-    font-size: 26px;
-    color: #2d2d2d;
-    margin-bottom: 18px;
-    font-weight: 700;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-
-.card {
-    background: white;
-    border-radius: 18px;
-    padding: 22px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
-    border: 1px solid #f0ebe6;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(139, 0, 0, 0.1);
-    border-color: #cc0000;
-}
-
-.card h3 {
-    font-size: 17px;
-    color: #2d2d2d;
-    margin-bottom: 8px;
-}
-
-.card p {
-    font-size: 14px;
-    color: #777;
-    line-height: 1.5;
-}
-
-.card button {
-    margin-top: 14px;
-    background: #8b0000;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.card button:hover {
-    background: #cc0000;
-    transform: scale(1.03);
-}
-
-/* ========================= */
-/* LATERAL DIREITA          */
-/* ========================= */
-
-=======
     bottom: 10px;
     right: 10px;
     background-color: white;
@@ -795,7 +434,6 @@ a.card p,
 /* =========================================================
    LATERAL DIREITA
    ========================================================= */
->>>>>>> melissa
 .lateral-direita {
     display: flex;
     flex-direction: column;
@@ -803,101 +441,6 @@ a.card p,
 }
 
 .lateral-direita section {
-<<<<<<< HEAD
-    background: white;
-    border-radius: 20px;
-    padding: 22px 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-}
-
-.lateral-direita section h2 {
-    font-size: 18px;
-    color: #2d2d2d;
-    margin-bottom: 4px;
-}
-
-.lateral-direita section > p {
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 14px;
-}
-
-/* --- ESTOQUE --- */
-
-.estoque {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-}
-
-.tipo-sangue {
-    background: #faf8f6;
-    border-radius: 10px;
-    padding: 10px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.tipo-sangue h3 {
-    font-size: 15px;
-    font-weight: 700;
-    color: #2d2d2d;
-}
-
-.tipo-sangue p {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-/* --- PRÓXIMA DOAÇÃO --- */
-
-.doacao h3 {
-    font-size: 14px;
-    color: #888;
-    font-weight: 400;
-}
-
-.doacao h2 {
-    font-size: 20px;
-    color: #2d8b2d;
-    margin: 4px 0 8px;
-}
-
-.doacao p {
-    font-size: 14px;
-    color: #666;
-}
-
-/* --- MENSAGEM --- */
-
-.mensagem h3 {
-    color: #8b0000;
-    font-size: 16px;
-    margin-bottom: 6px;
-}
-
-.mensagem p {
-    color: #555;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* --- CAMPANHA --- */
-
-.campanha img {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    object-fit: cover;
-    max-height: 120px;
-}
-
-.campanha h3 {
-    font-size: 15px;
-    color: #2d2d2d;
-    margin-bottom: 10px;
-=======
     background-color: white;
     padding: 20px;
     border-radius: 15px;
@@ -983,53 +526,10 @@ a.card p,
 .campanha h3 {
     font-size: 0.88rem;
     margin-bottom: 12px;
->>>>>>> melissa
 }
 
 .campanha a {
     display: inline-block;
-<<<<<<< HEAD
-    background: #8b0000;
-    color: white;
-    padding: 8px 22px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 13px;
-    transition: all 0.2s ease;
-}
-
-.campanha a:hover {
-    background: #cc0000;
-    transform: scale(1.03);
-}
-
-/* ========================= */
-/* RESPONSIVIDADE           */
-/* ========================= */
-
-@media (max-width: 1200px) {
-    body {
-        grid-template-columns: 220px 1fr 260px;
-        gap: 15px;
-        padding: 15px;
-    }
-}
-
-@media (max-width: 992px) {
-    body {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-
-    aside:first-of-type {
-        display: none;
-    }
-
-    .lateral-direita {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-=======
     text-decoration: none;
     background-color: #b30000;
     color: white;
@@ -1598,7 +1098,7 @@ body.pagina-cadastro {
     .lateral-esquerda {
         position: static;
         padding: 15px;
-        min-height: auto;      /* 👈 reseta a altura no mobile */
+        min-height: auto;
     }
 
     .menu-toggle-label {
@@ -1648,31 +1148,11 @@ body.pagina-cadastro {
     .menu-item {
         padding: 12px 15px;
         font-size: 0.9rem;
->>>>>>> melissa
     }
 
     .banner {
         flex-direction: column;
         text-align: center;
-<<<<<<< HEAD
-        padding: 30px;
-    }
-
-    .icone-banner {
-        flex: 0 0 120px;
-    }
-
-    .conteudo-banner {
-        padding: 0;
-    }
-
-    .conteudo-banner h1 {
-        font-size: 30px;
-    }
-
-    .conteudo-banner h2 {
-        font-size: 22px;
-=======
         padding: 25px 20px;
     }
 
@@ -1682,18 +1162,10 @@ body.pagina-cadastro {
 
     .conteudo-banner h2 {
         font-size: 1.3rem;
->>>>>>> melissa
     }
 
     .botoes-banner {
         justify-content: center;
-<<<<<<< HEAD
-        flex-wrap: wrap;
-    }
-
-    .lado-direito {
-        flex: 0 0 auto;
-=======
     }
 
     .foto-banner img {
@@ -1778,7 +1250,6 @@ body.pagina-cadastro {
     .botao-doar {
         width: 100%;
         text-align: center;
->>>>>>> melissa
     }
 
     .foto-banner img {
@@ -1787,29 +1258,6 @@ body.pagina-cadastro {
     }
 
     .cards {
-<<<<<<< HEAD
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .lateral-direita {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    header {
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        text-align: center;
-    }
-
-    header h2 {
-        font-size: 13px;
-    }
-
-    header h2:first-child {
-        font-size: 12px;
-        padding: 6px 14px;
-=======
         grid-template-columns: 1fr;
         gap: 12px;
     }
@@ -1855,46 +1303,10 @@ body.pagina-cadastro {
 
     .cadastro-cabecalho h1 {
         font-size: 1.7rem;
->>>>>>> melissa
     }
 }
 
 @media (max-width: 600px) {
-<<<<<<< HEAD
-    body {
-        padding: 10px;
-        gap: 12px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .lateral-direita {
-        grid-template-columns: 1fr;
-    }
-
-    .banner {
-        padding: 20px;
-        min-height: auto;
-    }
-
-    .conteudo-banner h1 {
-        font-size: 24px;
-    }
-
-    .conteudo-banner h2 {
-        font-size: 18px;
-    }
-
-    .botoes-banner a {
-        padding: 10px 20px;
-        font-size: 13px;
-    }
-
-    .estoque {
-        grid-template-columns: 1fr 1fr;
-=======
     body.pagina-cadastro {
         padding: 15px 10px;
     }
@@ -1940,9 +1352,9 @@ body.pagina-cadastro {
     .campo select {
         font-size: 1rem;
         padding: 13px 15px;
->>>>>>> melissa
     }
 }
+
 /* =========================================================
    ESCONDE BOTÃO "MOSTRAR" ANTIGO (CACHE)
    ========================================================= */

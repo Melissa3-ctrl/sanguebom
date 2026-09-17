@@ -2,103 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-<<<<<<< HEAD
-
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Recuperar Senha - Sangue Bom</title>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-</head>
-
-<body>
-
-    <main>
-
-        <h1>❤️ Sangue Bom</h1>
-
-        <h2>Recuperar senha</h2>
-
-        <p>
-            Digite seu e-mail e cadastre uma nova senha.
-        </p>
-
-
-        {% if erro %}
-
-            <p>
-                {{ erro }}
-            </p>
-
-        {% endif %}
-
-
-        {% if sucesso %}
-
-            <p>
-                {{ sucesso }}
-            </p>
-
-            <br>
-
-            <a href="{% url 'login' %}">
-                Voltar para o login
-            </a>
-
-        {% else %}
-
-
-            <form method="POST">
-
-                {% csrf_token %}
-
-
-                <label for="email">
-                    E-mail:
-                </label>
-
-                <br>
-
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Digite seu e-mail"
-                    value="{{ email|default:'' }}"
-                    required
-                >
-
-                <br><br>
-
-
-                <label for="nova_senha">
-                    Nova senha:
-                </label>
-
-                <br>
-
-                <input
-                    type="password"
-                    name="nova_senha"
-                    id="nova_senha"
-                    placeholder="Digite sua nova senha"
-                    required
-                >
-
-                <br><br>
-
-
-                <label for="confirmar_senha">
-                    Confirmar nova senha:
-                </label>
-
-                <br>
-
-=======
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +31,7 @@
         <p>Agora você pode criar uma nova senha.</p>
 
         {% if erro %}
-            <p>{{ erro }}</p>
+            <p style="color:#b30000;">{{ erro }}</p>
         {% endif %}
 
         <form method="POST" action="{% url 'alterar_senha' %}">
@@ -171,40 +74,10 @@
             <br>
 
             <div class="campo-senha">
->>>>>>> melissa
                 <input
                     type="password"
                     name="confirmar_senha"
                     id="confirmar_senha"
-<<<<<<< HEAD
-                    placeholder="Digite a senha novamente"
-                    required
-                >
-
-                <br><br>
-
-
-                <button type="submit">
-                    Alterar senha
-                </button>
-
-            </form>
-
-
-            <br>
-
-
-            <a href="{% url 'login' %}">
-                ← Voltar para o login
-            </a>
-
-        {% endif %}
-
-    </main>
-
-</body>
-
-=======
                     placeholder="Digite novamente"
                     minlength="8"
                     autocomplete="new-password"
@@ -229,17 +102,18 @@
         </form>
 
     <!-- =====================================================
-         CÓDIGO ENVIADO — DIGITAR CÓDIGO
+         CÓDIGO ENVIADO — VALIDAR + REENVIAR
          ===================================================== -->
     {% elif codigo_enviado %}
         <p>{{ mensagem }}</p>
 
         {% if erro %}
-            <p>{{ erro }}</p>
+            <p style="color:#b30000;">{{ erro }}</p>
         {% endif %}
 
         <p>Digite o código de 6 dígitos enviado para seu e-mail.</p>
 
+        <!-- FORM VALIDAR (SEMPRE ATIVO) -->
         <form method="POST" action="{% url 'validar_codigo' %}">
             {% csrf_token %}
 
@@ -263,8 +137,54 @@
 
             <br><br>
 
-            <button type="submit">Validar código</button>
+            <button type="submit" class="btn-continuar">
+                ✅ Validar código
+            </button>
         </form>
+
+        <!-- FORM REENVIAR (BLOQUEADO 60s) -->
+        <form method="POST" action="{% url 'reenviar_codigo' %}" style="margin-top:15px;">
+            {% csrf_token %}
+            <input type="hidden" name="email" value="{{ email }}">
+
+            <p id="contador" style="text-align:center; color:#888; font-size:0.9rem; margin-bottom:10px;">
+                ⏱️ Você poderá reenviar em <strong id="tempo">60</strong>s
+            </p>
+
+            <button
+                type="submit"
+                id="btn-reenviar"
+                class="btn-continuar"
+                disabled
+                style="background:#f0f0f0; color:#b30000; border:2px solid #b30000; opacity:0.5; cursor:not-allowed;"
+            >
+                🔄 Reenviar código
+            </button>
+        </form>
+
+        <script>
+            // ==========================================
+            // CONTADOR DE 60 SEGUNDOS
+            // ==========================================
+            let segundos = 60;
+            const tempoEl = document.getElementById('tempo');
+            const contadorEl = document.getElementById('contador');
+            const btnReenviar = document.getElementById('btn-reenviar');
+
+            const intervalo = setInterval(() => {
+                segundos--;
+                tempoEl.textContent = segundos;
+
+                if (segundos <= 0) {
+                    clearInterval(intervalo);
+                    contadorEl.style.display = 'none';
+                    btnReenviar.disabled = false;
+                    btnReenviar.style.opacity = '1';
+                    btnReenviar.style.cursor = 'pointer';
+                    btnReenviar.style.background = '#ffffff';
+                }
+            }, 1000);
+        </script>
 
     <!-- =====================================================
          PRIMEIRA TELA — E-MAIL
@@ -332,5 +252,4 @@
 </script>
 
 </body>
->>>>>>> melissa
 </html>

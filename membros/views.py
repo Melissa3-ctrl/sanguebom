@@ -2,15 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from .models import Doador, Hemocentro, Agendamento
-=======
 from django.core.mail import send_mail
 from django.utils import timezone
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
 from .emails import enviar_email_agendamento    # 👈 NOVO IMPORT
->>>>>>> melissa
 
 
 # =========================================================
@@ -88,13 +84,6 @@ def notificacoes(request):
 
 @login_required(login_url='login')
 def meu_perfil(request):
-<<<<<<< HEAD
-
-    doador = get_object_or_404(
-        Doador,
-        usuario=request.user
-    )
-=======
     doador = get_object_or_404(Doador, usuario=request.user)
 
     agendamentos = Agendamento.objects.filter(
@@ -107,7 +96,6 @@ def meu_perfil(request):
     proximo_agendamento = agendamentos.filter(
         data__gte=hoje
     ).order_by('data', 'horario').first()
->>>>>>> melissa
 
     return render(request, 'meu_perfil.html', {
         'doador': doador,
@@ -167,21 +155,12 @@ def cadastro(request):
             dados['sexo'] = request.POST.get('sexo', '')
             dados['tipo_sanguineo'] = request.POST.get('tipo_sanguineo', '')
 
-<<<<<<< HEAD
-        # Verifica se o e-mail já existe
-        if User.objects.filter(username=email).exists():
-
-            return render(request, 'cadastrar.html', {
-                'erro': 'Este e-mail já está cadastrado.'
-            })
-=======
             if User.objects.filter(username=dados['email']).exists():
                 return render(request, 'cadastrar.html', {
                     'etapa': '1',
                     'dados': dados,
                     'erro': 'Este e-mail já está cadastrado.'
                 })
->>>>>>> melissa
 
             request.session['cadastro_dados'] = dados
             return redirect('/cadastro/?etapa=2')
@@ -295,48 +274,6 @@ def login_view(request):
 
 
 # =========================================================
-# RECUPERAR SENHA
-# =========================================================
-
-def recuperar_senha(request):
-
-    if request.method == 'POST':
-
-        email = request.POST.get('email')
-        nova_senha = request.POST.get('nova_senha')
-        confirmar_senha = request.POST.get('confirmar_senha')
-
-        # Verifica se o e-mail está cadastrado
-        usuario = User.objects.filter(
-            username=email
-        ).first()
-
-        if usuario is None:
-
-            return render(request, 'recuperar_senha.html', {
-                'erro': 'Este e-mail não está cadastrado.'
-            })
-
-        # Verifica se as senhas são iguais
-        if nova_senha != confirmar_senha:
-
-            return render(request, 'recuperar_senha.html', {
-                'erro': 'As senhas não são iguais.',
-                'email': email
-            })
-
-        # Altera a senha usando o método seguro do Django
-        usuario.set_password(nova_senha)
-        usuario.save()
-
-        return render(request, 'recuperar_senha.html', {
-            'sucesso': 'Senha alterada com sucesso!'
-        })
-
-    return render(request, 'recuperar_senha.html')
-
-
-# =========================================================
 # LOGOUT
 # =========================================================
 
@@ -437,6 +374,72 @@ def validar_codigo(request):
 
 
 # =========================================================
+# REENVIAR CÓDIGO (NOVO)
+# =========================================================
+
+def reenviar_codigo(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        usuario = User.objects.filter(username=email).first()
+
+        if usuario is None:
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'E-mail não encontrado.',
+                'email': email
+            })
+
+        # Verifica o último código criado
+        ultimo_codigo = CodigoRecuperacao.objects.filter(email=email).first()
+
+        if ultimo_codigo:
+            tempo_passado = timezone.now() - ultimo_codigo.criado_em
+            segundos_passados = tempo_passado.total_seconds()
+
+            # ⏱️ Só pode reenviar depois de 60 segundos
+            if segundos_passados < 60:
+                segundos_restantes = int(60 - segundos_passados)
+                return render(request, 'recuperar_senha.html', {
+                    'erro': f'⏱️ Aguarde {segundos_restantes} segundos para reenviar.',
+                    'email': email,
+                    'codigo_enviado': True
+                })
+
+        # Gera novo código
+        codigo = str(random.randint(100000, 999999))
+
+        CodigoRecuperacao.objects.filter(email=email).delete()
+        CodigoRecuperacao.objects.create(email=email, codigo=codigo)
+
+        send_mail(
+            'Novo código de verificação - Sangue Bom',
+            f'''Olá!
+
+Você solicitou um novo código de verificação.
+
+Seu novo código é:
+
+{codigo}
+
+Este código é válido por 10 minutos.
+
+Equipe Sangue Bom ❤️
+''',
+            None,
+            [email],
+            fail_silently=False,
+        )
+
+        return render(request, 'recuperar_senha.html', {
+            'email': email,
+            'codigo_enviado': True,
+            'mensagem': '🔄 Um novo código foi enviado para seu e-mail.'
+        })
+
+    return redirect('recuperar_senha')
+
+
+# =========================================================
 # ALTERAR SENHA
 # =========================================================
 
@@ -504,16 +507,7 @@ def alterar_senha(request):
 
 @login_required(login_url='login')
 def agendar_doacao(request):
-<<<<<<< HEAD
-
-    # Descobre o doador que está logado
-    doador = get_object_or_404(
-        Doador,
-        usuario=request.user
-    )
-=======
     doador = get_object_or_404(Doador, usuario=request.user)
->>>>>>> melissa
 
     if request.method == 'POST':
         hemocentro_id = request.POST.get('hemocentro')
@@ -521,24 +515,10 @@ def agendar_doacao(request):
         horario = request.POST.get('horario')
         tipo_doacao = request.POST.get('tipo_doacao')
 
-<<<<<<< HEAD
-        # Busca o hemocentro escolhido
-        hemocentro = get_object_or_404(
-            Hemocentro,
-            id=hemocentro_id,
-            ativo=True
-        )
-
-        # Cria o agendamento
-        # A base recebe automaticamente o nome
-        # do hemocentro escolhido
-        Agendamento.objects.create(
-=======
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
         # Salva em variável pra poder enviar email
         agendamento = Agendamento.objects.create(
->>>>>>> melissa
             doador=doador,
             hemocentro=hemocentro,
             base=hemocentro.nome,
@@ -555,12 +535,6 @@ def agendar_doacao(request):
 
         return redirect('listar_agendamentos')
 
-<<<<<<< HEAD
-    # Busca somente hemocentros ativos
-    hemocentros = Hemocentro.objects.filter(
-        ativo=True
-    )
-=======
     hemocentros = Hemocentro.objects.filter(ativo=True)
     hoje = timezone.localdate()
 
@@ -568,7 +542,6 @@ def agendar_doacao(request):
         doador=doador,
         data__gte=hoje
     ).order_by('data', 'horario').first()
->>>>>>> melissa
 
     return render(request, 'agendar_doacao.html', {
         'doador': doador,
@@ -585,20 +558,7 @@ def agendar_doacao(request):
 def listar_agendamentos(request):
     doador = get_object_or_404(Doador, usuario=request.user)
 
-<<<<<<< HEAD
-    # Descobre o doador logado
-    doador = get_object_or_404(
-        Doador,
-        usuario=request.user
-    )
-
-    # Mostra somente os agendamentos desse doador
-    agendamentos = Agendamento.objects.filter(
-        doador=doador
-    )
-=======
     agendamentos = Agendamento.objects.filter(doador=doador)
->>>>>>> melissa
 
     return render(request, 'agendamentos.html', {
         'agendamentos': agendamentos
@@ -611,24 +571,8 @@ def listar_agendamentos(request):
 
 @login_required(login_url='login')
 def editar_agendamento(request, id):
-<<<<<<< HEAD
-
-    # Descobre o doador logado
-    doador = get_object_or_404(
-        Doador,
-        usuario=request.user
-    )
-
-    # Busca somente o agendamento desse doador
-    agendamento = get_object_or_404(
-        Agendamento,
-        id=id,
-        doador=doador
-    )
-=======
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
->>>>>>> melissa
 
     if request.method == 'POST':
         hemocentro_id = request.POST.get('hemocentro')
@@ -636,31 +580,7 @@ def editar_agendamento(request, id):
         horario = request.POST.get('horario')
         tipo_doacao = request.POST.get('tipo_doacao')
 
-<<<<<<< HEAD
-        hemocentro_id = request.POST.get('hemocentro')
-        data = request.POST.get('data')
-        horario = request.POST.get('horario')
-        tipo_doacao = request.POST.get('tipo_doacao')
-
-        # Busca o novo hemocentro
-        hemocentro = get_object_or_404(
-            Hemocentro,
-            id=hemocentro_id,
-            ativo=True
-        )
-
-        # Atualiza os dados
-        agendamento.hemocentro = hemocentro
-
-        # Atualiza a base automaticamente
-        agendamento.base = hemocentro.nome
-
-        agendamento.data = data
-        agendamento.horario = horario
-        agendamento.tipo_doacao = tipo_doacao
-=======
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
->>>>>>> melissa
 
         agendamento.hemocentro = hemocentro
         agendamento.base = hemocentro.nome
@@ -677,14 +597,7 @@ def editar_agendamento(request, id):
 
         return redirect('listar_agendamentos')
 
-<<<<<<< HEAD
-    # Busca somente hemocentros ativos
-    hemocentros = Hemocentro.objects.filter(
-        ativo=True
-    )
-=======
     hemocentros = Hemocentro.objects.filter(ativo=True)
->>>>>>> melissa
 
     return render(request, 'editar_agendamento.html', {
         'agendamento': agendamento,
@@ -698,25 +611,8 @@ def editar_agendamento(request, id):
 
 @login_required(login_url='login')
 def excluir_agendamento(request, id):
-<<<<<<< HEAD
-
-    # Descobre o doador
-    doador = get_object_or_404(
-        Doador,
-        usuario=request.user
-    )
-
-    # Busca somente um agendamento
-    # que pertence ao usuário logado
-    agendamento = get_object_or_404(
-        Agendamento,
-        id=id,
-        doador=doador
-    )
-=======
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
->>>>>>> melissa
 
     if request.method == 'POST':
         agendamento.delete()

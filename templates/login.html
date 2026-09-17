@@ -1,21 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sangue Bom</title>
 
-<<<<<<< HEAD
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-</head>
-=======
     <!-- 🩸 FAVICON -->
     <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
->>>>>>> melissa
 
     <!-- FONTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,33 +76,12 @@
             pode fazer uma grande diferença.
         </p>
 
-<<<<<<< HEAD
-        {% if erro %}
-
-            <p>
-                {{ erro }}
-            </p>
-
-        {% endif %}
-
-
-        <form method="POST">
-
-            {% csrf_token %}
-
-            <label for="email">
-                E-mail:
-            </label>
-
-            <br>
-=======
     </div>
 
     <!-- ========== LADO DIREITO ========== -->
     <div class="lado-formulario">
 
         <div class="card-login">
->>>>>>> melissa
 
             <h2><em>Bem-vindo de volta</em></h2>
             <p class="subtitulo">Vamos juntos salvar vidas!</p>
@@ -122,18 +93,9 @@
                 <div class="passo"><span>3</span><p>Pronto</p></div>
             </div>
 
-<<<<<<< HEAD
-
-            <label for="senha">
-                Senha:
-            </label>
-
-            <br>
-=======
             <!-- SEÇÃO -->
             <div class="secao-titulo">🔐 Acesse sua conta</div>
             <p class="secao-desc">Entre para agendar sua doação.</p>
->>>>>>> melissa
 
             {% if erro %}
                 <div class="login-erro">⚠️ {{ erro }}</div>
@@ -143,37 +105,6 @@
             <form method="POST">
                 {% csrf_token %}
 
-<<<<<<< HEAD
-
-            <button type="submit">
-                Entrar
-            </button>
-
-        </form>
-
-
-        <br>
-
-
-        <!-- ESQUECI MINHA SENHA -->
-
-        <a href="{% url 'recuperar_senha' %}">
-            Esqueci minha senha
-        </a>
-
-
-        <br><br>
-
-
-        <p>
-            Ainda não possui cadastro?
-        </p>
-
-
-        <a href="{% url 'cadastro' %}">
-            Criar minha conta
-        </a>
-=======
                 <div class="campo">
                     <label for="email">E-mail *</label>
                     <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required autofocus>
@@ -202,7 +133,6 @@
                 <span class="icone">🩸</span>
                 <p>Doar sangue é um gesto de amor.<br>E você pode fazer parte disso.</p>
             </div>
->>>>>>> melissa
 
             <!-- LINKS -->
             <div class="extras">
@@ -248,5 +178,4 @@
     </script>
 
 </body>
-
 </html>
