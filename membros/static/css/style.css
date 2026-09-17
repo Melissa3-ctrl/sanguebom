@@ -1943,3 +1943,18 @@ body.pagina-cadastro {
 >>>>>>> melissa
     }
 }
+/* =========================================================
+   ESCONDE BOTÃO "MOSTRAR" ANTIGO (CACHE)
+   ========================================================= */
+.botao-mostrar-senha,
+button.botao-mostrar-senha,
+input.botao-mostrar-senha {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+}

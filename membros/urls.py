@@ -77,6 +77,13 @@ urlpatterns = [
         name='validar_codigo'
     ),
 
+    # 👇 NOVA ROTA: REENVIAR CÓDIGO
+    path(
+        'reenviar_codigo/',
+        views.reenviar_codigo,
+        name='reenviar_codigo'
+    ),
+
     path(
         'alterar_senha/',
         views.alterar_senha,
