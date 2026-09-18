@@ -80,7 +80,6 @@ header a:hover {
     flex-direction: column;
     position: sticky;
     top: 15px;
-    /* 👇 ALTURA MÍNIMA pra empurrar o botão pra baixo */
     min-height: calc(100vh - 120px);
 }
 
@@ -209,8 +208,8 @@ header a:hover {
    ÁREA DO BOTÃO SAIR / ENTRAR
    ========================================================= */
 .area-btn-sair {
-    margin-top: auto;          /* 👈 empurra pro fim */
-    padding-top: 30px;         /* espaço mínimo acima */
+    margin-top: auto;
+    padding-top: 30px;
 }
 
 .btn-sair {
@@ -1099,7 +1098,7 @@ body.pagina-cadastro {
     .lateral-esquerda {
         position: static;
         padding: 15px;
-        min-height: auto;      /* 👈 reseta a altura no mobile */
+        min-height: auto;
     }
 
     .menu-toggle-label {
@@ -1354,4 +1353,20 @@ body.pagina-cadastro {
         font-size: 1rem;
         padding: 13px 15px;
     }
+}
+
+/* =========================================================
+   ESCONDE BOTÃO "MOSTRAR" ANTIGO (CACHE)
+   ========================================================= */
+.botao-mostrar-senha,
+button.botao-mostrar-senha,
+input.botao-mostrar-senha {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
 }

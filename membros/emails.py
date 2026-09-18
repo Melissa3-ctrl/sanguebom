@@ -60,6 +60,28 @@ def enviar_email_agendamento(doador, agendamento):
         texto_falta = 'Você atingiu o nível máximo!'
 
     # ==========================================
+    # 📊 CALCULA O PROGRESSO DO DOADOR
+    # ==========================================
+
+    total = Agendamento.objects.filter(doador=doador).count()
+    nivel, proximo, faltam, progresso, emoji = calcular_nivel(total)
+
+    # Monta o assunto dinâmico
+    if proximo:
+        if faltam == 1:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Falta 1 pro {proximo} 🩸'
+            msg_falta = f'Falta <strong>1 agendamento</strong> pro {proximo}!'
+            texto_falta = f'Falta 1 pro {proximo}'
+        else:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Faltam {faltam} pro {proximo} 🩸'
+            msg_falta = f'Faltam <strong>{faltam} agendamentos</strong> pro {proximo}!'
+            texto_falta = f'Faltam {faltam} pro {proximo}'
+    else:
+        assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Você é incrível! 🏆🩸'
+        msg_falta = '🏆 Você atingiu o <strong>nível máximo</strong>!'
+        texto_falta = 'Você atingiu o nível máximo!'
+
+    # ==========================================
     # 📧 E-MAIL 1: PRO DOADOR
     # ==========================================
 
@@ -155,6 +177,7 @@ Sua doação foi agendada com sucesso!
 
 Data: {agendamento.data}
 Horário: {agendamento.horario}
+Horário: {agendamento.horario}
 Local: {agendamento.hemocentro.nome}
 Tipo: {agendamento.tipo_doacao}
 
@@ -249,10 +272,13 @@ Tipo sanguíneo: {doador.tipo_sanguineo}
 Data: {agendamento.data}
 Horário: {agendamento.horario}
 Tipo de doação: {agendamento.tipo_doacao}
+Horário: {agendamento.horario}
+Tipo de doação: {agendamento.tipo_doacao}
 Telefone: {doador.telefone}
 E-mail: {doador.email}
 Nível: {nivel} ({total} agendamentos)
 
+Sistema Sangue Bom 💗
 Sistema Sangue Bom 💗
 '''
 

@@ -11,6 +11,10 @@
     <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- 🩸 FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
+
 </head>
 <body>
 
@@ -25,7 +29,6 @@
     {% if sucesso %}
         <p>{{ sucesso }}</p>
         <br>
-        <a href="{% url 'login' %}">Voltar para o login</a>
 
     <!-- =====================================================
          CÓDIGO VALIDADO — CRIAR NOVA SENHA
@@ -115,6 +118,7 @@
 
         <p>Digite o código de 6 dígitos enviado para seu e-mail.</p>
 
+        <!-- FORM VALIDAR (SEMPRE ATIVO) -->
         <form method="POST" action="{% url 'validar_codigo' %}">
             {% csrf_token %}
 

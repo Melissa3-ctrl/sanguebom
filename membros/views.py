@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils import timezone
 from django.conf import settings
+from django.conf import settings
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao
 from .emails import enviar_email_agendamento
@@ -487,6 +488,7 @@ def validar_codigo(request):
                 'codigo_enviado': True
             })
 
+        # ⏱️ SÓ VERIFICA EXPIRAÇÃO (10 minutos)
         tempo_passado = timezone.now() - codigo_recuperacao.criado_em
 
         if tempo_passado.total_seconds() > 600:
@@ -496,6 +498,7 @@ def validar_codigo(request):
                 'email': email
             })
 
+        # ✅ VALIDA NA HORA
         return render(request, 'recuperar_senha.html', {
             'email': email,
             'codigo': codigo_digitado,

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- 🩸 FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
     <title>Cadastro de Doador - Sangue Bom</title>
 </head>
 <body class="pagina-cadastro">
@@ -206,7 +208,6 @@
             <section class="cadastro-form">
                 <h2>Revisão e confirmação</h2>
 
-                <!-- RESUMO -->
                 <div class="resumo-cadastro">
                     <h3>SEUS DADOS</h3>
 
@@ -260,7 +261,6 @@
                     </a>
                 </div>
 
-                <!-- SENHA -->
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="etapa" value="3">
@@ -349,13 +349,7 @@
 
     </div>
 
-    <!-- =====================================================
-         SCRIPT: MÁSCARA CPF, SENHA E CIDADES
-         ===================================================== -->
     <script>
-        // =========================
-        // MOSTRAR/OCULTAR SENHA
-        // =========================
         function mostrarSenha(idInput, botao) {
             const input = document.getElementById(idInput);
 
@@ -382,9 +376,6 @@
             }
         }
 
-        // =========================
-        // CIDADES POR ESTADO
-        // =========================
         const cidadesPorEstado = {
             "DF": ["Brasília"],
             "GO": [
