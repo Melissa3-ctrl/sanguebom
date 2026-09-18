@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 
 
@@ -8,6 +7,19 @@ urlpatterns = [
     # =========================================================
     # PÁGINAS DO SITE
     # =========================================================
+
+    # Raiz abre a home direto
+    path(
+        '',
+        views.home,
+        name='home'
+    ),
+
+    path(
+        'home/',
+        views.home,
+        name='home'
+    ),
 
     path(
         'quero_doar/',
@@ -25,12 +37,6 @@ urlpatterns = [
         'notificacoes/',
         views.notificacoes,
         name='notificacoes'
-    ),
-
-    path(
-        'home/',
-        views.home,
-        name='home'
     ),
 
     path(
@@ -55,6 +61,13 @@ urlpatterns = [
         'validar_codigo/',
         views.validar_codigo,
         name='validar_codigo'
+    ),
+
+    # 👇 NOVA ROTA: REENVIAR CÓDIGO
+    path(
+        'reenviar_codigo/',
+        views.reenviar_codigo,
+        name='reenviar_codigo'
     ),
 
     path(

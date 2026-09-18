@@ -1,709 +1,118 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-
-<html lang="pt-br">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <title>Sangue Bom</title>
-
-</head>
-
-<body>
+{% block content %}
 
     <!-- ========================= -->
-    <!-- TOPO -->
+    <!-- BANNER -->
     <!-- ========================= -->
+    <section>
+        <div class="banner">
+            <div class="icone-banner">
+                <div class="gota">
+                    <svg width="170" height="220" viewBox="0 0 170 220">
+                        <path d="M85,10 C105,35 140,80 140,130 C140,175 115,200 85,200 C55,200 30,175 30,130 C30,80 65,35 85,10 Z" fill="rgba(255,255,255,0.07)" />
+                        <text x="85" y="110" text-anchor="middle" font-size="65" fill="#ffffff">♥</text>
+                        <path d="M50,150 Q85,175 120,150" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" />
+                        <path d="M50,150 L40,144" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" />
+                        <path d="M120,150 L130,144" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
 
-    <header>
+            <div class="conteudo-banner">
+                <h1>SANGUE BOM</h1>
+                <p class="subtitulo">Conectando doadores a quem precisa.</p>
+                <h2>Doe sangue. <span>Salve vidas.</span></h2>
+                <p class="descricao">
+                    O Sangue Bom conecta você aos hemocentros mais próximos,<br>
+                    avisa quando seu tipo é urgente e recompensa cada doação.<br>
+                    Simples, rápido, com impacto real.
+                </p>
 
-        <h2>
-            🚨 Estoque O- em nível crítico na sua região
-        </h2>
+                <div class="botoes-banner">
+                    <a href="{% url 'agendar_doacao' %}" class="botao-doar">🩸 &nbsp; Quero doar agora</a>
+                    <a href="#" class="botao-preciso">♡ &nbsp; Preciso de doação</a>
+                </div>
+            </div>
 
-        <h2>
-            🔔
-        </h2>
-
-       {% if user.is_authenticated %}
-
-    <h2>
-        👤 Olá, {{ user.username }}! 👋
-    </h2>
-
-   {% else %}
-
-    <h2>
-        👤 Olá, visitante! 👋
-    </h2>
-
-    <a href="/login/">
-        🔐 Entrar
-    </a>
-
-   {% endif %}
-
-    </header>
-
+            <div class="lado-direito">
+                <div class="circulo circulo-1"></div>
+                <div class="circulo circulo-2"></div>
+                <div class="foto-banner">
+                    <img src="{% static 'img/doacaodesangue.jpeg' %}" alt="Doação de sangue">
+                    <div class="salve-vidas">❤️ &nbsp; Salve vidas</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ========================= -->
-    <!-- MENU LATERAL ESQUERDO -->
+    <!-- PRINCIPAIS FUNÇÕES -->
     <!-- ========================= -->
+    <section>
+        <h2>Principais funções</h2>
+        <div class="cards">
 
-    <aside>
-
-        <h1>
-            ❤️ Sangue Bom
-        </h1>
-
-
-        <nav>
-
-            <a href="{% url 'home' %}">
-                🏠 Início
+            <a href="{% url 'locais_para_doar' %}" class="card">
+                <h3>📍 Locais para doar</h3>
+                <p>Encontre hemocentros próximos de você.</p>
             </a>
 
-            <a href="{% url 'quero_doar' %}">
-                🩸 Quero doar
+            <a href="{% url 'agendar_doacao' %}" class="card">
+                <h3>📅 Agendar doação</h3>
+                <p>Escolha data e horário.</p>
             </a>
 
-            <a href="{% url 'locais_para_doar' %}">
-                📍 Locais para doar
+            <a href="{% url 'tipos_sanguineos' %}" class="card">
+                <h3>🩸 Tipos sanguíneos</h3>
+                <p>Veja informações sobre os tipos.</p>
             </a>
 
-            <a href="{% url 'agendar_doacao' %}">
-                📅 Agendar doação
+            <a href="{% url 'campanhas' %}" class="card">
+                <h3>❤️ Campanhas</h3>
+                <p>Conheça as campanhas ativas.</p>
             </a>
 
-            <a href="{% url 'tipos_sanguineos' %}">
-                🩸 Tipos sanguíneos
+            <a href="{% url 'beneficios' %}" class="card">
+                <h3>🎁 Benefícios</h3>
+                <p>Veja os benefícios para doadores.</p>
             </a>
 
-            <a href="{% url 'campanhas' %}">
-                ♡ Campanhas
+            <a href="{% url 'duvidas' %}" class="card">
+                <h3>❓ Dúvidas</h3>
+                <p>Encontre respostas para suas perguntas.</p>
             </a>
-
-            <a href="{% url 'beneficios' %}">
-                🎁 Benefícios
-            </a>
-
-            <a href="{% url 'duvidas' %}">
-                ❓ Dúvidas
-            </a>
-
-        </nav>
-
-
-        <div class="dados-protegidos">
-
-            <h3>
-                🛡 Seus dados protegidos
-            </h3>
-
-            <p>
-                Ambiente seguro e em conformidade com a LGPD.
-            </p>
 
         </div>
-
-    {% if user.is_authenticated %}
-
-    <a href="{% url 'logout' %}">
-        🚪 Sair
-    </a>
-
-        {% endif %} 
-
+    </section>
 
     <!-- ========================= -->
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- PRECISANDO DE DOAÇÃO -->
     <!-- ========================= -->
+    <section>
+        <h2>Precisando de doação</h2>
+        <div class="cards">
 
-    <main>
-
-
-        <!-- ========================= -->
-        <!-- BANNER -->
-        <!-- ========================= -->
-
-        <section>
-
-            <div class="banner">
-
-
-                <!-- ÍCONE DO BANNER -->
-
-                <div class="icone-banner">
-
-                    <div class="gota">
-
-                        <svg
-                            width="170"
-                            height="220"
-                            viewBox="0 0 170 220"
-                        >
-
-                            <path
-                                d="M85,10 C105,35 140,80 140,130 C140,175 115,200 85,200 C55,200 30,175 30,130 C30,80 65,35 85,10 Z"
-                                fill="rgba(255,255,255,0.07)"
-                            />
-
-                            <text
-                                x="85"
-                                y="110"
-                                text-anchor="middle"
-                                font-size="65"
-                                fill="#ffffff"
-                            >
-                                ♥
-                            </text>
-
-                            <path
-                                d="M50,150 Q85,175 120,150"
-                                stroke="#ffffff"
-                                stroke-width="4"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-
-                            <path
-                                d="M50,150 L40,144"
-                                stroke="#ffffff"
-                                stroke-width="3"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-
-                            <path
-                                d="M120,150 L130,144"
-                                stroke="#ffffff"
-                                stroke-width="3"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-
-                        </svg>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEXTO DO BANNER -->
-
-                <div class="conteudo-banner">
-
-                    <h1>
-                        SANGUE BOM
-                    </h1>
-
-                    <p class="subtitulo">
-                        Conectando doadores a quem precisa.
-                    </p>
-
-                    <h2>
-                        Doe sangue.
-                        <span>Salve vidas.</span>
-                    </h2>
-
-                    <p class="descricao">
-
-                        O Sangue Bom conecta você aos hemocentros mais próximos,
-
-                        <br>
-
-                        avisa quando seu tipo é urgente e recompensa cada doação.
-
-                        <br>
-
-                        Simples, rápido, com impacto real.
-
-                    </p>
-
-
-                    <div class="botoes-banner">
-
-                        <a
-                            href="{% url 'agendar_doacao' %}"
-                            class="botao-doar"
-                        >
-                            🩸 &nbsp; Quero doar agora
-                        </a>
-
-                        <a
-                            href="#"
-                            class="botao-preciso"
-                        >
-                            ♡ &nbsp; Preciso de doação
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- FOTO DO BANNER -->
-
-                <div class="lado-direito">
-
-                    <div class="circulo circulo-1"></div>
-
-                    <div class="circulo circulo-2"></div>
-
-
-                    <div class="foto-banner">
-
-                        <img
-                            src="{% static 'img/doacaodesangue.jpeg' %}"
-                            alt="Doação de sangue"
-                        >
-
-                        <div class="salve-vidas">
-                            ❤️ &nbsp; Salve vidas
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="card">
+                <h3>🩸 O- — João Pedro</h3>
+                <p>23 anos <br> Hospital Santa Maria <br> Brasília - DF <br> 🔴 Urgente</p>
+                <button>Quero ajudar</button>
             </div>
 
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- PRINCIPAIS FUNÇÕES -->
-        <!-- ========================= -->
-
-        <section>
-
-            <h2>
-                Principais funções
-            </h2>
-
-
-            <div class="cards">
-
-
-                <div class="card">
-
-                    <h3>
-                        📍 Locais para doar
-                    </h3>
-
-                    <p>
-                        Encontre hemocentros próximos de você.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        📅 Agendar doação
-                    </h3>
-
-                    <p>
-                        Escolha data e horário.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        🩸 Tipos sanguíneos
-                    </h3>
-
-                    <p>
-                        Veja informações sobre os tipos.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        ❤️ Campanhas
-                    </h3>
-
-                    <p>
-                        Conheça as campanhas ativas.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        🎁 Benefícios
-                    </h3>
-
-                    <p>
-                        Veja os benefícios para doadores.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        ❓ Dúvidas
-                    </h3>
-
-                    <p>
-                        Encontre respostas para suas perguntas.
-                    </p>
-
-                </div>
-
+            <div class="card">
+                <h3>🩸 A- — Maria Clara</h3>
+                <p>7 anos <br> Hospital da Criança <br> Brasília - DF <br> 🟠 Atenção</p>
+                <button>Quero ajudar</button>
             </div>
 
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- PRECISANDO DE DOAÇÃO -->
-        <!-- ========================= -->
-
-        <section>
-
-            <h2>
-                Precisando de doação
-            </h2>
-
-
-            <div class="cards">
-
-
-                <!-- JOÃO PEDRO -->
-
-                <div class="card">
-
-                    <h3>
-                        🩸 O- — João Pedro
-                    </h3>
-
-                    <p>
-
-                        23 anos
-
-                        <br>
-
-                        Hospital Santa Maria
-
-                        <br>
-
-                        Brasília - DF
-
-                        <br>
-
-                        🔴 Urgente
-
-                    </p>
-
-                    <button>
-                        Quero ajudar
-                    </button>
-
-                </div>
-
-
-                <!-- MARIA CLARA -->
-
-                <div class="card">
-
-                    <h3>
-                        🩸 A- — Maria Clara
-                    </h3>
-
-                    <p>
-
-                        7 anos
-
-                        <br>
-
-                        Hospital da Criança
-
-                        <br>
-
-                        Brasília - DF
-
-                        <br>
-
-                        🟠 Atenção
-
-                    </p>
-
-                    <button>
-                        Quero ajudar
-                    </button>
-
-                </div>
-
-
-                <!-- CARLOS ALBERTO -->
-
-                <div class="card">
-
-                    <h3>
-                        🩸 B+ — Carlos Alberto
-                    </h3>
-
-                    <p>
-
-                        45 anos
-
-                        <br>
-
-                        Hospital Regional
-
-                        <br>
-
-                        Brasília - DF
-
-                        <br>
-
-                        🟢 Disponível
-
-                    </p>
-
-                    <button>
-                        Quero ajudar
-                    </button>
-
-                </div>
-
+            <div class="card">
+                <h3>🩸 B+ — Carlos Alberto</h3>
+                <p>45 anos <br> Hospital Regional <br> Brasília - DF <br> 🟢 Disponível</p>
+                <button>Quero ajudar</button>
             </div>
 
-        </section>
+        </div>
+    </section>
 
-    </main>
-
-
-    <!-- ========================= -->
-    <!-- LATERAL DIREITA -->
-    <!-- ========================= -->
-
-    <aside class="lateral-direita">
-
-
-        <!-- ========================= -->
-        <!-- ESTOQUE DE SANGUE -->
-        <!-- ========================= -->
-
-        <section>
-
-            <h2>
-                Estoque de sangue
-            </h2>
-
-            <p>
-                Hoje
-            </p>
-
-
-            <div class="estoque">
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        A+
-                    </h3>
-
-                    <p>
-                        🟢 Adequado
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        A-
-                    </h3>
-
-                    <p>
-                        🟠 Atenção
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        B+
-                    </h3>
-
-                    <p>
-                        🟢 Adequado
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        B-
-                    </h3>
-
-                    <p>
-                        🟠 Atenção
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        AB+
-                    </h3>
-
-                    <p>
-                        🟢 Adequado
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        AB-
-                    </h3>
-
-                    <p>
-                        🟠 Atenção
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        O+
-                    </h3>
-
-                    <p>
-                        🟢 Adequado
-                    </p>
-
-                </div>
-
-
-                <div class="tipo-sangue">
-
-                    <h3>
-                        O-
-                    </h3>
-
-                    <p>
-                        🔴 Crítico
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- PRÓXIMA DOAÇÃO -->
-        <!-- ========================= -->
-
-        <section class="doacao">
-
-            <h3>
-                Próxima doação disponível
-            </h3>
-
-            <h2>
-                Você pode doar! ✅
-            </h2>
-
-            <p>
-                3 doações &nbsp; • &nbsp; 12 vidas
-            </p>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- MENSAGEM -->
-        <!-- ========================= -->
-
-        <section class="mensagem">
-
-            <h3>
-                💗 Sua atitude pode salvar até 4 vidas!
-            </h3>
-
-            <p>
-
-                Doe sangue. Doe vida.
-
-                <br>
-
-                Seja sangue bom!
-
-            </p>
-
-        </section>
-
-
-        <!-- ========================= -->
-        <!-- CAMPANHA -->
-        <!-- ========================= -->
-
-        <section class="campanha">
-
-            <img
-                src="{% static 'img/campanha.jpeg' %}"
-                alt="Campanha de doação de sangue"
-            >
-
-            <h3>
-                Participe das campanhas e faça a diferença.
-            </h3>
-
-            <a href="{% url 'campanhas' %}">
-                Ver campanhas
-            </a>
-
-        </section>
-
-
-    </aside>
-
-
-    <!-- ========================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ========================= -->
-
-    <script src="{% static 'js/script.js' %}"></script>
-
-
-</body>
-
-</html>
-```
+{% endblock %}

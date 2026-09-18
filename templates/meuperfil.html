@@ -1,243 +1,105 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ========================= -->
+    <!-- CABEÇALHO DO PERFIL -->
+    <!-- ========================= -->
+    <section class="perfil-header">
+        <h1>👤 Meu Perfil</h1>
+        <p class="perfil-nome">{{ doador.nome }}</p>
+        <p class="perfil-info">🩸 Tipo sanguíneo: <strong>{{ doador.tipo_sanguineo }}</strong></p>
+        <p class="perfil-info">✉️ {{ doador.email }}</p>
+        {% if doador.telefone %}
+            <p class="perfil-info">📞 {{ doador.telefone }}</p>
+        {% endif %}
+    </section>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- ========================= -->
+    <!-- CARDS DE RESUMO -->
+    <!-- ========================= -->
+    <section>
+        <div class="cards">
 
-    <title>Meu Perfil - Sangue Bom</title>
-</head>
-
-<body>
-
-     <a href="javascript:history.back()" class="btn-voltar">
-        ← Voltar
-    </a>
-
-    <main>
-
-        <header>
-
-            <div>
-                <a href="{% url 'home' %}">← Voltar</a>
-            </div>
-
-            <h1>Meu Perfil</h1>
-
-            <p>
-                {{ doador.nome }}
-            </p>
-
-            <p>
-                Tipo sanguíneo: {{ doador.tipo_sanguineo }}
-            </p>
-
-            <p>
-                {{ doador.email }}
-            </p>
-
-        </header>
-
-
-        <!-- =====================================================
-             INFORMAÇÕES DO USUÁRIO
-             ===================================================== -->
-
-        <section>
-
-            <div>
-
-                <h2>PRÓXIMA DOAÇÃO</h2>
-
-                {% if proxima_doacao %}
-
+            <div class="card">
+                <h3>📅 Próxima doação</h3>
+                {% if proximo_agendamento %}
                     <p>
-                        {{ proxima_doacao }}
+                        <strong>{{ proximo_agendamento.hemocentro.nome }}</strong>
                     </p>
-
                     <p>
-                        Aguarde o período correto para sua próxima doação.
+                        📅 {{ proximo_agendamento.data|date:"d/m/Y" }}<br>
+                        🕐 {{ proximo_agendamento.horario|time:"H:i" }}<br>
+                        🩸 {{ proximo_agendamento.tipo_doacao }}
                     </p>
-
                 {% else %}
-
-                    <p>
-                        Liberado!
-                    </p>
-
-                    <p>
-                        Você já pode doar 😊
-                    </p>
-
+                    <p>✅ Liberado!</p>
+                    <p>Você ainda não tem agendamentos futuros. Já pode doar 😊</p>
                 {% endif %}
-
             </div>
 
-
-            <div>
-
-                <h2>DOAÇÕES</h2>
-
-                <p>
-                    {{ total_doacoes }}
+            <div class="card">
+                <h3>🩸 Minhas doações</h3>
+                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
+                    {{ total_agendamentos }}
                 </p>
-
-                <p>
-                    Doações realizadas
-                </p>
-
+                <p>Agendamentos realizados</p>
             </div>
 
-
-            <div>
-
-                <h2>SEU IMPACTO</h2>
-
-                <p>
-                    {{ vidas_salvas }}
+            <div class="card">
+                <h3>💗 Seu impacto</h3>
+                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
+                    {{ total_agendamentos|add:0|floatformat:0|add:0 }}x4
                 </p>
-
-                <p>
-                    vidas potencialmente salvas
-                </p>
-
-                <p>
-                    {{ ml_doado }} ml
-                </p>
-
-                <p>
-                    de sangue doado
-                </p>
-
+                <p>vidas potencialmente salvas</p>
             </div>
 
-        </section>
+        </div>
+    </section>
 
+    <!-- ========================= -->
+    <!-- HISTÓRICO DE AGENDAMENTOS -->
+    <!-- ========================= -->
+    <section>
+        <div class="perfil-secao-header">
+            <h2>📋 Histórico de Agendamentos</h2>
+            <a href="{% url 'agendar_doacao' %}" class="botao-doar">
+                + Nova doação
+            </a>
+        </div>
 
-        <!-- =====================================================
-             HISTÓRICO DE DOAÇÕES
-             ===================================================== -->
-
-        <section>
-
-            <div>
-
-                <h2>Histórico de Doações</h2>
-
-                <a href="{% url 'agendar_doacao' %}">
-                    <button type="button">
-                        + Nova doação
-                    </button>
-                </a>
-
-            </div>
-
-
-            <div>
-
-                {% if historico_doacoes %}
-
-                    {% for doacao in historico_doacoes %}
-
-                        <div>
-
-                            <div>
-
-                                <strong>
-                                    {{ doacao.hemocentro.nome }}
-                                </strong>
-
-                                <span>
-                                    {{ doacao.tipo_doacao }}
-                                </span>
-
-                                <span>
-                                    {{ doacao.data|date:"d/m/Y" }}
-                                </span>
-
-                            </div>
-
-                            {% if forloop.first %}
-
-                                <span>
-                                    Última
-                                </span>
-
-                            {% endif %}
-
-                        </div>
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <p>
-                        Você ainda não possui doações registradas.
-                    </p>
-
-                {% endif %}
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             AGENDAMENTOS
-             ===================================================== -->
-
-        <section>
-
-            <h2>Agendamentos</h2>
-
-
-            {% if agendamentos %}
-
+        {% if agendamentos %}
+            <div class="perfil-lista">
                 {% for agendamento in agendamentos %}
-
-                    <div>
-
-                        <div>
-
-                            <strong>
-                                {{ agendamento.hemocentro.nome }}
-                            </strong>
-
+                    <div class="perfil-item">
+                        <div class="perfil-item-info">
+                            <strong>{{ agendamento.hemocentro.nome }}</strong>
                             <span>
-                                {{ agendamento.data|date:"d/m/Y" }}
-                                às
-                                {{ agendamento.horario }}
+                                🩸 {{ agendamento.tipo_doacao }}
                             </span>
-
+                            <span>
+                                📅 {{ agendamento.data|date:"d/m/Y" }}
+                                às {{ agendamento.horario|time:"H:i" }}
+                            </span>
                         </div>
 
-                        <span>
-                            Confirmado
-                        </span>
-
+                        <div class="perfil-item-botoes">
+                            <a href="{% url 'editar_agendamento' agendamento.id %}" class="btn-editar">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'excluir_agendamento' agendamento.id %}" class="btn-excluir">
+                                🗑️ Excluir
+                            </a>
+                        </div>
                     </div>
-
                 {% endfor %}
+            </div>
+        {% else %}
+            <p class="perfil-vazio">
+                Você ainda não possui agendamentos registrados.
+            </p>
+        {% endif %}
+    </section>
 
-            {% else %}
-
-                <p>
-                    Você não possui agendamentos.
-                </p>
-
-            {% endif %}
-
-        </section>
-
-    </main>
-
-
-    <script src="{% static 'js/script.js' %}"></script>
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,129 +1,181 @@
 {% load static %}
-
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login - Sangue Bom</title>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- 🩸 FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
 
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- 🎨 CSS DA PÁGINA DE LOGIN -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
-
 <body>
 
-     <a href="javascript:history.back()" class="btn-voltar">
-        ← Voltar
-    </a>
+    <!-- ========== LADO ESQUERDO ========== -->
+    <div class="lado-ilustracao">
 
-    <main>
+        <!-- LOGO -->
+        <div class="logo-area">
+            <div class="logo-gota"><span>🩸</span></div>
+            <div class="logo-texto">
+                <h1>Sangue <span>Bom</span></h1>
+                <p>Conectando doadores a quem precisa</p>
+            </div>
+        </div>
 
-        <h1>❤️ Sangue Bom</h1>
+        <!-- TÍTULO -->
+        <h2>Faça parte <br> dessa <em>corrente.</em></h2>
+        <p class="subtitulo-ilustracao">Seu primeiro passo começa aqui.</p>
 
-        <h2>Entrar na sua conta</h2>
+        <!-- MOSAICO POLAROID -->
+        <div class="mural-polaroid">
 
-        <p>
-            Entre para agendar sua doação e acompanhar seus agendamentos.
+            <div class="polaroid p1">
+                <img src="{% static 'img/domingas.jpeg' %}" alt="Domingas">
+                <span class="legenda">Domingas</span>
+            </div>
+
+            <div class="polaroid p2">
+                <img src="{% static 'img/melissa.jpeg' %}" alt="Melissa">
+                <span class="legenda">Melissa</span>
+            </div>
+
+            <div class="polaroid p3">
+                <img src="{% static 'img/emmanuel.jpeg' %}" alt="Emmanuel">
+                <span class="legenda">Emmanuel</span>
+            </div>
+
+            <div class="polaroid p4">
+                <img src="{% static 'img/layssa.jpeg' %}" alt="Layssa">
+                <span class="legenda">Layssa</span>
+            </div>
+
+            <div class="polaroid p5">
+                <img src="{% static 'img/bolsa.jpeg' %}" alt="Bolsa de sangue">
+                <span class="legenda">Bolsa de sangue 🩸</span>
+            </div>
+
+            <div class="polaroid p6 destaque">
+                <img src="{% static 'img/equipe.jpeg' %}" alt="Equipe Sangue Bom">
+                <span class="legenda">Equipe Sangue Bom 💗</span>
+            </div>
+
+        </div>
+
+        <!-- FRASE FINAL -->
+        <p class="frase-rodape">
+            Uma pequena atitude<br>
+            pode fazer uma grande diferença.
         </p>
 
-        {% if erro %}
+    </div>
 
-            <p>
-                {{ erro }}
-            </p>
+    <!-- ========== LADO DIREITO ========== -->
+    <div class="lado-formulario">
 
-        {% endif %}
+        <div class="card-login">
 
+            <h2><em>Bem-vindo de volta</em></h2>
+            <p class="subtitulo">Vamos juntos salvar vidas!</p>
 
-        <form method="POST">
+            <!-- PASSOS -->
+            <div class="passos">
+                <div class="passo ativo"><span>1</span><p>Login</p></div>
+                <div class="passo"><span>2</span><p>Doação</p></div>
+                <div class="passo"><span>3</span><p>Pronto</p></div>
+            </div>
 
-            {% csrf_token %}
+            <!-- SEÇÃO -->
+            <div class="secao-titulo">🔐 Acesse sua conta</div>
+            <p class="secao-desc">Entre para agendar sua doação.</p>
 
+            {% if erro %}
+                <div class="login-erro">⚠️ {{ erro }}</div>
+            {% endif %}
 
-            <label for="email">
-                E-mail:
-            </label>
+            <!-- FORM -->
+            <form method="POST">
+                {% csrf_token %}
 
-            <br>
+                <div class="campo">
+                    <label for="email">E-mail *</label>
+                    <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required autofocus>
+                </div>
 
-            <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Digite seu e-mail"
-                required
-            >
+                <div class="campo">
+                    <label for="senha">Senha *</label>
+                    <div class="campo-senha">
+                        <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                        <button type="button" class="btn-olho" onclick="mostrarSenha()" aria-label="Mostrar senha">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-            <br><br>
+                <button type="submit" class="btn-continuar">
+                    🔓 Entrar
+                </button>
+            </form>
 
+            <!-- RODAPÉ DO FORM -->
+            <div class="rodape-form">
+                <span class="icone">🩸</span>
+                <p>Doar sangue é um gesto de amor.<br>E você pode fazer parte disso.</p>
+            </div>
 
-            <label for="senha">
-                Senha:
-            </label>
+            <!-- LINKS -->
+            <div class="extras">
+                <a href="{% url 'recuperar_senha' %}">🔑 Esqueci minha senha</a>
+                <br><br>
+                Ainda não tem conta?
+                <a href="{% url 'cadastro' %}">Criar agora</a>
+            </div>
 
-            <br>
-     <div>
-            <input
-                type="password"
-                name="senha"
-                id="senha"
-                placeholder="Digite sua senha"
-                required
-            >
+            <!-- BOTÃO VOLTAR -->
+            <a href="{% url 'home' %}" class="btn-voltar-card">
+                <span class="btn-voltar-seta">←</span>
+                <span>Voltar ao início</span>
+            </a>
 
-            <button
-         type="button"
-         class="botao-mostrar-senha"
-         onclick="mostrarSenha()"
-              >
-          Mostrar
-         </button>
-   </div>
+        </div>
 
-            <br><br>
+    </div>
 
+    <script>
+        function mostrarSenha() {
+            const input = document.getElementById('senha');
+            const botao = document.querySelector('.btn-olho');
 
-            <button type="submit">
-                Entrar
-            </button>
-
-        </form>
-
-
-        <br>
-
-
-        <!-- ESQUECI MINHA SENHA -->
-
-        <a href="{% url 'recuperar_senha' %}">
-            Esqueci minha senha
-        </a>
-
-
-        <br><br>
-
-
-        <p>
-            Ainda não possui cadastro?
-        </p>
-
-
-        <a href="{% url 'cadastro' %}">
-            Criar minha conta
-        </a>
-
-    </main>
-        
-     <script src="{% static 'js/script.js' %}"></script>
+            if (input.type === 'password') {
+                input.type = 'text';
+                botao.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                `;
+            } else {
+                input.type = 'password';
+                botao.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                `;
+            }
+        }
+    </script>
 
 </body>
-
-</body>
-
 </html>
