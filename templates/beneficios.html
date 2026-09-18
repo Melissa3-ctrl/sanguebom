@@ -3,21 +3,94 @@
 
 {% block content %}
 
+    <link rel="stylesheet" href="{% static 'css/beneficios.css' %}">
 
     <!-- TÍTULO -->
     <section>
         <h1>Benefícios para Doadores</h1>
         <p>Doe regularmente e desbloqueie vantagens exclusivas</p>
-
-        <!-- AVISO DE CADASTRO -->
-        <div>
-            <span>🧡</span>
-            <strong>Cadastre-se para ver seu progresso de benefícios</strong>
-            <a href="{% url 'cadastro' %}" class="btn-cadastro">
-                <button type="button">Cadastre-se</button>
-            </a>
-        </div>
     </section>
+
+    <!-- BARRA DE PROGRESSO (só logado) -->
+    {% if user.is_authenticated and doador %}
+    <section class="progresso-box">
+        <h2>🩸 Seu progresso</h2>
+        <p>Você tem <strong>{{ total_agendamentos }} agendamento{{ total_agendamentos|pluralize }}</strong></p>
+
+        <div class="barra">
+            <div class="barra-preenchida" style="width: {{ progresso }}%"></div>
+        </div>
+
+        <p class="nivel-atual">
+            {{ progresso }}% — Nível:
+            {% if nivel == 'Bronze' %}🥉{% elif nivel == 'Prata' %}🥈{% else %}🥇{% endif %}
+            <strong>{{ nivel }}</strong>
+        </p>
+
+        {% if proximo_nivel %}
+            <p class="faltam">Faltam {{ faltam }} agendamento{{ faltam|pluralize }} pro {{ proximo_nivel }}</p>
+        {% else %}
+            <p class="faltam">🏆 Você atingiu o nível máximo!</p>
+        {% endif %}
+    </section>
+
+    <!-- NÍVEIS -->
+    <section class="niveis-box">
+        <h2>🏆 Níveis de Doador</h2>
+
+        <div class="niveis-grid">
+
+            <div class="nivel {% if nivel == 'Bronze' %}atual{% endif %} {% if total_agendamentos >= 1 %}desbloqueado{% endif %}">
+                <span>🥉</span>
+                <strong>Bronze</strong>
+                <p>1-2 agendamentos</p>
+                {% if total_agendamentos >= 1 %}
+                    <span class="status">✅ Desbloqueado</span>
+                {% else %}
+                    <span class="status">🔒 Bloqueado</span>
+                {% endif %}
+            </div>
+
+            <div class="nivel {% if nivel == 'Prata' %}atual{% endif %} {% if total_agendamentos >= 3 %}desbloqueado{% endif %}">
+                <span>🥈</span>
+                <strong>Prata</strong>
+                <p>3-5 agendamentos</p>
+                {% if total_agendamentos >= 3 %}
+                    <span class="status">✅ Desbloqueado</span>
+                {% else %}
+                    <span class="status">🔒 Bloqueado</span>
+                {% endif %}
+            </div>
+
+            <div class="nivel {% if nivel == 'Ouro' %}atual{% endif %} {% if total_agendamentos >= 6 %}desbloqueado{% endif %}">
+                <span>🥇</span>
+                <strong>Ouro</strong>
+                <p>6+ agendamentos</p>
+                {% if total_agendamentos >= 6 %}
+                    <span class="status">✅ Desbloqueado</span>
+                {% else %}
+                    <span class="status">🔒 Bloqueado</span>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {% if proximo_nivel %}
+            <p class="dica">💡 Continue agendando para desbloquear o nível {{ proximo_nivel }}!</p>
+        {% endif %}
+    </section>
+    {% endif %}
+
+    <!-- AVISO DE CADASTRO (só NÃO logado) -->
+    {% if not user.is_authenticated %}
+    <section class="aviso-cadastro">
+        <span>🧡</span>
+        <strong>Cadastre-se para ver seu progresso de benefícios</strong>
+        <a href="{% url 'cadastro' %}" class="btn-cadastro">
+            <button type="button">Cadastre-se</button>
+        </a>
+    </section>
+    {% endif %}
 
     <!-- REQUISITOS -->
     <section>
@@ -51,10 +124,12 @@
         <div class="cards">
 
             <article class="card">
-                <div>🎵</div>
+                <div class="card-img">
+                    <img src="{% static 'img/shows.jpg' %}" alt="Shows">
+                </div>
                 <h3>Shows e Festivais</h3>
                 <p>Acesso VIP e ingressos gratuitos em shows e festivais parceiros no DF.</p>
-                <div>
+                <div class="tags">
                     <span>Rock in Rio</span>
                     <span>Lollapalooza</span>
                     <span>Nilson Nelson</span>
@@ -62,10 +137,12 @@
             </article>
 
             <article class="card">
-                <div>🎬</div>
+                <div class="card-img">
+                    <img src="{% static 'img/cinema.jpg' %}" alt="Cinema">
+                </div>
                 <h3>Cinema</h3>
                 <p>Entradas gratuitas em redes de cinema parceiras.</p>
-                <div>
+                <div class="tags">
                     <span>Cinemark</span>
                     <span>UCI Cinemas</span>
                     <span>Cinépolis</span>
@@ -73,10 +150,12 @@
             </article>
 
             <article class="card">
-                <div>✈️</div>
+                <div class="card-img">
+                    <img src="{% static 'img/viagens.jpg' %}" alt="Viagens">
+                </div>
                 <h3>Viagens</h3>
                 <p>Descontos em passagens, hotéis e pacotes turísticos.</p>
-                <div>
+                <div class="tags">
                     <span>CVC</span>
                     <span>Decolar</span>
                     <span>Hotéis parceiros</span>
@@ -84,10 +163,12 @@
             </article>
 
             <article class="card">
-                <div>📋</div>
+                <div class="card-img">
+                    <img src="{% static 'img/concursos.jpg' %}" alt="Concursos">
+                </div>
                 <h3>Concursos Públicos DF</h3>
                 <p>Isenção de taxas em concursos públicos do Distrito Federal.</p>
-                <div>
+                <div class="tags">
                     <span>GDF</span>
                     <span>PMDF</span>
                     <span>CBMDF</span>
@@ -95,10 +176,12 @@
             </article>
 
             <article class="card">
-                <div>💉</div>
+                <div class="card-img">
+                    <img src="{% static 'img/vacinacao.jpg' %}" alt="Vacinação">
+                </div>
                 <h3>Vacinação Prioritária</h3>
                 <p>Prioridade em campanhas de vacinação do GDF.</p>
-                <div>
+                <div class="tags">
                     <span>Gripe anual</span>
                     <span>COVID-19</span>
                     <span>Campanhas</span>
@@ -106,10 +189,12 @@
             </article>
 
             <article class="card">
-                <div>🎭</div>
+                <div class="card-img">
+                    <img src="{% static 'img/cultura.jpg' %}" alt="Cultura">
+                </div>
                 <h3>Cultura & Lazer</h3>
                 <p>Entradas em museus, teatros e eventos culturais.</p>
-                <div>
+                <div class="tags">
                     <span>Teatro Nacional</span>
                     <span>Museu Nacional</span>
                     <span>Planetário</span>

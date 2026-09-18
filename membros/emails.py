@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from .models import Agendamento
 
 
 # =========================================================
@@ -12,21 +13,77 @@ EMAIL_HEMOCENTRO_FIXO = 'servicosocial@fhb.df.gov.br'
 
 
 # =========================================================
+# FUNÇÃO AUXILIAR: CALCULA NÍVEL
+# =========================================================
+
+def calcular_nivel(total):
+    """Retorna (nivel, proximo_nivel, faltam, progresso, emoji)"""
+    if total >= 6:
+        return ('Ouro', None, 0, 100, '🥇')
+    elif total >= 3:
+        return ('Prata', 'Ouro', 6 - total, int((total / 6) * 100), '🥈')
+    else:
+        return ('Bronze', 'Prata', 3 - total, int((total / 3) * 100), '🥉')
+
+
+# =========================================================
 # E-MAIL DE CONFIRMAÇÃO DE AGENDAMENTO
 # =========================================================
 
 def enviar_email_agendamento(doador, agendamento):
     """
     Envia 2 e-mails HTML bonitos:
-    1. Confirmação pro DOADOR
+    1. Confirmação pro DOADOR (com progresso Bronze/Prata/Ouro)
     2. Aviso pro HEMOCENTRO (e-mail FIXO)
     """
 
     # ==========================================
-    # 📧 E-MAIL 1: PRO DOADOR
+    # 📊 CALCULA O PROGRESSO DO DOADOR
     # ==========================================
 
-    assunto_doador = '✅ Sua doação foi agendada - Sangue Bom'
+    total = Agendamento.objects.filter(doador=doador).count()
+    nivel, proximo, faltam, progresso, emoji = calcular_nivel(total)
+
+    # Monta o assunto dinâmico
+    if proximo:
+        if faltam == 1:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Falta 1 pro {proximo} 🩸'
+            msg_falta = f'Falta <strong>1 agendamento</strong> pro {proximo}!'
+            texto_falta = f'Falta 1 pro {proximo}'
+        else:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Faltam {faltam} pro {proximo} 🩸'
+            msg_falta = f'Faltam <strong>{faltam} agendamentos</strong> pro {proximo}!'
+            texto_falta = f'Faltam {faltam} pro {proximo}'
+    else:
+        assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Você é incrível! 🏆🩸'
+        msg_falta = '🏆 Você atingiu o <strong>nível máximo</strong>!'
+        texto_falta = 'Você atingiu o nível máximo!'
+
+    # ==========================================
+    # 📊 CALCULA O PROGRESSO DO DOADOR
+    # ==========================================
+
+    total = Agendamento.objects.filter(doador=doador).count()
+    nivel, proximo, faltam, progresso, emoji = calcular_nivel(total)
+
+    # Monta o assunto dinâmico
+    if proximo:
+        if faltam == 1:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Falta 1 pro {proximo} 🩸'
+            msg_falta = f'Falta <strong>1 agendamento</strong> pro {proximo}!'
+            texto_falta = f'Falta 1 pro {proximo}'
+        else:
+            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Faltam {faltam} pro {proximo} 🩸'
+            msg_falta = f'Faltam <strong>{faltam} agendamentos</strong> pro {proximo}!'
+            texto_falta = f'Faltam {faltam} pro {proximo}'
+    else:
+        assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Você é incrível! 🏆🩸'
+        msg_falta = '🏆 Você atingiu o <strong>nível máximo</strong>!'
+        texto_falta = 'Você atingiu o nível máximo!'
+
+    # ==========================================
+    # 📧 E-MAIL 1: PRO DOADOR
+    # ==========================================
 
     html_doador = f'''
 <!DOCTYPE html>
@@ -63,6 +120,29 @@ def enviar_email_agendamento(doador, agendamento):
                 <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>🩸 Tipo:</strong> {agendamento.tipo_doacao}</p>
             </div>
 
+            <!-- 🩸 SEÇÃO DE PROGRESSO -->
+            <div style="background:#fff5f5; border:2px solid #b30000; border-radius:12px; padding:25px; margin:30px 0;">
+                <h3 style="margin:0 0 15px 0; color:#b30000; font-size:18px; text-align:center;">
+                    {emoji} Seu progresso de doador
+                </h3>
+
+                <p style="margin:0 0 10px 0; color:#333333; font-size:15px; text-align:center;">
+                    Você tem <strong>{total} agendamento{'s' if total != 1 else ''}</strong>
+                </p>
+
+                <div style="background:#eeeeee; border-radius:20px; height:24px; overflow:hidden; margin:15px 0;">
+                    <div style="background:linear-gradient(90deg, #b30000, #ff6b6b); height:100%; width:{progresso}%; border-radius:20px;"></div>
+                </div>
+
+                <p style="margin:10px 0; color:#333333; font-size:15px; text-align:center;">
+                    <strong>{progresso}%</strong> — Nível: <strong>{emoji} {nivel}</strong>
+                </p>
+
+                <p style="margin:10px 0 0 0; color:#666666; font-size:14px; text-align:center;">
+                    {msg_falta}
+                </p>
+            </div>
+
             <h3 style="color:#b30000; font-size:16px; margin-top:30px;">📋 Antes de ir, lembre-se:</h3>
             <ul style="color:#555555; line-height:1.9; padding-left:20px; font-size:15px;">
                 <li>Leve um documento com foto</li>
@@ -97,8 +177,12 @@ Sua doação foi agendada com sucesso!
 
 Data: {agendamento.data}
 Horário: {agendamento.horario}
+Horário: {agendamento.horario}
 Local: {agendamento.hemocentro.nome}
 Tipo: {agendamento.tipo_doacao}
+
+Seu progresso: {total} agendamento(s) — Nível {nivel} ({progresso}%)
+{texto_falta}
 
 Antes de ir, lembre-se:
 - Leve um documento com foto
@@ -160,6 +244,7 @@ Equipe Sangue Bom 💗
                 <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>📞 Telefone:</strong> {doador.telefone}</p>
                 <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>📧 E-mail:</strong> {doador.email}</p>
                 <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>💬 Sexo:</strong> {doador.sexo if doador.sexo else "Não informado"}</p>
+                <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>{emoji} Nível:</strong> {nivel} ({total} agendamento{'s' if total != 1 else ''})</p>
             </div>
 
             <p style="color:#2e7d32; font-size:15px; text-align:center; padding:18px; background:#e8f5e9; border-radius:10px; margin:25px 0;">
@@ -187,9 +272,13 @@ Tipo sanguíneo: {doador.tipo_sanguineo}
 Data: {agendamento.data}
 Horário: {agendamento.horario}
 Tipo de doação: {agendamento.tipo_doacao}
+Horário: {agendamento.horario}
+Tipo de doação: {agendamento.tipo_doacao}
 Telefone: {doador.telefone}
 E-mail: {doador.email}
+Nível: {nivel} ({total} agendamentos)
 
+Sistema Sangue Bom 💗
 Sistema Sangue Bom 💗
 '''
 

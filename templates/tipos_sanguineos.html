@@ -1,88 +1,208 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Tipos Sanguíneos - Sangue Bom{% endblock %}
+
 {% block content %}
 
-    <h1>🩸 Tipos Sanguíneos</h1>
-    <p>Conheça os tipos sanguíneos, suas compatibilidades e descubra para quem você pode doar.</p>
+    <link rel="stylesheet" href="{% static 'css/tipos_sanguineos.css' %}">
 
-    <!-- ========================= -->
-    <!-- OS 8 TIPOS SANGUÍNEOS -->
-    <!-- ========================= -->
-    <section>
+    <!-- CABEÇALHO -->
+    <header class="tipos-cabecalho">
+        <h1>🩸 Tipos Sanguíneos</h1>
+        <p>Conheça os tipos sanguíneos, suas compatibilidades e descubra para quem você pode doar.</p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- OS 8 TIPOS SANGUÍNEOS                        -->
+    <!-- ============================================ -->
+    <section class="tipos-section">
         <h2>Os 8 tipos sanguíneos</h2>
+        <p class="section-sub">Clique em cada tipo para ver os detalhes de compatibilidade</p>
 
-        <div class="cards">
+        <div class="tipos-grid">
 
-            <div class="card">
-                <h3>A+</h3>
-                <p>Pode doar para: A+ e AB+</p>
-                <p>Pode receber de: A+, A-, O+ e O-</p>
+            <div class="tipo-card tipo-a-positivo">
+                <div class="tipo-nome">A+</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> A+ e AB+</p>
+                    <p><strong>💉 Pode receber de:</strong> A+, A-, O+ e O-</p>
+                </div>
+                <div class="tipo-badge">Comum</div>
             </div>
 
-            <div class="card">
-                <h3>A-</h3>
-                <p>Pode doar para: A+, A-, AB+ e AB-</p>
-                <p>Pode receber de: A- e O-</p>
+            <div class="tipo-card tipo-a-negativo">
+                <div class="tipo-nome">A-</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> A+, A-, AB+ e AB-</p>
+                    <p><strong>💉 Pode receber de:</strong> A- e O-</p>
+                </div>
+                <div class="tipo-badge">Raro</div>
             </div>
 
-            <div class="card">
-                <h3>B+</h3>
-                <p>Pode doar para: B+ e AB+</p>
-                <p>Pode receber de: B+, B-, O+ e O-</p>
+            <div class="tipo-card tipo-b-positivo">
+                <div class="tipo-nome">B+</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> B+ e AB+</p>
+                    <p><strong>💉 Pode receber de:</strong> B+, B-, O+ e O-</p>
+                </div>
+                <div class="tipo-badge">Comum</div>
             </div>
 
-            <div class="card">
-                <h3>B-</h3>
-                <p>Pode doar para: B+, B-, AB+ e AB-</p>
-                <p>Pode receber de: B- e O-</p>
+            <div class="tipo-card tipo-b-negativo">
+                <div class="tipo-nome">B-</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> B+, B-, AB+ e AB-</p>
+                    <p><strong>💉 Pode receber de:</strong> B- e O-</p>
+                </div>
+                <div class="tipo-badge">Raro</div>
             </div>
 
-            <div class="card">
-                <h3>AB+</h3>
-                <p>Pode doar para: AB+</p>
-                <p>Pode receber de: Todos os tipos (receptor universal)</p>
+            <div class="tipo-card tipo-ab-positivo receptor-universal">
+                <div class="tipo-nome">AB+</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> AB+</p>
+                    <p><strong>💉 Pode receber de:</strong> Todos os tipos</p>
+                </div>
+                <div class="tipo-badge">🏆 Receptor Universal</div>
             </div>
 
-            <div class="card">
-                <h3>AB-</h3>
-                <p>Pode doar para: AB+ e AB-</p>
-                <p>Pode receber de: A-, B-, AB- e O-</p>
+            <div class="tipo-card tipo-ab-negativo">
+                <div class="tipo-nome">AB-</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> AB+ e AB-</p>
+                    <p><strong>💉 Pode receber de:</strong> A-, B-, AB- e O-</p>
+                </div>
+                <div class="tipo-badge">⭐ Muito Raro</div>
             </div>
 
-            <div class="card">
-                <h3>O+</h3>
-                <p>Pode doar para: A+, B+, AB+ e O+</p>
-                <p>Pode receber de: O+ e O-</p>
+            <div class="tipo-card tipo-o-positivo">
+                <div class="tipo-nome">O+</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> A+, B+, AB+ e O+</p>
+                    <p><strong>💉 Pode receber de:</strong> O+ e O-</p>
+                </div>
+                <div class="tipo-badge">Mais Comum</div>
             </div>
 
-            <div class="card">
-                <h3>O-</h3>
-                <p>Pode doar para: Todos os tipos (doador universal)</p>
-                <p>Pode receber de: O-</p>
+            <div class="tipo-card tipo-o-negativo doador-universal">
+                <div class="tipo-nome">O-</div>
+                <div class="tipo-info">
+                    <p><strong>🩸 Pode doar para:</strong> Todos os tipos</p>
+                    <p><strong>💉 Pode receber de:</strong> O-</p>
+                </div>
+                <div class="tipo-badge">⭐ Doador Universal</div>
             </div>
 
         </div>
     </section>
 
-    <!-- ========================= -->
-    <!-- CURIOSIDADES -->
-    <!-- ========================= -->
-    <section>
-        <h2>💡 Curiosidades</h2>
-        <p>🩸 <strong>O- é o doador universal:</strong> seu sangue pode ser doado para qualquer pessoa em emergências.</p>
-        <p>🩸 <strong>AB+ é o receptor universal:</strong> pode receber sangue de todos os tipos.</p>
-        <p>🩸 <strong>AB- é um dos mais raros:</strong> apenas cerca de 0,5% da população mundial possui esse tipo.</p>
-        <p>🩸 <strong>O+ é o mais comum:</strong> cerca de 36% da população possui esse tipo sanguíneo.</p>
+    <!-- ============================================ -->
+    <!-- TABELA DE COMPATIBILIDADE                    -->
+    <!-- ============================================ -->
+    <section class="compat-section">
+        <h2>📊 Tabela de Compatibilidade</h2>
+        <p class="section-sub">Veja de forma rápida para quem cada tipo pode doar</p>
+
+        <div class="tabela-wrapper">
+            <table class="tabela-compat">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Pode doar para</th>
+                        <th>Pode receber de</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="tipo-cell tipo-a">A+</td>
+                        <td>A+, AB+</td>
+                        <td>A+, A-, O+, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-a">A-</td>
+                        <td>A+, A-, AB+, AB-</td>
+                        <td>A-, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-b">B+</td>
+                        <td>B+, AB+</td>
+                        <td>B+, B-, O+, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-b">B-</td>
+                        <td>B+, B-, AB+, AB-</td>
+                        <td>B-, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-ab">AB+</td>
+                        <td>AB+</td>
+                        <td>Todos os tipos</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-ab">AB-</td>
+                        <td>AB+, AB-</td>
+                        <td>A-, B-, AB-, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-o">O+</td>
+                        <td>A+, B+, AB+, O+</td>
+                        <td>O+, O-</td>
+                    </tr>
+                    <tr>
+                        <td class="tipo-cell tipo-o">O-</td>
+                        <td>Todos os tipos</td>
+                        <td>O-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
-    <!-- ========================= -->
-    <!-- CHAMADA PARA AÇÃO -->
-    <!-- ========================= -->
-    <section>
-        <h2>Descubra seu tipo sanguíneo</h2>
+    <!-- ============================================ -->
+    <!-- CURIOSIDADES                                 -->
+    <!-- ============================================ -->
+    <section class="curiosidades-section">
+        <h2>💡 Curiosidades</h2>
+
+        <div class="curiosidades-grid">
+
+            <div class="curiosidade-card">
+                <span class="curiosidade-icon">🩸</span>
+                <h3>O- é o doador universal</h3>
+                <p>Seu sangue pode ser doado para qualquer pessoa em emergências.</p>
+            </div>
+
+            <div class="curiosidade-card">
+                <span class="curiosidade-icon">🏆</span>
+                <h3>AB+ é o receptor universal</h3>
+                <p>Pode receber sangue de todos os tipos.</p>
+            </div>
+
+            <div class="curiosidade-card">
+                <span class="curiosidade-icon">⭐</span>
+                <h3>AB- é um dos mais raros</h3>
+                <p>Apenas cerca de 0,5% da população mundial possui esse tipo.</p>
+            </div>
+
+            <div class="curiosidade-card">
+                <span class="curiosidade-icon">📊</span>
+                <h3>O+ é o mais comum</h3>
+                <p>Cerca de 36% da população possui esse tipo sanguíneo.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CTA FINAL                                    -->
+    <!-- ============================================ -->
+    <section class="cta-tipos">
+        <h2>🩸 Descubra seu tipo sanguíneo</h2>
         <p>Se você ainda não sabe seu tipo, doe sangue! Durante a triagem, o hemocentro informa o seu tipo e você ainda salva vidas.</p>
-        <a href="{% url 'agendar_doacao' %}" class="botao-doar" style="display:inline-block; margin-top:10px;">Agendar minha doação 🩸</a>
+        <a href="{% url 'agendar_doacao' %}" class="btn-cta">
+            Agendar minha doação 🩸
+        </a>
     </section>
 
 {% endblock %}

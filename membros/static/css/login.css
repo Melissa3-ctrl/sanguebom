@@ -309,7 +309,77 @@ body {
 
 .btn-olho:hover { background: #f0f0f0; }
 
-/* BOTÃO */
+/* =========================================
+   LEMBRAR DE MIM + ESQUECI SENHA INLINE
+   ========================================= */
+.campo-lembrar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.checkmark::after {
+    content: '✓';
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.checkbox-container input:checked + .checkmark {
+    background: #c1121f;
+    border-color: #c1121f;
+}
+
+.checkbox-container input:checked + .checkmark::after {
+    opacity: 1;
+}
+
+.texto-lembrar {
+    color: #555;
+}
+
+.link-esqueci-inline {
+    color: #c1121f;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.link-esqueci-inline:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   BOTÃO COM LOADING
+   ========================================= */
 .btn-continuar {
     width: 100%;
     margin-top: 15px;
@@ -323,10 +393,34 @@ body {
     font-family: inherit;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-continuar:hover { background: #a01c2e; }
 .btn-continuar:active { transform: scale(0.98); }
+
+.btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: girar 0.6s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
 
 /* RODAPÉ FORM */
 .rodape-form {
@@ -342,7 +436,46 @@ body {
 
 .rodape-form .icone { color: #c1121f; font-size: 1.1rem; }
 
-/* EXTRAS */
+/* =========================================
+   BOTÃO CRIAR CONTA DESTACADO
+   ========================================= */
+.criar-conta-box {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.texto-criar {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.btn-criar-conta-destaque {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #c1121f, #a01c2e);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(193, 18, 31, 0.2);
+}
+
+.btn-criar-conta-destaque:hover {
+    background: linear-gradient(135deg, #a01c2e, #7a0f1f);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
+}
+
+/* EXTRAS (caso use) */
 .extras {
     text-align: center;
     margin-top: 20px;

@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils import timezone
 from django.conf import settings
+from django.conf import settings
 import random
-from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
+from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao
 from .emails import enviar_email_agendamento
 
 
@@ -27,7 +28,44 @@ def tipos_sanguineos(request):
 
 
 def beneficios(request):
-    return render(request, 'beneficios.html')
+    doador = None
+    total_agendamentos = 0
+    nivel = 'Bronze'
+    progresso = 0
+    proximo_nivel = 'Prata'
+    faltam = 3
+
+    if request.user.is_authenticated:
+        try:
+            doador = Doador.objects.get(usuario=request.user)
+            total_agendamentos = Agendamento.objects.filter(doador=doador).count()
+
+            if total_agendamentos >= 6:
+                nivel = 'Ouro'
+                progresso = 100
+                proximo_nivel = None
+                faltam = 0
+            elif total_agendamentos >= 3:
+                nivel = 'Prata'
+                progresso = int((total_agendamentos / 6) * 100)
+                proximo_nivel = 'Ouro'
+                faltam = 6 - total_agendamentos
+            else:
+                nivel = 'Bronze'
+                progresso = int((total_agendamentos / 3) * 100)
+                proximo_nivel = 'Prata'
+                faltam = 3 - total_agendamentos
+        except Doador.DoesNotExist:
+            pass
+
+    return render(request, 'beneficios.html', {
+        'doador': doador,
+        'total_agendamentos': total_agendamentos,
+        'nivel': nivel,
+        'progresso': progresso,
+        'proximo_nivel': proximo_nivel,
+        'faltam': faltam,
+    })
 
 
 def duvidas(request):
@@ -56,32 +94,45 @@ def campanhas(request):
     })
 
 
-def notificacoes(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+# =========================================================
+# NOTIFICAÇÕES (DINÂMICAS)
+# =========================================================
 
+@login_required(login_url='login')
+def notificacoes(request):
     doador = get_object_or_404(Doador, usuario=request.user)
 
-    agendamento = Agendamento.objects.filter(
-        doador=doador
-    ).order_by('-data', '-horario').first()
-
-    agendamento_confirmado = None
-    if agendamento:
-        agendamento_confirmado = (
-            f"Seu agendamento para doação no "
-            f"{agendamento.hemocentro.nome} foi confirmado para "
-            f"{agendamento.data.strftime('%d/%m/%Y')} às "
-            f"{agendamento.horario.strftime('%H:%M')}."
-        )
+    notificacoes_lista = Notificacao.objects.filter(doador=doador)
+    nao_lidas = notificacoes_lista.filter(lida=False).count()
 
     return render(request, 'notificacoes.html', {
-        'alerta_estoque': None,
-        'lembrete_doacao': None,
-        'campanha': None,
-        'agendamento_confirmado': agendamento_confirmado,
+        'notificacoes': notificacoes_lista,
+        'nao_lidas': nao_lidas,
     })
 
+
+@login_required(login_url='login')
+def marcar_lida(request, id):
+    doador = get_object_or_404(Doador, usuario=request.user)
+    notificacao = get_object_or_404(Notificacao, id=id, doador=doador)
+
+    notificacao.lida = True
+    notificacao.save()
+
+    return redirect('notificacoes')
+
+
+@login_required(login_url='login')
+def marcar_todas_lidas(request):
+    doador = get_object_or_404(Doador, usuario=request.user)
+    Notificacao.objects.filter(doador=doador, lida=False).update(lida=True)
+
+    return redirect('notificacoes')
+
+
+# =========================================================
+# MEU PERFIL
+# =========================================================
 
 @login_required(login_url='login')
 def meu_perfil(request):
@@ -98,11 +149,32 @@ def meu_perfil(request):
         data__gte=hoje
     ).order_by('data', 'horario').first()
 
+    if total_agendamentos >= 6:
+        nivel = 'Ouro'
+        proximo_nivel = None
+        faltam = 0
+        progresso = 100
+    elif total_agendamentos >= 3:
+        nivel = 'Prata'
+        proximo_nivel = 'Ouro'
+        faltam = 6 - total_agendamentos
+        progresso = int((total_agendamentos / 6) * 100)
+    else:
+        nivel = 'Bronze'
+        proximo_nivel = 'Prata'
+        faltam = 3 - total_agendamentos
+        progresso = int((total_agendamentos / 3) * 100)
+
     return render(request, 'meu_perfil.html', {
         'doador': doador,
         'agendamentos': agendamentos,
         'total_agendamentos': total_agendamentos,
+        'vidas_salvas': total_agendamentos * 4,
         'proximo_agendamento': proximo_agendamento,
+        'nivel': nivel,
+        'proximo_nivel': proximo_nivel,
+        'faltam': faltam,
+        'progresso': progresso,
     })
 
 
@@ -251,11 +323,18 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')
+        lembrar = request.POST.get('lembrar')
 
         usuario = authenticate(request, username=email, password=senha)
 
         if usuario is not None:
             login(request, usuario)
+
+            if lembrar:
+                request.session.set_expiry(1209600)
+            else:
+                request.session.set_expiry(0)
+
             return redirect('agendar_doacao')
 
         return render(request, 'login.html', {
@@ -452,7 +531,6 @@ def reenviar_codigo(request):
             tempo_passado = timezone.now() - ultimo_codigo.criado_em
             segundos_passados = tempo_passado.total_seconds()
 
-            # ⏱️ Só pode reenviar depois de 60 segundos
             if segundos_passados < 60:
                 segundos_restantes = int(60 - segundos_passados)
                 return render(request, 'recuperar_senha.html', {
@@ -552,7 +630,7 @@ def alterar_senha(request):
 
 
 # =========================================================
-# CREATE - AGENDAR DOAÇÃO
+# CREATE - AGENDAR DOAÇÃO (COM NOTIFICAÇÕES AUTOMÁTICAS)
 # =========================================================
 
 @login_required(login_url='login')
@@ -575,6 +653,39 @@ def agendar_doacao(request):
             horario=horario,
             tipo_doacao=tipo_doacao
         )
+
+        # 🆕 Notificação de agendamento confirmado
+        Notificacao.objects.create(
+            doador=doador,
+            tipo='confirmado',
+            titulo='✅ Agendamento confirmado',
+            mensagem=f'Seu agendamento no {hemocentro.nome} foi confirmado para {data} às {horario}.'
+        )
+
+        # 🆕 Notificação de nível
+        total = Agendamento.objects.filter(doador=doador).count()
+
+        if total >= 6:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🏆 Você atingiu o nível Ouro!',
+                mensagem='Parabéns! Você desbloqueou todos os benefícios.'
+            )
+        elif total >= 3:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🥈 Você subiu pro nível Prata!',
+                mensagem=f'Faltam {6 - total} agendamentos pro Ouro.'
+            )
+        else:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🥉 Nível Bronze',
+                mensagem=f'Faltam {3 - total} agendamentos pro Prata!'
+            )
 
         try:
             enviar_email_agendamento(doador, agendamento)

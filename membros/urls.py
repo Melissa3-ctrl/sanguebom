@@ -34,12 +34,6 @@ urlpatterns = [
     ),
 
     path(
-        'notificacoes/',
-        views.notificacoes,
-        name='notificacoes'
-    ),
-
-    path(
         'cadastro/',
         views.cadastro,
         name='cadastro'
@@ -116,6 +110,29 @@ urlpatterns = [
         'agendar_doacao/',
         views.agendar_doacao,
         name='agendar_doacao'
+    ),
+
+
+    # =========================================================
+    # NOTIFICAÇÕES 🆕
+    # =========================================================
+
+    path(
+        'notificacoes/',
+        views.notificacoes,
+        name='notificacoes'
+    ),
+
+    path(
+        'notificacoes/<int:id>/lida/',
+        views.marcar_lida,
+        name='marcar_lida'
+    ),
+
+    path(
+        'notificacoes/todas-lidas/',
+        views.marcar_todas_lidas,
+        name='marcar_todas_lidas'
     ),
 
 

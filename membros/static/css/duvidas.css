@@ -1,0 +1,257 @@
+/* ============================================ */
+/* HEADER                                       */
+/* ============================================ */
+
+.duvidas-header {
+    text-align: center;
+    margin: 30px 0 20px 0;
+}
+
+.duvidas-header h1 {
+    font-size: 2.2em;
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.duvidas-header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* ============================================ */
+/* NAVEGAÇÃO RÁPIDA                             */
+/* ============================================ */
+
+.duvidas-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    background: #fcf9f2;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 20px 0 40px 0;
+    border: 1px solid #f0e6d2;
+}
+
+.duvidas-nav a {
+    color: #b30000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #f0e6d2;
+    transition: all 0.2s;
+}
+
+.duvidas-nav a:hover {
+    background: #b30000;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* FAQ (ACCORDION)                              */
+/* ============================================ */
+
+.faq-section {
+    margin: 40px 0;
+}
+
+.faq-section h2 {
+    color: #b30000;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0e6d2;
+    padding-bottom: 10px;
+}
+
+.faq-item {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.faq-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item[open] {
+    border-color: #b30000;
+    box-shadow: 0 4px 16px rgba(179, 0, 0, 0.1);
+}
+
+.faq-item summary {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.05em;
+    list-style: none;
+    position: relative;
+    padding-right: 50px;
+    transition: background 0.2s;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    color: #b30000;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.faq-item[open] summary::after {
+    content: '−';
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.faq-item summary:hover {
+    background: #fcf9f2;
+}
+
+.faq-item[open] summary {
+    background: #fcf9f2;
+    color: #b30000;
+}
+
+.faq-item p {
+    padding: 0 20px 20px 20px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.faq-item p a {
+    color: #b30000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* ============================================ */
+/* MITOS E VERDADES                             */
+/* ============================================ */
+
+.mitos-section {
+    margin: 60px 0 40px 0;
+}
+
+.mitos-section h2 {
+    color: #b30000;
+    font-size: 1.6em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.mitos-sub {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.mitos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.mito-card {
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.mito-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff4444, #4caf50);
+}
+
+.mito-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.mito {
+    background: #ffebee;
+    color: #c62828;
+    font-weight: bold;
+    font-size: 0.85em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.mito-frase {
+    font-size: 1.05em;
+    color: #333;
+    font-style: italic;
+    margin: 0 0 16px 0;
+    min-height: 50px;
+    line-height: 1.4;
+}
+
+.verdade {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 0.85em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.verdade-texto {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .duvidas-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .duvidas-nav a {
+        text-align: center;
+    }
+
+    .mitos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .duvidas-header h1 {
+        font-size: 1.7em;
+    }
+}

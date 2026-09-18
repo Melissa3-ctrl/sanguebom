@@ -1,73 +1,70 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    <!-- 🩸 FAVICON -->
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
+{% block title %}Notificações - Sangue Bom{% endblock %}
 
-    <title>Notificações - Sangue Bom</title>
-</head>
+{% block content %}
 
-<body>
+    <link rel="stylesheet" href="{% static 'css/notificacoes.css' %}">
 
-    <header>
+    <section class="notificacoes-header">
         <h1>🔔 Notificações</h1>
-        <a href="home">🏠 Início</a>
-    </header>
-
-
-    <main>
-
-        <section>
-            <h2>Suas notificações</h2>
-
-            <article>
-                <h3>🚨 Estoque O- em nível crítico</h3>
-                <p>
-                    O estoque de sangue O- está em nível crítico na sua região.
-                    Sua doação pode ajudar a salvar vidas.
-                </p>
-            </article>
-
-            {% if proximo_agendamento %}
-                <article>
-                    <h3>📅 Próximo agendamento</h3>
-                    <p><strong>{{ proximo_agendamento.hemocentro.nome }}</strong></p>
-                    <p>📅 {{ proximo_agendamento.data|date:"d/m/Y" }}</p>
-                    <p>🕐 {{ proximo_agendamento.horario|time:"H:i" }}</p>
-                    <p>🩸 {{ proximo_agendamento.tipo_doacao }}</p>
-                </article>
+        <p>
+            {% if nao_lidas > 0 %}
+                Você tem <strong>{{ nao_lidas }}</strong> notificação{{ nao_lidas|pluralize }} não lida{{ nao_lidas|pluralize }}
             {% else %}
-                <article>
-                    <h3>📅 Lembrete de doação</h3>
-                    <p>Você já pode realizar uma nova doação de sangue.</p>
-                </article>
+                Tudo em dia! ✅
             {% endif %}
+        </p>
 
-            <article>
-                <h3>🩸 Nova campanha disponível</h3>
-                <p>Participe das campanhas de doação e faça a diferença.</p>
-                <a href="{% url 'campanhas' %}">Ver campanhas</a>
-            </article>
+        {% if nao_lidas > 0 %}
+            <a href="{% url 'marcar_todas_lidas' %}" class="btn-marcar-todas">
+                ✓ Marcar todas como lidas
+            </a>
+        {% endif %}
+    </section>
 
-            {% if agendamento_confirmado %}
-                <article>
-                    <h3>✅ Agendamento confirmado</h3>
-                    <p>{{ agendamento_confirmado }}</p>
+    <section class="notificacoes-lista">
+
+        {% if notificacoes %}
+            {% for notif in notificacoes %}
+                <article class="notificacao-card {{ notif.tipo }} {% if not notif.lida %}nao-lida{% endif %}">
+                    <div class="notificacao-icon">
+                        {% if notif.tipo == 'alerta' %}🚨
+                        {% elif notif.tipo == 'lembrete' %}📅
+                        {% elif notif.tipo == 'campanha' %}🩸
+                        {% elif notif.tipo == 'confirmado' %}✅
+                        {% elif notif.tipo == 'nivel' %}🏆
+                        {% else %}🔔{% endif %}
+                    </div>
+                    <div class="notificacao-conteudo">
+                        <h3>
+                            {{ notif.titulo }}
+                            {% if not notif.lida %}
+                                <span class="badge-nova">NOVA</span>
+                            {% endif %}
+                        </h3>
+                        <p>{{ notif.mensagem }}</p>
+                        <div class="notificacao-acoes">
+                            {% if not notif.lida %}
+                                <a href="{% url 'marcar_lida' notif.id %}" class="notificacao-btn">
+                                    ✓ Marcar como lida
+                                </a>
+                            {% endif %}
+                            <span class="notificacao-data">
+                                {{ notif.criada_em|date:"d/m/Y H:i" }}
+                            </span>
+                        </div>
+                    </div>
                 </article>
-            {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="notificacoes-vazio">
+                <span>🔕</span>
+                <p>Você não tem notificações ainda.</p>
+            </div>
+        {% endif %}
 
-        </section>
+    </section>
 
-    </main>
-
-    <script src="{% static 'js/script.js' %}"></script>
-
-</body>
-
-</html>
+{% endblock %}

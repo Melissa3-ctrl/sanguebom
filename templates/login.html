@@ -102,7 +102,7 @@
             {% endif %}
 
             <!-- FORM -->
-            <form method="POST">
+            <form method="POST" id="form-login" onsubmit="mostrarLoading()">
                 {% csrf_token %}
 
                 <div class="campo">
@@ -123,8 +123,21 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-continuar">
-                    🔓 Entrar
+                <!-- LEMBRAR DE MIM -->
+                <div class="campo-lembrar">
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lembrar" id="lembrar">
+                        <span class="checkmark"></span>
+                        <span class="texto-lembrar">Lembrar de mim</span>
+                    </label>
+                    <a href="{% url 'recuperar_senha' %}" class="link-esqueci-inline">Esqueci minha senha</a>
+                </div>
+
+                <button type="submit" class="btn-continuar" id="btn-entrar">
+                    <span class="btn-texto">🔓 Entrar</span>
+                    <span class="btn-loading" style="display: none;">
+                        <span class="spinner"></span> Entrando...
+                    </span>
                 </button>
             </form>
 
@@ -134,12 +147,12 @@
                 <p>Doar sangue é um gesto de amor.<br>E você pode fazer parte disso.</p>
             </div>
 
-            <!-- LINKS -->
-            <div class="extras">
-                <a href="{% url 'recuperar_senha' %}">🔑 Esqueci minha senha</a>
-                <br><br>
-                Ainda não tem conta?
-                <a href="{% url 'cadastro' %}">Criar agora</a>
+            <!-- BOTÃO CRIAR CONTA (DESTACADO) -->
+            <div class="criar-conta-box">
+                <p class="texto-criar">Ainda não tem conta?</p>
+                <a href="{% url 'cadastro' %}" class="btn-criar-conta-destaque">
+                    ✨ Criar minha conta
+                </a>
             </div>
 
             <!-- BOTÃO VOLTAR -->
@@ -153,6 +166,9 @@
     </div>
 
     <script>
+        // ==========================================
+        // MOSTRAR / OCULTAR SENHA
+        // ==========================================
         function mostrarSenha() {
             const input = document.getElementById('senha');
             const botao = document.querySelector('.btn-olho');
@@ -160,7 +176,7 @@
             if (input.type === 'password') {
                 input.type = 'text';
                 botao.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                     </svg>
@@ -174,6 +190,21 @@
                     </svg>
                 `;
             }
+        }
+
+        // ==========================================
+        // LOADING NO BOTÃO ENTRAR
+        // ==========================================
+        function mostrarLoading() {
+            const btn = document.getElementById('btn-entrar');
+            const texto = btn.querySelector('.btn-texto');
+            const loading = btn.querySelector('.btn-loading');
+
+            texto.style.display = 'none';
+            loading.style.display = 'inline-flex';
+            btn.disabled = true;
+            btn.style.opacity = '0.8';
+            btn.style.cursor = 'wait';
         }
     </script>
 
