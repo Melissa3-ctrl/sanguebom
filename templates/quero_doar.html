@@ -3,65 +3,229 @@
 
 {% block content %}
 
-    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+    <link rel="stylesheet" href="{% static 'css/quero_doar.css' %}">
 
-    <section>
+    <!-- ============================================ -->
+    <!-- HERO                                         -->
+    <!-- ============================================ -->
+    <section class="hero-doar">
         <h1>🩸 Quero Doar</h1>
-        <p>Sua doação pode fazer a diferença na vida de até 4 pessoas. Doe sangue e ajude quem precisa!</p>
+        <p class="hero-sub">Sua doação pode salvar até <strong>4 vidas</strong>. Doe sangue e ajude quem precisa!</p>
+
+        <a href="{% url 'agendar_doacao' %}" class="btn-hero">
+            Agendar minha doação 🩸
+        </a>
     </section>
 
-    <section>
+    <!-- ============================================ -->
+    <!-- POR QUE DOAR                                 -->
+    <!-- ============================================ -->
+    <section class="info-section">
         <h2>❤️ Por que doar sangue?</h2>
-        <p>A doação de sangue é um ato voluntário que pode ajudar pessoas em situações de emergência, cirurgias, tratamentos e outras necessidades médicas.</p>
-        <p>Uma única doação pode beneficiar até 4 pessoas após a separação dos componentes do sangue.</p>
+
+        <div class="info-card">
+            <span class="info-icon">❤️</span>
+            <p>A doação de sangue é um ato voluntário que pode ajudar pessoas em situações de emergência, cirurgias, tratamentos e outras necessidades médicas.</p>
+            <p><strong>Uma única doação pode beneficiar até 4 pessoas</strong> após a separação dos componentes do sangue.</p>
+        </div>
     </section>
 
-    <section>
+    <!-- ============================================ -->
+    <!-- QUEM PODE DOAR                               -->
+    <!-- ============================================ -->
+    <section class="info-section">
         <h2>👤 Quem pode doar?</h2>
-        <ul>
-            <li>Ter idade entre 16 e 69 anos;</li>
-            <li>Ter pelo menos 50 kg;</li>
-            <li>Estar em boas condições de saúde;</li>
-            <li>Apresentar documento oficial com foto;</li>
-            <li>Estar alimentado e bem hidratado.</li>
-        </ul>
+
+        <div class="requisitos-grid">
+            <div class="requisito-card">
+                <span class="requisito-icon">🎂</span>
+                <strong>16 a 69 anos</strong>
+                <p>Menores de 18 precisam de autorização</p>
+            </div>
+
+            <div class="requisito-card">
+                <span class="requisito-icon">⚖️</span>
+                <strong>Mínimo 50 kg</strong>
+                <p>Peso mínimo para doação</p>
+            </div>
+
+            <div class="requisito-card">
+                <span class="requisito-icon">💚</span>
+                <strong>Boa saúde</strong>
+                <p>Estar em boas condições</p>
+            </div>
+
+            <div class="requisito-card">
+                <span class="requisito-icon">📄</span>
+                <strong>Documento com foto</strong>
+                <p>RG, CNH ou passaporte</p>
+            </div>
+
+            <div class="requisito-card">
+                <span class="requisito-icon">🍽️</span>
+                <strong>Alimentado</strong>
+                <p>Não estar em jejum</p>
+            </div>
+
+            <div class="requisito-card">
+                <span class="requisito-icon">💧</span>
+                <strong>Bem hidratado</strong>
+                <p>Beba bastante água</p>
+            </div>
+        </div>
     </section>
 
-    <section>
+    <!-- ============================================ -->
+    <!-- REQUISITOS                                   -->
+    <!-- ============================================ -->
+    <section class="info-section">
         <h2>✅ Requisitos para doar</h2>
-        <p>✓ Estar saudável;</p>
-        <p>✓ Ter dormido pelo menos 6 horas;</p>
-        <p>✓ Não estar em jejum;</p>
-        <p>✓ Evitar alimentos muito gordurosos antes da doação;</p>
-        <p>✓ Beber bastante água;</p>
-        <p>✓ Evitar bebidas alcoólicas antes da doação;</p>
-        <p>✓ Levar um documento oficial com foto.</p>
-        <p><em>A equipe de saúde fará uma triagem antes da doação para verificar se você está apto naquele momento.</em></p>
+
+        <div class="checklist">
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Estar saudável</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Ter dormido pelo menos 6 horas</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Não estar em jejum</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Evitar alimentos muito gordurosos antes da doação</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Beber bastante água</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Evitar bebidas alcoólicas antes da doação</p>
+            </div>
+            <div class="check-item">
+                <span class="check">✓</span>
+                <p>Levar um documento oficial com foto</p>
+            </div>
+        </div>
+
+        <p class="aviso-triagem">
+            ⚕️ <em>A equipe de saúde fará uma triagem antes da doação para verificar se você está apto naquele momento.</em>
+        </p>
     </section>
 
-    <section>
-        <h2>🩸 Tipos sanguíneos</h2>
-        <p>Conheça os principais tipos sanguíneos: O+, O−, A+, A−, B+, B−, AB+, AB−</p>
+    <!-- ============================================ -->
+    <!-- TIPOS SANGUÍNEOS                             -->
+    <!-- ============================================ -->
+    <section class="info-section">
+        <h2>🩸 Tipos Sanguíneos</h2>
+        <p class="section-sub">Conheça os tipos e para quem cada um pode doar</p>
+
+        <div class="tipos-grid">
+
+            <div class="tipo-card doador-universal">
+                <div class="tipo-nome">O−</div>
+                <div class="tipo-badge">⭐ Doador Universal</div>
+                <p class="tipo-desc">Doa para <strong>todos</strong> os tipos</p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">O+</div>
+                <div class="tipo-badge receptor">Receptor universal de +</div>
+                <p class="tipo-desc">Doa para <strong>O+, A+, B+, AB+</strong></p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">A−</div>
+                <div class="tipo-badge">Pode doar</div>
+                <p class="tipo-desc">Doa para <strong>A+, A−, AB+, AB−</strong></p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">A+</div>
+                <div class="tipo-badge">Pode doar</div>
+                <p class="tipo-desc">Doa para <strong>A+ e AB+</strong></p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">B−</div>
+                <div class="tipo-badge">Pode doar</div>
+                <p class="tipo-desc">Doa para <strong>B+, B−, AB+, AB−</strong></p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">B+</div>
+                <div class="tipo-badge">Pode doar</div>
+                <p class="tipo-desc">Doa para <strong>B+ e AB+</strong></p>
+            </div>
+
+            <div class="tipo-card">
+                <div class="tipo-nome">AB−</div>
+                <div class="tipo-badge">Pode doar</div>
+                <p class="tipo-desc">Doa para <strong>AB+ e AB−</strong></p>
+            </div>
+
+            <div class="tipo-card receptor-universal">
+                <div class="tipo-nome">AB+</div>
+                <div class="tipo-badge">🏆 Receptor Universal</div>
+                <p class="tipo-desc">Recebe de <strong>todos</strong>, doa para <strong>AB+</strong></p>
+            </div>
+
+        </div>
     </section>
 
-    <section>
+    <!-- ============================================ -->
+    <!-- ANTES DE DOAR                                -->
+    <!-- ============================================ -->
+    <section class="info-section">
         <h2>💡 Antes de doar</h2>
-        <p>✓ Beba bastante água</p>
-        <p>✓ Não vá em jejum</p>
-        <p>✓ Durma pelo menos 6 horas</p>
-        <p>✓ Evite bebidas alcoólicas</p>
-        <p>✓ Não fume antes da doação</p>
+
+        <div class="dicas-grid">
+            <div class="dica-card">
+                <span>💧</span>
+                <p>Beba bastante água</p>
+            </div>
+            <div class="dica-card">
+                <span>🍽️</span>
+                <p>Não vá em jejum</p>
+            </div>
+            <div class="dica-card">
+                <span>😴</span>
+                <p>Durma pelo menos 6 horas</p>
+            </div>
+            <div class="dica-card">
+                <span>🚫🍺</span>
+                <p>Evite bebidas alcoólicas</p>
+            </div>
+            <div class="dica-card">
+                <span>🚭</span>
+                <p>Não fume antes da doação</p>
+            </div>
+        </div>
     </section>
 
-    <section>
-        <h2>❤️ Uma doação = até 4 vidas</h2>
-        <p>Seu sangue pode ajudar até 4 pessoas diferentes após a triagem e separação dos componentes.</p>
+    <!-- ============================================ -->
+    <!-- DESTAQUE — 4 VIDAS                           -->
+    <!-- ============================================ -->
+    <section class="destaque-vidas">
+        <div class="destaque-icon">❤️</div>
+        <h2>Uma doação = até 4 vidas</h2>
+        <p>Seu sangue pode ajudar até <strong>4 pessoas diferentes</strong> após a triagem e separação dos componentes.</p>
     </section>
 
-    <section>
+    <!-- ============================================ -->
+    <!-- CTA FINAL                                    -->
+    <!-- ============================================ -->
+    <section class="cta-final">
         <h2>📅 Pronto para doar?</h2>
         <p>Escolha um hemocentro, uma data e um horário para realizar sua doação.</p>
-        <a href="{% url 'agendar_doacao' %}" class="botao-doar">Agendar minha doação 🩸</a>
+
+        <a href="{% url 'agendar_doacao' %}" class="btn-cta">
+            Agendar minha doação 🩸
+        </a>
     </section>
 
 {% endblock %}

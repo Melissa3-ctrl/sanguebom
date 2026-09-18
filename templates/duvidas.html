@@ -3,127 +3,238 @@
 
 {% block content %}
 
-    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+    <link rel="stylesheet" href="{% static 'css/duvidas.css' %}">
 
-    <h1>Dúvidas Frequentes</h1>
-    <p>Encontre respostas para as perguntas mais comuns sobre doação de sangue.</p>
 
-    <nav>
-        <a href="#todas">Todas</a>
+    <!-- TÍTULO -->
+    <section class="duvidas-header">
+        <h1>❓ Dúvidas Frequentes</h1>
+        <p>Encontre respostas para as perguntas mais comuns sobre doação de sangue.</p>
+    </section>
+
+    <!-- NAVEGAÇÃO RÁPIDA -->
+    <nav class="duvidas-nav">
         <a href="#quem-pode-doar">👨‍🦰 Quem pode doar?</a>
         <a href="#sobre-doacao">🩸 Sobre a doação</a>
         <a href="#tipos-sanguineos">🔬 Tipos sanguíneos</a>
         <a href="#beneficios">🏆 Benefícios</a>
         <a href="#agendamento">🗓️ Agendamento</a>
+        <a href="#mitos">🧠 Mitos e Verdades</a>
     </nav>
 
-    <section id="todas">
-        <!-- Todas as dúvidas -->
-    </section>
-
-    <section id="quem-pode-doar">
+    <!-- ============================================ -->
+    <!-- 👨‍🦰 QUEM PODE DOAR                          -->
+    <!-- ============================================ -->
+    <section id="quem-pode-doar" class="faq-section">
         <h2>👨‍🦰 Quem pode doar?</h2>
 
-        <article>
-            <h3>Qual a idade mínima e máxima para doação?</h3>
-            <p>Entre 16 e 69 anos.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Qual a idade mínima e máxima para doação?</summary>
+            <p>Entre <strong>16 e 69 anos</strong>. Menores de 18 precisam de autorização dos responsáveis.</p>
+        </details>
 
-        <article>
-            <h3>Qual o peso mínimo?</h3>
-            <p>O doador deve pesar no mínimo 50 kg.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Qual o peso mínimo?</summary>
+            <p>O doador deve pesar no mínimo <strong>50 kg</strong>.</p>
+        </details>
 
-        <article>
-            <h3>Grávidas podem doar?</h3>
-            <p>Não. A doação é contraindicada durante a gravidez.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Grávidas podem doar?</summary>
+            <p><strong>Não.</strong> A doação é contraindicada durante a gravidez e amamentação.</p>
+        </details>
 
-        <article>
-            <h3>Quem tomou vacina pode doar?</h3>
-            <p>Depende da vacina.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Quem tomou vacina pode doar?</summary>
+            <p>Depende da vacina. Vacinas de vírus vivo (como febre amarela) exigem <strong>4 semanas</strong> de espera. Vacinas de gripe e COVID-19, geralmente <strong>48h</strong>. Consulte o hemocentro.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Quem tem tatuagem ou piercing pode doar?</summary>
+            <p>Sim, mas é preciso esperar <strong>12 meses</strong> após fazer a tatuagem ou colocar o piercing.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Quem tem diabetes pode doar?</summary>
+            <p>Sim, desde que a diabetes esteja controlada <strong>sem uso de insulina</strong>.</p>
+        </details>
     </section>
 
-    <section id="sobre-doacao">
+    <!-- ============================================ -->
+    <!-- 🩸 SOBRE A DOAÇÃO                            -->
+    <!-- ============================================ -->
+    <section id="sobre-doacao" class="faq-section">
         <h2>🩸 Sobre a doação</h2>
 
-        <article>
-            <h3>Posso comer antes de doar?</h3>
-            <p>Sim! É obrigatório não estar em jejum.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Posso comer antes de doar?</summary>
+            <p><strong>Sim!</strong> É obrigatório não estar em jejum. Coma algo leve 2h antes e evite alimentos gordurosos.</p>
+        </details>
 
-        <article>
-            <h3>Qual o intervalo entre doações?</h3>
-            <p>Homens: 60 dias. Mulheres: 90 dias.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Qual o intervalo entre doações?</summary>
+            <p><strong>Homens:</strong> a cada 60 dias (máx 4/ano).<br><strong>Mulheres:</strong> a cada 90 dias (máx 3/ano).</p>
+        </details>
 
-        <article>
-            <h3>Quanto tempo dura o processo?</h3>
-            <p>A doação dura em média 10 minutos.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Quanto tempo dura o processo?</summary>
+            <p>Cerca de <strong>40 minutos</strong> no total. A coleta em si dura em média <strong>10 minutos</strong>.</p>
+        </details>
 
-        <article>
-            <h3>Dói?</h3>
-            <p>A picada é rápida e causa apenas um leve desconforto.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Dói?</summary>
+            <p>A picada é rápida e causa apenas um <strong>leve desconforto</strong>. A maioria dos doadores não sente dor.</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>O que devo fazer depois da doação?</summary>
+            <p>Beba bastante líquido, evite esforço físico por algumas horas e não fume por pelo menos 2h.</p>
+        </details>
     </section>
 
-    <section id="tipos-sanguineos">
+    <!-- ============================================ -->
+    <!-- 🔬 TIPOS SANGUÍNEOS                          -->
+    <!-- ============================================ -->
+    <section id="tipos-sanguineos" class="faq-section">
         <h2>🔬 Tipos sanguíneos</h2>
 
-        <article>
-            <h3>Qual tipo sanguíneo é mais raro?</h3>
-            <p>O tipo AB- é um dos mais raros.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Qual tipo sanguíneo é mais raro?</summary>
+            <p>O tipo <strong>AB-</strong> é um dos mais raros. O tipo <strong>O-</strong> é o doador universal.</p>
+        </details>
 
-        <article>
-            <h3>O que é o fator Rh?</h3>
-            <p>É uma característica relacionada às hemácias.</p>
-        </article>
+        <details class="faq-item">
+            <summary>O que é o fator Rh?</summary>
+            <p>É uma proteína presente nas hemácias. Se você tem, é <strong>Rh+</strong>; se não, <strong>Rh-</strong>.</p>
+        </details>
 
-        <article>
-            <h3>Posso receber sangue de qualquer tipo?</h3>
-            <p>Não. Cada tipo possui compatibilidades específicas.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Posso receber sangue de qualquer tipo?</summary>
+            <p><strong>Não.</strong> Cada tipo tem compatibilidades específicas. O <strong>O-</strong> doa pra todos, mas só recebe de O-. O <strong>AB+</strong> recebe de todos, mas só doa pra AB+.</p>
+        </details>
     </section>
 
-    <section id="beneficios">
+    <!-- ============================================ -->
+    <!-- 🏆 BENEFÍCIOS                                -->
+    <!-- ============================================ -->
+    <section id="beneficios" class="faq-section">
         <h2>🏆 Benefícios</h2>
 
-        <article>
-            <h3>Quais benefícios tenho ao doar?</h3>
-            <p>Doadores regulares podem ter benefícios específicos.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Quais benefícios tenho ao doar?</summary>
+            <p>Doadores regulares podem ter <strong>descontos em eventos culturais</strong>, <strong>prioridade em vacinação</strong>, <strong>isenção em concursos do DF</strong> e mais. Confira na página <a href="{% url 'beneficios' %}">Benefícios</a>.</p>
+        </details>
 
-        <article>
-            <h3>Como funciona o sistema de benefícios?</h3>
-            <p>O histórico de doações pode ser acompanhado pelo perfil.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Como funciona o sistema de níveis?</summary>
+            <p>🥉 <strong>Bronze</strong> (1-2 agendamentos) → 🥈 <strong>Prata</strong> (3-5) → 🥇 <strong>Ouro</strong> (6+). Quanto mais você doa, mais benefícios desbloqueia.</p>
+        </details>
 
-        <article>
-            <h3>Como comprovo meu status de doador?</h3>
-            <p>O certificado pode ser emitido pelo hemocentro.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Como comprovo meu status de doador?</summary>
+            <p>O <strong>certificado</strong> pode ser emitido diretamente pelo hemocentro onde você doou.</p>
+        </details>
     </section>
 
-    <section id="agendamento">
+    <!-- ============================================ -->
+    <!-- 🗓️ AGENDAMENTO                               -->
+    <!-- ============================================ -->
+    <section id="agendamento" class="faq-section">
         <h2>🗓️ Agendamento</h2>
 
-        <article>
-            <h3>Preciso agendar ou posso ir espontaneamente?</h3>
-            <p>É possível ir sem agendamento em alguns locais.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Preciso agendar ou posso ir espontaneamente?</summary>
+            <p>É possível ir sem agendamento em alguns locais, mas o <strong>agendamento garante prioridade</strong> e menos espera.</p>
+        </details>
 
-        <article>
-            <h3>Posso cancelar ou reagendar?</h3>
-            <p>Sim, é possível cancelar ou reagendar.</p>
-        </article>
+        <details class="faq-item">
+            <summary>Posso cancelar ou reagendar?</summary>
+            <p><strong>Sim.</strong> Em "Meus Agendamentos" você pode <strong>editar</strong> (reagendar) ou <strong>excluir</strong> (cancelar).</p>
+        </details>
 
-        <article>
-            <h3>O que levar no dia da doação?</h3>
-            <p>Leve um documento de identidade com foto.</p>
-        </article>
+        <details class="faq-item">
+            <summary>O que levar no dia da doação?</summary>
+            <p>Leve um <strong>documento de identidade com foto</strong> (RG, CNH ou passaporte).</p>
+        </details>
+
+        <details class="faq-item">
+            <summary>Recebo confirmação do agendamento?</summary>
+            <p><strong>Sim!</strong> Você recebe um e-mail com todos os detalhes: data, horário, local e dicas.</p>
+        </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 🧠 MITOS E VERDADES                          -->
+    <!-- ============================================ -->
+    <section id="mitos" class="mitos-section">
+        <h2>🧠 Mitos e Verdades</h2>
+        <p class="mitos-sub">Será que é verdade? Descubra!</p>
+
+        <div class="mitos-grid">
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue engorda"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Não engorda nem emagrece. O corpo repõe o volume em 24h.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Preciso estar em jejum"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Nunca doe em jejum! Coma algo leve 2h antes.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue afina o sangue"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">O sangue volta ao normal em poucos dias.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue vicia"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Não existe dependência. É um ato voluntário.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Quem tem tatuagem não pode doar"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Pode, mas espere 12 meses após fazer.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Só posso doar uma vez na vida"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Homens: 4x/ano. Mulheres: 3x/ano.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue faz mal à saúde"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">Faz bem! Estimula a produção de novas células.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue dói muito"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">A dor é mínima, só a picada da agulha.</p>
+            </div>
+
+            <div class="mito-card">
+                <div class="mito">❌ MITO</div>
+                <p class="mito-frase">"Doar sangue pode passar doença"</p>
+                <div class="verdade">✅ VERDADE</div>
+                <p class="verdade-texto">O material é 100% descartável e estéril.</p>
+            </div>
+
+        </div>
     </section>
 
 {% endblock %}

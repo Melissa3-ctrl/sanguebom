@@ -1,70 +1,70 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/stylecss' %}">
-    <title>Notificações - Sangue Bom</title>
-</head>
+{% block title %}Notificações - Sangue Bom{% endblock %}
 
-<body>
-     <a href="javascript:history.back()" class="btn-voltar">
-        ← Voltar
-    </a>
+{% block content %}
 
-    <header>
+    <link rel="stylesheet" href="{% static 'css/notificacoes.css' %}">
+
+    <section class="notificacoes-header">
         <h1>🔔 Notificações</h1>
+        <p>
+            {% if nao_lidas > 0 %}
+                Você tem <strong>{{ nao_lidas }}</strong> notificação{{ nao_lidas|pluralize }} não lida{{ nao_lidas|pluralize }}
+            {% else %}
+                Tudo em dia! ✅
+            {% endif %}
+        </p>
 
-        <a href="home">🏠 Início</a>
-    </header>
+        {% if nao_lidas > 0 %}
+            <a href="{% url 'marcar_todas_lidas' %}" class="btn-marcar-todas">
+                ✓ Marcar todas como lidas
+            </a>
+        {% endif %}
+    </section>
 
+    <section class="notificacoes-lista">
 
-    <main>
+        {% if notificacoes %}
+            {% for notif in notificacoes %}
+                <article class="notificacao-card {{ notif.tipo }} {% if not notif.lida %}nao-lida{% endif %}">
+                    <div class="notificacao-icon">
+                        {% if notif.tipo == 'alerta' %}🚨
+                        {% elif notif.tipo == 'lembrete' %}📅
+                        {% elif notif.tipo == 'campanha' %}🩸
+                        {% elif notif.tipo == 'confirmado' %}✅
+                        {% elif notif.tipo == 'nivel' %}🏆
+                        {% else %}🔔{% endif %}
+                    </div>
+                    <div class="notificacao-conteudo">
+                        <h3>
+                            {{ notif.titulo }}
+                            {% if not notif.lida %}
+                                <span class="badge-nova">NOVA</span>
+                            {% endif %}
+                        </h3>
+                        <p>{{ notif.mensagem }}</p>
+                        <div class="notificacao-acoes">
+                            {% if not notif.lida %}
+                                <a href="{% url 'marcar_lida' notif.id %}" class="notificacao-btn">
+                                    ✓ Marcar como lida
+                                </a>
+                            {% endif %}
+                            <span class="notificacao-data">
+                                {{ notif.criada_em|date:"d/m/Y H:i" }}
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="notificacoes-vazio">
+                <span>🔕</span>
+                <p>Você não tem notificações ainda.</p>
+            </div>
+        {% endif %}
 
-        <section>
-            <h2>Suas notificações</h2>
+    </section>
 
-            <article>
-                <h3>🚨 Estoque O- em nível crítico</h3>
-                <p>
-                    O estoque de sangue O- está em nível crítico na sua região.
-                    Sua doação pode ajudar a salvar vidas.
-                </p>
-            </article>
-
-            <article>
-                <h3>📅 Lembrete de doação</h3>
-                <p>
-                    Você já pode realizar uma nova doação de sangue.
-                </p>
-            </article>
-
-            <article>
-                <h3>🩸 Nova campanha disponível</h3>
-                <p>
-                    Participe das campanhas de doação e faça a diferença.
-                </p>
-
-            <a href="{% url 'campanhas' %}">
-                Ver campanhas
-           </a>
-
-            <article>
-                <h3>✅ Agendamento confirmado</h3>
-                <p>
-                    Seu agendamento de doação foi confirmado com sucesso.
-                </p>
-            </article>
-
-        </section>
-
-    </main>
-      <script src="{% static 'js/script.js' %}"></script>
-
-
-</body>
-</body>
-
-</html>
+{% endblock %}

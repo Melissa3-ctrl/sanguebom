@@ -3,18 +3,50 @@
 
 {% block content %}
 
-    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
 
     <!-- ========================= -->
     <!-- CABEÇALHO DO PERFIL -->
     <!-- ========================= -->
     <section class="perfil-header">
-        <h1>👤 Meu Perfil</h1>
-        <p class="perfil-nome">{{ doador.nome }}</p>
-        <p class="perfil-info">🩸 Tipo sanguíneo: <strong>{{ doador.tipo_sanguineo }}</strong></p>
-        <p class="perfil-info">✉️ {{ doador.email }}</p>
-        {% if doador.telefone %}
-            <p class="perfil-info">📞 {{ doador.telefone }}</p>
+        <div class="perfil-avatar">
+            {{ doador.nome|first|upper }}
+        </div>
+
+        <div class="perfil-info-header">
+            <h1>👤 Meu Perfil</h1>
+            <p class="perfil-nome">{{ doador.nome }}</p>
+
+            <div class="perfil-badges">
+                <span class="badge">🩸 {{ doador.tipo_sanguineo }}</span>
+                <span class="badge">✉️ {{ doador.email }}</span>
+                {% if doador.telefone %}
+                    <span class="badge">📞 {{ doador.telefone }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================= -->
+    <!-- BARRA DE PROGRESSO -->
+    <!-- ========================= -->
+    <section class="progresso-box">
+        <h2>🩸 Seu progresso</h2>
+        <p>
+            Nível:
+            {% if nivel == 'Bronze' %}🥉{% elif nivel == 'Prata' %}🥈{% else %}🥇{% endif %}
+            <strong>{{ nivel }}</strong>
+            — {{ total_agendamentos }} agendamento{{ total_agendamentos|pluralize }}
+        </p>
+
+        <div class="barra">
+            <div class="barra-preenchida" style="width: {{ progresso }}%"></div>
+        </div>
+
+        {% if proximo_nivel %}
+            <p class="faltam">Faltam {{ faltam }} agendamento{{ faltam|pluralize }} pro {{ proximo_nivel }}</p>
+        {% else %}
+            <p class="faltam">🏆 Você atingiu o nível máximo!</p>
         {% endif %}
     </section>
 
@@ -43,17 +75,13 @@
 
             <div class="card">
                 <h3>🩸 Minhas doações</h3>
-                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
-                    {{ total_agendamentos }}
-                </p>
+                <p class="card-numero">{{ total_agendamentos }}</p>
                 <p>Agendamentos realizados</p>
             </div>
 
             <div class="card">
                 <h3>💗 Seu impacto</h3>
-                <p style="font-size: 2rem; color: #b30000; font-weight: bold;">
-                    {{ total_agendamentos|add:0|floatformat:0|add:0 }}x4
-                </p>
+                <p class="card-numero">{{ vidas_salvas }}</p>
                 <p>vidas potencialmente salvas</p>
             </div>
 

@@ -14,23 +14,35 @@
     <!-- TOPO -->
     <!-- ========================= -->
     <header>
-        <h2>🚨 Estoque O- crítico</h2>
-        <h2>🔔</h2>
+        <a href="{% url 'locais_para_doar' %}" class="header-alerta">
+            <h2>🚨 Estoque O- crítico</h2>
+        </a>
+
+        <a href="{% url 'notificacoes' %}" class="header-sino" title="Notificações">
+            <h2>
+                🔔
+                {% if notificacoes_nao_lidas > 0 %}
+                    <span class="badge-sino">{{ notificacoes_nao_lidas }}</span>
+                {% endif %}
+            </h2>
+        </a>
 
         {% if user.is_authenticated %}
-            <h2>👤 Olá,
-                {% if user.doador %}
-                    {{ user.doador.nome }}
-                {% elif user.first_name %}
-                    {{ user.first_name }}
-                {% else %}
-                    {{ user.username }}
-                {% endif %}! 👋
-            </h2>
-            <a href="{% url 'logout' %}">🚪 Sair</a>
+            <a href="{% url 'meu_perfil' %}" class="header-user" title="Meu Perfil">
+                <h2>👤 Olá,
+                    {% if user.doador %}
+                        {{ user.doador.nome }}
+                    {% elif user.first_name %}
+                        {{ user.first_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}! 👋
+                </h2>
+            </a>
+            <a href="{% url 'logout' %}" class="header-sair">🚪 Sair</a>
         {% else %}
             <h2>👤 Olá, visitante! 👋</h2>
-            <a href="{% url 'login' %}">🔐 Entrar</a>
+            <a href="{% url 'login' %}" class="header-entrar">🔐 Entrar</a>
         {% endif %}
     </header>
 

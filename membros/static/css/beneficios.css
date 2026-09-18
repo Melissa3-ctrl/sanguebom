@@ -1,0 +1,223 @@
+/* ============================================ */
+/* BARRA DE PROGRESSO                           */
+/* ============================================ */
+
+.progresso-box {
+    background: #fff5f5;
+    border: 2px solid #d32f2f;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.progresso-box h2 {
+    color: #d32f2f;
+    margin-top: 0;
+}
+
+.barra {
+    background: #eee;
+    border-radius: 20px;
+    height: 24px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.barra-preenchida {
+    background: linear-gradient(90deg, #d32f2f, #ff6b6b);
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
+
+.nivel-atual {
+    font-size: 1.2em;
+    margin: 8px 0;
+}
+
+.faltam {
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* ============================================ */
+/* NÍVEIS (BRONZE / PRATA / OURO)               */
+/* ============================================ */
+
+.niveis-box {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.niveis-box h2 {
+    margin-top: 0;
+    color: #b30000;
+}
+
+.niveis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.nivel {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+.nivel.desbloqueado {
+    opacity: 1;
+    border-color: #4caf50;
+}
+
+.nivel.atual {
+    border-color: #d32f2f;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+    transform: scale(1.05);
+}
+
+.nivel span:first-child {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.nivel strong {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.nivel p {
+    color: #666;
+    font-size: 0.9em;
+    margin: 8px 0;
+}
+
+.nivel .status {
+    font-size: 0.8em;
+    color: #666;
+    display: block;
+    margin-top: 8px;
+}
+
+.nivel.desbloqueado .status {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.dica {
+    text-align: center;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-top: 16px;
+}
+
+/* ============================================ */
+/* AVISO DE CADASTRO                            */
+/* ============================================ */
+
+.aviso-cadastro {
+    background: #fff3e0;
+    border: 2px solid #ff9800;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+    text-align: center;
+}
+
+.aviso-cadastro span {
+    font-size: 2em;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.aviso-cadastro strong {
+    display: block;
+    color: #e65100;
+    margin-bottom: 12px;
+}
+
+.btn-cadastro button {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cadastro button:hover {
+    background: #e65100;
+}
+
+/* ============================================ */
+/* CARDS COM FOTO                               */
+/* ============================================ */
+
+.card-img {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.card:hover .card-img img {
+    transform: scale(1.05);
+}
+
+/* ============================================ */
+/* TAGS DOS CARDS                               */
+/* ============================================ */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.tags span {
+    background: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    color: #555;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .niveis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nivel.atual {
+        transform: scale(1);
+    }
+
+    .nivel span:first-child {
+        font-size: 2em;
+    }
+}
