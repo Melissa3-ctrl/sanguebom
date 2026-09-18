@@ -1,133 +1,169 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Agendar Doação - Sangue Bom{% endblock %}
+
 {% block content %}
 
+    <link rel="stylesheet" href="{% static 'css/agendar_doacao.css' %}">
 
+    <!-- CABEÇALHO -->
     <header class="agendamento-cabecalho">
-        <h1>Agendar Doação</h1>
+        <h1>📅 Agendar Doação</h1>
         <p>Em poucos passos você salva até 4 vidas ❤️</p>
-        <p>① Hemocentro → ② Data e Horário → ③ Confirmar</p>
+
+        <!-- BARRA DE PROGRESSO -->
+        <div class="progresso-etapas">
+            <div class="etapa ativa" data-etapa="1">
+                <span class="etapa-numero">1</span>
+                <span class="etapa-texto">Hemocentro</span>
+            </div>
+            <div class="etapa" data-etapa="2">
+                <span class="etapa-numero">2</span>
+                <span class="etapa-texto">Data e Horário</span>
+            </div>
+            <div class="etapa" data-etapa="3">
+                <span class="etapa-numero">3</span>
+                <span class="etapa-texto">Confirmar</span>
+            </div>
+        </div>
     </header>
 
-    <form method="POST">
+    <form method="POST" id="form-agendamento">
         {% csrf_token %}
 
-        <!-- ETAPA 1 - ESCOLHER BASE -->
-        <section id="etapa1" class="card-etapa">
+        <!-- ============================================ -->
+        <!-- ETAPA 1 - ESCOLHER HEMOCENTRO                 -->
+        <!-- ============================================ -->
+        <section id="etapa1" class="card-etapa ativa">
             <div class="card-conteudo">
-                <h2>Escolha o local onde deseja realizar sua doação.</h2>
-                <p>Escolha uma das bases disponíveis.</p>
+                <h2>🏥 Escolha o hemocentro</h2>
+                <p>Selecione uma das bases disponíveis para sua doação.</p>
 
                 <div class="bases-container">
                     {% if hemocentros %}
                         {% for hemocentro in hemocentros %}
-                            <div class="card-base">
-                                <h3>{{ hemocentro.nome }}</h3>
-                                <p>📍 {{ hemocentro.endereco }}, {{ hemocentro.cidade }} – DF</p>
-                                <p>🕐 {{ hemocentro.horario_abertura|time:"H:i" }} – {{ hemocentro.horario_fechamento|time:"H:i" }}</p>
-                                <label>
-                                    <input type="radio" name="hemocentro" value="{{ hemocentro.id }}" required>
-                                    Escolher esta base
-                                </label>
-                            </div>
+                            <label class="card-base">
+                                <input type="radio" name="hemocentro" value="{{ hemocentro.id }}" required>
+                                <div class="card-base-conteudo">
+                                    <h3>{{ hemocentro.nome }}</h3>
+                                    <p>📍 {{ hemocentro.endereco }}, {{ hemocentro.cidade }} – DF</p>
+                                    <p>🕐 {{ hemocentro.horario_abertura|time:"H:i" }} – {{ hemocentro.horario_fechamento|time:"H:i" }}</p>
+                                    <span class="check-selecionado">✓ Selecionado</span>
+                                </div>
+                            </label>
                         {% endfor %}
                     {% else %}
-                        <p>Nenhuma base de atendimento está disponível no momento.</p>
+                        <p class="aviso-vazio">Nenhuma base de atendimento disponível no momento.</p>
                     {% endif %}
                 </div>
 
-                <p>Selecione uma base para continuar.</p>
+                <div class="navegacao-etapa">
+                    <button type="button" class="btn-proximo" data-proxima="2">
+                        Próximo →
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- ETAPA 2 - DATA E HORÁRIO -->
+        <!-- ============================================ -->
+        <!-- ETAPA 2 - DATA E HORÁRIO                      -->
+        <!-- ============================================ -->
         <section id="etapa2" class="card-etapa">
             <div class="card-conteudo">
-                <h2>Data e Horário</h2>
+                <h2>📅 Data e Horário</h2>
 
                 <!-- TIPO DE DOAÇÃO -->
                 <div class="campo-agendamento">
                     <h3>🩸 Tipo de doação</h3>
-                    <label>
-                        <input type="radio" name="tipo_doacao" value="Sangue total" required>
-                        Sangue Total
-                    </label>
-                    <label>
-                        <input type="radio" name="tipo_doacao" value="Plaquetas">
-                        Plaquetas
-                    </label>
-                    <label>
-                        <input type="radio" name="tipo_doacao" value="Plasma">
-                        Plasma
-                    </label>
-                    <label>
-                        <input type="radio" name="tipo_doacao" value="Hemácias">
-                        Hemácias
-                    </label>
+                    <div class="opcoes-tipo">
+                        <label class="opcao-radio">
+                            <input type="radio" name="tipo_doacao" value="Sangue total" required>
+                            <span>Sangue Total</span>
+                        </label>
+                        <label class="opcao-radio">
+                            <input type="radio" name="tipo_doacao" value="Plaquetas">
+                            <span>Plaquetas</span>
+                        </label>
+                        <label class="opcao-radio">
+                            <input type="radio" name="tipo_doacao" value="Plasma">
+                            <span>Plasma</span>
+                        </label>
+                        <label class="opcao-radio">
+                            <input type="radio" name="tipo_doacao" value="Hemácias">
+                            <span>Hemácias</span>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- DATA -->
                 <div class="campo-agendamento">
                     <h3>📅 Data</h3>
-                    <input type="date" name="data" id="data" required>
+                    <input type="date" name="data" id="data" required min="">
                 </div>
 
                 <!-- HORÁRIO -->
                 <div class="campo-agendamento">
                     <h3>🕐 Horário</h3>
                     <div class="horarios">
-                        <label><input type="radio" name="horario" value="07:00" required> 07:00</label>
-                        <label><input type="radio" name="horario" value="07:30"> 07:30</label>
-                        <label><input type="radio" name="horario" value="08:00"> 08:00</label>
-                        <label><input type="radio" name="horario" value="08:30"> 08:30</label>
-                        <label><input type="radio" name="horario" value="09:00"> 09:00</label>
-                        <label><input type="radio" name="horario" value="09:30"> 09:30</label>
-                        <label><input type="radio" name="horario" value="10:00"> 10:00</label>
-                        <label><input type="radio" name="horario" value="10:30"> 10:30</label>
-                        <label><input type="radio" name="horario" value="11:00"> 11:00</label>
-                        <label><input type="radio" name="horario" value="11:30"> 11:30</label>
-                        <label><input type="radio" name="horario" value="13:00"> 13:00</label>
-                        <label><input type="radio" name="horario" value="13:30"> 13:30</label>
-                        <label><input type="radio" name="horario" value="14:00"> 14:00</label>
-                        <label><input type="radio" name="horario" value="14:30"> 14:30</label>
-                        <label><input type="radio" name="horario" value="15:00"> 15:00</label>
-                        <label><input type="radio" name="horario" value="15:30"> 15:30</label>
-                        <label><input type="radio" name="horario" value="16:00"> 16:00</label>
-                        <label><input type="radio" name="horario" value="16:30"> 16:30</label>
-                        <label><input type="radio" name="horario" value="17:00"> 17:00</label>
-                        <label><input type="radio" name="horario" value="17:30"> 17:30</label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="07:00" required><span>07:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="07:30"><span>07:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="08:00"><span>08:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="08:30"><span>08:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="09:00"><span>09:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="09:30"><span>09:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="10:00"><span>10:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="10:30"><span>10:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="11:00"><span>11:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="11:30"><span>11:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="13:00"><span>13:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="13:30"><span>13:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="14:00"><span>14:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="14:30"><span>14:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="15:00"><span>15:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="15:30"><span>15:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="16:00"><span>16:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="16:30"><span>16:30</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="17:00"><span>17:00</span></label>
+                        <label class="opcao-horario"><input type="radio" name="horario" value="17:30"><span>17:30</span></label>
                     </div>
+                </div>
+
+                <div class="navegacao-etapa">
+                    <button type="button" class="btn-voltar" data-voltar="1">
+                        ← Voltar
+                    </button>
+                    <button type="button" class="btn-proximo" data-proxima="3">
+                        Próximo →
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- ETAPA 3 - CONFIRMAÇÃO -->
+        <!-- ============================================ -->
+        <!-- ETAPA 3 - CONFIRMAÇÃO                         -->
+        <!-- ============================================ -->
         <section id="etapa3" class="card-etapa">
             <div class="card-conteudo">
-                <h2>Confirmar Agendamento</h2>
+                <h2>✅ Confirmar Agendamento</h2>
                 <p>Confira os dados antes de confirmar sua doação.</p>
 
                 <div class="resumo-agendamento">
-                    <div>
-                        <h3>🏥 Hemocentro responsável</h3>
-                        <p>Fundação Hemocentro de Brasília</p>
+                    <div class="resumo-item">
+                        <h3>🏥 Hemocentro</h3>
+                        <p id="resumo-hemocentro">—</p>
                     </div>
-                    <div>
-                        <h3>📍 Base escolhida</h3>
-                        <p>A base selecionada será utilizada no seu agendamento.</p>
-                    </div>
-                    <div>
-                        <h3>📅 Data</h3>
-                        <p>A data selecionada será utilizada no seu agendamento.</p>
-                    </div>
-                    <div>
-                        <h3>🕐 Horário</h3>
-                        <p>O horário selecionado será utilizado no seu agendamento.</p>
-                    </div>
-                    <div>
+                    <div class="resumo-item">
                         <h3>🩸 Tipo de doação</h3>
-                        <p>O tipo de doação selecionado será utilizado no seu agendamento.</p>
+                        <p id="resumo-tipo">—</p>
+                    </div>
+                    <div class="resumo-item">
+                        <h3>📅 Data</h3>
+                        <p id="resumo-data">—</p>
+                    </div>
+                    <div class="resumo-item">
+                        <h3>🕐 Horário</h3>
+                        <p id="resumo-horario">—</p>
                     </div>
                 </div>
 
@@ -143,14 +179,23 @@
                 </div>
 
                 <div class="impacto-doacao">
-                    <h3>🩸 Uma doação = até 4 vidas</h3>
+                    <h3>💗 Uma doação = até 4 vidas</h3>
                     <p>Seu sangue pode ajudar até 4 pessoas diferentes após a triagem e separação dos componentes.</p>
                 </div>
 
-                <button type="submit">Confirmar Doação 🩸</button>
+                <div class="navegacao-etapa">
+                    <button type="button" class="btn-voltar" data-voltar="2">
+                        ← Voltar
+                    </button>
+                    <button type="submit" class="btn-confirmar">
+                        Confirmar Doação 🩸
+                    </button>
+                </div>
             </div>
         </section>
 
     </form>
+
+    <script src="{% static 'js/agendar_doacao.js' %}"></script>
 
 {% endblock %}
