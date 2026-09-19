@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cadastrar.css' %}">
     <!-- 🩸 FAVICON -->
     <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
     <title>Cadastro de Doador - Sangue Bom</title>
@@ -12,7 +12,6 @@
 <body class="pagina-cadastro">
 
     <div class="cadastro-container">
-
 
         <!-- CABEÇALHO -->
         <header class="cadastro-cabecalho">
@@ -135,9 +134,14 @@
                         <small>Pode ser informado depois no seu perfil</small>
                     </div>
 
-                    <button type="submit" class="btn-continuar">
-                        Continuar →
-                    </button>
+                    <div class="botoes-cadastro">
+                        <a href="{% url 'home' %}" class="btn-voltar-cadastro">
+                            ← Voltar
+                        </a>
+                        <button type="submit" class="btn-continuar">
+                            Continuar →
+                        </button>
+                    </div>
                 </form>
             </section>
         {% endif %}
