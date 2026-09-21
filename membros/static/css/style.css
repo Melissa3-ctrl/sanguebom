@@ -8,7 +8,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-html, body {
+html, body {a
     width: 100%;
     overflow-x: hidden;
 }
@@ -1369,4 +1369,23 @@ input.botao-mostrar-senha {
     margin: 0 !important;
     position: absolute !important;
     left: -9999px !important;
+}
+/* ============================================ */
+/* SEM LATERAL DIREITA (admin/hemocentro)       */
+/* ============================================ */
+
+.app-container.sem-lateral {
+    grid-template-columns: 240px 1fr;
+}
+
+@media (max-width: 1200px) {
+    .app-container.sem-lateral {
+        grid-template-columns: 220px 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .app-container.sem-lateral {
+        grid-template-columns: 1fr;
+    }
 }

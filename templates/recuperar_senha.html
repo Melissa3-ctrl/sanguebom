@@ -11,14 +11,13 @@
     <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    <!-- 🩸 FAVICON -->
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
 
 </head>
 <body>
 
 <main>
+
+    <a href="javascript:history.back()" class="btn-voltar-recuperar">← Voltar</a>
 
     <h1>❤️ Sangue Bom</h1>
     <h2>Recuperar senha</h2>
@@ -195,6 +194,8 @@
         {% if erro %}
             <p>{{ erro }}</p>
         {% endif %}
+
+        <link rel="stylesheet" href="{% static 'css/recuperar_senha.css' %}">
 
         <p>Digite seu e-mail para receber um código de verificação.</p>
 

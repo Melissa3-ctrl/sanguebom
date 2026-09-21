@@ -57,7 +57,6 @@ urlpatterns = [
         name='validar_codigo'
     ),
 
-    # 👇 NOVA ROTA: REENVIAR CÓDIGO
     path(
         'reenviar_codigo/',
         views.reenviar_codigo,
@@ -114,7 +113,7 @@ urlpatterns = [
 
 
     # =========================================================
-    # NOTIFICAÇÕES 🆕
+    # NOTIFICAÇÕES
     # =========================================================
 
     path(
@@ -133,6 +132,23 @@ urlpatterns = [
         'notificacoes/todas-lidas/',
         views.marcar_todas_lidas,
         name='marcar_todas_lidas'
+    ),
+
+
+    # =========================================================
+    # 🆕 RELATÓRIOS (ADMIN) E PAINEL (HEMOCENTRO)
+    # =========================================================
+
+    path(
+        'relatorios/',
+        views.relatorios,
+        name='relatorios'
+    ),
+
+    path(
+        'painel/',
+        views.painel_hemocentro,
+        name='painel_hemocentro'
     ),
 
 
