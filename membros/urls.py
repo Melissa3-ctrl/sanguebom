@@ -34,12 +34,6 @@ urlpatterns = [
     ),
 
     path(
-        'notificacoes/',
-        views.notificacoes,
-        name='notificacoes'
-    ),
-
-    path(
         'cadastro/',
         views.cadastro,
         name='cadastro'
@@ -63,7 +57,6 @@ urlpatterns = [
         name='validar_codigo'
     ),
 
-    # 👇 NOVA ROTA: REENVIAR CÓDIGO
     path(
         'reenviar_codigo/',
         views.reenviar_codigo,
@@ -116,6 +109,46 @@ urlpatterns = [
         'agendar_doacao/',
         views.agendar_doacao,
         name='agendar_doacao'
+    ),
+
+
+    # =========================================================
+    # NOTIFICAÇÕES
+    # =========================================================
+
+    path(
+        'notificacoes/',
+        views.notificacoes,
+        name='notificacoes'
+    ),
+
+    path(
+        'notificacoes/<int:id>/lida/',
+        views.marcar_lida,
+        name='marcar_lida'
+    ),
+
+    path(
+        'notificacoes/todas-lidas/',
+        views.marcar_todas_lidas,
+        name='marcar_todas_lidas'
+    ),
+
+
+    # =========================================================
+    # 🆕 RELATÓRIOS (ADMIN) E PAINEL (HEMOCENTRO)
+    # =========================================================
+
+    path(
+        'relatorios/',
+        views.relatorios,
+        name='relatorios'
+    ),
+
+    path(
+        'painel/',
+        views.painel_hemocentro,
+        name='painel_hemocentro'
     ),
 
 

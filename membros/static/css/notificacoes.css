@@ -1,0 +1,236 @@
+/* ============================================ */
+/* HEADER                                       */
+/* ============================================ */
+
+.notificacoes-header {
+    text-align: center;
+    margin: 30px 0 40px 0;
+}
+
+.notificacoes-header h1 {
+    font-size: 2.2em;
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.notificacoes-header p {
+    color: #666;
+    font-size: 1.05em;
+    margin-bottom: 16px;
+}
+
+.btn-marcar-todas {
+    display: inline-block;
+    background: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: all 0.2s;
+}
+
+.btn-marcar-todas:hover {
+    background: #2e7d32;
+    transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* LISTA DE NOTIFICAÇÕES                        */
+/* ============================================ */
+
+.notificacoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.notificacao-card {
+    display: flex;
+    gap: 20px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border-left: 5px solid #ddd;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    align-items: flex-start;
+}
+
+.notificacao-card.nao-lida {
+    background: #fffef5;
+    box-shadow: 0 4px 16px rgba(179, 0, 0, 0.1);
+}
+
+.notificacao-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.notificacao-icon {
+    font-size: 2.2em;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+}
+
+.notificacao-conteudo {
+    flex: 1;
+}
+
+.notificacao-conteudo h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.15em;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge-nova {
+    background: #d32f2f;
+    color: white;
+    font-size: 0.65em;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.notificacao-conteudo p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+}
+
+.notificacao-acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.notificacao-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: all 0.2s;
+    background: #4caf50;
+    color: white;
+}
+
+.notificacao-btn:hover {
+    background: #2e7d32;
+    transform: translateY(-2px);
+}
+
+.notificacao-data {
+    color: #999;
+    font-size: 0.85em;
+}
+
+/* ============================================ */
+/* VARIAÇÕES (COR POR TIPO)                     */
+/* ============================================ */
+
+.notificacao-card.alerta {
+    border-left-color: #d32f2f;
+}
+
+.notificacao-card.alerta .notificacao-icon {
+    background: #ffebee;
+}
+
+.notificacao-card.lembrete {
+    border-left-color: #ff9800;
+}
+
+.notificacao-card.lembrete .notificacao-icon {
+    background: #fff3e0;
+}
+
+.notificacao-card.campanha {
+    border-left-color: #b30000;
+}
+
+.notificacao-card.campanha .notificacao-icon {
+    background: #fff5f5;
+}
+
+.notificacao-card.confirmado {
+    border-left-color: #4caf50;
+}
+
+.notificacao-card.confirmado .notificacao-icon {
+    background: #e8f5e9;
+}
+
+.notificacao-card.nivel {
+    border-left-color: #ffc107;
+}
+
+.notificacao-card.nivel .notificacao-icon {
+    background: #fff8e1;
+}
+
+/* ============================================ */
+/* VAZIO                                        */
+/* ============================================ */
+
+.notificacoes-vazio {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+}
+
+.notificacoes-vazio span {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.notificacoes-vazio p {
+    color: #888;
+    font-size: 1.05em;
+    font-style: italic;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .notificacao-card {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .notificacao-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8em;
+    }
+
+    .notificacoes-header h1 {
+        font-size: 1.7em;
+    }
+
+    .notificacao-acoes {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

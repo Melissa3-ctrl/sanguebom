@@ -14,30 +14,48 @@
     <!-- TOPO -->
     <!-- ========================= -->
     <header>
-        <h2>🚨 Estoque O- crítico</h2>
-        <h2>🔔</h2>
+        {% if not user.is_staff and not user.hemocentro %}
+            <a href="{% url 'locais_para_doar' %}" class="header-alerta">
+                <h2>🚨 Estoque O- crítico</h2>
+            </a>
+
+            <a href="{% url 'notificacoes' %}" class="header-sino" title="Notificações">
+                <h2>
+                    🔔
+                    {% if notificacoes_nao_lidas > 0 %}
+                        <span class="badge-sino">{{ notificacoes_nao_lidas }}</span>
+                    {% endif %}
+                </h2>
+            </a>
+        {% endif %}
 
         {% if user.is_authenticated %}
-            <h2>👤 Olá,
-                {% if user.doador %}
-                    {{ user.doador.nome }}
-                {% elif user.first_name %}
-                    {{ user.first_name }}
-                {% else %}
-                    {{ user.username }}
-                {% endif %}! 👋
-            </h2>
-            <a href="{% url 'logout' %}">🚪 Sair</a>
+            <a href="{% url 'meu_perfil' %}" class="header-user" title="Meu Perfil">
+                <h2>👤 Olá,
+                    {% if user.is_staff %}
+                        {{ user.username }}
+                    {% elif user.hemocentro %}
+                        {{ user.hemocentro.nome }}
+                    {% elif user.doador %}
+                        {{ user.doador.nome }}
+                    {% elif user.first_name %}
+                        {{ user.first_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}! 👋
+                </h2>
+            </a>
+            <a href="{% url 'logout' %}" class="header-sair">🚪 Sair</a>
         {% else %}
             <h2>👤 Olá, visitante! 👋</h2>
-            <a href="{% url 'login' %}">🔐 Entrar</a>
+            <a href="{% url 'login' %}" class="header-entrar">🔐 Entrar</a>
         {% endif %}
     </header>
 
     <!-- ========================= -->
     <!-- CONTAINER PRINCIPAL (3 COLUNAS) -->
     <!-- ========================= -->
-    <div class="app-container">
+    <div class="app-container {% if user.is_staff or user.hemocentro %}sem-lateral{% endif %}">
 
         <!-- MENU LATERAL ESQUERDO -->
         <aside class="lateral-esquerda">
@@ -59,38 +77,59 @@
 
             <!-- NAVEGAÇÃO -->
             <nav class="menu-nav">
-                <a href="{% url 'home' %}" class="menu-item ativo">
-                    <span class="menu-item-icone">🏠</span>
-                    <span class="menu-item-texto">Início</span>
-                </a>
-                <a href="{% url 'quero_doar' %}" class="menu-item">
-                    <span class="menu-item-icone">💧</span>
-                    <span class="menu-item-texto">Quero doar</span>
-                </a>
-                <a href="{% url 'locais_para_doar' %}" class="menu-item">
-                    <span class="menu-item-icone">📍</span>
-                    <span class="menu-item-texto">Locais para doar</span>
-                </a>
-                <a href="{% url 'agendar_doacao' %}" class="menu-item">
-                    <span class="menu-item-icone">📅</span>
-                    <span class="menu-item-texto">Agendar doação</span>
-                </a>
-                <a href="{% url 'tipos_sanguineos' %}" class="menu-item">
-                    <span class="menu-item-icone">💧</span>
-                    <span class="menu-item-texto">Tipos sanguíneos</span>
-                </a>
-                <a href="{% url 'campanhas' %}" class="menu-item">
-                    <span class="menu-item-icone">♡</span>
-                    <span class="menu-item-texto">Campanhas</span>
-                </a>
-                <a href="{% url 'beneficios' %}" class="menu-item">
-                    <span class="menu-item-icone">🎁</span>
-                    <span class="menu-item-texto">Benefícios</span>
-                </a>
-                <a href="{% url 'duvidas' %}" class="menu-item">
-                    <span class="menu-item-icone">❓</span>
-                    <span class="menu-item-texto">Dúvidas</span>
-                </a>
+
+                <!-- SÓ ADMIN -->
+                {% if user.is_staff %}
+                    <a href="{% url 'relatorios' %}" class="menu-item">
+                        <span class="menu-item-icone">📊</span>
+                        <span class="menu-item-texto">Relatórios</span>
+                    </a>
+                {% endif %}
+
+                <!-- SÓ HEMOCENTRO -->
+                {% if user.hemocentro %}
+                    <a href="{% url 'painel_hemocentro' %}" class="menu-item">
+                        <span class="menu-item-icone">🏥</span>
+                        <span class="menu-item-texto">Painel</span>
+                    </a>
+                {% endif %}
+
+                <!-- SÓ DOADOR (ou visitante) -->
+                {% if not user.is_staff and not user.hemocentro %}
+                    <a href="{% url 'home' %}" class="menu-item ativo">
+                        <span class="menu-item-icone">🏠</span>
+                        <span class="menu-item-texto">Início</span>
+                    </a>
+                    <a href="{% url 'quero_doar' %}" class="menu-item">
+                        <span class="menu-item-icone">💧</span>
+                        <span class="menu-item-texto">Quero doar</span>
+                    </a>
+                    <a href="{% url 'locais_para_doar' %}" class="menu-item">
+                        <span class="menu-item-icone">📍</span>
+                        <span class="menu-item-texto">Locais para doar</span>
+                    </a>
+                    <a href="{% url 'agendar_doacao' %}" class="menu-item">
+                        <span class="menu-item-icone">📅</span>
+                        <span class="menu-item-texto">Agendar doação</span>
+                    </a>
+                    <a href="{% url 'tipos_sanguineos' %}" class="menu-item">
+                        <span class="menu-item-icone">💧</span>
+                        <span class="menu-item-texto">Tipos sanguíneos</span>
+                    </a>
+                    <a href="{% url 'campanhas' %}" class="menu-item">
+                        <span class="menu-item-icone">♡</span>
+                        <span class="menu-item-texto">Campanhas</span>
+                    </a>
+                    <a href="{% url 'beneficios' %}" class="menu-item">
+                        <span class="menu-item-icone">🎁</span>
+                        <span class="menu-item-texto">Benefícios</span>
+                    </a>
+                    <a href="{% url 'duvidas' %}" class="menu-item">
+                        <span class="menu-item-icone">❓</span>
+                        <span class="menu-item-texto">Dúvidas</span>
+                    </a>
+                {% endif %}
+
             </nav>
 
             <!-- DADOS PROTEGIDOS -->
@@ -125,7 +164,8 @@
             {% endblock %}
         </main>
 
-        <!-- LATERAL DIREITA -->
+        <!-- LATERAL DIREITA (só pra doador e visitante) -->
+        {% if not user.is_staff and not user.hemocentro %}
         <aside class="lateral-direita">
 
             <!-- ESTOQUE DE SANGUE -->
@@ -173,6 +213,7 @@
             </section>
 
         </aside>
+        {% endif %}
 
     </div>
 

@@ -1,0 +1,521 @@
+/* ============================================ */
+/* CABEÇALHO                                     */
+/* ============================================ */
+
+.agendamento-cabecalho {
+    text-align: center;
+    margin: 30px 0 40px 0;
+}
+
+.agendamento-cabecalho h1 {
+    font-size: 2.2em;
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.agendamento-cabecalho p {
+    color: #666;
+    font-size: 1.05em;
+    margin-bottom: 30px;
+}
+
+/* ============================================ */
+/* PROGRESSO DE ETAPAS                          */
+/* ============================================ */
+
+.progresso-etapas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.etapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.etapa:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 60%;
+    width: 80%;
+    height: 2px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.etapa.ativa:not(:last-child)::after,
+.etapa.concluida:not(:last-child)::after {
+    background: #b30000;
+}
+
+.etapa-numero {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    z-index: 1;
+    transition: all 0.3s;
+}
+
+.etapa.ativa .etapa-numero {
+    background: #b30000;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
+}
+
+.etapa.concluida .etapa-numero {
+    background: #4caf50;
+    color: white;
+}
+
+.etapa-texto {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: #666;
+    font-weight: bold;
+}
+
+.etapa.ativa .etapa-texto {
+    color: #b30000;
+}
+
+/* ============================================ */
+/* CARDS DE ETAPA                               */
+/* ============================================ */
+
+.card-etapa {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+    display: none;
+}
+
+.card-etapa.ativa {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-conteudo h2 {
+    color: #b30000;
+    font-size: 1.6em;
+    margin: 0 0 10px 0;
+}
+
+.card-conteudo > p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+/* ============================================ */
+/* CARDS DE HEMOCENTRO                          */
+/* ============================================ */
+
+.bases-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.card-base {
+    cursor: pointer;
+    position: relative;
+}
+
+.card-base input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card-base-conteudo {
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.card-base:hover .card-base-conteudo {
+    border-color: #b30000;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(179, 0, 0, 0.1);
+}
+
+.card-base input[type="radio"]:checked + .card-base-conteudo {
+    border-color: #4caf50;
+    background: #f1f8e9;
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+}
+
+.card-base-conteudo h3 {
+    color: #b30000;
+    margin: 0 0 12px 0;
+    font-size: 1.15em;
+}
+
+.card-base-conteudo p {
+    color: #555;
+    font-size: 0.9em;
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.check-selecionado {
+    display: none;
+    background: #4caf50;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card-base input[type="radio"]:checked + .card-base-conteudo .check-selecionado {
+    opacity: 1;
+}
+
+/* ============================================ */
+/* CAMPOS                                       */
+/* ============================================ */
+
+.campo-agendamento {
+    margin: 28px 0;
+}
+
+.campo-agendamento h3 {
+    color: #333;
+    margin: 0 0 12px 0;
+    font-size: 1.1em;
+}
+
+.opcoes-tipo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.opcao-radio {
+    cursor: pointer;
+    position: relative;
+}
+
+.opcao-radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.opcao-radio span {
+    display: block;
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    transition: all 0.2s;
+    font-weight: 500;
+    color: #555;
+}
+
+.opcao-radio:hover span {
+    border-color: #b30000;
+}
+
+.opcao-radio input[type="radio"]:checked + span {
+    background: #b30000;
+    border-color: #b30000;
+    color: white;
+    font-weight: bold;
+}
+
+/* ============================================ */
+/* DATA                                         */
+/* ============================================ */
+
+input[type="date"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 16px;
+    border: 2px solid #f0e6d2;
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+input[type="date"]:focus {
+    outline: none;
+    border-color: #b30000;
+    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.1);
+}
+
+/* ============================================ */
+/* HORÁRIOS                                     */
+/* ============================================ */
+
+.horarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+}
+
+.opcao-horario {
+    cursor: pointer;
+    position: relative;
+}
+
+.opcao-horario input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.opcao-horario span {
+    display: block;
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555;
+}
+
+.opcao-horario:hover span {
+    border-color: #b30000;
+}
+
+.opcao-horario input[type="radio"]:checked + span {
+    background: #b30000;
+    border-color: #b30000;
+    color: white;
+    font-weight: bold;
+    transform: scale(1.05);
+}
+
+/* ============================================ */
+/* NAVEGAÇÃO                                    */
+/* ============================================ */
+
+.navegacao-etapa {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-voltar,
+.btn-proximo,
+.btn-confirmar {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-voltar {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.btn-voltar:hover {
+    background: #e0e0e0;
+    transform: translateX(-2px);
+}
+
+.btn-proximo {
+    background: #b30000;
+    color: white;
+    margin-left: auto;
+}
+
+.btn-proximo:hover {
+    background: #7a0000;
+    transform: translateX(2px);
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, #b30000, #7a0000);
+    color: white;
+    padding: 14px 40px;
+    font-size: 1.1em;
+    box-shadow: 0 4px 16px rgba(179, 0, 0, 0.3);
+    margin-left: auto;
+}
+
+.btn-confirmar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.4);
+}
+
+/* ============================================ */
+/* RESUMO                                       */
+/* ============================================ */
+
+.resumo-agendamento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.resumo-item {
+    background: #fcf9f2;
+    border-left: 4px solid #b30000;
+    padding: 16px 20px;
+    border-radius: 10px;
+}
+
+.resumo-item h3 {
+    color: #b30000;
+    font-size: 0.9em;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resumo-item p {
+    color: #333;
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ============================================ */
+/* ORIENTAÇÕES E IMPACTO                        */
+/* ============================================ */
+
+.orientacoes-doacao,
+.impacto-doacao {
+    background: #fff5f5;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+}
+
+.orientacoes-doacao h3,
+.impacto-doacao h3 {
+    color: #b30000;
+    margin: 0 0 12px 0;
+    font-size: 1.1em;
+}
+
+.orientacoes-doacao ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.orientacoes-doacao li {
+    padding: 6px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.impacto-doacao {
+    background: linear-gradient(135deg, #fff5f5, #ffe8e8);
+    border: 2px solid #b30000;
+}
+
+.impacto-doacao p {
+    color: #555;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ============================================ */
+/* AVISO VAZIO                                  */
+/* ============================================ */
+
+.aviso-vazio {
+    text-align: center;
+    color: #888;
+    padding: 40px 20px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    font-style: italic;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .agendamento-cabecalho h1 {
+        font-size: 1.7em;
+    }
+
+    .progresso-etapas {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .etapa:not(:last-child)::after {
+        display: none;
+    }
+
+    .etapa {
+        flex-direction: row;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .etapa-numero {
+        width: 32px;
+        height: 32px;
+        font-size: 0.95em;
+    }
+
+    .card-etapa {
+        padding: 20px;
+    }
+
+    .card-conteudo h2 {
+        font-size: 1.3em;
+    }
+
+    .navegacao-etapa {
+        flex-direction: column-reverse;
+    }
+
+    .btn-voltar,
+    .btn-proximo,
+    .btn-confirmar {
+        width: 100%;
+    }
+}

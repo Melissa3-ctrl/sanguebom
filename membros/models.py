@@ -49,6 +49,14 @@ class Doador(models.Model):
 
 class Hemocentro(models.Model):
 
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='hemocentro'
+    )
+
     nome = models.CharField(max_length=100)
     endereco = models.CharField(max_length=200)
     bairro = models.CharField(max_length=100)
@@ -108,3 +116,44 @@ class CodigoRecuperacao(models.Model):
 
     def __str__(self):
         return self.email
+
+
+# =========================================================
+# 🆕 NOTIFICAÇÕES
+# =========================================================
+
+class Notificacao(models.Model):
+
+    TIPOS = [
+        ('alerta', '🚨 Alerta'),
+        ('lembrete', '📅 Lembrete'),
+        ('campanha', '🩸 Campanha'),
+        ('confirmado', '✅ Confirmação'),
+        ('nivel', '🏆 Nível'),
+    ]
+
+    doador = models.ForeignKey(
+        Doador,
+        on_delete=models.CASCADE,
+        related_name='notificacoes'
+    )
+
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPOS,
+        default='alerta'
+    )
+
+    titulo = models.CharField(max_length=200)
+
+    mensagem = models.TextField()
+
+    lida = models.BooleanField(default=False)
+
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-criada_em']
+
+    def __str__(self):
+        return f"{self.titulo} - {self.doador.nome}"

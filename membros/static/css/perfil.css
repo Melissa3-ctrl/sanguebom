@@ -1,0 +1,328 @@
+/* ============================================ */
+/* CABEÇALHO DO PERFIL                          */
+/* ============================================ */
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: linear-gradient(135deg, #b30000, #7a0000);
+    color: white;
+    padding: 30px;
+    border-radius: 16px;
+    margin: 30px 0;
+    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.2);
+}
+
+.perfil-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: white;
+    color: #b30000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.perfil-info-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.5em;
+    color: white;
+}
+
+.perfil-nome {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+}
+
+.perfil-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: white;
+}
+
+/* ============================================ */
+/* BARRA DE PROGRESSO                           */
+/* ============================================ */
+
+.progresso-box {
+    background: #fff5f5;
+    border: 2px solid #d32f2f;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.progresso-box h2 {
+    color: #d32f2f;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.barra {
+    background: #eee;
+    border-radius: 20px;
+    height: 24px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.barra-preenchida {
+    background: linear-gradient(90deg, #d32f2f, #ff6b6b);
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
+
+.faltam {
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* ============================================ */
+/* CARDS DE RESUMO                              */
+/* ============================================ */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.card {
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.card:hover {
+    border-color: #b30000;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(179, 0, 0, 0.1);
+}
+
+.card h3 {
+    color: #b30000;
+    font-size: 1.1em;
+    margin: 0 0 16px 0;
+}
+
+.card p {
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.card-numero {
+    font-size: 2.5em !important;
+    color: #b30000 !important;
+    font-weight: bold;
+    margin: 12px 0 !important;
+}
+
+/* ============================================ */
+/* HISTÓRICO                                    */
+/* ============================================ */
+
+.perfil-secao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 20px 0;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.perfil-secao-header h2 {
+    color: #b30000;
+    font-size: 1.6em;
+    margin: 0;
+    border-bottom: 3px solid #f0e6d2;
+    padding-bottom: 8px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.botao-doar {
+    background: #b30000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.botao-doar:hover {
+    background: #7a0000;
+    transform: translateY(-2px);
+}
+
+.perfil-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.perfil-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    flex-wrap: wrap;
+}
+
+.perfil-item:hover {
+    border-color: #b30000;
+    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.08);
+}
+
+.perfil-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.perfil-item-info strong {
+    color: #b30000;
+    font-size: 1.1em;
+}
+
+.perfil-item-info span {
+    color: #555;
+    font-size: 0.95em;
+}
+
+.perfil-item-botoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar,
+.btn-excluir {
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-editar {
+    background: #e3f2fd;
+    color: #1565c0;
+    border: 2px solid #e3f2fd;
+}
+
+.btn-editar:hover {
+    background: #1565c0;
+    color: white;
+    border-color: #1565c0;
+}
+
+.btn-excluir {
+    background: #ffebee;
+    color: #c62828;
+    border: 2px solid #ffebee;
+}
+
+.btn-excluir:hover {
+    background: #c62828;
+    color: white;
+    border-color: #c62828;
+}
+
+.perfil-vazio {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 40px 20px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .perfil-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+    }
+
+    .perfil-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 2em;
+    }
+
+    .perfil-info-header h1 {
+        font-size: 1.2em;
+    }
+
+    .perfil-nome {
+        font-size: 1.3em;
+    }
+
+    .perfil-badges {
+        justify-content: center;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .perfil-item-botoes {
+        justify-content: stretch;
+    }
+
+    .btn-editar,
+    .btn-excluir {
+        flex: 1;
+        text-align: center;
+    }
+
+    .perfil-secao-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .botao-doar {
+        text-align: center;
+    }
+}

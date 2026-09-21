@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils import timezone
+from django.conf import settings
+from django.db.models import Count
 import random
-from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao
-from .emails import enviar_email_agendamento    # 👈 NOVO IMPORT
+from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao
+from .emails import enviar_email_agendamento
 
 
 # =========================================================
@@ -26,7 +28,44 @@ def tipos_sanguineos(request):
 
 
 def beneficios(request):
-    return render(request, 'beneficios.html')
+    doador = None
+    total_agendamentos = 0
+    nivel = 'Bronze'
+    progresso = 0
+    proximo_nivel = 'Prata'
+    faltam = 3
+
+    if request.user.is_authenticated:
+        try:
+            doador = Doador.objects.get(usuario=request.user)
+            total_agendamentos = Agendamento.objects.filter(doador=doador).count()
+
+            if total_agendamentos >= 6:
+                nivel = 'Ouro'
+                progresso = 100
+                proximo_nivel = None
+                faltam = 0
+            elif total_agendamentos >= 3:
+                nivel = 'Prata'
+                progresso = int((total_agendamentos / 6) * 100)
+                proximo_nivel = 'Ouro'
+                faltam = 6 - total_agendamentos
+            else:
+                nivel = 'Bronze'
+                progresso = int((total_agendamentos / 3) * 100)
+                proximo_nivel = 'Prata'
+                faltam = 3 - total_agendamentos
+        except Doador.DoesNotExist:
+            pass
+
+    return render(request, 'beneficios.html', {
+        'doador': doador,
+        'total_agendamentos': total_agendamentos,
+        'nivel': nivel,
+        'progresso': progresso,
+        'proximo_nivel': proximo_nivel,
+        'faltam': faltam,
+    })
 
 
 def duvidas(request):
@@ -34,10 +73,23 @@ def duvidas(request):
 
 
 def locais_para_doar(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('relatorios')
+        if hasattr(request.user, 'hemocentro'):
+            return redirect('painel_hemocentro')
     return render(request, 'locais_para_doar.html')
 
 
 def campanhas(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('relatorios')
+        if hasattr(request.user, 'hemocentro'):
+            return redirect('painel_hemocentro')
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -55,35 +107,72 @@ def campanhas(request):
     })
 
 
+# =========================================================
+# NOTIFICAÇÕES (DINÂMICAS)
+# =========================================================
+
+@login_required(login_url='login')
 def notificacoes(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+    # Admin e hemocentro não têm notificações
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
 
     doador = get_object_or_404(Doador, usuario=request.user)
 
-    agendamento = Agendamento.objects.filter(
-        doador=doador
-    ).order_by('-data', '-horario').first()
-
-    agendamento_confirmado = None
-    if agendamento:
-        agendamento_confirmado = (
-            f"Seu agendamento para doação no "
-            f"{agendamento.hemocentro.nome} foi confirmado para "
-            f"{agendamento.data.strftime('%d/%m/%Y')} às "
-            f"{agendamento.horario.strftime('%H:%M')}."
-        )
+    notificacoes_lista = Notificacao.objects.filter(doador=doador)
+    nao_lidas = notificacoes_lista.filter(lida=False).count()
 
     return render(request, 'notificacoes.html', {
-        'alerta_estoque': None,
-        'lembrete_doacao': None,
-        'campanha': None,
-        'agendamento_confirmado': agendamento_confirmado,
+        'notificacoes': notificacoes_lista,
+        'nao_lidas': nao_lidas,
     })
 
 
 @login_required(login_url='login')
+def marcar_lida(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
+    doador = get_object_or_404(Doador, usuario=request.user)
+    notificacao = get_object_or_404(Notificacao, id=id, doador=doador)
+
+    notificacao.lida = True
+    notificacao.save()
+
+    return redirect('notificacoes')
+
+
+@login_required(login_url='login')
+def marcar_todas_lidas(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
+    doador = get_object_or_404(Doador, usuario=request.user)
+    Notificacao.objects.filter(doador=doador, lida=False).update(lida=True)
+
+    return redirect('notificacoes')
+
+
+# =========================================================
+# MEU PERFIL
+# =========================================================
+
+@login_required(login_url='login')
 def meu_perfil(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     agendamentos = Agendamento.objects.filter(
@@ -97,11 +186,127 @@ def meu_perfil(request):
         data__gte=hoje
     ).order_by('data', 'horario').first()
 
+    if total_agendamentos >= 6:
+        nivel = 'Ouro'
+        proximo_nivel = None
+        faltam = 0
+        progresso = 100
+    elif total_agendamentos >= 3:
+        nivel = 'Prata'
+        proximo_nivel = 'Ouro'
+        faltam = 6 - total_agendamentos
+        progresso = int((total_agendamentos / 6) * 100)
+    else:
+        nivel = 'Bronze'
+        proximo_nivel = 'Prata'
+        faltam = 3 - total_agendamentos
+        progresso = int((total_agendamentos / 3) * 100)
+
     return render(request, 'meu_perfil.html', {
         'doador': doador,
         'agendamentos': agendamentos,
         'total_agendamentos': total_agendamentos,
+        'vidas_salvas': total_agendamentos * 4,
         'proximo_agendamento': proximo_agendamento,
+        'nivel': nivel,
+        'proximo_nivel': proximo_nivel,
+        'faltam': faltam,
+        'progresso': progresso,
+    })
+
+
+# =========================================================
+# RELATÓRIOS (ADMIN)
+# =========================================================
+
+@login_required(login_url='login')
+def relatorios(request):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    total_doadores = Doador.objects.count()
+    total_agendamentos = Agendamento.objects.count()
+    total_hemocentros = Hemocentro.objects.count()
+
+    doacoes_por_mes = (
+        Agendamento.objects
+        .extra(select={'mes': "strftime('%%m', data)"})
+        .values('mes')
+        .annotate(total=Count('id'))
+        .order_by('mes')
+    )
+
+    tipos = (
+        Doador.objects
+        .values('tipo_sanguineo')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    ranking = (
+        Hemocentro.objects
+        .annotate(total=Count('agendamento'))
+        .order_by('-total')[:5]
+    )
+
+    hoje = timezone.localdate()
+    proximos = Agendamento.objects.filter(
+        data__gte=hoje
+    ).order_by('data', 'horario')[:10]
+
+    return render(request, 'relatorios.html', {
+        'total_doadores': total_doadores,
+        'total_agendamentos': total_agendamentos,
+        'total_hemocentros': total_hemocentros,
+        'doacoes_por_mes': list(doacoes_por_mes),
+        'tipos': list(tipos),
+        'ranking': ranking,
+        'proximos': proximos,
+    })
+
+
+# =========================================================
+# PAINEL DO HEMOCENTRO
+# =========================================================
+
+@login_required(login_url='login')
+def painel_hemocentro(request):
+    try:
+        hemocentro = Hemocentro.objects.get(usuario=request.user)
+    except Hemocentro.DoesNotExist:
+        return redirect('home')
+
+    agendamentos = Agendamento.objects.filter(hemocentro=hemocentro)
+    total_agendamentos = agendamentos.count()
+    total_doadores = agendamentos.values('doador').distinct().count()
+
+    doacoes_por_mes = (
+        agendamentos
+        .extra(select={'mes': "strftime('%%m', data)"})
+        .values('mes')
+        .annotate(total=Count('id'))
+        .order_by('mes')
+    )
+
+    tipos = (
+        agendamentos
+        .values('doador__tipo_sanguineo')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    hoje = timezone.localdate()
+    proximos = agendamentos.filter(
+        data__gte=hoje
+    ).order_by('data', 'horario')[:10]
+
+    return render(request, 'painel_hemocentro.html', {
+        'hemocentro': hemocentro,
+        'total_agendamentos': total_agendamentos,
+        'total_doadores': total_doadores,
+        'doacoes_por_mes': list(doacoes_por_mes),
+        'tipos': list(tipos),
+        'proximos': proximos,
     })
 
 
@@ -140,13 +345,9 @@ def cadastro(request):
 
     cidades = cidades_por_estado.get(dados.get('estado'), [])
 
-    # =====================================================
-    # POST
-    # =====================================================
     if request.method == 'POST':
         etapa_post = request.POST.get('etapa', '1')
 
-        # ---------- ETAPA 1 ----------
         if etapa_post == '1':
             dados['nome'] = request.POST.get('nome', '')
             dados['email'] = request.POST.get('email', '')
@@ -165,7 +366,6 @@ def cadastro(request):
             request.session['cadastro_dados'] = dados
             return redirect('/cadastro/?etapa=2')
 
-        # ---------- ETAPA 2 ----------
         elif etapa_post == '2':
             dados['telefone'] = request.POST.get('telefone', '')
             dados['estado'] = request.POST.get('estado', '')
@@ -195,7 +395,6 @@ def cadastro(request):
                     })
                 return redirect('/cadastro/?etapa=3')
 
-        # ---------- ETAPA 3 ----------
         elif etapa_post == '3':
             senha = request.POST.get('senha', '')
             confirmar_senha = request.POST.get('confirmar_senha', '')
@@ -240,9 +439,6 @@ def cadastro(request):
             request.session.pop('cadastro_dados', None)
             return redirect('login')
 
-    # =====================================================
-    # GET
-    # =====================================================
     return render(request, 'cadastrar.html', {
         'etapa': etapa,
         'dados': dados,
@@ -259,12 +455,24 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')
+        lembrar = request.POST.get('lembrar')
 
         usuario = authenticate(request, username=email, password=senha)
 
         if usuario is not None:
             login(request, usuario)
-            return redirect('agendar_doacao')
+
+            if lembrar:
+                request.session.set_expiry(1209600)
+            else:
+                request.session.set_expiry(0)
+
+            if usuario.is_staff:
+                return redirect('relatorios')
+            elif hasattr(usuario, 'hemocentro'):
+                return redirect('painel_hemocentro')
+            else:
+                return redirect('agendar_doacao')
 
         return render(request, 'login.html', {
             'erro': 'E-mail ou senha incorretos.'
@@ -280,6 +488,85 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+# =========================================================
+# FUNÇÃO AUXILIAR: E-MAIL DE CÓDIGO BONITO
+# =========================================================
+
+def enviar_email_codigo(email, codigo, assunto):
+    """Envia e-mail com código de verificação (HTML bonito)"""
+
+    mensagem_texto = f'''Ola!
+
+Seu codigo de verificacao e:
+
+    {codigo}
+
+Este codigo e valido por 10 minutos.
+
+Equipe Sangue Bom ❤️
+'''
+
+    mensagem_html = f'''
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="margin:0; padding:0; font-family:Arial, sans-serif; background:#fcf9f2;">
+
+    <div style="max-width:600px; margin:0 auto; background:white; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+
+        <div style="background:linear-gradient(135deg, #b30000, #7a0000); padding:35px 30px; text-align:center; color:white;">
+            <h1 style="margin:0; font-size:28px;">🩸 Sangue Bom</h1>
+            <p style="margin:10px 0 0 0; opacity:0.9; font-size:14px;">Recuperacao de senha</p>
+        </div>
+
+        <div style="padding:40px 30px;">
+
+            <h2 style="color:#b30000; margin-top:0; font-size:22px;">Ola! 👋</h2>
+
+            <p style="color:#555; font-size:16px; line-height:1.6;">
+                Use o codigo abaixo para confirmar sua identidade:
+            </p>
+
+            <div style="background:#fcf9f2; border:2px dashed #b30000; border-radius:12px; padding:25px; text-align:center; margin:30px 0;">
+                <p style="margin:0; color:#b30000; font-size:13px; letter-spacing:2px; text-transform:uppercase;">Seu codigo</p>
+                <p style="margin:10px 0 0 0; color:#b30000; font-size:42px; font-weight:bold; letter-spacing:8px; font-family:'Courier New', monospace;">{codigo}</p>
+            </div>
+
+            <p style="color:#888; font-size:14px; text-align:center;">
+                ⏱️ Este codigo e valido por <strong>10 minutos</strong>
+            </p>
+
+            <div style="background:#fff3cd; border-left:4px solid #ffc107; padding:15px; border-radius:8px; margin-top:25px;">
+                <p style="margin:0; color:#856404; font-size:13px;">
+                    ⚠️ <strong>Importante:</strong> Se voce nao solicitou, ignore este e-mail.
+                </p>
+            </div>
+
+        </div>
+
+        <div style="background:#7a0000; color:rgba(255,255,255,0.8); padding:20px; text-align:center; font-size:13px;">
+            <p style="margin:5px 0;">Doe sangue. Doe vida. 🩸</p>
+            <p style="margin:10px 0 0 0; opacity:0.7;">Equipe Sangue Bom ❤️</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
+'''
+
+    email_msg = EmailMultiAlternatives(
+        subject=assunto,
+        body=mensagem_texto,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[email]
+    )
+    email_msg.attach_alternative(mensagem_html, "text/html")
+    email_msg.send(fail_silently=False)
 
 
 # =========================================================
@@ -302,32 +589,16 @@ def recuperar_senha(request):
         CodigoRecuperacao.objects.filter(email=email).delete()
         CodigoRecuperacao.objects.create(email=email, codigo=codigo)
 
-        send_mail(
-            'Código de verificação - Sangue Bom',
-            f'''Olá!
-
-Recebemos uma solicitação para recuperação de senha da sua conta no Sangue Bom.
-
-Seu código de verificação é:
-
-{codigo}
-
-Digite esse código na página de recuperação de senha para confirmar sua solicitação.
-
-Importante: este código é válido por 10 minutos.
-
-Atenciosamente,
-Equipe Sangue Bom ❤️
-''',
-            None,
-            [email],
-            fail_silently=False,
+        enviar_email_codigo(
+            email,
+            codigo,
+            '🩸 Seu código de verificação - Sangue Bom'
         )
 
         return render(request, 'recuperar_senha.html', {
             'email': email,
             'codigo_enviado': True,
-            'mensagem': 'Um código de verificação foi enviado para seu e-mail.'
+            'mensagem': 'Um código de verificação foi enviado para seu e-mail. Verifique também a caixa de spam.'
         })
 
     return render(request, 'recuperar_senha.html')
@@ -374,7 +645,7 @@ def validar_codigo(request):
 
 
 # =========================================================
-# REENVIAR CÓDIGO (NOVO)
+# REENVIAR CÓDIGO
 # =========================================================
 
 def reenviar_codigo(request):
@@ -389,14 +660,12 @@ def reenviar_codigo(request):
                 'email': email
             })
 
-        # Verifica o último código criado
         ultimo_codigo = CodigoRecuperacao.objects.filter(email=email).first()
 
         if ultimo_codigo:
             tempo_passado = timezone.now() - ultimo_codigo.criado_em
             segundos_passados = tempo_passado.total_seconds()
 
-            # ⏱️ Só pode reenviar depois de 60 segundos
             if segundos_passados < 60:
                 segundos_restantes = int(60 - segundos_passados)
                 return render(request, 'recuperar_senha.html', {
@@ -405,29 +674,15 @@ def reenviar_codigo(request):
                     'codigo_enviado': True
                 })
 
-        # Gera novo código
         codigo = str(random.randint(100000, 999999))
 
         CodigoRecuperacao.objects.filter(email=email).delete()
         CodigoRecuperacao.objects.create(email=email, codigo=codigo)
 
-        send_mail(
-            'Novo código de verificação - Sangue Bom',
-            f'''Olá!
-
-Você solicitou um novo código de verificação.
-
-Seu novo código é:
-
-{codigo}
-
-Este código é válido por 10 minutos.
-
-Equipe Sangue Bom ❤️
-''',
-            None,
-            [email],
-            fail_silently=False,
+        enviar_email_codigo(
+            email,
+            codigo,
+            '🔄 Novo código de verificação - Sangue Bom'
         )
 
         return render(request, 'recuperar_senha.html', {
@@ -479,6 +734,14 @@ def alterar_senha(request):
                 'codigo_validado': True
             })
 
+        if len(nova_senha) < 8:
+            return render(request, 'recuperar_senha.html', {
+                'erro': 'A senha deve ter pelo menos 8 caracteres.',
+                'email': email,
+                'codigo': codigo,
+                'codigo_validado': True
+            })
+
         usuario = User.objects.filter(username=email).first()
 
         if usuario is None:
@@ -507,6 +770,12 @@ def alterar_senha(request):
 
 @login_required(login_url='login')
 def agendar_doacao(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     if request.method == 'POST':
@@ -517,7 +786,6 @@ def agendar_doacao(request):
 
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
-        # Salva em variável pra poder enviar email
         agendamento = Agendamento.objects.create(
             doador=doador,
             hemocentro=hemocentro,
@@ -527,7 +795,37 @@ def agendar_doacao(request):
             tipo_doacao=tipo_doacao
         )
 
-        # 🎯 ENVIA E-MAIL (doador + hemocentro)
+        Notificacao.objects.create(
+            doador=doador,
+            tipo='confirmado',
+            titulo='✅ Agendamento confirmado',
+            mensagem=f'Seu agendamento no {hemocentro.nome} foi confirmado para {data} às {horario}.'
+        )
+
+        total = Agendamento.objects.filter(doador=doador).count()
+
+        if total >= 6:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🏆 Você atingiu o nível Ouro!',
+                mensagem='Parabéns! Você desbloqueou todos os benefícios.'
+            )
+        elif total >= 3:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🥈 Você subiu pro nível Prata!',
+                mensagem=f'Faltam {6 - total} agendamentos pro Ouro.'
+            )
+        else:
+            Notificacao.objects.create(
+                doador=doador,
+                tipo='nivel',
+                titulo='🥉 Nível Bronze',
+                mensagem=f'Faltam {3 - total} agendamentos pro Prata!'
+            )
+
         try:
             enviar_email_agendamento(doador, agendamento)
         except Exception as e:
@@ -556,6 +854,12 @@ def agendar_doacao(request):
 
 @login_required(login_url='login')
 def listar_agendamentos(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     agendamentos = Agendamento.objects.filter(doador=doador)
@@ -571,6 +875,12 @@ def listar_agendamentos(request):
 
 @login_required(login_url='login')
 def editar_agendamento(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
 
@@ -589,7 +899,6 @@ def editar_agendamento(request, id):
         agendamento.tipo_doacao = tipo_doacao
         agendamento.save()
 
-        # 🎯 ENVIA E-MAIL DE ATUALIZAÇÃO
         try:
             enviar_email_agendamento(doador, agendamento)
         except Exception as e:
@@ -611,6 +920,12 @@ def editar_agendamento(request, id):
 
 @login_required(login_url='login')
 def excluir_agendamento(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
 

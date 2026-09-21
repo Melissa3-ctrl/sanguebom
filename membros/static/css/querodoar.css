@@ -1,0 +1,448 @@
+/* ============================================ */
+/* HERO                                         */
+/* ============================================ */
+
+.hero-doar {
+    background: linear-gradient(135deg, #b30000, #7a0000);
+    color: white;
+    text-align: center;
+    padding: 60px 30px;
+    border-radius: 16px;
+    margin: 30px 0 40px 0;
+    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.2);
+}
+
+.hero-doar h1 {
+    font-size: 2.8em;
+    margin: 0 0 16px 0;
+    color: white;
+}
+
+.hero-sub {
+    font-size: 1.2em;
+    opacity: 0.95;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-sub strong {
+    color: #ffd700;
+}
+
+.btn-hero {
+    display: inline-block;
+    background: white;
+    color: #b30000;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 1.15em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    background: #ffd700;
+    color: #7a0000;
+}
+
+/* ============================================ */
+/* SEÇÕES                                       */
+/* ============================================ */
+
+.info-section {
+    margin: 50px 0;
+}
+
+.info-section h2 {
+    color: #b30000;
+    font-size: 1.8em;
+    margin-bottom: 24px;
+    border-bottom: 3px solid #f0e6d2;
+    padding-bottom: 12px;
+}
+
+.section-sub {
+    color: #666;
+    font-size: 1.05em;
+    margin-top: -16px;
+    margin-bottom: 24px;
+}
+
+/* ============================================ */
+/* CARD INFO                                    */
+/* ============================================ */
+
+.info-card {
+    background: #fcf9f2;
+    border-left: 5px solid #b30000;
+    border-radius: 12px;
+    padding: 28px;
+    line-height: 1.8;
+    position: relative;
+}
+
+.info-icon {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.info-card p {
+    color: #555;
+    font-size: 1.05em;
+    margin: 12px 0;
+}
+
+.info-card strong {
+    color: #b30000;
+}
+
+/* ============================================ */
+/* REQUISITOS GRID                              */
+/* ============================================ */
+
+.requisitos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.requisito-card {
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.requisito-card:hover {
+    border-color: #b30000;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(179, 0, 0, 0.1);
+}
+
+.requisito-icon {
+    font-size: 2.2em;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.requisito-card strong {
+    display: block;
+    color: #b30000;
+    font-size: 1.05em;
+    margin-bottom: 6px;
+}
+
+.requisito-card p {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* ============================================ */
+/* CHECKLIST                                    */
+/* ============================================ */
+
+.checklist {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.check-item:last-child {
+    border-bottom: none;
+}
+
+.check {
+    background: #4caf50;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 0.9em;
+}
+
+.check-item p {
+    margin: 0;
+    color: #444;
+    font-size: 1.05em;
+}
+
+.aviso-triagem {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #856404;
+    font-size: 0.95em;
+}
+
+/* ============================================ */
+/* TIPOS SANGUÍNEOS                             */
+/* ============================================ */
+
+.tipos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.tipo-card {
+    background: white;
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.tipo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tipo-nome {
+    font-size: 2.4em;
+    font-weight: bold;
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.tipo-badge {
+    display: inline-block;
+    background: #ffebee;
+    color: #c62828;
+    font-size: 0.75em;
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.tipo-desc {
+    color: #555;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.tipo-card.doador-universal {
+    border-color: #4caf50;
+    background: #f1f8e9;
+}
+
+.tipo-card.doador-universal .tipo-nome {
+    color: #2e7d32;
+}
+
+.tipo-card.doador-universal .tipo-badge {
+    background: #4caf50;
+    color: white;
+}
+
+.tipo-card.receptor-universal {
+    border-color: #ff9800;
+    background: #fff8e1;
+}
+
+.tipo-card.receptor-universal .tipo-nome {
+    color: #e65100;
+}
+
+.tipo-card.receptor-universal .tipo-badge {
+    background: #ff9800;
+    color: white;
+}
+
+.tipo-badge.receptor {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* ============================================ */
+/* DICAS                                        */
+/* ============================================ */
+
+.dicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.dica-card {
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+    border: 2px solid #f0e6d2;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.dica-card:hover {
+    border-color: #b30000;
+    transform: scale(1.03);
+}
+
+.dica-card span {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.dica-card p {
+    color: #444;
+    font-weight: bold;
+    margin: 0;
+    font-size: 0.95em;
+}
+
+/* ============================================ */
+/* DESTAQUE — 4 VIDAS                           */
+/* ============================================ */
+
+.destaque-vidas {
+    background: linear-gradient(135deg, #b30000, #7a0000);
+    color: white;
+    text-align: center;
+    padding: 50px 30px;
+    border-radius: 16px;
+    margin: 50px 0;
+    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.2);
+}
+
+.destaque-icon {
+    font-size: 4em;
+    margin-bottom: 16px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.destaque-vidas h2 {
+    color: white;
+    font-size: 2em;
+    margin: 0 0 16px 0;
+    border: none;
+    padding: 0;
+}
+
+.destaque-vidas p {
+    font-size: 1.15em;
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.destaque-vidas strong {
+    color: #ffd700;
+}
+
+/* ============================================ */
+/* CTA FINAL                                    */
+/* ============================================ */
+
+.cta-final {
+    text-align: center;
+    background: #fcf9f2;
+    border-radius: 16px;
+    padding: 50px 30px;
+    margin: 50px 0;
+    border: 2px dashed #f0e6d2;
+}
+
+.cta-final h2 {
+    color: #b30000;
+    font-size: 1.8em;
+    margin-bottom: 16px;
+    border: none;
+    padding: 0;
+}
+
+.cta-final p {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+.btn-cta {
+    display: inline-block;
+    background: #b30000;
+    color: white;
+    padding: 18px 50px;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(179, 0, 0, 0.3);
+}
+
+.btn-cta:hover {
+    background: #7a0000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(179, 0, 0, 0.4);
+}
+
+/* ============================================ */
+/* RESPONSIVO                                   */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .hero-doar h1 {
+        font-size: 2em;
+    }
+
+    .hero-sub {
+        font-size: 1.05em;
+    }
+
+    .btn-hero,
+    .btn-cta {
+        padding: 14px 30px;
+        font-size: 1em;
+    }
+
+    .info-section h2 {
+        font-size: 1.5em;
+    }
+
+    .tipos-grid,
+    .requisitos-grid,
+    .dicas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .destaque-vidas h2 {
+        font-size: 1.5em;
+    }
+
+    .tipo-nome {
+        font-size: 2em;
+    }
+}
