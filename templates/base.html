@@ -55,7 +55,7 @@
     <!-- ========================= -->
     <!-- CONTAINER PRINCIPAL (3 COLUNAS) -->
     <!-- ========================= -->
-    <div class="app-container {% if user.is_staff or user.hemocentro %}sem-lateral{% endif %}">
+    <div class="app-container {% if not lateral_direita %}sem-lateral{% endif %}">
 
         <!-- MENU LATERAL ESQUERDO -->
         <aside class="lateral-esquerda">
@@ -83,6 +83,10 @@
                     <a href="{% url 'relatorios' %}" class="menu-item">
                         <span class="menu-item-icone">📊</span>
                         <span class="menu-item-texto">Relatórios</span>
+                    </a>
+                    <a href="/admin/" class="menu-item">
+                        <span class="menu-item-icone">⚙️</span>
+                        <span class="menu-item-texto">Administração</span>
                     </a>
                 {% endif %}
 
@@ -128,6 +132,10 @@
                         <span class="menu-item-icone">❓</span>
                         <span class="menu-item-texto">Dúvidas</span>
                     </a>
+                    <a href="{% url 'preciso_doacao' %}" class="menu-item">
+                        <span class="menu-item-icone">🩸</span>
+                        <span class="menu-item-texto">Preciso de Doação</span>
+                    </a>
                 {% endif %}
 
             </nav>
@@ -164,8 +172,8 @@
             {% endblock %}
         </main>
 
-        <!-- LATERAL DIREITA (só pra doador e visitante) -->
-        {% if not user.is_staff and not user.hemocentro %}
+        <!-- LATERAL DIREITA (só se lateral_direita for True) -->
+        {% if lateral_direita %}
         <aside class="lateral-direita">
 
             <!-- ESTOQUE DE SANGUE -->

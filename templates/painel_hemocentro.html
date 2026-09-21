@@ -28,8 +28,35 @@
 
         <div class="card-kpi">
             <span class="kpi-icon">💗</span>
-            <span class="kpi-numero">{{ total_agendamentos }}</span>
+            <span class="kpi-numero">{{ total_vidas }}</span>
             <span class="kpi-label">Vidas impactadas</span>
+        </div>
+    </section>
+
+    <!-- CARDS DE STATUS -->
+    <section class="cards-kpi">
+        <div class="card-kpi status-agendado">
+            <span class="kpi-icon">⏳</span>
+            <span class="kpi-numero">{{ agendados }}</span>
+            <span class="kpi-label">Agendados</span>
+        </div>
+
+        <div class="card-kpi status-realizado">
+            <span class="kpi-icon">✅</span>
+            <span class="kpi-numero">{{ realizados }}</span>
+            <span class="kpi-label">Realizados</span>
+        </div>
+
+        <div class="card-kpi status-cancelado">
+            <span class="kpi-icon">❌</span>
+            <span class="kpi-numero">{{ cancelados }}</span>
+            <span class="kpi-label">Cancelados</span>
+        </div>
+
+        <div class="card-kpi status-faltou">
+            <span class="kpi-icon">⚠️</span>
+            <span class="kpi-numero">{{ faltaram }}</span>
+            <span class="kpi-label">Faltaram</span>
         </div>
     </section>
 
@@ -46,23 +73,113 @@
         </div>
     </section>
 
-    <!-- PRÓXIMOS -->
-    <section class="info-grid">
-        <div class="info-card" style="grid-column: 1 / -1;">
-            <h2>📅 Próximos Agendamentos</h2>
-            {% if proximos %}
-                <ul class="proximos-lista">
-                    {% for a in proximos %}
-                        <li>
-                            <strong>{{ a.data|date:"d/m/Y" }} às {{ a.horario|time:"H:i" }}</strong>
-                            <span>{{ a.doador.nome }} ({{ a.doador.tipo_sanguineo }}) — {{ a.tipo_doacao }}</span>
-                        </li>
+    <!-- FILTROS -->
+    <section class="filtros-box">
+        <h2>🔍 Filtros</h2>
+        <form method="GET" class="filtros-form">
+            <div class="filtro-campo">
+                <label>📅 Data início:</label>
+                <input type="date" name="data_inicio" value="{{ data_inicio }}">
+            </div>
+
+            <div class="filtro-campo">
+                <label>📅 Data fim:</label>
+                <input type="date" name="data_fim" value="{{ data_fim }}">
+            </div>
+
+            <div class="filtro-campo">
+                <label>🩸 Tipo de doação:</label>
+                <select name="tipo">
+                    <option value="">Todos</option>
+                    {% for t in tipos_doacao %}
+                        <option value="{{ t }}" {% if tipo_filtro == t %}selected{% endif %}>{{ t }}</option>
                     {% endfor %}
-                </ul>
-            {% else %}
-                <p class="vazio">Nenhum agendamento futuro.</p>
-            {% endif %}
-        </div>
+                </select>
+            </div>
+
+            <div class="filtro-campo">
+                <label>📊 Status:</label>
+                <select name="status">
+                    <option value="">Todos</option>
+                    <option value="agendado" {% if status_filtro == 'agendado' %}selected{% endif %}>⏳ Agendado</option>
+                    <option value="realizado" {% if status_filtro == 'realizado' %}selected{% endif %}>✅ Realizado</option>
+                    <option value="cancelado" {% if status_filtro == 'cancelado' %}selected{% endif %}>❌ Cancelado</option>
+                    <option value="faltou" {% if status_filtro == 'faltou' %}selected{% endif %}>⚠️ Faltou</option>
+                </select>
+            </div>
+
+            <div class="filtro-botoes">
+                <button type="submit" class="btn-filtrar">🔍 Filtrar</button>
+                <a href="{% url 'painel_hemocentro' %}" class="btn-limpar">🧹 Limpar</a>
+                <a href="{% url 'exportar_csv' %}" class="btn-exportar">📥 Exportar CSV</a>
+            </div>
+        </form>
+    </section>
+
+    <!-- TABELA DE AGENDAMENTOS -->
+    <section class="tabela-box">
+        <h2>📋 Todos os Agendamentos ({{ total_agendamentos }})</h2>
+
+        {% if agendamentos %}
+            <div class="tabela-wrapper">
+                <table class="tabela-agendamentos">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Doador</th>
+                            <th>Tipo</th>
+                            <th>Telefone</th>
+                            <th>Doação</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in agendamentos %}
+                            <tr>
+                                <td>{{ a.data|date:"d/m/Y" }}</td>
+                                <td>{{ a.horario|time:"H:i" }}</td>
+                                <td>
+                                    <strong>{{ a.doador.nome }}</strong>
+                                    <br>
+                                    <small>{{ a.doador.email }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge-tipo">{{ a.doador.tipo_sanguineo }}</span>
+                                </td>
+                                <td>{{ a.doador.telefone }}</td>
+                                <td>{{ a.tipo_doacao }}</td>
+                                <td>
+                                    {% if a.status == 'agendado' %}
+                                        <span class="badge-status badge-agendado">⏳ Agendado</span>
+                                    {% elif a.status == 'realizado' %}
+                                        <span class="badge-status badge-realizado">✅ Realizado</span>
+                                    {% elif a.status == 'cancelado' %}
+                                        <span class="badge-status badge-cancelado">❌ Cancelado</span>
+                                    {% elif a.status == 'faltou' %}
+                                        <span class="badge-status badge-faltou">⚠️ Faltou</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="{% url 'alterar_status' a.id %}" class="form-status">
+                                        {% csrf_token %}
+                                        <select name="status" onchange="this.form.submit()">
+                                            <option value="agendado" {% if a.status == 'agendado' %}selected{% endif %}>⏳ Agendado</option>
+                                            <option value="realizado" {% if a.status == 'realizado' %}selected{% endif %}>✅ Realizado</option>
+                                            <option value="cancelado" {% if a.status == 'cancelado' %}selected{% endif %}>❌ Cancelado</option>
+                                            <option value="faltou" {% if a.status == 'faltou' %}selected{% endif %}>⚠️ Faltou</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="vazio">Nenhum agendamento encontrado com esses filtros.</p>
+        {% endif %}
     </section>
 
     <!-- Chart.js -->

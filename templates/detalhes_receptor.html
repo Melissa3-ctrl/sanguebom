@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ receptor.nome }} - Sangue Bom{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+    <a href="{% url 'preciso_doacao' %}" class="btn-voltar">← Voltar</a>
+
+    <article class="receptor-detalhes urgencia-{{ receptor.urgencia }}">
+
+        <header class="receptor-detalhes-header">
+            <span class="receptor-tipo-grande">{{ receptor.tipo_sanguineo }}</span>
+            <div>
+                <h1>{{ receptor.nome }}</h1>
+                <span class="receptor-urgencia">
+                    {% if receptor.urgencia == 'baixa' %}🟢 Baixa
+                    {% elif receptor.urgencia == 'media' %}🟡 Média
+                    {% else %}🔴 Alta
+                    {% endif %}
+                </span>
+            </div>
+        </header>
+
+        <div class="receptor-detalhes-info">
+            <div class="info-item">
+                <span class="info-icon">🏥</span>
+                <div>
+                    <strong>Hospital</strong>
+                    <p>{{ receptor.hospital }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📍</span>
+                <div>
+                    <strong>Cidade</strong>
+                    <p>{{ receptor.cidade }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">🩸</span>
+                <div>
+                    <strong>Tipo sanguíneo</strong>
+                    <p>{{ receptor.tipo_sanguineo }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📞</span>
+                <div>
+                    <strong>Contato</strong>
+                    <p>{{ receptor.contato }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if receptor.descricao %}
+            <div class="receptor-detalhes-descricao">
+                <h3>📝 Descrição</h3>
+                <p>{{ receptor.descricao }}</p>
+            </div>
+        {% endif %}
+
+        <div class="receptor-detalhes-cta">
+            <h3>💗 Ajude essa pessoa!</h3>
+            <p>Entre em contato com o hospital ou vá até o hemocentro mais próximo.</p>
+
+            <a href="{% url 'locais_para_doar' %}" class="btn-cadastrar-receptor">
+                📍 Ver hemocentros
+            </a>
+        </div>
+
+    </article>
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}
