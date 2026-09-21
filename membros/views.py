@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils import timezone
 from django.conf import settings
-from django.conf import settings
+from django.db.models import Count
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao
 from .emails import enviar_email_agendamento
@@ -73,10 +73,23 @@ def duvidas(request):
 
 
 def locais_para_doar(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('relatorios')
+        if hasattr(request.user, 'hemocentro'):
+            return redirect('painel_hemocentro')
     return render(request, 'locais_para_doar.html')
 
 
 def campanhas(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('relatorios')
+        if hasattr(request.user, 'hemocentro'):
+            return redirect('painel_hemocentro')
+
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -100,6 +113,12 @@ def campanhas(request):
 
 @login_required(login_url='login')
 def notificacoes(request):
+    # Admin e hemocentro não têm notificações
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     notificacoes_lista = Notificacao.objects.filter(doador=doador)
@@ -113,6 +132,12 @@ def notificacoes(request):
 
 @login_required(login_url='login')
 def marcar_lida(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     notificacao = get_object_or_404(Notificacao, id=id, doador=doador)
 
@@ -124,6 +149,12 @@ def marcar_lida(request, id):
 
 @login_required(login_url='login')
 def marcar_todas_lidas(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     Notificacao.objects.filter(doador=doador, lida=False).update(lida=True)
 
@@ -136,6 +167,12 @@ def marcar_todas_lidas(request):
 
 @login_required(login_url='login')
 def meu_perfil(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     agendamentos = Agendamento.objects.filter(
@@ -175,6 +212,101 @@ def meu_perfil(request):
         'proximo_nivel': proximo_nivel,
         'faltam': faltam,
         'progresso': progresso,
+    })
+
+
+# =========================================================
+# RELATÓRIOS (ADMIN)
+# =========================================================
+
+@login_required(login_url='login')
+def relatorios(request):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    total_doadores = Doador.objects.count()
+    total_agendamentos = Agendamento.objects.count()
+    total_hemocentros = Hemocentro.objects.count()
+
+    doacoes_por_mes = (
+        Agendamento.objects
+        .extra(select={'mes': "strftime('%%m', data)"})
+        .values('mes')
+        .annotate(total=Count('id'))
+        .order_by('mes')
+    )
+
+    tipos = (
+        Doador.objects
+        .values('tipo_sanguineo')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    ranking = (
+        Hemocentro.objects
+        .annotate(total=Count('agendamento'))
+        .order_by('-total')[:5]
+    )
+
+    hoje = timezone.localdate()
+    proximos = Agendamento.objects.filter(
+        data__gte=hoje
+    ).order_by('data', 'horario')[:10]
+
+    return render(request, 'relatorios.html', {
+        'total_doadores': total_doadores,
+        'total_agendamentos': total_agendamentos,
+        'total_hemocentros': total_hemocentros,
+        'doacoes_por_mes': list(doacoes_por_mes),
+        'tipos': list(tipos),
+        'ranking': ranking,
+        'proximos': proximos,
+    })
+
+
+# =========================================================
+# PAINEL DO HEMOCENTRO
+# =========================================================
+
+@login_required(login_url='login')
+def painel_hemocentro(request):
+    try:
+        hemocentro = Hemocentro.objects.get(usuario=request.user)
+    except Hemocentro.DoesNotExist:
+        return redirect('home')
+
+    agendamentos = Agendamento.objects.filter(hemocentro=hemocentro)
+    total_agendamentos = agendamentos.count()
+    total_doadores = agendamentos.values('doador').distinct().count()
+
+    doacoes_por_mes = (
+        agendamentos
+        .extra(select={'mes': "strftime('%%m', data)"})
+        .values('mes')
+        .annotate(total=Count('id'))
+        .order_by('mes')
+    )
+
+    tipos = (
+        agendamentos
+        .values('doador__tipo_sanguineo')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    hoje = timezone.localdate()
+    proximos = agendamentos.filter(
+        data__gte=hoje
+    ).order_by('data', 'horario')[:10]
+
+    return render(request, 'painel_hemocentro.html', {
+        'hemocentro': hemocentro,
+        'total_agendamentos': total_agendamentos,
+        'total_doadores': total_doadores,
+        'doacoes_por_mes': list(doacoes_por_mes),
+        'tipos': list(tipos),
+        'proximos': proximos,
     })
 
 
@@ -335,7 +467,12 @@ def login_view(request):
             else:
                 request.session.set_expiry(0)
 
-            return redirect('agendar_doacao')
+            if usuario.is_staff:
+                return redirect('relatorios')
+            elif hasattr(usuario, 'hemocentro'):
+                return redirect('painel_hemocentro')
+            else:
+                return redirect('agendar_doacao')
 
         return render(request, 'login.html', {
             'erro': 'E-mail ou senha incorretos.'
@@ -468,7 +605,7 @@ def recuperar_senha(request):
 
 
 # =========================================================
-# VALIDAR CÓDIGO (SEM BLOQUEIO - VALIDA NA HORA)
+# VALIDAR CÓDIGO
 # =========================================================
 
 def validar_codigo(request):
@@ -488,7 +625,6 @@ def validar_codigo(request):
                 'codigo_enviado': True
             })
 
-        # ⏱️ SÓ VERIFICA EXPIRAÇÃO (10 minutos)
         tempo_passado = timezone.now() - codigo_recuperacao.criado_em
 
         if tempo_passado.total_seconds() > 600:
@@ -498,7 +634,6 @@ def validar_codigo(request):
                 'email': email
             })
 
-        # ✅ VALIDA NA HORA
         return render(request, 'recuperar_senha.html', {
             'email': email,
             'codigo': codigo_digitado,
@@ -510,7 +645,7 @@ def validar_codigo(request):
 
 
 # =========================================================
-# REENVIAR CÓDIGO (BLOQUEADO 60s)
+# REENVIAR CÓDIGO
 # =========================================================
 
 def reenviar_codigo(request):
@@ -630,11 +765,17 @@ def alterar_senha(request):
 
 
 # =========================================================
-# CREATE - AGENDAR DOAÇÃO (COM NOTIFICAÇÕES AUTOMÁTICAS)
+# CREATE - AGENDAR DOAÇÃO
 # =========================================================
 
 @login_required(login_url='login')
 def agendar_doacao(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     if request.method == 'POST':
@@ -654,7 +795,6 @@ def agendar_doacao(request):
             tipo_doacao=tipo_doacao
         )
 
-        # 🆕 Notificação de agendamento confirmado
         Notificacao.objects.create(
             doador=doador,
             tipo='confirmado',
@@ -662,7 +802,6 @@ def agendar_doacao(request):
             mensagem=f'Seu agendamento no {hemocentro.nome} foi confirmado para {data} às {horario}.'
         )
 
-        # 🆕 Notificação de nível
         total = Agendamento.objects.filter(doador=doador).count()
 
         if total >= 6:
@@ -715,6 +854,12 @@ def agendar_doacao(request):
 
 @login_required(login_url='login')
 def listar_agendamentos(request):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
 
     agendamentos = Agendamento.objects.filter(doador=doador)
@@ -730,6 +875,12 @@ def listar_agendamentos(request):
 
 @login_required(login_url='login')
 def editar_agendamento(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
 
@@ -769,6 +920,12 @@ def editar_agendamento(request, id):
 
 @login_required(login_url='login')
 def excluir_agendamento(request, id):
+    # Admin e hemocentro não acessam
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
 
