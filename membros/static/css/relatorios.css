@@ -1,0 +1,233 @@
+/* ============================================ */
+/* CABEÇALHO                                     */
+/* ============================================ */
+
+.relatorios-header {
+    text-align: center;
+    margin: 30px 0 40px 0;
+}
+
+.relatorios-header h1 {
+    font-size: 2em;
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+.relatorios-header p {
+    color: #666;
+    font-size: 1.05em;
+}
+
+/* ============================================ */
+/* CARDS KPI                                     */
+/* ============================================ */
+
+.cards-kpi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card-kpi {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #b30000;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-kpi:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.15);
+}
+
+.kpi-icon {
+    font-size: 2.5em;
+}
+
+.kpi-numero {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #b30000;
+    line-height: 1;
+}
+
+.kpi-label {
+    color: #666;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================================ */
+/* GRÁFICOS                                      */
+/* ============================================ */
+
+.graficos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.grafico-container {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.grafico-container h2 {
+    color: #b30000;
+    font-size: 1.2em;
+    margin: 0 0 20px 0;
+}
+
+.grafico-container canvas {
+    max-height: 300px;
+}
+
+/* ============================================ */
+/* RANKING + PRÓXIMOS                            */
+/* ============================================ */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.info-card h2 {
+    color: #b30000;
+    font-size: 1.2em;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0e6d2;
+}
+
+.ranking-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: ranking;
+}
+
+.ranking-lista li {
+    counter-increment: ranking;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+}
+
+.ranking-lista li:last-child {
+    border-bottom: none;
+}
+
+.ranking-lista li::before {
+    content: counter(ranking);
+    background: #b30000;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85em;
+    flex-shrink: 0;
+}
+
+.ranking-lista li strong {
+    flex: 1;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.ranking-lista li span {
+    color: #b30000;
+    font-weight: bold;
+    font-size: 0.85em;
+    background: #fceceb;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.proximos-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.proximos-lista li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.proximos-lista li:last-child {
+    border-bottom: none;
+}
+
+.proximos-lista li strong {
+    color: #b30000;
+    font-size: 0.95em;
+}
+
+.proximos-lista li span {
+    color: #666;
+    font-size: 0.88em;
+}
+
+.vazio {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                    */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .relatorios-header h1 {
+        font-size: 1.6em;
+    }
+
+    .graficos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-kpi {
+        padding: 20px;
+    }
+
+    .kpi-numero {
+        font-size: 2em;
+    }
+}

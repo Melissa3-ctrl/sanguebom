@@ -49,6 +49,14 @@ class Doador(models.Model):
 
 class Hemocentro(models.Model):
 
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='hemocentro'
+    )
+
     nome = models.CharField(max_length=100)
     endereco = models.CharField(max_length=200)
     bairro = models.CharField(max_length=100)

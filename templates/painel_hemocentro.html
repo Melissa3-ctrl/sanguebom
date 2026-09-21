@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Painel - {{ hemocentro.nome }}{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/relatorios.css' %}">
+
+    <header class="relatorios-header">
+        <h1>🏥 {{ hemocentro.nome }}</h1>
+        <p>Painel de controle do hemocentro</p>
+    </header>
+
+    <!-- CARDS KPI -->
+    <section class="cards-kpi">
+        <div class="card-kpi">
+            <span class="kpi-icon">📅</span>
+            <span class="kpi-numero">{{ total_agendamentos }}</span>
+            <span class="kpi-label">Agendamentos</span>
+        </div>
+
+        <div class="card-kpi">
+            <span class="kpi-icon">👥</span>
+            <span class="kpi-numero">{{ total_doadores }}</span>
+            <span class="kpi-label">Doadores únicos</span>
+        </div>
+
+        <div class="card-kpi">
+            <span class="kpi-icon">💗</span>
+            <span class="kpi-numero">{{ total_agendamentos }}</span>
+            <span class="kpi-label">Vidas impactadas</span>
+        </div>
+    </section>
+
+    <!-- GRÁFICOS -->
+    <section class="graficos-grid">
+        <div class="grafico-container">
+            <h2>📈 Doações por mês</h2>
+            <canvas id="grafico-mes"></canvas>
+        </div>
+
+        <div class="grafico-container">
+            <h2>🩸 Tipos sanguíneos recebidos</h2>
+            <canvas id="grafico-tipos"></canvas>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS -->
+    <section class="info-grid">
+        <div class="info-card" style="grid-column: 1 / -1;">
+            <h2>📅 Próximos Agendamentos</h2>
+            {% if proximos %}
+                <ul class="proximos-lista">
+                    {% for a in proximos %}
+                        <li>
+                            <strong>{{ a.data|date:"d/m/Y" }} às {{ a.horario|time:"H:i" }}</strong>
+                            <span>{{ a.doador.nome }} ({{ a.doador.tipo_sanguineo }}) — {{ a.tipo_doacao }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="vazio">Nenhum agendamento futuro.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const doacoesPorMes = {{ doacoes_por_mes|safe }};
+        const tipos = {{ tipos|safe }};
+
+        const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                       'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+        if (doacoesPorMes.length > 0) {
+            new Chart(document.getElementById('grafico-mes'), {
+                type: 'line',
+                data: {
+                    labels: doacoesPorMes.map(d => meses[parseInt(d.mes) - 1]),
+                    datasets: [{
+                        label: 'Doações',
+                        data: doacoesPorMes.map(d => d.total),
+                        borderColor: '#b30000',
+                        backgroundColor: 'rgba(179, 0, 0, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#b30000',
+                        pointRadius: 6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        if (tipos.length > 0) {
+            new Chart(document.getElementById('grafico-tipos'), {
+                type: 'doughnut',
+                data: {
+                    labels: tipos.map(t => t.doador__tipo_sanguineo || 'Não informado'),
+                    datasets: [{
+                        data: tipos.map(t => t.total),
+                        backgroundColor: [
+                            '#d32f2f', '#1976d2', '#7b1fa2', '#388e3c',
+                            '#f57c00', '#fbc02d', '#c2185b', '#455a64'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+    </script>
+
+{% endblock %}
