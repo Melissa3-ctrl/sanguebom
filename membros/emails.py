@@ -4,15 +4,6 @@ from .models import Agendamento
 
 
 # =========================================================
-# CONFIGURAÇÃO: E-MAIL FIXO DO HEMOCENTRO
-# =========================================================
-# Todos os agendamentos vão pra esse e-mail, independente
-# de qual hemocentro o doador escolher.
-
-EMAIL_HEMOCENTRO_FIXO = 'servicosocial@fhb.df.gov.br'
-
-
-# =========================================================
 # FUNÇÃO AUXILIAR: CALCULA NÍVEL
 # =========================================================
 
@@ -34,30 +25,8 @@ def enviar_email_agendamento(doador, agendamento):
     """
     Envia 2 e-mails HTML bonitos:
     1. Confirmação pro DOADOR (com progresso Bronze/Prata/Ouro)
-    2. Aviso pro HEMOCENTRO (e-mail FIXO)
+    2. Aviso pro HEMOCENTRO (e-mail do hemocentro escolhido)
     """
-
-    # ==========================================
-    # 📊 CALCULA O PROGRESSO DO DOADOR
-    # ==========================================
-
-    total = Agendamento.objects.filter(doador=doador).count()
-    nivel, proximo, faltam, progresso, emoji = calcular_nivel(total)
-
-    # Monta o assunto dinâmico
-    if proximo:
-        if faltam == 1:
-            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Falta 1 pro {proximo} 🩸'
-            msg_falta = f'Falta <strong>1 agendamento</strong> pro {proximo}!'
-            texto_falta = f'Falta 1 pro {proximo}'
-        else:
-            assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Faltam {faltam} pro {proximo} 🩸'
-            msg_falta = f'Faltam <strong>{faltam} agendamentos</strong> pro {proximo}!'
-            texto_falta = f'Faltam {faltam} pro {proximo}'
-    else:
-        assunto_doador = f'{emoji} Agendamento confirmado! Você está no {nivel} — Você é incrível! 🏆🩸'
-        msg_falta = '🏆 Você atingiu o <strong>nível máximo</strong>!'
-        texto_falta = 'Você atingiu o nível máximo!'
 
     # ==========================================
     # 📊 CALCULA O PROGRESSO DO DOADOR
@@ -120,7 +89,6 @@ def enviar_email_agendamento(doador, agendamento):
                 <p style="margin:8px 0; color:#333333; font-size:15px;"><strong>🩸 Tipo:</strong> {agendamento.tipo_doacao}</p>
             </div>
 
-            <!-- 🩸 SEÇÃO DE PROGRESSO -->
             <div style="background:#fff5f5; border:2px solid #b30000; border-radius:12px; padding:25px; margin:30px 0;">
                 <h3 style="margin:0 0 15px 0; color:#b30000; font-size:18px; text-align:center;">
                     {emoji} Seu progresso de doador
@@ -177,7 +145,6 @@ Sua doação foi agendada com sucesso!
 
 Data: {agendamento.data}
 Horário: {agendamento.horario}
-Horário: {agendamento.horario}
 Local: {agendamento.hemocentro.nome}
 Tipo: {agendamento.tipo_doacao}
 
@@ -204,7 +171,7 @@ Equipe Sangue Bom 💗
 
 
     # ==========================================
-    # 📧 E-MAIL 2: PRO HEMOCENTRO (E-MAIL FIXO)
+    # 📧 E-MAIL 2: PRO HEMOCENTRO (DINÂMICO!)
     # ==========================================
 
     assunto_hemocentro = f'🩸 Nova doação agendada - {doador.nome}'
@@ -272,22 +239,19 @@ Tipo sanguíneo: {doador.tipo_sanguineo}
 Data: {agendamento.data}
 Horário: {agendamento.horario}
 Tipo de doação: {agendamento.tipo_doacao}
-Horário: {agendamento.horario}
-Tipo de doação: {agendamento.tipo_doacao}
 Telefone: {doador.telefone}
 E-mail: {doador.email}
 Nível: {nivel} ({total} agendamentos)
 
 Sistema Sangue Bom 💗
-Sistema Sangue Bom 💗
 '''
 
-    # 👇 E-MAIL FIXO (independente do hemocentro escolhido)
+    # 🆕 E-MAIL DINÂMICO (vai pro hemocentro escolhido!)
     email_hemocentro = EmailMultiAlternatives(
         subject=assunto_hemocentro,
         body=texto_hemocentro,
         from_email=settings.EMAIL_HOST_USER,
-        to=[EMAIL_HEMOCENTRO_FIXO]        # 👈 E-MAIL FIXO
+        to=[agendamento.hemocentro.email]        # 👈 DINÂMICO!
     )
     email_hemocentro.attach_alternative(html_hemocentro, "text/html")
     email_hemocentro.send(fail_silently=False)

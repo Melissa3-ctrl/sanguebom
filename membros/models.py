@@ -76,6 +76,13 @@ class Hemocentro(models.Model):
 
 class Agendamento(models.Model):
 
+    STATUS = [
+        ('agendado', '⏳ Agendado'),
+        ('realizado', '✅ Realizado'),
+        ('cancelado', '❌ Cancelado'),
+        ('faltou', '⚠️ Faltou'),
+    ]
+
     doador = models.ForeignKey(
         Doador,
         on_delete=models.CASCADE
@@ -96,6 +103,12 @@ class Agendamento(models.Model):
 
     tipo_doacao = models.CharField(
         max_length=30
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS,
+        default='agendado'
     )
 
     def __str__(self):
@@ -119,7 +132,7 @@ class CodigoRecuperacao(models.Model):
 
 
 # =========================================================
-# 🆕 NOTIFICAÇÕES
+# NOTIFICAÇÕES
 # =========================================================
 
 class Notificacao(models.Model):
@@ -157,3 +170,61 @@ class Notificacao(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.doador.nome}"
+
+
+# =========================================================
+# 🆕 RECEPTOR (Quem precisa de doação)
+# =========================================================
+
+class Receptor(models.Model):
+
+    URGENCIA = [
+        ('baixa', '🟢 Baixa'),
+        ('media', '🟡 Média'),
+        ('alta', '🔴 Alta'),
+    ]
+
+    TIPOS = [
+        ('A+', 'A+'), ('A-', 'A-'),
+        ('B+', 'B+'), ('B-', 'B-'),
+        ('AB+', 'AB+'), ('AB-', 'AB-'),
+        ('O+', 'O+'), ('O-', 'O-'),
+    ]
+
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    nome = models.CharField(max_length=100)
+
+    tipo_sanguineo = models.CharField(
+        max_length=3,
+        choices=TIPOS
+    )
+
+    hospital = models.CharField(max_length=200)
+
+    cidade = models.CharField(max_length=100)
+
+    urgencia = models.CharField(
+        max_length=20,
+        choices=URGENCIA,
+        default='media'
+    )
+
+    descricao = models.TextField()
+
+    contato = models.CharField(max_length=100)
+
+    ativo = models.BooleanField(default=False)
+
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-urgencia', '-criado_em']
+
+    def __str__(self):
+        return f"{self.nome} - {self.tipo_sanguineo}"

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Preciso de Doação - Sangue Bom{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+    <!-- CABEÇALHO -->
+    <header class="preciso-header">
+        <h1>🩸 Quem Precisa de Doação</h1>
+        <p>Veja quem está precisando de sangue e ajude a salvar vidas</p>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
+                ➕ Cadastrar Pedido
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn-cadastrar-receptor">
+                🔐 Entre pra cadastrar
+            </a>
+        {% endif %}
+    </header>
+
+    <!-- LISTA DE RECEPTORES -->
+    {% if receptores %}
+        <div class="receptores-grid">
+            {% for r in receptores %}
+                <article class="receptor-card urgencia-{{ r.urgencia }}">
+                    <div class="receptor-header">
+                        <span class="receptor-tipo">{{ r.tipo_sanguineo }}</span>
+                        <span class="receptor-urgencia">
+                            {% if r.urgencia == 'baixa' %}🟢 Baixa
+                            {% elif r.urgencia == 'media' %}🟡 Média
+                            {% else %}🔴 Alta
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <h3>{{ r.nome }}</h3>
+
+                    <p class="receptor-info">
+                        🏥 <strong>{{ r.hospital }}</strong>
+                    </p>
+
+                    <p class="receptor-info">
+                        📍 {{ r.cidade }}
+                    </p>
+
+                    {% if r.descricao %}
+                        <p class="receptor-descricao">{{ r.descricao|truncatewords:20 }}</p>
+                    {% endif %}
+
+                    <a href="{% url 'detalhes_receptor' r.id %}" class="receptor-btn">
+                        Ver detalhes →
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="vazio">
+            <span>🩸</span>
+            <p>Nenhum pedido de doação no momento.</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
+                    ➕ Cadastrar primeiro pedido
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}

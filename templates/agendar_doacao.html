@@ -32,9 +32,7 @@
     <form method="POST" id="form-agendamento">
         {% csrf_token %}
 
-        <!-- ============================================ -->
-        <!-- ETAPA 1 - ESCOLHER HEMOCENTRO                 -->
-        <!-- ============================================ -->
+        <!-- ETAPA 1 - ESCOLHER HEMOCENTRO -->
         <section id="etapa1" class="card-etapa ativa">
             <div class="card-conteudo">
                 <h2>🏥 Escolha o hemocentro</h2>
@@ -66,14 +64,11 @@
             </div>
         </section>
 
-        <!-- ============================================ -->
-        <!-- ETAPA 2 - DATA E HORÁRIO                      -->
-        <!-- ============================================ -->
+        <!-- ETAPA 2 - DATA E HORÁRIO -->
         <section id="etapa2" class="card-etapa">
             <div class="card-conteudo">
                 <h2>📅 Data e Horário</h2>
 
-                <!-- TIPO DE DOAÇÃO -->
                 <div class="campo-agendamento">
                     <h3>🩸 Tipo de doação</h3>
                     <div class="opcoes-tipo">
@@ -96,13 +91,11 @@
                     </div>
                 </div>
 
-                <!-- DATA -->
                 <div class="campo-agendamento">
                     <h3>📅 Data</h3>
                     <input type="date" name="data" id="data" required min="">
                 </div>
 
-                <!-- HORÁRIO -->
                 <div class="campo-agendamento">
                     <h3>🕐 Horário</h3>
                     <div class="horarios">
@@ -140,9 +133,7 @@
             </div>
         </section>
 
-        <!-- ============================================ -->
-        <!-- ETAPA 3 - CONFIRMAÇÃO                         -->
-        <!-- ============================================ -->
+        <!-- ETAPA 3 - CONFIRMAÇÃO -->
         <section id="etapa3" class="card-etapa">
             <div class="card-conteudo">
                 <h2>✅ Confirmar Agendamento</h2>
@@ -199,3 +190,5 @@
     <script src="{% static 'js/agendar_doacao.js' %}"></script>
 
 {% endblock %}
+
+{% block lateral_direita %}{% endblock %}

@@ -8,7 +8,6 @@ urlpatterns = [
     # PÁGINAS DO SITE
     # =========================================================
 
-    # Raiz abre a home direto
     path(
         '',
         views.home,
@@ -113,6 +112,29 @@ urlpatterns = [
 
 
     # =========================================================
+    # 🆕 PRECISO DE DOAÇÃO (RECEPTOR)
+    # =========================================================
+
+    path(
+        'preciso-doacao/',
+        views.preciso_doacao,
+        name='preciso_doacao'
+    ),
+
+    path(
+        'preciso-doacao/cadastrar/',
+        views.cadastrar_receptor,
+        name='cadastrar_receptor'
+    ),
+
+    path(
+        'preciso-doacao/<int:id>/',
+        views.detalhes_receptor,
+        name='detalhes_receptor'
+    ),
+
+
+    # =========================================================
     # NOTIFICAÇÕES
     # =========================================================
 
@@ -136,7 +158,7 @@ urlpatterns = [
 
 
     # =========================================================
-    # 🆕 RELATÓRIOS (ADMIN) E PAINEL (HEMOCENTRO)
+    # RELATÓRIOS (ADMIN) E PAINEL (HEMOCENTRO)
     # =========================================================
 
     path(
@@ -156,25 +178,39 @@ urlpatterns = [
     # CRUD DE AGENDAMENTOS
     # =========================================================
 
-    # READ - listar
     path(
         'agendamentos/',
         views.listar_agendamentos,
         name='listar_agendamentos'
     ),
 
-    # UPDATE - editar
     path(
         'agendamentos/editar/<int:id>/',
         views.editar_agendamento,
         name='editar_agendamento'
     ),
 
-    # DELETE - excluir
     path(
         'agendamentos/excluir/<int:id>/',
         views.excluir_agendamento,
         name='excluir_agendamento'
+    ),
+
+
+    # =========================================================
+    # PAINEL DO HEMOCENTRO (AÇÕES)
+    # =========================================================
+
+    path(
+        'painel/status/<int:id>/',
+        views.alterar_status,
+        name='alterar_status'
+    ),
+
+    path(
+        'painel/exportar-csv/',
+        views.exportar_csv,
+        name='exportar_csv'
     ),
 
 ]
