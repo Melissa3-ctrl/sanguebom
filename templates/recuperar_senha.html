@@ -17,7 +17,6 @@
 
 <main>
 
-    <a href="javascript:history.back()" class="btn-voltar-recuperar">← Voltar</a>
 
     <h1>❤️ Sangue Bom</h1>
     <h2>Recuperar senha</h2>
@@ -166,26 +165,7 @@
             </button>
         </form>
 
-        <script>
-            let segundos = 60;
-            const tempoEl = document.getElementById('tempo');
-            const contadorEl = document.getElementById('contador');
-            const btnReenviar = document.getElementById('btn-reenviar');
-
-            const intervalo = setInterval(() => {
-                segundos--;
-                tempoEl.textContent = segundos;
-
-                if (segundos <= 0) {
-                    clearInterval(intervalo);
-                    contadorEl.style.display = 'none';
-                    btnReenviar.disabled = false;
-                    btnReenviar.style.opacity = '1';
-                    btnReenviar.style.cursor = 'pointer';
-                    btnReenviar.style.background = '#ffffff';
-                }
-            }, 1000);
-        </script>
+       
 
     <!-- =====================================================
          PRIMEIRA TELA — E-MAIL
@@ -250,7 +230,5 @@
             `;
         }
     }
-</script>
-
 </body>
 </html>
