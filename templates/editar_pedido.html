@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Editar Pedido - Sangue Bom{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+    <a href="{% url 'meus_pedidos' %}" class="btn-voltar">← Voltar</a>
+
+    <header class="preciso-header">
+        <h1>✏️ Editar Pedido</h1>
+        <p>Edite as informações do pedido</p>
+    </header>
+
+    <form method="POST" class="form-receptor">
+        {% csrf_token %}
+
+        <div class="campo">
+            <label for="nome">Nome do paciente *</label>
+            <input type="text" id="nome" name="nome" value="{{ receptor.nome }}" required>
+        </div>
+
+        <div class="duas-colunas">
+            <div class="campo">
+                <label for="tipo_sanguineo">Tipo sanguíneo *</label>
+                <select id="tipo_sanguineo" name="tipo_sanguineo" required>
+                    <option value="A+" {% if receptor.tipo_sanguineo == 'A+' %}selected{% endif %}>A+</option>
+                    <option value="A-" {% if receptor.tipo_sanguineo == 'A-' %}selected{% endif %}>A-</option>
+                    <option value="B+" {% if receptor.tipo_sanguineo == 'B+' %}selected{% endif %}>B+</option>
+                    <option value="B-" {% if receptor.tipo_sanguineo == 'B-' %}selected{% endif %}>B-</option>
+                    <option value="AB+" {% if receptor.tipo_sanguineo == 'AB+' %}selected{% endif %}>AB+</option>
+                    <option value="AB-" {% if receptor.tipo_sanguineo == 'AB-' %}selected{% endif %}>AB-</option>
+                    <option value="O+" {% if receptor.tipo_sanguineo == 'O+' %}selected{% endif %}>O+</option>
+                    <option value="O-" {% if receptor.tipo_sanguineo == 'O-' %}selected{% endif %}>O-</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="urgencia">Urgência *</label>
+                <select id="urgencia" name="urgencia" required>
+                    <option value="baixa" {% if receptor.urgencia == 'baixa' %}selected{% endif %}>🟢 Baixa</option>
+                    <option value="media" {% if receptor.urgencia == 'media' %}selected{% endif %}>🟡 Média</option>
+                    <option value="alta" {% if receptor.urgencia == 'alta' %}selected{% endif %}>🔴 Alta</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label for="hospital">Hospital *</label>
+            <input type="text" id="hospital" name="hospital" value="{{ receptor.hospital }}" required>
+        </div>
+
+        <div class="campo">
+            <label for="cidade">Cidade *</label>
+            <input type="text" id="cidade" name="cidade" value="{{ receptor.cidade }}" required>
+        </div>
+
+        <div class="campo">
+            <label for="descricao">Descrição *</label>
+            <textarea id="descricao" name="descricao" rows="4" required>{{ receptor.descricao }}</textarea>
+        </div>
+
+        <div class="campo">
+            <label for="contato">Contato *</label>
+            <input type="text" id="contato" name="contato" value="{{ receptor.contato }}" required>
+        </div>
+
+        <div class="botoes-cadastro">
+            <a href="{% url 'meus_pedidos' %}" class="btn-voltar-cadastro">
+                ← Cancelar
+            </a>
+            <button type="submit" class="btn-enviar">
+                💾 Salvar Alterações
+            </button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}

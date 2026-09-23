@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
 from django.db.models import Count
+from django.utils import timezone
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor
 
 
@@ -283,15 +284,19 @@ class NotificacaoAdmin(admin.ModelAdmin):
 
 
 # =========================================================
-# 🆕 RECEPTOR (Quem precisa de doação)
+# RECEPTOR (Quem precisa de doação) — COMPLETO
 # =========================================================
 
 @admin.register(Receptor)
 class ReceptorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'tipo_sanguineo_badge', 'hospital', 'cidade', 'urgencia_badge', 'ativo', 'criado_em')
-    list_filter = ('urgencia', 'ativo', 'cidade', 'tipo_sanguineo')
-    search_fields = ('nome', 'hospital', 'cidade', 'contato')
-    list_editable = ('ativo',)
+    list_display = (
+        'nome', 'tipo_sanguineo_badge', 'hospital', 'cidade',
+        'urgencia_badge', 'status', 'status_badge', 'visualizacoes',
+        'dias_restantes_display', 'criado_em'
+    )
+    list_filter = ('status', 'urgencia', 'ativo', 'cidade', 'tipo_sanguineo')
+    search_fields = ('nome', 'hospital', 'cidade', 'contato', 'usuario__email')
+    list_editable = ('status',)
     list_per_page = 25
     ordering = ('-urgencia', '-criado_em')
     date_hierarchy = 'criado_em'
@@ -313,13 +318,18 @@ class ReceptorAdmin(admin.ModelAdmin):
         ('Contato', {
             'fields': ('contato',)
         }),
+        ('Status e Controle', {
+            'fields': ('status', 'ativo', 'visualizacoes', 'expira_em'),
+            'description': 'Aprove ou reprove o pedido. Pedidos aprovados ficam visíveis no site.'
+        }),
         ('Acesso', {
-            'fields': ('usuario', 'ativo'),
-            'description': 'O receptor só aparece no site se estiver ATIVO.'
+            'fields': ('usuario',),
         }),
     )
 
-    actions = ['aprovar', 'reprovar', 'exportar_csv']
+    readonly_fields = ('visualizacoes',)
+
+    actions = ['aprovar', 'reprovar', 'marcar_atendido', 'exportar_csv']
 
     def tipo_sanguineo_badge(self, obj):
         cores = {
@@ -348,13 +358,43 @@ class ReceptorAdmin(admin.ModelAdmin):
         )
     urgencia_badge.short_description = 'Urgência'
 
+    def status_badge(self, obj):
+        cores = {
+            'pendente': ('#fff3e0', '#e65100', '⏳'),
+            'aprovado': ('#e8f5e9', '#2e7d32', '✅'),
+            'atendido': ('#e3f2fd', '#1565c0', '🎉'),
+            'expirado': ('#f5f5f5', '#616161', '📅'),
+            'recusado': ('#ffebee', '#c62828', '❌'),
+        }
+        bg, cor, icone = cores.get(obj.status, ('#f5f5f5', '#666', ''))
+        return format_html(
+            '<span style="background:{}; color:{}; padding:3px 10px; border-radius:12px; font-weight:bold;">{} {}</span>',
+            bg, cor, icone, obj.get_status_display()
+        )
+    status_badge.short_description = 'Status'
+
+    def dias_restantes_display(self, obj):
+        if obj.status == 'atendido':
+            return format_html('<span style="color:#1565c0;">🎉 Atendido</span>')
+        if obj.status == 'expirado':
+            return format_html('<span style="color:#999;">📅 Expirado</span>')
+        dias = obj.dias_restantes
+        if dias <= 3:
+            return format_html('<span style="color:#d32f2f; font-weight:bold;">⚠️ {} dias</span>', dias)
+        return format_html('<span style="color:#666;">{} dias</span>', dias)
+    dias_restantes_display.short_description = 'Expira em'
+
     @admin.action(description='✅ Aprovar selecionados')
     def aprovar(self, request, queryset):
-        queryset.update(ativo=True)
+        queryset.update(status='aprovado', ativo=True)
 
     @admin.action(description='❌ Reprovar selecionados')
     def reprovar(self, request, queryset):
-        queryset.update(ativo=False)
+        queryset.update(status='recusado', ativo=False)
+
+    @admin.action(description='🎉 Marcar como Atendido')
+    def marcar_atendido(self, request, queryset):
+        queryset.update(status='atendido', ativo=False)
 
     @admin.action(description='📥 Exportar selecionados para CSV')
     def exportar_csv(self, request, queryset):
@@ -363,13 +403,16 @@ class ReceptorAdmin(admin.ModelAdmin):
         response.write('\ufeff')
 
         writer = csv.writer(response, delimiter=';')
-        writer.writerow(['Nome', 'Tipo Sanguíneo', 'Hospital', 'Cidade', 'Urgência', 'Contato', 'Ativo'])
+        writer.writerow([
+            'Nome', 'Tipo Sanguíneo', 'Hospital', 'Cidade',
+            'Urgência', 'Status', 'Contato', 'Visualizações', 'Criado em'
+        ])
 
         for r in queryset:
             writer.writerow([
                 r.nome, r.tipo_sanguineo, r.hospital, r.cidade,
-                r.get_urgencia_display(), r.contato,
-                'Sim' if r.ativo else 'Não'
+                r.get_urgencia_display(), r.get_status_display(),
+                r.contato, r.visualizacoes, r.criado_em
             ])
 
         return response

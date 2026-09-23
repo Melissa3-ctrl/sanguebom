@@ -1,0 +1,426 @@
+/* ============================================ */
+/* RESET                                          */
+/* ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+/* ============================================ */
+/* CONTAINER CENTRALIZADO                         */
+/* ============================================ */
+
+.preciso-header,
+.aviso-legal,
+.preciso-info,
+.preciso-cta,
+.form-receptor,
+.alerta,
+.btn-voltar {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================ */
+/* CABEÇALHO                                      */
+/* ============================================ */
+
+.preciso-header {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+}
+
+.preciso-header h1 {
+    font-size: 2.2em;
+    color: #b30000;
+    margin: 0 0 10px 0;
+    font-weight: 800;
+}
+
+.preciso-header p {
+    color: #666;
+    font-size: 1.05em;
+    margin: 0;
+}
+
+/* ============================================ */
+/* AVISO LEGAL                                    */
+/* ============================================ */
+
+.aviso-legal {
+    background: linear-gradient(135deg, #fff8e1, #fffde7);
+    border-left: 5px solid #ffc107;
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.15);
+    margin-bottom: 30px;
+}
+
+.aviso-legal-icon {
+    font-size: 2em;
+    flex-shrink: 0;
+}
+
+.aviso-legal-texto {
+    color: #6d4c00;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.aviso-legal-texto strong {
+    display: block;
+    color: #b30000;
+    font-size: 1.05em;
+    margin-bottom: 8px;
+}
+
+.aviso-legal-texto p {
+    margin: 6px 0;
+}
+
+.aviso-legal-texto a {
+    color: #b30000;
+    font-weight: bold;
+}
+
+.aviso-legal-lgpd {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 10px !important;
+    font-size: 0.9em;
+}
+
+/* ============================================ */
+/* CARDS DE INFO (2 COLUNAS)                      */
+/* ============================================ */
+
+.preciso-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.preciso-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border-top: 5px solid #b30000;
+    transition: all 0.3s;
+}
+
+.preciso-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(179, 0, 0, 0.12);
+}
+
+.preciso-card-icone {
+    font-size: 2.5em;
+    margin-bottom: 12px;
+}
+
+.preciso-card h2 {
+    color: #b30000;
+    font-size: 1.3em;
+    margin: 0 0 16px 0;
+}
+
+.preciso-card p {
+    color: #555;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* PASSOS */
+.preciso-passos {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.preciso-passos li {
+    padding: 12px 0;
+    color: #555;
+    font-size: 0.95em;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.5;
+}
+
+.preciso-passos li:last-child {
+    border-bottom: none;
+}
+
+.preciso-passos b {
+    color: #b30000;
+    margin-right: 6px;
+    font-weight: 800;
+}
+
+/* AVISO PRIVACIDADE DENTRO DO CARD */
+.preciso-aviso-privacidade {
+    background: #f0f7ff;
+    color: #1565c0 !important;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    margin: 16px 0 0 0 !important;
+    line-height: 1.5;
+}
+
+/* ============================================ */
+/* BOTÕES                                         */
+/* ============================================ */
+
+.btn-cadastrar-receptor,
+.btn-meus-pedidos {
+    display: inline-block;
+    background: #b30000;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.25);
+    margin: 6px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-cadastrar-receptor:hover,
+.btn-meus-pedidos:hover {
+    background: #7a0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(179, 0, 0, 0.35);
+}
+
+/* ============================================ */
+/* CTA FINAL (botão grande embaixo)               */
+/* ============================================ */
+
+.preciso-cta {
+    text-align: center;
+    padding: 40px 20px 60px 20px;
+}
+
+.preciso-cta p {
+    color: #666;
+    margin-bottom: 16px;
+    font-size: 1.05em;
+}
+
+.preciso-cta .btn-cadastrar-receptor {
+    font-size: 1.1em;
+    padding: 16px 42px;
+}
+
+/* ============================================ */
+/* BOTÃO VOLTAR                                   */
+/* ============================================ */
+
+.btn-voltar {
+    display: inline-block;
+    color: #b30000;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 20px auto 0 auto;
+    padding: 0 20px;
+    transition: 0.3s;
+    font-size: 0.95em;
+}
+
+.btn-voltar:hover {
+    color: #7a0000;
+    transform: translateX(-3px);
+}
+
+/* ============================================ */
+/* FORMULÁRIO                                     */
+/* ============================================ */
+
+.form-receptor {
+    background: white;
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+    max-width: 700px;
+}
+
+.form-receptor .campo {
+    margin-bottom: 22px;
+}
+
+.form-receptor label {
+    display: block;
+    color: #444;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.form-receptor input,
+.form-receptor select,
+.form-receptor textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #f0e6d2;
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: white;
+}
+
+.form-receptor input:focus,
+.form-receptor select:focus,
+.form-receptor textarea:focus {
+    outline: none;
+    border-color: #b30000;
+    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.1);
+}
+
+.form-receptor textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-secao {
+    color: #b30000;
+    font-size: 1.05em;
+    font-weight: 700;
+    margin: 28px 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0e6d2;
+}
+
+.form-secao:first-of-type {
+    margin-top: 0;
+}
+
+.aviso {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 24px 0;
+    color: #856404;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.botoes-cadastro {
+    display: flex;
+    gap: 15px;
+    margin-top: 28px;
+}
+
+.btn-enviar,
+.btn-voltar-cadastro {
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 1.05em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    flex: 1;
+    border: none;
+}
+
+.btn-enviar {
+    background: #b30000;
+    color: white;
+}
+
+.btn-enviar:hover {
+    background: #7a0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(179, 0, 0, 0.3);
+}
+
+.btn-voltar-cadastro {
+    background: transparent;
+    color: #b30000;
+    border: 2px solid #b30000;
+}
+
+.btn-voltar-cadastro:hover {
+    background: #b30000;
+    color: white;
+}
+
+/* ============================================ */
+/* ALERTAS (sucesso / erro)                       */
+/* ============================================ */
+
+.alerta {
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 700px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alerta.sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.alerta.erro {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #d32f2f;
+}
+
+/* ============================================ */
+/* RESPONSIVO                                     */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .preciso-info {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+
+    .preciso-header h1 {
+        font-size: 1.6em;
+    }
+
+    .aviso-legal {
+        flex-direction: column;
+        padding: 16px;
+        margin: 0 16px 20px 16px;
+    }
+
+    .form-receptor {
+        padding: 0 16px;
+    }
+
+    .duas-colunas {
+        grid-template-columns: 1fr;
+    }
+
+    .botoes-cadastro {
+        flex-direction: column;
+    }
+}

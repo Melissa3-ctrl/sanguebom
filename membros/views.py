@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.paginator import Paginator
 from django.utils import timezone
 from django.conf import settings
 from django.db.models import Count
@@ -18,18 +19,15 @@ from .emails import enviar_email_agendamento
 # =========================================================
 
 def home(request):
-    receptores = Receptor.objects.filter(ativo=True).order_by('-urgencia', '-criado_em')[:3]
     return render(request, 'home.html', {
-        'receptores': receptores,
+        'lateral_direita': True,
     })
-
-
 def quero_doar(request):
-    return render(request, 'quero_doar.html')
+    return render(request, 'quero_doar.html', {'lateral_direita': True})
 
 
 def tipos_sanguineos(request):
-    return render(request, 'tipos_sanguineos.html')
+    return render(request, 'tipos_sanguineos.html', {'lateral_direita': True})
 
 
 def beneficios(request):
@@ -42,7 +40,6 @@ def beneficios(request):
 
     if request.user.is_authenticated:
         try:
-            
             doador = Doador.objects.get(usuario=request.user)
             total_agendamentos = Agendamento.objects.filter(doador=doador).count()
 
@@ -71,11 +68,12 @@ def beneficios(request):
         'progresso': progresso,
         'proximo_nivel': proximo_nivel,
         'faltam': faltam,
+        'lateral_direita': True,
     })
 
 
 def duvidas(request):
-    return render(request, 'duvidas.html')
+    return render(request, 'duvidas.html', {'lateral_direita': True})
 
 
 def locais_para_doar(request):
@@ -89,6 +87,7 @@ def locais_para_doar(request):
 
     return render(request, 'locais_para_doar.html', {
         'hemocentros': hemocentros,
+        'lateral_direita': True,
     })
 
 
@@ -113,6 +112,7 @@ def campanhas(request):
     return render(request, 'campanhas.html', {
         'doador': doador,
         'proximo_agendamento': proximo_agendamento,
+        'lateral_direita': True,
     })
 
 
@@ -135,6 +135,7 @@ def notificacoes(request):
     return render(request, 'notificacoes.html', {
         'notificacoes': notificacoes_lista,
         'nao_lidas': nao_lidas,
+        'lateral_direita': False,
     })
 
 
@@ -217,6 +218,7 @@ def meu_perfil(request):
         'proximo_nivel': proximo_nivel,
         'faltam': faltam,
         'progresso': progresso,
+        'lateral_direita': False,
     })
 
 
@@ -232,6 +234,7 @@ def relatorios(request):
     total_doadores = Doador.objects.count()
     total_agendamentos = Agendamento.objects.count()
     total_hemocentros = Hemocentro.objects.count()
+    total_receptores = Receptor.objects.filter(ativo=True, status='aprovado').count()
 
     doacoes_por_mes = (
         Agendamento.objects
@@ -263,10 +266,12 @@ def relatorios(request):
         'total_doadores': total_doadores,
         'total_agendamentos': total_agendamentos,
         'total_hemocentros': total_hemocentros,
+        'total_receptores': total_receptores,
         'doacoes_por_mes': list(doacoes_por_mes),
         'tipos': list(tipos),
         'ranking': ranking,
         'proximos': proximos,
+        'lateral_direita': False,
     })
 
 
@@ -283,9 +288,6 @@ def painel_hemocentro(request):
 
     agendamentos = Agendamento.objects.filter(hemocentro=hemocentro)
 
-    # ==========================================
-    # FILTROS
-    # ==========================================
     data_inicio = request.GET.get('data_inicio', '')
     data_fim = request.GET.get('data_fim', '')
     tipo_filtro = request.GET.get('tipo', '')
@@ -302,9 +304,6 @@ def painel_hemocentro(request):
 
     agendamentos = agendamentos.order_by('data', 'horario')
 
-    # ==========================================
-    # ESTATÍSTICAS
-    # ==========================================
     total_agendamentos = agendamentos.count()
     total_doadores = agendamentos.values('doador').distinct().count()
     total_vidas = total_agendamentos * 4
@@ -353,6 +352,7 @@ def painel_hemocentro(request):
         'data_fim': data_fim,
         'tipo_filtro': tipo_filtro,
         'status_filtro': status_filtro,
+        'lateral_direita': False,
     })
 
 
@@ -953,7 +953,8 @@ def agendar_doacao(request):
     return render(request, 'agendar_doacao.html', {
         'doador': doador,
         'hemocentros': hemocentros,
-        'proximo_agendamento': proximo_agendamento
+        'proximo_agendamento': proximo_agendamento,
+        'lateral_direita': False,
     })
 
 
@@ -973,7 +974,8 @@ def listar_agendamentos(request):
     agendamentos = Agendamento.objects.filter(doador=doador)
 
     return render(request, 'agendamentos.html', {
-        'agendamentos': agendamentos
+        'agendamentos': agendamentos,
+        'lateral_direita': False,
     })
 
 
@@ -1017,7 +1019,8 @@ def editar_agendamento(request, id):
 
     return render(request, 'editar_agendamento.html', {
         'agendamento': agendamento,
-        'hemocentros': hemocentros
+        'hemocentros': hemocentros,
+        'lateral_direita': False,
     })
 
 
@@ -1040,49 +1043,74 @@ def excluir_agendamento(request, id):
         return redirect('listar_agendamentos')
 
     return render(request, 'confirmar_exclusao.html', {
-        'agendamento': agendamento
+        'agendamento': agendamento,
+        'lateral_direita': False,
     })
+
 
 # =========================================================
 # PRECISO DE DOAÇÃO (RECEPTOR)
 # =========================================================
 
 def preciso_doacao(request):
-    receptores = Receptor.objects.filter(ativo=True).order_by('-urgencia', '-criado_em')
-
+    """Página informativa — o formulário vai pro admin/hemocentro."""
     return render(request, 'preciso_doacao.html', {
-        'receptores': receptores,
+        'lateral_direita': False,
     })
-
 
 @login_required(login_url='login')
 def cadastrar_receptor(request):
+    hemocentros = Hemocentro.objects.filter(ativo=True).order_by('nome')
+    cidades = Hemocentro.objects.filter(ativo=True).values_list('cidade', flat=True).distinct().order_by('cidade')
+
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        tipo_sanguineo = request.POST.get('tipo_sanguineo')
-        hospital = request.POST.get('hospital')
-        cidade = request.POST.get('cidade')
-        urgencia = request.POST.get('urgencia')
-        descricao = request.POST.get('descricao')
-        contato = request.POST.get('contato')
+        nome = request.POST.get('nome', '').strip()
+        tipo_sanguineo = request.POST.get('tipo_sanguineo', '')
+        hospital = request.POST.get('hospital', '').strip()
+        cidade = request.POST.get('cidade', '').strip()
+        urgencia = request.POST.get('urgencia', 'media')
+        descricao = request.POST.get('descricao', '').strip()
+        contato = request.POST.get('contato', '').strip()
 
-        if nome and tipo_sanguineo and hospital and cidade and contato:
-            Receptor.objects.create(
-                usuario=request.user,
-                nome=nome,
-                tipo_sanguineo=tipo_sanguineo,
-                hospital=hospital,
-                cidade=cidade,
-                urgencia=urgencia,
-                descricao=descricao,
-                contato=contato,
-                ativo=False
-            )
+        # Validações
+        erros = []
+        if not nome:
+            erros.append('Nome é obrigatório.')
+        if not tipo_sanguineo:
+            erros.append('Tipo sanguíneo é obrigatório.')
+        if not hospital:
+            erros.append('Hospital é obrigatório.')
+        if not cidade:
+            erros.append('Cidade é obrigatória.')
+        if not contato:
+            erros.append('Contato é obrigatório.')
+        if len(descricao) < 20:
+            erros.append('Descrição deve ter pelo menos 20 caracteres.')
 
-            try:
-                send_mail(
-                    subject='🩸 Novo pedido de doação',
-                    message=f'''Um novo pedido de doação foi cadastrado.
+        if erros:
+            return render(request, 'cadastrar_receptor.html', {
+                'erro': ' '.join(erros),
+                'hemocentros': hemocentros,
+                'cidades': cidades,
+            })
+
+        receptor = Receptor.objects.create(
+            usuario=request.user,
+            nome=nome,
+            tipo_sanguineo=tipo_sanguineo,
+            hospital=hospital,
+            cidade=cidade,
+            urgencia=urgencia,
+            descricao=descricao,
+            contato=contato,
+            status='pendente',
+            ativo=False
+        )
+
+        try:
+            send_mail(
+                subject='🩸 Novo pedido de doação',
+                message=f'''Um novo pedido de doação foi cadastrado.
 
 Nome: {nome}
 Tipo sanguíneo: {tipo_sanguineo}
@@ -1095,27 +1123,128 @@ Descrição: {descricao}
 
 Acesse o admin pra aprovar.
 ''',
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[settings.EMAIL_HOST_USER],
-                    fail_silently=True
-                )
-            except Exception as e:
-                print(f"Erro ao enviar e-mail: {e}")
-
-            return render(request, 'cadastrar_receptor.html', {
-                'sucesso': 'Pedido enviado com sucesso! Aguarde aprovação do administrador.'
-            })
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[settings.EMAIL_HOST_USER],
+                fail_silently=True
+            )
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
 
         return render(request, 'cadastrar_receptor.html', {
-            'erro': 'Preencha todos os campos obrigatórios.'
+            'sucesso': 'Pedido enviado com sucesso! Aguarde aprovação do administrador.',
+            'hemocentros': hemocentros,
+            'cidades': cidades,
         })
 
-    return render(request, 'cadastrar_receptor.html')
+    return render(request, 'cadastrar_receptor.html', {
+        'hemocentros': hemocentros,
+        'cidades': cidades,
+    })
 
 
 def detalhes_receptor(request, id):
-    receptor = get_object_or_404(Receptor, id=id, ativo=True)
+    receptor = get_object_or_404(Receptor, id=id, status='aprovado', ativo=True)
+
+    receptor.visualizacoes += 1
+    receptor.save(update_fields=['visualizacoes'])
 
     return render(request, 'detalhes_receptor.html', {
         'receptor': receptor,
+        'lateral_direita': False,
+    })
+
+
+@login_required(login_url='login')
+def quero_ajudar(request, id):
+    receptor = get_object_or_404(Receptor, id=id, status='aprovado', ativo=True)
+
+    if receptor.usuario:
+        try:
+            doador_destino = Doador.objects.get(usuario=receptor.usuario)
+            Notificacao.objects.create(
+                doador=doador_destino,
+                tipo='alerta',
+                titulo=f'❤️ Alguém quer ajudar {receptor.nome}!',
+                mensagem=f'{request.user.first_name or request.user.username} viu o pedido de {receptor.nome} e quer ajudar.'
+            )
+        except Doador.DoesNotExist:
+            pass
+
+        try:
+            if receptor.usuario.email:
+                send_mail(
+                    subject=f'❤️ Alguém quer ajudar {receptor.nome}!',
+                    message=f'''Boa notícia!
+
+{request.user.first_name or request.user.username} viu o pedido de {receptor.nome} e quer ajudar.
+
+Contato de quem quer ajudar: {request.user.email}
+
+Entre em contato!
+''',
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[receptor.usuario.email],
+                    fail_silently=True
+                )
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
+
+    return redirect('detalhes_receptor', id=receptor.id)
+
+
+@login_required(login_url='login')
+def meus_pedidos(request):
+    receptores = Receptor.objects.filter(usuario=request.user).order_by('-criado_em')
+
+    total = receptores.count()
+    pendentes = receptores.filter(status='pendente').count()
+    aprovados = receptores.filter(status='aprovado').count()
+    atendidos = receptores.filter(status='atendido').count()
+
+    return render(request, 'meus_pedidos.html', {
+        'receptores': receptores,
+        'total': total,
+        'pendentes': pendentes,
+        'aprovados': aprovados,
+        'atendidos': atendidos,
+        'lateral_direita': False,
+    })
+
+
+@login_required(login_url='login')
+def editar_pedido(request, id):
+    receptor = get_object_or_404(Receptor, id=id, usuario=request.user)
+
+    if receptor.status in ['atendido', 'expirado']:
+        return redirect('meus_pedidos')
+
+    if request.method == 'POST':
+        receptor.nome = request.POST.get('nome', receptor.nome)
+        receptor.tipo_sanguineo = request.POST.get('tipo_sanguineo', receptor.tipo_sanguineo)
+        receptor.hospital = request.POST.get('hospital', receptor.hospital)
+        receptor.cidade = request.POST.get('cidade', receptor.cidade)
+        receptor.urgencia = request.POST.get('urgencia', receptor.urgencia)
+        receptor.descricao = request.POST.get('descricao', receptor.descricao)
+        receptor.contato = request.POST.get('contato', receptor.contato)
+        receptor.save()
+
+        return redirect('meus_pedidos')
+
+    return render(request, 'editar_pedido.html', {
+        'receptor': receptor,
+        'lateral_direita': False,
+    })
+
+
+@login_required(login_url='login')
+def excluir_pedido(request, id):
+    receptor = get_object_or_404(Receptor, id=id, usuario=request.user)
+
+    if request.method == 'POST':
+        receptor.delete()
+        return redirect('meus_pedidos')
+
+    return render(request, 'confirmar_exclusao_pedido.html', {
+        'receptor': receptor,
+        'lateral_direita': False,
     })
