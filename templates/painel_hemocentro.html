@@ -89,12 +89,14 @@
 
             <div class="filtro-campo">
                 <label>🩸 Tipo de doação:</label>
-                <select name="tipo">
-                    <option value="">Todos</option>
-                    {% for t in tipos_doacao %}
-                        <option value="{{ t }}" {% if tipo_filtro == t %}selected{% endif %}>{{ t }}</option>
-                    {% endfor %}
-                </select>
+               <select name="tipo">
+    <option value="">Todos</option>
+    <option value="Sangue Total" {% if tipo_filtro == 'Sangue Total' %}selected{% endif %}>🩸 Sangue Total</option>
+    <option value="Plaquetas" {% if tipo_filtro == 'Plaquetas' %}selected{% endif %}>🟡 Plaquetas</option>
+    <option value="Plasma" {% if tipo_filtro == 'Plasma' %}selected{% endif %}>🟠 Plasma</option>
+    <option value="Medula Óssea" {% if tipo_filtro == 'Medula Óssea' %}selected{% endif %}>🦴 Medula Óssea</option>
+    <option value="Concentrado de Hemácias" {% if tipo_filtro == 'Concentrado de Hemácias' %}selected{% endif %}>🔴 Concentrado de Hemácias</option>
+</select>
             </div>
 
             <div class="filtro-campo">

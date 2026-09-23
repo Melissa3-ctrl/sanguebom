@@ -265,3 +265,53 @@ class Receptor(models.Model):
 
     def __str__(self):
         return f"{self.nome} - {self.tipo_sanguineo}"
+
+    # =========================================================
+# CAMPANHA (Eventos e ações do hemocentro)
+# =========================================================
+
+class Campanha(models.Model):
+
+    STATUS = [
+        ('ativa', '✅ Ativa'),
+        ('breve', '📅 Em breve'),
+        ('urgente', '🚨 Urgente'),
+        ('encerrada', '❌ Encerrada'),
+    ]
+
+    emoji = models.CharField(max_length=10, default='🩸', verbose_name='Emoji')
+
+    titulo = models.CharField(max_length=200, verbose_name='Título')
+
+    descricao = models.TextField(verbose_name='Descrição')
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS,
+        default='ativa',
+        verbose_name='Status'
+    )
+
+    local = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name='Local'
+    )
+
+    data = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Data / Período'
+    )
+
+    ativa = models.BooleanField(default=True, verbose_name='Visível no site')
+
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-criada_em']
+        verbose_name = 'Campanha'
+        verbose_name_plural = 'Campanhas'
+
+    def __str__(self):
+        return self.titulo

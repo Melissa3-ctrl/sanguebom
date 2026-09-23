@@ -15,7 +15,7 @@
     {% if user.is_authenticated and doador %}
     <section class="progresso-box">
         <h2>🩸 Seu progresso</h2>
-        <p>Você tem <strong>{{ total_agendamentos }} agendamento{{ total_agendamentos|pluralize }}</strong></p>
+        <p>Você tem <strong>{{ total_agendamentos }} doaç{{ total_agendamentos|pluralize:"ão,ões" }}</strong> realizadas</p>
 
         <div class="barra">
             <div class="barra-preenchida" style="width: {{ progresso }}%"></div>
@@ -28,55 +28,79 @@
         </p>
 
         {% if proximo_nivel %}
-            <p class="faltam">Faltam {{ faltam }} agendamento{{ faltam|pluralize }} pro {{ proximo_nivel }}</p>
+            <p class="faltam">Faltam {{ faltam }} doaç{{ faltam|pluralize:"ão,ões" }} pro {{ proximo_nivel }}</p>
         {% else %}
             <p class="faltam">🏆 Você atingiu o nível máximo!</p>
         {% endif %}
     </section>
 
-    <!-- NÍVEIS -->
+    <!-- NÍVEIS COM BENEFÍCIOS DETALHADOS -->
     <section class="niveis-box">
         <h2>🏆 Níveis de Doador</h2>
+        <p class="niveis-sub">Quanto mais você doa, mais benefícios desbloqueia</p>
 
         <div class="niveis-grid">
 
+            <!-- BRONZE -->
             <div class="nivel {% if nivel == 'Bronze' %}atual{% endif %} {% if total_agendamentos >= 1 %}desbloqueado{% endif %}">
-                <span>🥉</span>
+                <span class="nivel-emoji">🥉</span>
                 <strong>Bronze</strong>
-                <p>1-2 agendamentos</p>
+                <p class="nivel-faixa">1 a 2 doações</p>
+
+                <ul class="nivel-beneficios">
+                    <li>✅ Certificado digital de doador</li>
+                    <li>✅ Acesso ao ranking de doadores</li>
+                </ul>
+
                 {% if total_agendamentos >= 1 %}
-                    <span class="status">✅ Desbloqueado</span>
+                    <span class="status desbloqueado-badge">✅ Desbloqueado</span>
                 {% else %}
-                    <span class="status">🔒 Bloqueado</span>
+                    <span class="status bloqueado-badge">🔒 Bloqueado</span>
                 {% endif %}
             </div>
 
+            <!-- PRATA -->
             <div class="nivel {% if nivel == 'Prata' %}atual{% endif %} {% if total_agendamentos >= 3 %}desbloqueado{% endif %}">
-                <span>🥈</span>
+                <span class="nivel-emoji">🥈</span>
                 <strong>Prata</strong>
-                <p>3-5 agendamentos</p>
+                <p class="nivel-faixa">3 a 5 doações</p>
+
+                <ul class="nivel-beneficios">
+                    <li>✅ Isenção em concursos do DF</li>
+                    <li>✅ Desconto em eventos culturais</li>
+                    <li>✅ Prioridade em vacinação</li>
+                </ul>
+
                 {% if total_agendamentos >= 3 %}
-                    <span class="status">✅ Desbloqueado</span>
+                    <span class="status desbloqueado-badge">✅ Desbloqueado</span>
                 {% else %}
-                    <span class="status">🔒 Bloqueado</span>
+                    <span class="status bloqueado-badge">🔒 Bloqueado</span>
                 {% endif %}
             </div>
 
+            <!-- OURO -->
             <div class="nivel {% if nivel == 'Ouro' %}atual{% endif %} {% if total_agendamentos >= 6 %}desbloqueado{% endif %}">
-                <span>🥇</span>
+                <span class="nivel-emoji">🥇</span>
                 <strong>Ouro</strong>
-                <p>6+ agendamentos</p>
+                <p class="nivel-faixa">6 ou mais doações</p>
+
+                <ul class="nivel-beneficios">
+                    <li>✅ Meia-entrada em eventos culturais</li>
+                    <li>✅ Selo "Doador Ouro" no perfil</li>
+                    <li>✅ Acesso VIP em shows parceiros</li>
+                </ul>
+
                 {% if total_agendamentos >= 6 %}
-                    <span class="status">✅ Desbloqueado</span>
+                    <span class="status desbloqueado-badge">✅ Desbloqueado</span>
                 {% else %}
-                    <span class="status">🔒 Bloqueado</span>
+                    <span class="status bloqueado-badge">🔒 Bloqueado</span>
                 {% endif %}
             </div>
 
         </div>
 
         {% if proximo_nivel %}
-            <p class="dica">💡 Continue agendando para desbloquear o nível {{ proximo_nivel }}!</p>
+            <p class="dica">💡 Continue doando para desbloquear o nível {{ proximo_nivel }}!</p>
         {% endif %}
     </section>
     {% endif %}
@@ -92,16 +116,36 @@
     </section>
     {% endif %}
 
-    <!-- REQUISITOS -->
+    <!-- ============================================ -->
+    <!-- ISENÇÃO EM CONCURSOS PÚBLICOS (Lei do DF)     -->
+    <!-- ============================================ -->
     <section>
-        <h2>📋 Requisitos (Lei do DF)</h2>
+        <h2>📋 Isenção em Concursos Públicos (DF)</h2>
+
+        <div class="card">
+            <span>🎓</span>
+            <div>
+                <strong>Mínimo necessário</strong>
+                <h3>3</h3>
+                <p>doações nos últimos 12 meses</p>
+            </div>
+        </div>
+
+        <p>⚖️ <strong>Lei nº 4.949/2012, Art. 27</strong> — Isenção de taxa de inscrição em concursos públicos do Distrito Federal. O comprovante é emitido pelos hemocentros credenciados.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- LIMITES DE DOAÇÃO (Ministério da Saúde)       -->
+    <!-- ============================================ -->
+    <section>
+        <h2>🩸 Limites de Doação por Ano</h2>
 
         <div class="card">
             <span>👩</span>
             <div>
                 <strong>Mulheres</strong>
-                <h3>2</h3>
-                <p>doações em 12 meses</p>
+                <h3>3</h3>
+                <p>doações por ano — intervalo de 90 dias</p>
             </div>
         </div>
 
@@ -109,12 +153,12 @@
             <span>👨</span>
             <div>
                 <strong>Homens</strong>
-                <h3>3</h3>
-                <p>doações em 12 meses</p>
+                <h3>4</h3>
+                <p>doações por ano — intervalo de 60 dias</p>
             </div>
         </div>
 
-        <p>⚖️ Baseado na legislação do Distrito Federal. Comprovante emitido pelos hemocentros credenciados.</p>
+        <p>📋 Regra nacional do <strong>Ministério da Saúde</strong>. O intervalo é essencial para a recuperação do organismo e para a saúde do doador.</p>
     </section>
 
     <!-- BENEFÍCIOS -->

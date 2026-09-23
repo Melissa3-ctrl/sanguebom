@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.db.models import Count
 from django.utils import timezone
-from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor
+from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor, Campanha
 
 
 # =========================================================
@@ -416,3 +416,39 @@ class ReceptorAdmin(admin.ModelAdmin):
             ])
 
         return response
+
+    # =========================================================
+# CAMPANHA
+# =========================================================
+
+@admin.register(Campanha)
+class CampanhaAdmin(admin.ModelAdmin):
+    list_display = ('emoji', 'titulo', 'status', 'local', 'data', 'ativa', 'criada_em')
+    list_filter = ('status', 'ativa', 'criada_em')
+    search_fields = ('titulo', 'descricao', 'local')
+    list_editable = ('status', 'ativa')
+    list_per_page = 25
+    ordering = ('-criada_em',)
+
+    fieldsets = (
+        ('Informações Principais', {
+            'fields': ('emoji', 'titulo', 'descricao')
+        }),
+        ('Status e Local', {
+            'fields': ('status', 'local', 'data')
+        }),
+        ('Visibilidade', {
+            'fields': ('ativa',),
+            'description': 'Desmarque "Visível no site" para esconder a campanha sem apagar.'
+        }),
+    )
+
+    actions = ['marcar_ativa', 'marcar_encerrada']
+
+    @admin.action(description='✅ Marcar como Ativa')
+    def marcar_ativa(self, request, queryset):
+        queryset.update(status='ativa', ativa=True)
+
+    @admin.action(description='❌ Marcar como Encerrada')
+    def marcar_encerrada(self, request, queryset):
+        queryset.update(status='encerrada')

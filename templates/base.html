@@ -80,11 +80,11 @@
 
                 <!-- SÓ ADMIN -->
                 {% if user.is_staff %}
-                    <a href="{% url 'relatorios' %}" class="menu-item">
+                    <a href="{% url 'relatorios' %}" class="menu-item {% if request.path == '/relatorios/' %}ativo{% endif %}">
                         <span class="menu-item-icone">📊</span>
                         <span class="menu-item-texto">Relatórios</span>
                     </a>
-                    <a href="/admin/" class="menu-item">
+                    <a href="/admin/" class="menu-item {% if '/admin/' in request.path %}ativo{% endif %}">
                         <span class="menu-item-icone">⚙️</span>
                         <span class="menu-item-texto">Administração</span>
                     </a>
@@ -92,7 +92,7 @@
 
                 <!-- SÓ HEMOCENTRO -->
                 {% if user.hemocentro %}
-                    <a href="{% url 'painel_hemocentro' %}" class="menu-item">
+                    <a href="{% url 'painel_hemocentro' %}" class="menu-item {% if request.path == '/painel/' %}ativo{% endif %}">
                         <span class="menu-item-icone">🏥</span>
                         <span class="menu-item-texto">Painel</span>
                     </a>
@@ -100,39 +100,39 @@
 
                 <!-- SÓ DOADOR (ou visitante) -->
                 {% if not user.is_staff and not user.hemocentro %}
-                    <a href="{% url 'home' %}" class="menu-item ativo">
+                    <a href="{% url 'home' %}" class="menu-item {% if request.path == '/' or request.path == '/home/' %}ativo{% endif %}">
                         <span class="menu-item-icone">🏠</span>
                         <span class="menu-item-texto">Início</span>
                     </a>
-                    <a href="{% url 'quero_doar' %}" class="menu-item">
+                    <a href="{% url 'quero_doar' %}" class="menu-item {% if request.path == '/quero_doar/' %}ativo{% endif %}">
                         <span class="menu-item-icone">💧</span>
                         <span class="menu-item-texto">Quero doar</span>
                     </a>
-                    <a href="{% url 'locais_para_doar' %}" class="menu-item">
+                    <a href="{% url 'locais_para_doar' %}" class="menu-item {% if request.path == '/locais_para_doar/' %}ativo{% endif %}">
                         <span class="menu-item-icone">📍</span>
                         <span class="menu-item-texto">Locais para doar</span>
                     </a>
-                    <a href="{% url 'agendar_doacao' %}" class="menu-item">
+                    <a href="{% url 'agendar_doacao' %}" class="menu-item {% if '/agendar_doacao/' in request.path or '/agendamentos/' in request.path %}ativo{% endif %}">
                         <span class="menu-item-icone">📅</span>
                         <span class="menu-item-texto">Agendar doação</span>
                     </a>
-                    <a href="{% url 'tipos_sanguineos' %}" class="menu-item">
+                    <a href="{% url 'tipos_sanguineos' %}" class="menu-item {% if request.path == '/tipos_sanguineos/' %}ativo{% endif %}">
                         <span class="menu-item-icone">💧</span>
                         <span class="menu-item-texto">Tipos sanguíneos</span>
                     </a>
-                    <a href="{% url 'campanhas' %}" class="menu-item">
+                    <a href="{% url 'campanhas' %}" class="menu-item {% if request.path == '/campanhas/' %}ativo{% endif %}">
                         <span class="menu-item-icone">♡</span>
                         <span class="menu-item-texto">Campanhas</span>
                     </a>
-                    <a href="{% url 'beneficios' %}" class="menu-item">
+                    <a href="{% url 'beneficios' %}" class="menu-item {% if request.path == '/beneficios/' %}ativo{% endif %}">
                         <span class="menu-item-icone">🎁</span>
                         <span class="menu-item-texto">Benefícios</span>
                     </a>
-                    <a href="{% url 'duvidas' %}" class="menu-item">
+                    <a href="{% url 'duvidas' %}" class="menu-item {% if request.path == '/duvidas/' %}ativo{% endif %}">
                         <span class="menu-item-icone">❓</span>
                         <span class="menu-item-texto">Dúvidas</span>
                     </a>
-                    <a href="{% url 'preciso_doacao' %}" class="menu-item">
+                    <a href="{% url 'preciso_doacao' %}" class="menu-item {% if '/preciso-doacao/' in request.path %}ativo{% endif %}">
                         <span class="menu-item-icone">🩸</span>
                         <span class="menu-item-texto">Preciso de Doação</span>
                     </a>
