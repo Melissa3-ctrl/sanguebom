@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Dúvidas Frequentes - Sangue Bom{% endblock %}
+
 {% block content %}
 
     <link rel="stylesheet" href="{% static 'css/duvidas.css' %}">
-
 
     <!-- TÍTULO -->
     <section class="duvidas-header">
@@ -227,13 +228,6 @@
                 <p class="verdade-texto">A dor é mínima, só a picada da agulha.</p>
             </div>
 
-            <div class="mito-card">
-                <div class="mito">❌ MITO</div>
-                <p class="mito-frase">"Doar sangue pode passar doença"</p>
-                <div class="verdade">✅ VERDADE</div>
-                <p class="verdade-texto">O material é 100% descartável e estéril.</p>
-            </div>
-
         </div>
     </section>
 
@@ -251,3 +245,5 @@
     </section>
 
 {% endblock %}
+
+{% block lateral_direita %}{% endblock %}

@@ -1,173 +1,79 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block title %}Editar Agendamento - Sangue Bom{% endblock %}
 
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Editar Agendamento - Sangue Bom</title>
-    
-    <!-- 🩸 FAVICON -->
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
-
+{% block content %}
 
     <link rel="stylesheet" href="{% static 'css/editar_agendamento.css' %}">
 
-</head>
+    <a href="{% url 'listar_agendamentos' %}" class="btn-voltar">← Voltar para agendamentos</a>
 
-<body>
+    <header class="editar-header">
+        <h1>✏️ Editar Agendamento</h1>
+        <p>Altere os dados do seu agendamento.</p>
+    </header>
 
-    <main>
+    <form method="POST" class="form-editar">
 
-        <h1>Editar Agendamento</h1>
+        {% csrf_token %}
 
-        <p>
-            Altere os dados do seu agendamento.
-        </p>
+        <!-- DOADOR (somente leitura) -->
+        <div class="info-doador">
+            <span class="info-icon">👤</span>
+            <div>
+                <strong>Doador</strong>
+                <p>{{ agendamento.doador.nome }}</p>
+            </div>
+        </div>
 
-        <form method="POST">
-
-            {% csrf_token %}
-
-            <!-- DOADOR -->
-
-            <p>
-                <strong>Doador:</strong>
-                {{ agendamento.doador.nome }}
-            </p>
-
-            <!-- HEMOCENTRO -->
-
-            <label for="hemocentro">
-                Hemocentro:
-            </label>
-
-            <select
-                name="hemocentro"
-                id="hemocentro"
-                required
-            >
-
+        <!-- HEMOCENTRO -->
+        <div class="campo">
+            <label for="hemocentro">🏥 Hemocentro</label>
+            <select name="hemocentro" id="hemocentro" required>
                 {% for hemocentro in hemocentros %}
-
-                    <option
-                        value="{{ hemocentro.id }}"
-                        {% if hemocentro.id == agendamento.hemocentro.id %}
-                            selected
-                        {% endif %}
-                    >
+                    <option value="{{ hemocentro.id }}"
+                        {% if hemocentro.id == agendamento.hemocentro.id %}selected{% endif %}>
                         {{ hemocentro.nome }}
                     </option>
-
                 {% endfor %}
-
             </select>
+        </div>
 
-            <br><br>
-
-            <!-- TIPO DE DOAÇÃO -->
-
-            <label for="tipo_doacao">
-                Tipo de Doação:
-            </label>
-
-            <select
-                name="tipo_doacao"
-                id="tipo_doacao"
-                required
-            >
-
-                <option
-                    value="Sangue total"
-                    {% if agendamento.tipo_doacao == "Sangue total" %}
-                        selected
-                    {% endif %}
-                >
-                    Sangue total
-                </option>
-
-                <option
-                    value="Plaquetas"
-                    {% if agendamento.tipo_doacao == "Plaquetas" %}
-                        selected
-                    {% endif %}
-                >
-                    Plaquetas
-                </option>
-
-                <option
-                    value="Plasma"
-                    {% if agendamento.tipo_doacao == "Plasma" %}
-                        selected
-                    {% endif %}
-                >
-                    Plasma
-                </option>
-
-                <option
-                    value="Hemácias"
-                    {% if agendamento.tipo_doacao == "Hemácias" %}
-                        selected
-                    {% endif %}
-                >
-                    Hemácias
-                </option>
-
+        <!-- TIPO DE DOAÇÃO -->
+        <div class="campo">
+            <label for="tipo_doacao">🩸 Tipo de Doação</label>
+            <select name="tipo_doacao" id="tipo_doacao" required>
+                <option value="Sangue total" {% if agendamento.tipo_doacao == "Sangue total" %}selected{% endif %}>Sangue total</option>
+                <option value="Plaquetas" {% if agendamento.tipo_doacao == "Plaquetas" %}selected{% endif %}>Plaquetas</option>
+                <option value="Plasma" {% if agendamento.tipo_doacao == "Plasma" %}selected{% endif %}>Plasma</option>
+                <option value="Hemácias" {% if agendamento.tipo_doacao == "Hemácias" %}selected{% endif %}>Hemácias</option>
             </select>
+        </div>
 
-            <br><br>
+        <!-- DATA E HORÁRIO -->
+        <div class="duas-colunas">
+            <div class="campo">
+                <label for="data">📅 Data</label>
+                <input type="date" name="data" id="data"
+                       value="{{ agendamento.data|date:'Y-m-d' }}" required>
+            </div>
 
-            <!-- DATA -->
+            <div class="campo">
+                <label for="horario">⏰ Horário</label>
+                <input type="time" name="horario" id="horario"
+                       value="{{ agendamento.horario|time:'H:i' }}" required>
+            </div>
+        </div>
 
-            <label for="data">
-                Data:
-            </label>
+        <!-- BOTÕES -->
+        <div class="botoes-editar">
+            <a href="{% url 'listar_agendamentos' %}" class="btn-cancelar">← Cancelar</a>
+            <button type="submit" class="btn-salvar">💾 Salvar Alterações</button>
+        </div>
 
-            <input
-                type="date"
-                name="data"
-                id="data"
-                value="{{ agendamento.data|date:'Y-m-d' }}"
-                required
-            >
+    </form>
 
-            <br><br>
+{% endblock %}
 
-            <!-- HORÁRIO -->
-
-            <label for="horario">
-                Horário:
-            </label>
-
-            <input
-                type="time"
-                name="horario"
-                id="horario"
-                value="{{ agendamento.horario|time:'H:i' }}"
-                required
-            >
-
-            <br><br>
-
-            <!-- BOTÃO SALVAR -->
-
-            <button type="submit">
-                💾 Salvar Alterações
-            </button>
-
-        </form>
-
-        <br>
-
-        <a href="{% url 'listar_agendamentos' %}">
-            ← Voltar para agendamentos
-        </a>
-
-    </main>
-
-</body>
-
-</html>
+{% block lateral_direita %}{% endblock %}

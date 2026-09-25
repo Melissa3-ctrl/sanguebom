@@ -60,6 +60,76 @@
         </div>
     </section>
 
+    <!-- ============================================ -->
+    <!-- 📋 PEDIDOS DE DOAÇÃO                          -->
+    <!-- ============================================ -->
+    <section class="pedidos-receptores">
+        <h2>📋 Pedidos de Doação</h2>
+        <p>
+            Pedidos cadastrados no sistema para o seu hemocentro.
+            {% if receptores_pendentes > 0 %}
+                <strong style="color:#e65100;">⏳ {{ receptores_pendentes }} aguardando aprovação do admin.</strong>
+            {% endif %}
+        </p>
+
+        {% if total_receptores > 0 %}
+            <div class="receptores-grid">
+                {% for r in receptores %}
+                    <article class="receptor-card urgencia-{{ r.urgencia }}">
+                        <div class="receptor-header">
+                            <span class="receptor-tipo">{{ r.tipo_sanguineo }}</span>
+                            <span class="receptor-status">
+                                {% if r.status == 'pendente' %}⏳ Pendente
+                                {% elif r.status == 'aprovado' %}✅ Aprovado
+                                {% elif r.status == 'atendido' %}🎉 Atendido
+                                {% elif r.status == 'expirado' %}📅 Expirado
+                                {% else %}❌ Recusado
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <h3>{{ r.nome }}</h3>
+
+                        {% if r.idade_paciente %}
+                            <p class="receptor-info">👤 {{ r.idade_paciente }} anos</p>
+                        {% endif %}
+
+                        <p class="receptor-info">
+                            🩸 Tipo de doação:
+                            <strong>{{ r.get_tipo_doacao_display }}</strong>
+                        </p>
+
+                        <p class="receptor-info">🏥 {{ r.hospital }}</p>
+                        <p class="receptor-info">📍 {{ r.cidade }}</p>
+
+                        <p class="receptor-descricao">{{ r.descricao|truncatewords:20 }}</p>
+
+                        <div class="receptor-footer">
+                            <span>📞 {{ r.contato }}</span>
+                        </div>
+
+                        <div class="receptor-botoes">
+                            {% if r.laudo %}
+                                <a href="{{ r.laudo.url }}" target="_blank" class="btn-laudo">
+                                    📎 Ver laudo
+                                </a>
+                            {% endif %}
+
+                            <a href="{% url 'detalhes_receptor_hemocentro' r.id %}" class="btn-ver-admin">
+                                👁️ Ver completo
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="vazio-pedidos">
+                <span>📋</span>
+                <p>Nenhum pedido de doação para este hemocentro.</p>
+            </div>
+        {% endif %}
+    </section>
+
     <!-- GRÁFICOS -->
     <section class="graficos-grid">
         <div class="grafico-container">
@@ -89,14 +159,14 @@
 
             <div class="filtro-campo">
                 <label>🩸 Tipo de doação:</label>
-               <select name="tipo">
-    <option value="">Todos</option>
-    <option value="Sangue Total" {% if tipo_filtro == 'Sangue Total' %}selected{% endif %}>🩸 Sangue Total</option>
-    <option value="Plaquetas" {% if tipo_filtro == 'Plaquetas' %}selected{% endif %}>🟡 Plaquetas</option>
-    <option value="Plasma" {% if tipo_filtro == 'Plasma' %}selected{% endif %}>🟠 Plasma</option>
-    <option value="Medula Óssea" {% if tipo_filtro == 'Medula Óssea' %}selected{% endif %}>🦴 Medula Óssea</option>
-    <option value="Concentrado de Hemácias" {% if tipo_filtro == 'Concentrado de Hemácias' %}selected{% endif %}>🔴 Concentrado de Hemácias</option>
-</select>
+                <select name="tipo">
+                    <option value="">Todos</option>
+                    <option value="Sangue Total" {% if tipo_filtro == 'Sangue Total' %}selected{% endif %}>🩸 Sangue Total</option>
+                    <option value="Plaquetas" {% if tipo_filtro == 'Plaquetas' %}selected{% endif %}>🟡 Plaquetas</option>
+                    <option value="Plasma" {% if tipo_filtro == 'Plasma' %}selected{% endif %}>🟠 Plasma</option>
+                    <option value="Medula Óssea" {% if tipo_filtro == 'Medula Óssea' %}selected{% endif %}>🦴 Medula Óssea</option>
+                    <option value="Concentrado de Hemácias" {% if tipo_filtro == 'Concentrado de Hemácias' %}selected{% endif %}>🔴 Concentrado de Hemácias</option>
+                </select>
             </div>
 
             <div class="filtro-campo">

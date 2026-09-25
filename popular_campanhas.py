@@ -115,3 +115,5 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f'\n🎉 {len(campanhas)} campanhas criadas!'))
         self.stdout.write(f'📊 Total no banco: {Campanha.objects.count()}')
+
+        

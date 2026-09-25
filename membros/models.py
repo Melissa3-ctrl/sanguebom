@@ -266,7 +266,8 @@ class Receptor(models.Model):
     def __str__(self):
         return f"{self.nome} - {self.tipo_sanguineo}"
 
-    # =========================================================
+
+# =========================================================
 # CAMPANHA (Eventos e ações do hemocentro)
 # =========================================================
 

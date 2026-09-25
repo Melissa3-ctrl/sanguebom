@@ -2,6 +2,7 @@ import csv
 from django.http import HttpResponse
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.db.models import Count
 from django.utils import timezone
@@ -111,8 +112,8 @@ class HemocentroAdmin(admin.ModelAdmin):
 
     def ativo_badge(self, obj):
         if obj.ativo:
-            return format_html('<span style="color:#4caf50; font-weight:bold;">✅ Ativo</span>')
-        return format_html('<span style="color:#d32f2f; font-weight:bold;">❌ Inativo</span>')
+            return mark_safe('<span style="color:#4caf50; font-weight:bold;">✅ Ativo</span>')
+        return mark_safe('<span style="color:#d32f2f; font-weight:bold;">❌ Inativo</span>')
     ativo_badge.short_description = 'Status'
 
     def total_agendamentos(self, obj):
@@ -261,8 +262,8 @@ class NotificacaoAdmin(admin.ModelAdmin):
 
     def lida_badge(self, obj):
         if obj.lida:
-            return format_html('<span style="color:#4caf50;">✅ Lida</span>')
-        return format_html('<span style="color:#ff9800;">🔔 Não lida</span>')
+            return mark_safe('<span style="color:#4caf50;">✅ Lida</span>')
+        return mark_safe('<span style="color:#ff9800;">🔔 Não lida</span>')
     lida_badge.short_description = 'Lida'
 
     @admin.action(description='📥 Exportar selecionados para CSV')
@@ -284,7 +285,7 @@ class NotificacaoAdmin(admin.ModelAdmin):
 
 
 # =========================================================
-# RECEPTOR (Quem precisa de doação) — COMPLETO
+# RECEPTOR (Quem precisa de doação)
 # =========================================================
 
 @admin.register(Receptor)
@@ -375,9 +376,9 @@ class ReceptorAdmin(admin.ModelAdmin):
 
     def dias_restantes_display(self, obj):
         if obj.status == 'atendido':
-            return format_html('<span style="color:#1565c0;">🎉 Atendido</span>')
+            return mark_safe('<span style="color:#1565c0;">🎉 Atendido</span>')
         if obj.status == 'expirado':
-            return format_html('<span style="color:#999;">📅 Expirado</span>')
+            return mark_safe('<span style="color:#999;">📅 Expirado</span>')
         dias = obj.dias_restantes
         if dias <= 3:
             return format_html('<span style="color:#d32f2f; font-weight:bold;">⚠️ {} dias</span>', dias)
@@ -417,7 +418,8 @@ class ReceptorAdmin(admin.ModelAdmin):
 
         return response
 
-    # =========================================================
+
+# =========================================================
 # CAMPANHA
 # =========================================================
 

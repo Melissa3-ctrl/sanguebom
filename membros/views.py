@@ -11,8 +11,7 @@ from django.http import HttpResponse
 import csv
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor, Campanha
-from .emails import enviar_email_agendamento, enviar_email_doacao_realizada
-
+from .emails import enviar_email_agendamento, enviar_email_doacao_realizada, enviar_email_pedido_aprovado, enviar_email_pedido_atendido
 # =========================================================
 # PÁGINAS DO SITE
 # =========================================================
@@ -235,8 +234,14 @@ def relatorios(request):
     total_doadores = Doador.objects.count()
     total_agendamentos = Agendamento.objects.count()
     total_hemocentros = Hemocentro.objects.count()
-    total_receptores = Receptor.objects.filter(ativo=True, status='aprovado').count()
+    total_receptores = Receptor.objects.count()
+    receptores_pendentes = Receptor.objects.filter(status='pendente').count()
+    receptores_aprovados = Receptor.objects.filter(status='aprovado', ativo=True).count()
 
+        # Lista dos últimos receptores aprovados
+        # Lista dos últimos receptores (todos os status)
+    receptores = Receptor.objects.all().order_by('-urgencia', '-criado_em')[:6]
+    
     doacoes_por_mes = (
         Agendamento.objects
         .extra(select={'mes': "strftime('%%m', data)"})
@@ -262,7 +267,6 @@ def relatorios(request):
     proximos = Agendamento.objects.filter(
         data__gte=hoje
     ).order_by('data', 'horario')[:10]
-
     return render(request, 'relatorios.html', {
         'total_doadores': total_doadores,
         'total_agendamentos': total_agendamentos,
@@ -273,6 +277,9 @@ def relatorios(request):
         'ranking': ranking,
         'proximos': proximos,
         'lateral_direita': False,
+        'receptores': receptores,
+        'receptores_pendentes': receptores_pendentes,
+        'receptores_aprovados': receptores_aprovados,
     })
 
 
@@ -335,7 +342,25 @@ def painel_hemocentro(request):
         .values_list('tipo_doacao', flat=True)
         .distinct()
     )
+         # ==========================================
+    # 📋 PEDIDOS DE DOAÇÃO (RECEPTORES)
+    # ==========================================
+    receptores = Receptor.objects.filter(
+        hospital__icontains=hemocentro.nome,
+        ativo=True,
+        status='aprovado'
+    ).order_by('-urgencia', '-criado_em')
+        # ==========================================
+    # 📋 PEDIDOS DE DOAÇÃO (TODOS, inclusive pendentes)
+    # ==========================================
+    receptores = Receptor.objects.filter(
+        hospital__icontains=hemocentro.nome
+    ).order_by('-urgencia', '-criado_em')
 
+    total_receptores = receptores.count()
+    receptores_pendentes = receptores.filter(status='pendente').count()
+
+    total_receptores = receptores.count()
     return render(request, 'painel_hemocentro.html', {
         'hemocentro': hemocentro,
         'agendamentos': agendamentos,
@@ -354,6 +379,9 @@ def painel_hemocentro(request):
         'tipo_filtro': tipo_filtro,
         'status_filtro': status_filtro,
         'lateral_direita': False,
+         'receptores': receptores,
+        'total_receptores': total_receptores,
+        'receptores_pendentes': receptores_pendentes,
     })
 
 
@@ -1266,17 +1294,62 @@ Acesse o admin pra aprovar.
     })
 
 
-def detalhes_receptor(request, id):
-    receptor = get_object_or_404(Receptor, id=id, status='aprovado', ativo=True)
+@login_required(login_url='login')
+def detalhes_receptor_hemocentro(request, id):
+    """Hemocentro vê o pedido completo e pode aprovar/reprovar/atender."""
+    try:
+        hemocentro = Hemocentro.objects.get(usuario=request.user)
+    except Hemocentro.DoesNotExist:
+        return redirect('home')
 
-    receptor.visualizacoes += 1
-    receptor.save(update_fields=['visualizacoes'])
+    receptor = get_object_or_404(Receptor, id=id)
 
-    return render(request, 'detalhes_receptor.html', {
+    # Só deixa ver se o hospital bate com o hemocentro
+    if hemocentro.nome not in receptor.hospital:
+        return redirect('painel_hemocentro')
+
+    if request.method == 'POST':
+        novo_status = request.POST.get('status')
+
+        if novo_status in ['pendente', 'aprovado', 'atendido', 'recusado']:
+            receptor.status = novo_status
+            receptor.ativo = (novo_status == 'aprovado')
+            receptor.save()
+
+            # Se foi APROVADO → envia e-mail pro responsável
+            if novo_status == 'aprovado':
+                try:
+                    enviar_email_pedido_aprovado(receptor, hemocentro)
+                except Exception as e:
+                    print(f"Erro ao enviar e-mail de aprovação: {e}")
+
+            # Se foi marcado como ATENDIDO → envia e-mail pro responsável
+            if novo_status == 'atendido':
+                try:
+                    enviar_email_pedido_atendido(receptor, hemocentro)
+                except Exception as e:
+                    print(f"Erro ao enviar e-mail de 'atendido': {e}")
+
+            # Notifica o doador no site
+            if receptor.usuario:
+                try:
+                    doador_destino = Doador.objects.get(usuario=receptor.usuario)
+                    Notificacao.objects.create(
+                        doador=doador_destino,
+                        tipo='alerta',
+                        titulo=f'Status do pedido: {receptor.get_status_display()}',
+                        mensagem=f'O hemocentro {hemocentro.nome} atualizou o status do seu pedido para {receptor.get_status_display()}.'
+                    )
+                except Doador.DoesNotExist:
+                    pass
+
+        return redirect('detalhes_receptor_hemocentro', id=receptor.id)
+
+    return render(request, 'detalhes_receptor_hemocentro.html', {
+        'hemocentro': hemocentro,
         'receptor': receptor,
         'lateral_direita': False,
     })
-
 
 @login_required(login_url='login')
 def quero_ajudar(request, id):

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pedido de {{ receptor.nome }}{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/relatorios.css' %}">
+
+    <a href="{% url 'painel_hemocentro' %}" class="btn-voltar">← Voltar ao painel</a>
+
+    <header class="relatorios-header">
+        <h1>📋 Pedido de Doação</h1>
+        <p>Análise e gerencie o pedido</p>
+    </header>
+
+    <article class="receptor-detalhes urgencia-{{ receptor.urgencia }}">
+
+        <div class="receptor-detalhes-header">
+            <span class="receptor-tipo-grande">{{ receptor.tipo_sanguineo }}</span>
+            <div>
+                <h1>{{ receptor.nome }}</h1>
+                <span class="receptor-status">
+                    {% if receptor.status == 'pendente' %}⏳ Pendente
+                    {% elif receptor.status == 'aprovado' %}✅ Aprovado
+                    {% elif receptor.status == 'atendido' %}🎉 Atendido
+                    {% elif receptor.status == 'expirado' %}📅 Expirado
+                    {% else %}❌ Recusado
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="receptor-detalhes-info">
+            {% if receptor.idade_paciente %}
+            <div class="info-item">
+                <span class="info-icon">👤</span>
+                <div>
+                    <strong>Idade</strong>
+                    <p>{{ receptor.idade_paciente }} anos</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="info-item">
+                <span class="info-icon">🩸</span>
+                <div>
+                    <strong>Tipo sanguíneo</strong>
+                    <p>{{ receptor.tipo_sanguineo }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">💉</span>
+                <div>
+                    <strong>Tipo de doação</strong>
+                    <p>{{ receptor.get_tipo_doacao_display }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📊</span>
+                <div>
+                    <strong>Urgência</strong>
+                    <p>{{ receptor.get_urgencia_display }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">🏥</span>
+                <div>
+                    <strong>Hospital</strong>
+                    <p>{{ receptor.hospital }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📍</span>
+                <div>
+                    <strong>Cidade</strong>
+                    <p>{{ receptor.cidade }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📧</span>
+                <div>
+                    <strong>E-mail</strong>
+                    <p>{{ receptor.email_contato|default:"Não informado" }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">📱</span>
+                <div>
+                    <strong>Celular</strong>
+                    <p>{{ receptor.celular_contato|default:"Não informado" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="receptor-detalhes-descricao">
+            <h3>📝 Descrição</h3>
+            <p>{{ receptor.descricao }}</p>
+        </div>
+
+        {% if receptor.laudo %}
+            <div class="receptor-detalhes-cta">
+                <h3>📎 Laudo Médico Anexado</h3>
+                <p>O responsável anexou o laudo médico que comprova a necessidade.</p>
+                <a href="{{ receptor.laudo.url }}" target="_blank" class="btn-laudo" style="font-size: 1.1em; padding: 14px 32px;">
+                    📎 Abrir laudo médico
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- AÇÕES -->
+        <div class="receptor-detalhes-cta" style="margin-top: 30px;">
+            <h3>🎯 Ações do Hemocentro</h3>
+            <p>📧 Ao clicar em <strong>✅ Aprovar</strong>, um e-mail automático será enviado para o responsável. Ao marcar como <strong>🎉 Atendido</strong>, outro e-mail avisará que o sangue está disponível.</p>
+
+            <form method="POST" class="acoes-status">
+                {% csrf_token %}
+
+                <div class="acoes-grid">
+                    <button type="submit" name="status" value="aprovado" class="btn-acao btn-aprovar"
+                            {% if receptor.status == 'aprovado' %}disabled{% endif %}>
+                        ✅ Aprovar
+                    </button>
+
+                    <button type="submit" name="status" value="atendido" class="btn-acao btn-atendido"
+                            {% if receptor.status == 'atendido' %}disabled{% endif %}>
+                        🎉 Marcar como Atendido
+                    </button>
+
+                    <button type="submit" name="status" value="recusado" class="btn-acao btn-recusar"
+                            {% if receptor.status == 'recusado' %}disabled{% endif %}>
+                        ❌ Recusar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </article>
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}
