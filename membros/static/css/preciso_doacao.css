@@ -1,429 +1,7 @@
-/* ============================================ */
-/* RESET                                          */
-/* ============================================ */
-
-* {
-    box-sizing: border-box;
-}
-
-/* ============================================ */
-/* CONTAINER CENTRALIZADO                         */
-/* ============================================ */
-
-.preciso-header,
-.aviso-legal,
-.preciso-info,
-.preciso-cta,
-.form-receptor,
-.alerta,
-.btn-voltar {
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ============================================ */
-/* CABEÇALHO                                      */
-/* ============================================ */
-
-.preciso-header {
-    text-align: center;
-    padding: 40px 20px 20px 20px;
-}
-
-.preciso-header h1 {
-    font-size: 2.2em;
-    color: #b30000;
-    margin: 0 0 10px 0;
-    font-weight: 800;
-}
-
-.preciso-header p {
-    color: #666;
-    font-size: 1.05em;
-    margin: 0;
-}
-
-/* ============================================ */
-/* AVISO LEGAL                                    */
-/* ============================================ */
-
-.aviso-legal {
-    background: linear-gradient(135deg, #fff8e1, #fffde7);
-    border-left: 5px solid #ffc107;
-    border-radius: 14px;
-    padding: 20px 24px;
-    display: flex;
-    gap: 16px;
-    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.15);
-    margin-bottom: 30px;
-}
-
-.aviso-legal-icon {
-    font-size: 2em;
-    flex-shrink: 0;
-}
-
-.aviso-legal-texto {
-    color: #6d4c00;
-    font-size: 0.95em;
-    line-height: 1.6;
-}
-
-.aviso-legal-texto strong {
-    display: block;
-    color: #b30000;
-    font-size: 1.05em;
-    margin-bottom: 8px;
-}
-
-.aviso-legal-texto p {
-    margin: 6px 0;
-}
-
-.aviso-legal-texto a {
-    color: #b30000;
-    font-weight: bold;
-}
-
-.aviso-legal-lgpd {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-top: 10px !important;
-    font-size: 0.9em;
-}
-
-/* ============================================ */
-/* CARDS DE INFO (2 COLUNAS)                      */
-/* ============================================ */
-
-.preciso-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 40px;
-    padding: 0 20px;
-}
-
-.preciso-card {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    border-top: 5px solid #b30000;
-    transition: all 0.3s;
-}
-
-.preciso-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(179, 0, 0, 0.12);
-}
-
-.preciso-card-icone {
-    font-size: 2.5em;
-    margin-bottom: 12px;
-}
-
-.preciso-card h2 {
-    color: #b30000;
-    font-size: 1.3em;
-    margin: 0 0 16px 0;
-}
-
-.preciso-card p {
-    color: #555;
-    line-height: 1.6;
-    margin: 10px 0;
-}
-
-/* PASSOS */
-.preciso-passos {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-}
-
-.preciso-passos li {
-    padding: 12px 0;
-    color: #555;
-    font-size: 0.95em;
-    border-bottom: 1px solid #f0f0f0;
-    line-height: 1.5;
-}
-
-.preciso-passos li:last-child {
-    border-bottom: none;
-}
-
-.preciso-passos b {
-    color: #b30000;
-    margin-right: 6px;
-    font-weight: 800;
-}
-
-/* AVISO PRIVACIDADE DENTRO DO CARD */
-.preciso-aviso-privacidade {
-    background: #f0f7ff;
-    color: #1565c0 !important;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 0.9em;
-    margin: 16px 0 0 0 !important;
-    line-height: 1.5;
-}
-
-/* ============================================ */
-/* BOTÕES                                         */
-/* ============================================ */
-
-.btn-cadastrar-receptor,
-.btn-meus-pedidos {
-    display: inline-block;
-    background: #b30000;
-    color: white;
-    padding: 14px 32px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1em;
-    transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.25);
-    margin: 6px;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-}
-
-.btn-cadastrar-receptor:hover,
-.btn-meus-pedidos:hover {
-    background: #7a0000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(179, 0, 0, 0.35);
-}
-
-/* ============================================ */
-/* CTA FINAL (botão grande embaixo)               */
-/* ============================================ */
-
-.preciso-cta {
-    text-align: center;
-    padding: 40px 20px 60px 20px;
-}
-
-.preciso-cta p {
-    color: #666;
-    margin-bottom: 16px;
-    font-size: 1.05em;
-}
-
-.preciso-cta .btn-cadastrar-receptor {
-    font-size: 1.1em;
-    padding: 16px 42px;
-}
-
-/* ============================================ */
-/* BOTÃO VOLTAR                                   */
-/* ============================================ */
-
-.btn-voltar {
-    display: inline-block;
-    color: #b30000;
-    text-decoration: none;
-    font-weight: 600;
-    margin: 20px auto 0 auto;
-    padding: 0 20px;
-    transition: 0.3s;
-    font-size: 0.95em;
-}
-
-.btn-voltar:hover {
-    color: #7a0000;
-    transform: translateX(-3px);
-}
-
-/* ============================================ */
-/* FORMULÁRIO                                     */
-/* ============================================ */
-
-.form-receptor {
-    background: white;
-    border-radius: 16px;
-    padding: 36px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    margin: 0 auto 60px auto;
-    padding: 0 20px;
-    max-width: 700px;
-}
-
-.form-receptor .campo {
-    margin-bottom: 22px;
-}
-
-.form-receptor label {
-    display: block;
-    color: #444;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 0.95em;
-}
-
-.form-receptor input,
-.form-receptor select,
-.form-receptor textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #f0e6d2;
-    border-radius: 10px;
-    font-size: 1em;
-    font-family: inherit;
-    transition: all 0.2s;
-    background: white;
-}
-
-.form-receptor input:focus,
-.form-receptor select:focus,
-.form-receptor textarea:focus {
-    outline: none;
-    border-color: #b30000;
-    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.1);
-}
-
-.form-receptor textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.duas-colunas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-secao {
-    color: #b30000;
-    font-size: 1.05em;
-    font-weight: 700;
-    margin: 28px 0 16px 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f0e6d2;
-}
-
-.form-secao:first-of-type {
-    margin-top: 0;
-}
-
-.aviso {
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin: 24px 0;
-    color: #856404;
-    font-size: 0.9em;
-    line-height: 1.5;
-}
-
-.botoes-cadastro {
-    display: flex;
-    gap: 15px;
-    margin-top: 28px;
-}
-
-.btn-enviar,
-.btn-voltar-cadastro {
-    padding: 14px 30px;
-    border-radius: 12px;
-    font-size: 1.05em;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-    flex: 1;
-    border: none;
-}
-
-.btn-enviar {
-    background: #b30000;
-    color: white;
-}
-
-.btn-enviar:hover {
-    background: #7a0000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(179, 0, 0, 0.3);
-}
-
-.btn-voltar-cadastro {
-    background: transparent;
-    color: #b30000;
-    border: 2px solid #b30000;
-}
-
-.btn-voltar-cadastro:hover {
-    background: #b30000;
-    color: white;
-}
-
-/* ============================================ */
-/* ALERTAS (sucesso / erro)                       */
-/* ============================================ */
-
-.alerta {
-    padding: 18px 22px;
-    border-radius: 12px;
-    margin: 20px auto;
-    max-width: 700px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.alerta.sucesso {
-    background: #e8f5e9;
-    color: #2e7d32;
-    border-left: 4px solid #4caf50;
-}
-
-.alerta.erro {
-    background: #ffebee;
-    color: #c62828;
-    border-left: 4px solid #d32f2f;
-}
-
-/* ============================================ */
-/* RESPONSIVO                                     */
-/* ============================================ */
-
-@media (max-width: 768px) {
-    .preciso-info {
-        grid-template-columns: 1fr;
-        padding: 0 16px;
-    }
-
-    .preciso-header h1 {
-        font-size: 1.6em;
-    }
-
-    .aviso-legal {
-        flex-direction: column;
-        padding: 16px;
-        margin: 0 16px 20px 16px;
-    }
-
-    .form-receptor {
-        padding: 0 16px;
-    }
-
-    .duas-colunas {
-        grid-template-columns: 1fr;
-    }
-
-    .botoes-cadastro {
-        flex-direction: column;
-    }
-}
+/* =========================================================
+   PRECISO DE DOAÇÃO — CSS CONSOLIDADO
+   Cobre: Info, Cadastro, Detalhes, Meus Pedidos, Editar
+   ========================================================= */
 
 /* =========================================================
    RESET E VARIÁVEIS
@@ -449,7 +27,7 @@
 }
 
 /* =========================================================
-   BOTÃO VOLTAR (topo)
+   BOTÃO VOLTAR
    ========================================================= */
 
 .btn-voltar {
@@ -457,10 +35,9 @@
     color: var(--vermelho-claro);
     text-decoration: none;
     font-weight: 600;
-    margin: 20px auto 0 auto;
-    padding: 0 clamp(16px, 2vw, 40px);
-    transition: 0.3s;
+    margin: 20px clamp(16px, 2vw, 40px) 0 clamp(16px, 2vw, 40px);
     font-size: clamp(0.9rem, 1vw, 1rem);
+    transition: 0.3s;
 }
 
 .btn-voltar:hover {
@@ -469,21 +46,22 @@
 }
 
 /* =========================================================
-   CABEÇALHO
+   CABEÇALHO (Preciso de Doação / Cadastrar / Detalhes)
    ========================================================= */
 
 .preciso-header {
     text-align: center;
-    margin: 30px auto 40px auto;
+    margin: clamp(20px, 3vw, 40px) auto clamp(24px, 3vw, 40px) auto;
     padding: 0 clamp(16px, 2vw, 40px);
     max-width: 1000px;
 }
 
 .preciso-header h1 {
     color: var(--vermelho-principal);
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
     margin: 0 0 10px 0;
     font-weight: 800;
+    line-height: 1.2;
 }
 
 .preciso-header p {
@@ -491,6 +69,246 @@
     font-size: clamp(0.95rem, 1.2vw, 1.15rem);
     margin: 0;
     line-height: 1.5;
+}
+
+/* =========================================================
+   AVISO LEGAL (LGPD) — página Preciso de Doação
+   ========================================================= */
+
+.aviso-legal {
+    display: flex;
+    gap: clamp(14px, 1.8vw, 22px);
+    background: #fff8e1;
+    border-left: 5px solid #ffc107;
+    border-radius: 16px;
+    padding: clamp(18px, 2.2vw, 28px);
+    max-width: 1000px;
+    margin: 0 auto clamp(24px, 3vw, 40px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    box-shadow: 0 4px 16px rgba(255, 193, 7, 0.15);
+    animation: fadeInUp 0.5s ease;
+    align-items: flex-start;
+}
+
+.aviso-legal-icon {
+    font-size: clamp(1.6rem, 2.2vw, 2rem);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.aviso-legal-texto {
+    flex: 1;
+    min-width: 0;
+}
+
+.aviso-legal-texto strong {
+    display: block;
+    color: #b30000;
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.aviso-legal-texto p {
+    color: #856404;
+    font-size: clamp(0.82rem, 0.98vw, 0.92rem);
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+}
+
+.aviso-legal-texto p b {
+    color: #b30000;
+    font-weight: 700;
+}
+
+.aviso-legal-texto p:last-child {
+    margin-bottom: 0;
+}
+
+.aviso-legal-lgpd {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 14px;
+    border-radius: 10px;
+    border-left: 3px solid #ffc107;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* =========================================================
+   CARDS DE INFO (Como funciona / Doe)
+   ========================================================= */
+
+.preciso-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 2vw, 26px);
+    max-width: 1200px;
+    margin: 0 auto clamp(30px, 4vw, 50px) auto;
+    padding: 0 clamp(12px, 2vw, 40px);
+}
+
+@media (min-width: 800px) {
+    .preciso-info {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.preciso-card {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(22px, 2.5vw, 34px);
+    box-shadow: var(--sombra-suave);
+    border-top: 6px solid var(--vermelho-principal);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vw, 16px);
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.preciso-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
+}
+
+.preciso-card-icone {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1;
+}
+
+.preciso-card h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.preciso-card p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.85rem, 1vw, 0.98rem);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.preciso-card p b,
+.preciso-card p strong {
+    color: var(--vermelho-principal);
+    font-weight: 700;
+}
+
+/* Lista de passos */
+.preciso-passos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preciso-passos li {
+    color: var(--texto-secundario);
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    line-height: 1.5;
+    padding: clamp(10px, 1.2vw, 14px) clamp(12px, 1.4vw, 18px);
+    background: #fcf9f2;
+    border-radius: 10px;
+    border-left: 4px solid var(--vermelho-borda);
+    transition: all 0.3s;
+}
+
+.preciso-passos li:hover {
+    background: var(--vermelho-suave);
+    border-left-color: var(--vermelho-principal);
+    transform: translateX(4px);
+}
+
+.preciso-passos li b {
+    color: var(--vermelho-principal);
+    font-weight: 800;
+    margin-right: 4px;
+}
+
+/* Aviso de privacidade dentro do card */
+.preciso-aviso-privacidade {
+    background: linear-gradient(135deg, #fff5f5, #fcf9f2);
+    padding: clamp(12px, 1.5vw, 16px) clamp(14px, 1.6vw, 20px);
+    border-radius: 12px;
+    border-left: 4px solid var(--vermelho-principal);
+    color: var(--texto-secundario) !important;
+    font-size: clamp(0.8rem, 0.95vw, 0.9rem) !important;
+    font-weight: 600;
+    margin-top: 4px !important;
+    line-height: 1.5;
+}
+
+.preciso-aviso-privacidade b {
+    color: var(--vermelho-principal);
+}
+
+/* =========================================================
+   CTA FINAL (página info)
+   ========================================================= */
+
+.preciso-cta {
+    text-align: center;
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+    border: 3px solid var(--vermelho-principal);
+    border-radius: 20px;
+    padding: clamp(28px, 3.5vw, 44px);
+    max-width: 800px;
+    margin: 0 auto clamp(40px, 5vw, 70px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    box-shadow: var(--sombra-suave);
+    animation: fadeInUp 0.5s ease;
+}
+
+.preciso-cta > p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+    margin: 0 0 18px 0;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+/* =========================================================
+   BOTÕES PRINCIPAIS
+   ========================================================= */
+
+.btn-cadastrar-receptor,
+.btn-meus-pedidos {
+    display: inline-block;
+    background: var(--vermelho-principal);
+    color: white;
+    text-decoration: none;
+    padding: clamp(12px, 1.5vw, 16px) clamp(24px, 3vw, 38px);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+    text-align: center;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    margin: 6px;
+}
+
+.btn-cadastrar-receptor:hover,
+.btn-meus-pedidos:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(139, 0, 0, 0.45);
+}
+
+.preciso-cta .btn-cadastrar-receptor {
+    padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3vw, 42px);
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
 }
 
 /* =========================================================
@@ -523,7 +341,7 @@
 }
 
 /* =========================================================
-   FORMULÁRIO
+   FORMULÁRIO (Cadastrar / Editar Pedido)
    ========================================================= */
 
 .form-receptor {
@@ -539,7 +357,6 @@
     animation: fadeInUp 0.5s ease;
 }
 
-/* SEÇÕES DO FORMULÁRIO */
 .form-secao {
     color: var(--vermelho-principal);
     font-size: clamp(1.1rem, 1.5vw, 1.35rem);
@@ -602,7 +419,14 @@
     line-height: 1.6;
 }
 
-/* CAMPO DE UPLOAD (laudo) */
+.campo small {
+    color: #999;
+    font-size: clamp(0.78rem, 0.9vw, 0.85rem);
+    margin-top: 4px;
+    display: block;
+}
+
+/* UPLOAD */
 .form-receptor input[type="file"] {
     padding: clamp(14px, 1.5vw, 20px);
     background: #fafafa;
@@ -618,12 +442,6 @@
 .form-receptor input[type="file"]:hover {
     border-color: var(--vermelho-claro);
     background: var(--vermelho-suave);
-}
-
-.form-receptor input[type="file"]:focus {
-    outline: none;
-    border-color: var(--vermelho-principal);
-    box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.1);
 }
 
 .campo-ajuda {
@@ -648,17 +466,13 @@
     gap: clamp(16px, 1.5vw, 24px);
 }
 
-/* TABLET: 2 colunas */
 @media (min-width: 600px) {
     .duas-colunas {
         grid-template-columns: 1fr 1fr;
     }
 }
 
-/* =========================================================
-   AVISO (LGPD)
-   ========================================================= */
-
+/* AVISO LGPD (dentro do form) */
 .aviso {
     background: #fff3cd;
     border-left: 5px solid #ffc107;
@@ -674,10 +488,7 @@
     color: #b30000;
 }
 
-/* =========================================================
-   BOTÕES DE AÇÃO (Cancelar / Enviar)
-   ========================================================= */
-
+/* BOTÕES DO FORM */
 .botoes-cadastro {
     display: flex;
     gap: clamp(12px, 1.5vw, 20px);
@@ -729,86 +540,6 @@
     transform: translateY(-3px);
 }
 
-/* BOTÃO CADASTRAR RECEPTOR (na tela de sucesso) */
-.btn-cadastrar-receptor {
-    display: inline-block;
-    background: var(--vermelho-principal);
-    color: white;
-    padding: clamp(14px, 1.5vw, 18px) clamp(28px, 3vw, 42px);
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
-}
-
-.btn-cadastrar-receptor:hover {
-    background: var(--vermelho-escuro);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(139, 0, 0, 0.4);
-}
-
-/* =========================================================
-   ANIMAÇÕES
-   ========================================================= */
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================================================
-   TELAS MUITO GRANDES (4K)
-   ========================================================= */
-
-@media (min-width: 1920px) {
-    .form-receptor {
-        max-width: 1000px;
-    }
-
-    .preciso-header {
-        max-width: 1100px;
-    }
-}
-
-@media (min-width: 2560px) {
-    .form-receptor {
-        max-width: 1200px;
-        padding: 60px 80px;
-    }
-
-    .preciso-header h1 {
-        font-size: 2.8rem;
-    }
-}
-
-/* =========================================================
-   RESPONSIVO — CELULAR
-   ========================================================= */
-
-@media (max-width: 480px) {
-    .form-receptor {
-        border-radius: 16px;
-        padding: 24px 18px;
-        margin-bottom: 40px;
-    }
-
-    .botoes-cadastro {
-        flex-direction: column;
-    }
-
-    .btn-enviar,
-    .btn-voltar-cadastro {
-        width: 100%;
-    }
-}
 /* =========================================================
    DETALHES DO RECEPTOR (página pública)
    ========================================================= */
@@ -826,22 +557,9 @@
     animation: fadeInUp 0.5s ease;
 }
 
-/* Borda colorida por urgência */
-.receptor-detalhes.urgencia-baixa {
-    border-top-color: #388e3c;
-}
-
-.receptor-detalhes.urgencia-media {
-    border-top-color: #fbc02d;
-}
-
-.receptor-detalhes.urgencia-alta {
-    border-top-color: #d32f2f;
-}
-
-/* =========================================================
-   CABEÇALHO DO CARD
-   ========================================================= */
+.receptor-detalhes.urgencia-baixa { border-top-color: #388e3c; }
+.receptor-detalhes.urgencia-media { border-top-color: #fbc02d; }
+.receptor-detalhes.urgencia-alta { border-top-color: #d32f2f; }
 
 .receptor-detalhes-header {
     display: flex;
@@ -886,10 +604,6 @@
     font-size: clamp(0.8rem, 1vw, 0.95rem);
     font-weight: 700;
 }
-
-/* =========================================================
-   GRID DE INFORMAÇÕES
-   ========================================================= */
 
 .receptor-detalhes-info {
     display: grid;
@@ -948,10 +662,6 @@
     margin: 0;
 }
 
-/* =========================================================
-   DESCRIÇÃO
-   ========================================================= */
-
 .receptor-detalhes-descricao {
     background: #fcf9f2;
     border-radius: 12px;
@@ -973,10 +683,6 @@
     line-height: 1.6;
     margin: 0;
 }
-
-/* =========================================================
-   CTA — QUERO AJUDAR
-   ========================================================= */
 
 .receptor-detalhes-cta {
     background: linear-gradient(135deg, #fff5f5, #ffffff);
@@ -1025,60 +731,457 @@
 }
 
 /* =========================================================
-   TELAS MUITO GRANDES (TV FULL HD / 4K)
+   MEUS PEDIDOS — ESTATÍSTICAS
    ========================================================= */
 
-@media (min-width: 1920px) {
-    .receptor-detalhes {
-        max-width: 1400px;
-    }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 1.2vw, 16px);
+    max-width: 1200px;
+    margin: 0 auto clamp(20px, 3vw, 32px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    padding: 0;
+}
 
-    .receptor-tipo-grande {
-        width: 140px;
-        height: 140px;
-        font-size: 3.2rem;
-    }
-
-    .receptor-detalhes-header h1 {
-        font-size: 2.2rem;
+@media (min-width: 700px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media (min-width: 2560px) {
-    .receptor-detalhes {
-        max-width: 1800px;
-        padding: 70px 90px;
-    }
+.stat-card {
+    background: var(--branco);
+    border-radius: 16px;
+    padding: clamp(14px, 1.6vw, 22px);
+    box-shadow: var(--sombra-suave);
+    border-top: 4px solid var(--vermelho-principal);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.3s;
+}
 
-    .receptor-tipo-grande {
-        width: 160px;
-        height: 160px;
-        font-size: 3.8rem;
-    }
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
+}
 
-    .receptor-detalhes-header h1 {
-        font-size: 2.6rem;
-    }
+.stat-card.total { border-top-color: #8b0000; }
+.stat-card.media { border-top-color: #fbc02d; }
+.stat-card.baixa { border-top-color: #2e7d32; }
+.stat-card.urgente { border-top-color: #1565c0; }
 
-    .info-item p {
-        font-size: 1.15rem;
-    }
+.stat-icon {
+    font-size: clamp(1.3rem, 1.7vw, 1.7rem);
+    line-height: 1;
+}
 
-    .info-item strong {
-        font-size: 0.9rem;
-    }
+.stat-numero {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 900;
+    line-height: 1;
+}
 
-    .btn-ajudar {
-        font-size: 1.2rem;
-        padding: 20px 48px;
+.stat-label {
+    color: var(--texto-secundario);
+    font-size: clamp(0.72rem, 0.9vw, 0.85rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   MEUS PEDIDOS — GRID DE CARDS
+   ========================================================= */
+
+.receptores-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 1.8vw, 22px);
+    max-width: 1400px;
+    margin: 0 auto clamp(40px, 5vw, 60px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    padding: 0;
+}
+
+@media (min-width: 700px) {
+    .receptores-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1100px) {
+    .receptores-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* =========================================================
-   RESPONSIVO — CELULAR PEQUENO
+   CARD DE PEDIDO (Meus Pedidos / Painel Hemocentro)
+   ========================================================= */
+
+.receptor-card {
+    background: var(--branco);
+    border-radius: 18px;
+    padding: clamp(18px, 2vw, 26px);
+    box-shadow: var(--sombra-suave);
+    border-top: 5px solid var(--vermelho-borda);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1vw, 12px);
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.receptor-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
+}
+
+.receptor-card.urgencia-baixa { border-top-color: #388e3c; }
+.receptor-card.urgencia-media { border-top-color: #fbc02d; }
+.receptor-card.urgencia-alta { border-top-color: #d32f2f; }
+
+.receptor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.receptor-tipo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vermelho-principal);
+    color: white;
+    font-size: clamp(0.85rem, 1.05vw, 1rem);
+    font-weight: 800;
+    width: clamp(44px, 5vw, 56px);
+    height: clamp(44px, 5vw, 56px);
+    border-radius: 50%;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+}
+
+.receptor-status {
+    display: inline-block;
+    background: #fcf9f2;
+    color: var(--texto-principal);
+    border: 1.5px solid var(--vermelho-borda);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: clamp(0.72rem, 0.88vw, 0.82rem);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.receptor-card h3 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+    margin: 4px 0 0 0;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.receptor-info {
+    color: var(--texto-secundario);
+    font-size: clamp(0.82rem, 0.98vw, 0.92rem);
+    line-height: 1.45;
+    margin: 0;
+    word-break: break-word;
+}
+
+.receptor-info strong {
+    color: var(--texto-principal);
+    font-weight: 700;
+}
+
+.receptor-descricao {
+    color: var(--texto-claro);
+    font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+    line-height: 1.45;
+    margin: 2px 0 0 0;
+    font-style: italic;
+    background: #fcf9f2;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--vermelho-borda);
+}
+
+.receptor-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+    color: var(--texto-claro);
+    font-size: clamp(0.72rem, 0.88vw, 0.82rem);
+    font-weight: 600;
+}
+
+.receptor-acoes,
+.receptor-botoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.receptor-btn,
+.receptor-card .btn-editar,
+.receptor-card .btn-excluir,
+.btn-laudo,
+.btn-ver-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 90px;
+    text-decoration: none;
+    padding: clamp(8px, 1vw, 10px) clamp(12px, 1.4vw, 16px);
+    border-radius: 10px;
+    font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+    font-weight: 700;
+    transition: all 0.3s;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.receptor-btn,
+.btn-ver-admin {
+    background: var(--vermelho-principal);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+}
+
+.receptor-btn:hover,
+.btn-ver-admin:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(139, 0, 0, 0.35);
+}
+
+.btn-laudo {
+    background: #fcf9f2;
+    color: var(--vermelho-principal);
+    border: 2px solid var(--vermelho-borda);
+}
+
+.btn-laudo:hover {
+    background: var(--vermelho-suave);
+    border-color: var(--vermelho-claro);
+    transform: translateY(-2px);
+}
+
+.receptor-card .btn-editar {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.receptor-card .btn-editar:hover {
+    background: #e0e0e0;
+    color: #333;
+    transform: translateY(-2px);
+}
+
+.receptor-card .btn-excluir {
+    background: #fceceb;
+    color: var(--vermelho-claro);
+}
+
+.receptor-card .btn-excluir:hover {
+    background: var(--vermelho-claro);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   ESTADO VAZIO
+   ========================================================= */
+
+.vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(40px, 5vw, 70px) clamp(20px, 3vw, 40px);
+    max-width: 600px;
+    margin: 0 auto clamp(40px, 5vw, 60px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    box-shadow: var(--sombra-suave);
+    border-left: 5px solid var(--vermelho-borda);
+    text-align: center;
+}
+
+.vazio > span {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1;
+}
+
+.vazio > p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (TV FULL HD — 1920px)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .form-receptor { max-width: 1000px; }
+    .preciso-header { max-width: 1200px; }
+    .aviso-legal { max-width: 1300px; padding: 32px; }
+    .aviso-legal-texto strong { font-size: 1.2rem; }
+    .aviso-legal-texto p { font-size: 1.05rem; }
+    .preciso-info { max-width: 1500px; gap: 32px; }
+    .preciso-card { padding: 40px; border-radius: 24px; }
+    .preciso-card-icone { font-size: 3.2rem; }
+    .preciso-card h2 { font-size: 1.6rem; }
+    .preciso-card p { font-size: 1.1rem; }
+    .preciso-passos li { font-size: 1.08rem; padding: 18px 22px; }
+    .preciso-cta { max-width: 1000px; padding: 52px; }
+    .preciso-cta .btn-cadastrar-receptor { font-size: 1.2rem; padding: 22px 52px; }
+
+    .receptor-detalhes { max-width: 1400px; }
+    .receptor-tipo-grande { width: 140px; height: 140px; font-size: 3.2rem; }
+    .receptor-detalhes-header h1 { font-size: 2.2rem; }
+
+    .receptores-grid { max-width: 1800px; gap: 28px; }
+    .receptor-card { padding: 28px; }
+    .receptor-card h3 { font-size: 1.45rem; }
+    .receptor-tipo { width: 64px; height: 64px; font-size: 1.15rem; }
+    .receptor-info { font-size: 1.05rem; }
+    .receptor-descricao { font-size: 0.95rem; }
+    .stat-numero { font-size: 2.4rem; }
+    .stat-label { font-size: 0.95rem; }
+    .receptor-btn, .receptor-card .btn-editar, .receptor-card .btn-excluir,
+    .btn-laudo, .btn-ver-admin { font-size: 0.95rem; padding: 12px 20px; }
+}
+
+/* =========================================================
+   TELAS ENORMES (TV 4K — 2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .form-receptor { max-width: 1200px; padding: 60px 80px; }
+    .preciso-header h1 { font-size: 3rem; }
+    .preciso-header p { font-size: 1.35rem; }
+    .aviso-legal { max-width: 1600px; padding: 40px; }
+    .aviso-legal-icon { font-size: 2.6rem; }
+    .aviso-legal-texto strong { font-size: 1.4rem; }
+    .aviso-legal-texto p { font-size: 1.2rem; }
+    .preciso-info { max-width: 1900px; gap: 40px; }
+    .preciso-card { padding: 52px; }
+    .preciso-card-icone { font-size: 4rem; }
+    .preciso-card h2 { font-size: 2rem; }
+    .preciso-card p { font-size: 1.3rem; }
+    .preciso-passos li { font-size: 1.25rem; padding: 22px 28px; }
+    .preciso-cta { max-width: 1300px; padding: 70px; }
+    .preciso-cta > p { font-size: 1.3rem; }
+    .preciso-cta .btn-cadastrar-receptor { font-size: 1.4rem; padding: 26px 64px; }
+
+    .receptor-detalhes { max-width: 1800px; padding: 70px 90px; }
+    .receptor-tipo-grande { width: 160px; height: 160px; font-size: 3.8rem; }
+    .receptor-detalhes-header h1 { font-size: 2.6rem; }
+    .info-item p { font-size: 1.15rem; }
+    .info-item strong { font-size: 0.9rem; }
+    .btn-ajudar { font-size: 1.2rem; padding: 20px 48px; }
+
+    .receptores-grid { max-width: 2200px; gap: 34px; }
+    .receptor-card { padding: 36px; border-radius: 22px; }
+    .receptor-card h3 { font-size: 1.7rem; }
+    .receptor-tipo { width: 76px; height: 76px; font-size: 1.35rem; }
+    .receptor-info { font-size: 1.2rem; }
+    .receptor-descricao { font-size: 1.05rem; }
+    .receptor-status { font-size: 0.95rem; padding: 6px 16px; }
+    .receptor-btn, .receptor-card .btn-editar, .receptor-card .btn-excluir,
+    .btn-laudo, .btn-ver-admin { font-size: 1.05rem; padding: 14px 24px; }
+    .stat-numero { font-size: 2.8rem; }
+    .stat-icon { font-size: 2rem; }
+    .stat-label { font-size: 1.05rem; }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR PEQUENO (até 480px)
    ========================================================= */
 
 @media (max-width: 480px) {
+    .aviso-legal {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 18px 16px;
+        border-radius: 14px;
+    }
+
+    .aviso-legal-texto {
+        text-align: left;
+        width: 100%;
+    }
+
+    .preciso-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .preciso-cta {
+        padding: 24px 18px;
+        border-radius: 16px;
+    }
+
+    .preciso-cta .btn-cadastrar-receptor {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-receptor {
+        border-radius: 16px;
+        padding: 24px 18px;
+        margin-bottom: 40px;
+    }
+
+    .botoes-cadastro {
+        flex-direction: column;
+    }
+
+    .btn-enviar,
+    .btn-voltar-cadastro {
+        width: 100%;
+        min-width: 0;
+    }
+
     .receptor-detalhes {
         border-radius: 16px;
         padding: 20px 16px;
@@ -1102,9 +1205,45 @@
     }
 
     .btn-ajudar,
-    .btn-cadastrar-receptor {
+    .receptor-detalhes-cta .btn-cadastrar-receptor {
         display: block;
         width: 100%;
         margin: 8px 0 !important;
+    }
+
+    .stat-card {
+        padding: 12px 8px;
+        border-radius: 12px;
+    }
+
+    .stat-numero {
+        font-size: 1.3rem;
+    }
+
+    .receptor-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .receptor-acoes,
+    .receptor-botoes {
+        gap: 6px;
+    }
+
+    .receptor-btn,
+    .receptor-card .btn-editar,
+    .receptor-card .btn-excluir,
+    .btn-laudo,
+    .btn-ver-admin {
+        min-width: 0;
+        font-size: 0.75rem;
+        padding: 8px 10px;
+        flex: 1 1 100%;
+    }
+
+    .receptor-tipo {
+        width: 40px;
+        height: 40px;
+        font-size: 0.8rem;
     }
 }

@@ -1,0 +1,696 @@
+/* =========================================================
+   QUERO DOAR — CSS RESPONSIVO
+   ========================================================= */
+
+/* =========================================================
+   RESET E VARIÁVEIS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-banner: #7a0f1a;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #888;
+    --branco: #ffffff;
+    --verde: #2e7d32;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(139, 0, 0, 0.12);
+}
+
+/* =========================================================
+   HERO (topo)
+   ========================================================= */
+
+.hero-doar {
+    text-align: center;
+    padding: clamp(30px, 4vw, 60px) clamp(16px, 2vw, 40px);
+    margin: clamp(20px, 3vw, 40px) clamp(12px, 2vw, 40px) clamp(24px, 3vw, 40px) clamp(12px, 2vw, 40px);
+    background: linear-gradient(135deg, #7a0f1a, #5c0000);
+    border-radius: 24px;
+    color: white;
+    box-shadow: 0 12px 40px rgba(122, 15, 26, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-doar::before {
+    content: '';
+    position: absolute;
+    width: clamp(300px, 30vw, 500px);
+    height: clamp(300px, 30vw, 500px);
+    background: radial-gradient(circle, rgba(92, 0, 0, 0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -20%;
+    right: -10%;
+    pointer-events: none;
+}
+
+.hero-doar::after {
+    content: '';
+    position: absolute;
+    width: clamp(220px, 22vw, 380px);
+    height: clamp(220px, 22vw, 380px);
+    background: radial-gradient(circle, rgba(92, 0, 0, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -15%;
+    left: -8%;
+    pointer-events: none;
+}
+
+.hero-doar h1,
+.hero-doar p,
+.hero-doar .btn-hero {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-doar h1 {
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    margin: 0 0 12px 0;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.hero-sub {
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    margin: 0 0 clamp(20px, 2.5vw, 30px) 0;
+    opacity: 0.95;
+    line-height: 1.5;
+}
+
+.hero-sub strong {
+    color: #f5c6cb;
+    font-weight: 800;
+}
+
+.btn-hero {
+    display: inline-block;
+    background: white;
+    color: var(--vermelho-principal);
+    text-decoration: none;
+    padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3vw, 42px);
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-hero:hover {
+    background: #f5c6cb;
+    color: var(--vermelho-escuro);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   SEÇÕES DE INFO (título + conteúdo)
+   ========================================================= */
+
+.info-section {
+    max-width: 1100px;
+    margin: 0 auto clamp(30px, 4vw, 50px) auto;
+    padding: 0 clamp(16px, 2vw, 40px);
+}
+
+.info-section h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 clamp(18px, 2vw, 26px) 0;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* =========================================================
+   CARD INFO (Por que doar sangue?)
+   ========================================================= */
+
+.info-card {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(22px, 2.5vw, 36px);
+    box-shadow: var(--sombra-suave);
+    border-left: 6px solid var(--vermelho-principal);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1.5vw, 18px);
+    text-align: center;
+    align-items: center;
+}
+
+.info-icon {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1;
+}
+
+.info-card p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.info-card p strong {
+    color: var(--vermelho-principal);
+    font-weight: 800;
+}
+
+/* =========================================================
+   REQUISITOS GRID (Quem pode doar?)
+   ========================================================= */
+
+.requisitos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(12px, 1.5vw, 18px);
+}
+
+@media (min-width: 600px) {
+    .requisitos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .requisitos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.requisito-card {
+    background: var(--branco);
+    border-radius: 16px;
+    padding: clamp(18px, 2vw, 26px);
+    box-shadow: var(--sombra-suave);
+    border-top: 5px solid var(--vermelho-principal);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.requisito-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
+}
+
+.requisito-icon {
+    font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+    line-height: 1;
+}
+
+.requisito-card strong {
+    color: var(--vermelho-principal);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.requisito-card p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* =========================================================
+   CHECKLIST (Requisitos para doar)
+   ========================================================= */
+
+.checklist {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(10px, 1.2vw, 14px);
+    margin-bottom: clamp(16px, 2vw, 22px);
+}
+
+@media (min-width: 700px) {
+    .checklist {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--branco);
+    padding: clamp(12px, 1.4vw, 16px) clamp(16px, 1.8vw, 22px);
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+    border-left: 4px solid var(--verde);
+    transition: all 0.3s;
+}
+
+.check-item:hover {
+    transform: translateX(6px);
+    box-shadow: var(--sombra-hover);
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--verde);
+    color: white;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    font-weight: 900;
+    width: clamp(26px, 2.8vw, 32px);
+    height: clamp(26px, 2.8vw, 32px);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(46, 125, 50, 0.3);
+}
+
+.check-item p {
+    color: var(--texto-principal);
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    line-height: 1.4;
+    margin: 0;
+    font-weight: 500;
+}
+
+.aviso-triagem {
+    background: #fff8e1;
+    border-left: 5px solid #ffc107;
+    border-radius: 12px;
+    padding: clamp(14px, 1.8vw, 20px) clamp(18px, 2vw, 24px);
+    color: #856404;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.aviso-triagem em {
+    font-style: italic;
+    color: #856404;
+}
+
+/* =========================================================
+   DICAS GRID (Antes de doar)
+   ========================================================= */
+
+.dicas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 1.2vw, 16px);
+}
+
+@media (min-width: 700px) {
+    .dicas-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .dicas-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.dica-card {
+    background: var(--branco);
+    border-radius: 14px;
+    padding: clamp(14px, 1.6vw, 20px) clamp(10px, 1.2vw, 16px);
+    text-align: center;
+    box-shadow: var(--sombra-suave);
+    border-top: 4px solid var(--vermelho-principal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.dica-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+}
+
+.dica-card span {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    line-height: 1;
+}
+
+.dica-card p {
+    color: var(--texto-principal);
+    font-size: clamp(0.78rem, 0.92vw, 0.9rem);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    text-align: center;
+}
+
+/* =========================================================
+   DESTAQUE 4 VIDAS
+   ========================================================= */
+
+.destaque-vidas {
+    max-width: 900px;
+    margin: 0 auto clamp(30px, 4vw, 50px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    padding: clamp(30px, 4vw, 50px) clamp(20px, 3vw, 40px);
+    background: linear-gradient(135deg, #fff5f5, #ffe8e8);
+    border: 3px solid var(--vermelho-principal);
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(139, 0, 0, 0.15);
+}
+
+.destaque-icon {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1;
+    margin-bottom: 12px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.destaque-vidas h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 12px 0;
+    font-weight: 800;
+}
+
+.destaque-vidas p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.destaque-vidas p strong {
+    color: var(--vermelho-principal);
+    font-weight: 800;
+}
+
+/* =========================================================
+   CTA FINAL
+   ========================================================= */
+
+.cta-final {
+    max-width: 800px;
+    margin: 0 auto clamp(40px, 5vw, 70px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    padding: clamp(28px, 3.5vw, 44px);
+    background: var(--branco);
+    border-radius: 20px;
+    box-shadow: var(--sombra-suave);
+    border-top: 6px solid var(--vermelho-principal);
+    text-align: center;
+}
+
+.cta-final h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 12px 0;
+    font-weight: 800;
+}
+
+.cta-final p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.5;
+    margin: 0 0 22px 0;
+}
+
+.btn-cta {
+    display: inline-block;
+    background: var(--vermelho-principal);
+    color: white;
+    text-decoration: none;
+    padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3vw, 46px);
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.3);
+}
+
+.btn-cta:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(139, 0, 0, 0.45);
+}
+
+/* =========================================================
+   TELAS GRANDES (TV FULL HD — 1920px)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .hero-doar {
+        max-width: 1700px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 80px 60px;
+    }
+
+    .hero-doar h1 {
+        font-size: 3.6rem;
+    }
+
+    .hero-sub {
+        font-size: 1.35rem;
+    }
+
+    .btn-hero {
+        font-size: 1.25rem;
+        padding: 22px 54px;
+    }
+
+    .info-section {
+        max-width: 1400px;
+    }
+
+    .info-section h2 {
+        font-size: 2.2rem;
+    }
+
+    .info-card p {
+        font-size: 1.2rem;
+    }
+
+    .requisito-card strong {
+        font-size: 1.4rem;
+    }
+
+    .requisito-card p {
+        font-size: 1.05rem;
+    }
+
+    .check-item p {
+        font-size: 1.15rem;
+    }
+
+    .dica-card p {
+        font-size: 1rem;
+    }
+
+    .destaque-vidas {
+        max-width: 1100px;
+    }
+
+    .destaque-vidas h2 {
+        font-size: 2.2rem;
+    }
+
+    .destaque-vidas p {
+        font-size: 1.2rem;
+    }
+
+    .cta-final {
+        max-width: 1000px;
+    }
+
+    .cta-final h2 {
+        font-size: 2.2rem;
+    }
+
+    .cta-final p {
+        font-size: 1.2rem;
+    }
+
+    .btn-cta {
+        font-size: 1.3rem;
+        padding: 22px 56px;
+    }
+}
+
+/* =========================================================
+   TELAS ENORMES (TV 4K — 2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .hero-doar {
+        max-width: 2200px;
+        padding: 100px 80px;
+        border-radius: 30px;
+    }
+
+    .hero-doar h1 {
+        font-size: 4.5rem;
+    }
+
+    .hero-sub {
+        font-size: 1.55rem;
+    }
+
+    .btn-hero {
+        font-size: 1.5rem;
+        padding: 26px 68px;
+    }
+
+    .info-section {
+        max-width: 1900px;
+    }
+
+    .info-section h2 {
+        font-size: 2.8rem;
+    }
+
+    .info-card {
+        padding: 52px;
+        border-radius: 26px;
+    }
+
+    .info-icon {
+        font-size: 4.5rem;
+    }
+
+    .info-card p {
+        font-size: 1.4rem;
+    }
+
+    .requisito-card {
+        padding: 36px;
+        border-radius: 20px;
+    }
+
+    .requisito-icon {
+        font-size: 3rem;
+    }
+
+    .requisito-card strong {
+        font-size: 1.6rem;
+    }
+
+    .requisito-card p {
+        font-size: 1.2rem;
+    }
+
+    .check-item {
+        padding: 20px 28px;
+    }
+
+    .check-item p {
+        font-size: 1.3rem;
+    }
+
+    .check {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .dica-card {
+        padding: 26px 20px;
+    }
+
+    .dica-card span {
+        font-size: 2.6rem;
+    }
+
+    .dica-card p {
+        font-size: 1.15rem;
+    }
+
+    .destaque-vidas {
+        max-width: 1400px;
+        padding: 70px;
+    }
+
+    .destaque-icon {
+        font-size: 5rem;
+    }
+
+    .destaque-vidas h2 {
+        font-size: 2.8rem;
+    }
+
+    .destaque-vidas p {
+        font-size: 1.4rem;
+    }
+
+    .cta-final {
+        max-width: 1300px;
+        padding: 70px;
+    }
+
+    .cta-final h2 {
+        font-size: 2.8rem;
+    }
+
+    .cta-final p {
+        font-size: 1.4rem;
+    }
+
+    .btn-cta {
+        font-size: 1.6rem;
+        padding: 28px 72px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .hero-doar {
+        border-radius: 18px;
+        padding: 28px 18px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .btn-hero {
+        width: 100%;
+        text-align: center;
+    }
+
+    .info-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .destaque-vidas,
+    .cta-final {
+        border-radius: 18px;
+    }
+
+    .btn-cta {
+        width: 100%;
+        text-align: center;
+    }
+
+    .checklist {
+        grid-template-columns: 1fr;
+    }
+}
