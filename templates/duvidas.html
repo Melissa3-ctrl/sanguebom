@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Dúvidas Frequentes - Sangue Bom{% endblock %}
+
 {% block content %}
 
     <link rel="stylesheet" href="{% static 'css/duvidas.css' %}">
-
 
     <!-- TÍTULO -->
     <section class="duvidas-header">
@@ -227,14 +228,22 @@
                 <p class="verdade-texto">A dor é mínima, só a picada da agulha.</p>
             </div>
 
-            <div class="mito-card">
-                <div class="mito">❌ MITO</div>
-                <p class="mito-frase">"Doar sangue pode passar doença"</p>
-                <div class="verdade">✅ VERDADE</div>
-                <p class="verdade-texto">O material é 100% descartável e estéril.</p>
-            </div>
-
         </div>
     </section>
 
+    <!-- ============================================ -->
+    <!-- 💬 AINDA TEM DÚVIDAS? WHATSAPP               -->
+    <!-- ============================================ -->
+    <section class="wpp-duvidas">
+        <h3>❓ Ainda tem dúvidas?</h3>
+        <p>Não encontrou sua resposta? Fale com a gente pelo WhatsApp!</p>
+        <a href="https://wa.me/5561998819379?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Sangue%20Bom"
+           target="_blank" rel="noopener"
+           class="btn-wpp">
+            💬 Falar no WhatsApp
+        </a>
+    </section>
+
 {% endblock %}
+
+{% block lateral_direita %}{% endblock %}

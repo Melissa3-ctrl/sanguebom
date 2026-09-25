@@ -74,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'membros.context_processors.notificacoes_nao_lidas',  # 🆕
+                'membros.context_processors.notificacoes_nao_lidas',
             ],
         },
     },
@@ -134,7 +134,7 @@ USE_TZ = True
 
 
 # =========================================================
-# ARQUIVOS ESTÁTICOS
+# ARQUIVOS ESTÁTICOS (CSS, JS, imagens do site)
 # =========================================================
 
 STATIC_URL = 'static/'
@@ -143,6 +143,14 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'membros' / 'static',
 ]
+
+
+# =========================================================
+# MEDIA (uploads de arquivos — laudos médicos)
+# =========================================================
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # =========================================================

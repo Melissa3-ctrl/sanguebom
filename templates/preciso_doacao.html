@@ -7,68 +7,59 @@
 
     <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
 
-    <!-- CABEÇALHO -->
     <header class="preciso-header">
-        <h1>🩸 Quem Precisa de Doação</h1>
-        <p>Veja quem está precisando de sangue e ajude a salvar vidas</p>
-
-        {% if user.is_authenticated %}
-            <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
-                ➕ Cadastrar Pedido
-            </a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn-cadastrar-receptor">
-                🔐 Entre pra cadastrar
-            </a>
-        {% endif %}
+        <h1>🩸 Precisa de Doação?</h1>
+        <p>Nós conectamos você ao hemocentro mais próximo.</p>
     </header>
 
-    <!-- LISTA DE RECEPTORES -->
-    {% if receptores %}
-        <div class="receptores-grid">
-            {% for r in receptores %}
-                <article class="receptor-card urgencia-{{ r.urgencia }}">
-                    <div class="receptor-header">
-                        <span class="receptor-tipo">{{ r.tipo_sanguineo }}</span>
-                        <span class="receptor-urgencia">
-                            {% if r.urgencia == 'baixa' %}🟢 Baixa
-                            {% elif r.urgencia == 'media' %}🟡 Média
-                            {% else %}🔴 Alta
-                            {% endif %}
-                        </span>
-                    </div>
-
-                    <h3>{{ r.nome }}</h3>
-
-                    <p class="receptor-info">
-                        🏥 <strong>{{ r.hospital }}</strong>
-                    </p>
-
-                    <p class="receptor-info">
-                        📍 {{ r.cidade }}
-                    </p>
-
-                    {% if r.descricao %}
-                        <p class="receptor-descricao">{{ r.descricao|truncatewords:20 }}</p>
-                    {% endif %}
-
-                    <a href="{% url 'detalhes_receptor' r.id %}" class="receptor-btn">
-                        Ver detalhes →
-                    </a>
-                </article>
-            {% endfor %}
+    <div class="aviso-legal">
+        <div class="aviso-legal-icon">⚠️</div>
+        <div class="aviso-legal-texto">
+            <strong>Este site NÃO substitui o hemocentro ou o hospital.</strong>
+            <p>Ele serve apenas como <b>canal de contato</b>. Seu pedido será enviado <b>apenas para o hemocentro e o administrador</b> — <b>não fica visível publicamente</b>.</p>
+            <p class="aviso-legal-lgpd">🔒 Seus dados são tratados conforme a <b>LGPD</b>.</p>
         </div>
-    {% else %}
-        <div class="vazio">
-            <span>🩸</span>
-            <p>Nenhum pedido de doação no momento.</p>
-            {% if user.is_authenticated %}
-                <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
-                    ➕ Cadastrar primeiro pedido
-                </a>
-            {% endif %}
+    </div>
+
+    <section class="preciso-info">
+        <div class="preciso-card">
+            <div class="preciso-card-icone">📋</div>
+            <h2>Como funciona</h2>
+            <ol class="preciso-passos">
+                <li><b>1.</b> Você preenche o formulário com os dados do paciente.</li>
+                <li><b>2.</b> O hemocentro e o administrador recebem seu pedido.</li>
+                <li><b>3.</b> A equipe entra em contato com você.</li>
+                <li><b>4.</b> O hemocentro mobiliza doadores compatíveis.</li>
+            </ol>
+            <p class="preciso-aviso-privacidade">
+                🔒 <b>Seu pedido NÃO fica visível no site.</b>
+                Só o hemocentro e o administrador têm acesso.
+            </p>
         </div>
-    {% endif %}
+
+        <div class="preciso-card">
+            <div class="preciso-card-icone">💗</div>
+            <h2>Se você pode doar</h2>
+            <p>Doe sangue. Doe vida. Sua doação pode salvar até <b>4 vidas</b>.</p>
+            <p>Procure o hemocentro mais próximo ou agende sua doação pelo nosso site.</p>
+            <a href="{% url 'agendar_doacao' %}" class="btn-cadastrar-receptor">
+                🩸 Quero doar
+            </a>
+        </div>
+    </section>
+
+    <section class="preciso-cta">
+        {% if user.is_authenticated %}
+            <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
+                ➕ Cadastrar pedido de doação
+            </a>
+        {% else %}
+            <p>Faça login para cadastrar seu pedido:</p>
+            <a href="{% url 'login' %}" class="btn-cadastrar-receptor">
+                🔐 Entrar e cadastrar
+            </a>
+        {% endif %}
+    </section>
 
 {% endblock %}
 

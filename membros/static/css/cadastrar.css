@@ -1,0 +1,491 @@
+/* =========================================================
+   VARIÁVEIS
+   ========================================================= */
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-banner: #7a0000;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #888;
+    --branco: #ffffff;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(139, 0, 0, 0.12);
+}
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
+
+.cadastro-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto 60px auto;
+    padding: 0 clamp(16px, 2vw, 40px);
+    animation: fadeInUp 0.5s ease;
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.cadastro-cabecalho {
+    text-align: center;
+    margin-bottom: clamp(30px, 4vw, 50px);
+}
+
+.cadastro-cabecalho h1 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    margin: 0 0 10px 0;
+    font-weight: 800;
+}
+
+.cadastro-cabecalho p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+    margin: 0;
+}
+
+/* =========================================================
+   ETAPAS (1 - 2 - 3)
+   ========================================================= */
+
+.etapas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: clamp(30px, 4vw, 50px) 0;
+    gap: 10px;
+}
+
+.etapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.etapa .numero {
+    width: clamp(40px, 5vw, 55px);
+    height: clamp(40px, 5vw, 55px);
+    border-radius: 50%;
+    background: #e0e0e0;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    transition: 0.3s;
+}
+
+.etapa.ativa .numero {
+    background: var(--vermelho-principal);
+    color: white;
+    box-shadow: 0 4px 16px rgba(139, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.etapa span {
+    font-size: clamp(0.75rem, 1vw, 0.95rem);
+    color: #999;
+    font-weight: 600;
+    text-align: center;
+}
+
+.etapa.ativa span {
+    color: var(--vermelho-principal);
+    font-weight: bold;
+}
+
+.linha {
+    flex: 1;
+    height: 3px;
+    background: #e0e0e0;
+    margin-bottom: 25px;
+    border-radius: 2px;
+}
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+.cadastro-form {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(24px, 4vw, 50px);
+    box-shadow: var(--sombra-suave);
+    border-top: 5px solid var(--vermelho-principal);
+}
+
+.cadastro-form h2 {
+    color: var(--texto-principal);
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    margin: 0 0 clamp(20px, 3vw, 30px) 0;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    font-weight: 700;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.campo label {
+    color: #444;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+}
+
+.campo input,
+.campo select {
+    padding: clamp(12px, 1.5vw, 16px) clamp(14px, 1.5vw, 18px);
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    font-family: inherit;
+    transition: 0.3s;
+    outline: none;
+    width: 100%;
+    background: white;
+    color: var(--texto-principal);
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--vermelho-principal);
+    box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.1);
+}
+
+.campo small {
+    color: var(--texto-claro);
+    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+    margin-top: 3px;
+}
+
+/* DUAS COLUNAS */
+.duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 2vw, 24px);
+}
+
+@media (min-width: 600px) {
+    .duas-colunas {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =========================================================
+   CAMPO SENHA COM OLHO
+   ========================================================= */
+
+.campo-senha {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.campo-senha input {
+    padding-right: 55px;
+}
+
+.btn-olho {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.btn-olho:hover {
+    opacity: 0.7;
+}
+
+.btn-olho svg {
+    stroke: #555;
+    transition: 0.3s;
+    width: 22px;
+    height: 22px;
+}
+
+.btn-olho:hover svg {
+    stroke: var(--vermelho-principal);
+}
+
+/* =========================================================
+   RESUMO (ETAPA 3)
+   ========================================================= */
+
+.resumo-cadastro {
+    background: #fcf9f2;
+    padding: clamp(20px, 2.5vw, 30px);
+    border-radius: 15px;
+    margin-bottom: clamp(24px, 3vw, 35px);
+    border-left: 5px solid var(--vermelho-principal);
+}
+
+.resumo-cadastro h3 {
+    color: var(--vermelho-principal);
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    letter-spacing: 1.5px;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.dados-cadastro {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 600px) {
+    .dados-cadastro {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.dados-cadastro strong {
+    color: var(--vermelho-banner);
+    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.dados-cadastro p {
+    color: var(--texto-principal);
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    margin: 0;
+    word-break: break-word;
+}
+
+.link-editar {
+    color: var(--vermelho-principal);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.link-editar:hover {
+    text-decoration: underline;
+    transform: translateX(3px);
+}
+
+/* =========================================================
+   TERMOS (LGPD)
+   ========================================================= */
+
+.termos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: clamp(20px, 2.5vw, 30px) 0;
+    padding: clamp(16px, 2vw, 24px);
+    background: #fcf9f2;
+    border-radius: 12px;
+}
+
+.termos label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    color: #555;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.termos input[type="checkbox"] {
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--vermelho-principal);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.botoes-cadastro {
+    display: flex;
+    gap: clamp(12px, 1.5vw, 20px);
+    margin-top: clamp(24px, 3vw, 35px);
+    flex-wrap: wrap;
+}
+
+.btn-continuar,
+.btn-voltar-cadastro {
+    padding: clamp(14px, 1.5vw, 18px) clamp(24px, 3vw, 40px);
+    border-radius: 12px;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.btn-continuar {
+    background: var(--vermelho-principal);
+    color: white;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+}
+
+.btn-continuar:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(139, 0, 0, 0.4);
+}
+
+.btn-voltar-cadastro {
+    background: transparent;
+    color: var(--vermelho-principal);
+    border: 3px solid var(--vermelho-principal);
+}
+
+.btn-voltar-cadastro:hover {
+    background: var(--vermelho-principal);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* =========================================================
+   ERRO / SUCESSO
+   ========================================================= */
+
+.cadastro-erro {
+    background: #ffebee;
+    color: #c62828;
+    padding: clamp(14px, 2vw, 18px) clamp(18px, 2vw, 24px);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    border-left: 5px solid #d32f2f;
+    text-align: center;
+    font-weight: 600;
+}
+
+.cadastro-sucesso {
+    text-align: center;
+    padding: clamp(30px, 4vw, 60px) 0;
+}
+
+.caixa-sucesso {
+    background: #fcf9f2;
+    padding: clamp(30px, 4vw, 60px);
+    border-radius: 20px;
+    border-left: 5px solid var(--vermelho-principal);
+}
+
+.icone-sucesso {
+    font-size: clamp(3rem, 5vw, 5rem);
+    margin-bottom: 20px;
+}
+
+.cadastro-sucesso h1 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 20px 0;
+    font-weight: 800;
+}
+
+.cadastro-sucesso p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.cadastro-sucesso strong {
+    color: var(--vermelho-principal);
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   TELAS MUITO GRANDES (4K)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .cadastro-container {
+        max-width: 1000px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .cadastro-container {
+        max-width: 1200px;
+    }
+
+    .cadastro-form {
+        padding: 60px 80px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .cadastro-form {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .etapa span {
+        font-size: 0.7rem;
+    }
+
+    .botoes-cadastro {
+        flex-direction: column;
+    }
+
+    .btn-continuar,
+    .btn-voltar-cadastro {
+        width: 100%;
+    }
+}

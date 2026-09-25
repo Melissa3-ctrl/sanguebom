@@ -112,7 +112,8 @@ urlpatterns = [
 
 
     # =========================================================
-    # 🆕 PRECISO DE DOAÇÃO (RECEPTOR)
+    # PRECISO DE DOAÇÃO (RECEPTOR) — REATIVADO (SÓ INFO + CADASTRO)
+    # O pedido vai SÓ pro admin/hemocentro, não fica visível
     # =========================================================
 
     path(
@@ -127,11 +128,42 @@ urlpatterns = [
         name='cadastrar_receptor'
     ),
 
-    path(
-        'preciso-doacao/<int:id>/',
-        views.detalhes_receptor,
-        name='detalhes_receptor'
-    ),
+    # As rotas abaixo continuam ESCONDIDAS (não são usadas):
+
+    # path(
+    #     'preciso-doacao/<int:id>/',
+    #     views.detalhes_receptor,
+    #     name='detalhes_receptor'
+    # ),
+
+    # path(
+    #     'preciso-doacao/<int:id>/ajudar/',
+    #     views.quero_ajudar,
+    #     name='quero_ajudar'
+    # ),
+
+
+    # =========================================================
+    # MEUS PEDIDOS — ESCONDIDO (não é usado)
+    # =========================================================
+
+    # path(
+    #     'meus-pedidos/',
+    #     views.meus_pedidos,
+    #     name='meus_pedidos'
+    # ),
+
+    # path(
+    #     'meus-pedidos/<int:id>/editar/',
+    #     views.editar_pedido,
+    #     name='editar_pedido'
+    # ),
+
+    # path(
+    #     'meus-pedidos/<int:id>/excluir/',
+    #     views.excluir_pedido,
+    #     name='excluir_pedido'
+    # ),
 
 
     # =========================================================
@@ -173,6 +205,24 @@ urlpatterns = [
         name='painel_hemocentro'
     ),
 
+        path(
+        'painel/pedido/<int:id>/',
+        views.detalhes_receptor_hemocentro,
+        name='detalhes_receptor_hemocentro'
+    ),
+
+     path(
+            'painel/status/<int:id>/',
+            views.alterar_status,
+            name='alterar_status'
+        ),
+    
+        path(
+            'painel/exportar-csv/',
+            views.exportar_csv,
+            name='exportar_csv'
+        ),
+        
 
     # =========================================================
     # CRUD DE AGENDAMENTOS
@@ -195,22 +245,4 @@ urlpatterns = [
         views.excluir_agendamento,
         name='excluir_agendamento'
     ),
-
-
-    # =========================================================
-    # PAINEL DO HEMOCENTRO (AÇÕES)
-    # =========================================================
-
-    path(
-        'painel/status/<int:id>/',
-        views.alterar_status,
-        name='alterar_status'
-    ),
-
-    path(
-        'painel/exportar-csv/',
-        views.exportar_csv,
-        name='exportar_csv'
-    ),
-
 ]

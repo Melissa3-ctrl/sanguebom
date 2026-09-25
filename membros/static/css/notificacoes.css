@@ -1,39 +1,72 @@
 /* ============================================ */
+/* VARIÁVEIS                                      */
+/* ============================================ */
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --verde-principal: #4caf50;
+    --verde-escuro: #2e7d32;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #999;
+    --branco: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ============================================ */
 /* HEADER                                       */
 /* ============================================ */
 
 .notificacoes-header {
     text-align: center;
-    margin: 30px 0 40px 0;
+    margin: clamp(20px, 3vw, 40px) auto clamp(24px, 3vw, 40px) auto;
+    padding: 0 clamp(16px, 2vw, 40px);
+    max-width: 900px;
 }
 
 .notificacoes-header h1 {
-    font-size: 2.2em;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
     color: #b30000;
     margin-bottom: 10px;
+    font-weight: 800;
 }
 
 .notificacoes-header p {
     color: #666;
-    font-size: 1.05em;
+    font-size: clamp(0.9rem, 1.15vw, 1.05rem);
     margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.notificacoes-header p strong {
+    color: var(--vermelho-principal);
+    font-size: 1.15em;
 }
 
 .btn-marcar-todas {
     display: inline-block;
-    background: #4caf50;
+    background: var(--verde-principal);
     color: white;
-    padding: 10px 20px;
+    padding: clamp(10px, 1.2vw, 13px) clamp(20px, 2.2vw, 28px);
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.95em;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
     transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
 }
 
 .btn-marcar-todas:hover {
-    background: #2e7d32;
+    background: var(--verde-escuro);
     transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(76, 175, 80, 0.4);
 }
 
 /* ============================================ */
@@ -43,16 +76,20 @@
 .notificacoes-lista {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-bottom: 40px;
+    gap: clamp(12px, 1.5vw, 18px);
+    margin-bottom: clamp(30px, 4vw, 50px);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 clamp(16px, 2vw, 40px);
 }
 
 .notificacao-card {
     display: flex;
-    gap: 20px;
+    gap: clamp(14px, 1.6vw, 20px);
     background: white;
     border-radius: 12px;
-    padding: 24px;
+    padding: clamp(16px, 2vw, 24px);
     border-left: 5px solid #ddd;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     transition: all 0.3s;
@@ -70,10 +107,10 @@
 }
 
 .notificacao-icon {
-    font-size: 2.2em;
+    font-size: clamp(1.6rem, 2.2vw, 2.2rem);
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: clamp(46px, 5vw, 60px);
+    height: clamp(46px, 5vw, 60px);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -83,12 +120,14 @@
 
 .notificacao-conteudo {
     flex: 1;
+    min-width: 0;
 }
 
 .notificacao-conteudo h3 {
     margin: 0 0 8px 0;
-    font-size: 1.15em;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
     color: #333;
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -98,17 +137,25 @@
 .badge-nova {
     background: #d32f2f;
     color: white;
-    font-size: 0.65em;
+    font-size: clamp(0.6rem, 0.7vw, 0.65rem);
     padding: 3px 8px;
     border-radius: 12px;
     font-weight: bold;
     letter-spacing: 1px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .notificacao-conteudo p {
     color: #666;
     line-height: 1.6;
     margin: 0 0 16px 0;
+    font-size: clamp(0.85rem, 1vw, 0.98rem);
+    word-break: break-word;
 }
 
 .notificacao-acoes {
@@ -121,24 +168,28 @@
 
 .notificacao-btn {
     display: inline-block;
-    padding: 8px 18px;
+    padding: clamp(7px, 0.9vw, 9px) clamp(14px, 1.6vw, 20px);
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: clamp(0.78rem, 0.92vw, 0.9rem);
     transition: all 0.2s;
-    background: #4caf50;
+    background: var(--verde-principal);
     color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    white-space: nowrap;
 }
 
 .notificacao-btn:hover {
-    background: #2e7d32;
+    background: var(--verde-escuro);
     transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(76, 175, 80, 0.35);
 }
 
 .notificacao-data {
     color: #999;
-    font-size: 0.85em;
+    font-size: clamp(0.72rem, 0.85vw, 0.85rem);
+    white-space: nowrap;
 }
 
 /* ============================================ */
@@ -191,46 +242,192 @@
 
 .notificacoes-vazio {
     text-align: center;
-    padding: 60px 20px;
+    padding: clamp(40px, 5vw, 60px) clamp(16px, 2vw, 20px);
     background: #fafafa;
     border-radius: 12px;
     border: 2px dashed #ddd;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .notificacoes-vazio span {
-    font-size: 3em;
+    font-size: clamp(2.5rem, 4vw, 3rem);
     display: block;
     margin-bottom: 16px;
+    opacity: 0.6;
 }
 
 .notificacoes-vazio p {
     color: #888;
-    font-size: 1.05em;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
     font-style: italic;
+    margin: 0;
 }
 
 /* ============================================ */
-/* RESPONSIVO                                   */
+/* RESPONSIVO — CELULAR PEQUENO (até 480px)     */
+/* ============================================ */
+
+@media (max-width: 480px) {
+    .notificacao-card {
+        padding: 14px;
+        gap: 12px;
+        border-radius: 10px;
+    }
+
+    .notificacao-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.4rem;
+    }
+
+    .notificacao-acoes {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .notificacao-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-marcar-todas {
+        width: 100%;
+        text-align: center;
+    }
+
+    .badge-nova {
+        font-size: 0.58rem;
+        padding: 2px 6px;
+    }
+}
+
+/* ============================================ */
+/* RESPONSIVO — TABLET (até 768px)              */
 /* ============================================ */
 
 @media (max-width: 768px) {
     .notificacao-card {
         flex-direction: column;
-        padding: 20px;
+        padding: 18px;
     }
 
     .notificacao-icon {
         width: 50px;
         height: 50px;
-        font-size: 1.8em;
-    }
-
-    .notificacoes-header h1 {
-        font-size: 1.7em;
+        font-size: 1.7rem;
     }
 
     .notificacao-acoes {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+/* ============================================ */
+/* TELAS GRANDES (TV FULL HD — 1920px)          */
+/* ============================================ */
+
+@media (min-width: 1920px) {
+    .notificacoes-lista {
+        max-width: 1300px;
+    }
+
+    .notificacao-card {
+        padding: 28px;
+        border-radius: 16px;
+        gap: 24px;
+    }
+
+    .notificacao-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2.6rem;
+    }
+
+    .notificacao-conteudo h3 {
+        font-size: 1.4rem;
+    }
+
+    .notificacao-conteudo p {
+        font-size: 1.15rem;
+    }
+
+    .notificacao-btn {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+
+    .notificacao-data {
+        font-size: 1rem;
+    }
+
+    .btn-marcar-todas {
+        font-size: 1.1rem;
+        padding: 14px 32px;
+    }
+
+    .notificacoes-header h1 {
+        font-size: 2.8rem;
+    }
+}
+
+/* ============================================ */
+/* TELAS ENORMES (TV 4K — 2560px+)              */
+/* ============================================ */
+
+@media (min-width: 2560px) {
+    .notificacoes-lista {
+        max-width: 1700px;
+        gap: 26px;
+    }
+
+    .notificacao-card {
+        padding: 38px;
+        border-radius: 20px;
+        gap: 28px;
+    }
+
+    .notificacao-icon {
+        width: 84px;
+        height: 84px;
+        font-size: 3.2rem;
+    }
+
+    .notificacao-conteudo h3 {
+        font-size: 1.7rem;
+    }
+
+    .notificacao-conteudo p {
+        font-size: 1.35rem;
+        line-height: 1.7;
+    }
+
+    .notificacao-btn {
+        font-size: 1.15rem;
+        padding: 15px 30px;
+    }
+
+    .notificacao-data {
+        font-size: 1.15rem;
+    }
+
+    .badge-nova {
+        font-size: 0.85rem;
+        padding: 5px 12px;
+    }
+
+    .btn-marcar-todas {
+        font-size: 1.25rem;
+        padding: 18px 40px;
+    }
+
+    .notificacoes-header h1 {
+        font-size: 3.4rem;
+    }
+
+    .notificacoes-header p {
+        font-size: 1.35rem;
     }
 }

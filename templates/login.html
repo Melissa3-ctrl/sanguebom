@@ -6,169 +6,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sangue Bom</title>
 
-    <!-- 🩸 FAVICON -->
     <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
 
-    <!-- FONTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- 🎨 CSS DA PÁGINA DE LOGIN -->
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
 
-    <!-- ========== LADO ESQUERDO ========== -->
-    <div class="lado-ilustracao">
+    <div class="login-wrapper">
 
-        <!-- LOGO -->
-        <div class="logo-area">
-            <div class="logo-gota"><span>🩸</span></div>
-            <div class="logo-texto">
-                <h1>Sangue <span>Bom</span></h1>
-                <p>Conectando doadores a quem precisa</p>
-            </div>
-        </div>
+        <!-- ========== LADO ESQUERDO ========== -->
+        <div class="lado-ilustracao">
 
-        <!-- TÍTULO -->
-        <h2>Faça parte <br> dessa <em>corrente.</em></h2>
-        <p class="subtitulo-ilustracao">Seu primeiro passo começa aqui.</p>
-
-        <!-- MOSAICO POLAROID -->
-        <div class="mural-polaroid">
-
-            <div class="polaroid p1">
-                <img src="{% static 'img/domingas.jpeg' %}" alt="Domingas">
-                <span class="legenda">Domingas</span>
+            <div class="logo-area">
+                <div class="logo-gota"><span>🩸</span></div>
+                <div class="logo-texto">
+                    <h1>Sangue <span>Bom</span></h1>
+                    <p>Conectando doadores a quem precisa</p>
+                </div>
             </div>
 
-            <div class="polaroid p2">
-                <img src="{% static 'img/melissa.jpeg' %}" alt="Melissa">
-                <span class="legenda">Melissa</span>
-            </div>
+            <h2>Faça parte <br> dessa <em>corrente.</em></h2>
+            <p class="subtitulo-ilustracao">Seu primeiro passo começa aqui.</p>
 
-            <div class="polaroid p3">
-                <img src="{% static 'img/emmanuel.jpeg' %}" alt="Emmanuel">
-                <span class="legenda">Emmanuel</span>
-            </div>
+            <div class="mural-polaroid">
 
-            <div class="polaroid p4">
-                <img src="{% static 'img/layssa.jpeg' %}" alt="Layssa">
-                <span class="legenda">Layssa</span>
-            </div>
-
-            <div class="polaroid p5">
-                <img src="{% static 'img/bolsa.jpeg' %}" alt="Bolsa de sangue">
-                <span class="legenda">Bolsa de sangue 🩸</span>
-            </div>
-
-            <div class="polaroid p6 destaque">
-                <img src="{% static 'img/equipe.jpeg' %}" alt="Equipe Sangue Bom">
-                <span class="legenda">Equipe Sangue Bom 💗</span>
-            </div>
-
-        </div>
-
-        <!-- FRASE FINAL -->
-        <p class="frase-rodape">
-            Uma pequena atitude<br>
-            pode fazer uma grande diferença.
-        </p>
-
-    </div>
-
-    <!-- ========== LADO DIREITO ========== -->
-    <div class="lado-formulario">
-
-        <div class="card-login">
-
-            <h2><em>Bem-vindo de volta</em></h2>
-            <p class="subtitulo">Vamos juntos salvar vidas!</p>
-
-            <!-- PASSOS -->
-            <div class="passos">
-                <div class="passo ativo"><span>1</span><p>Login</p></div>
-                <div class="passo"><span>2</span><p>Doação</p></div>
-                <div class="passo"><span>3</span><p>Pronto</p></div>
-            </div>
-
-            <!-- SEÇÃO -->
-            <div class="secao-titulo">🔐 Acesse sua conta</div>
-            <p class="secao-desc">Entre para agendar sua doação.</p>
-
-            {% if erro %}
-                <div class="login-erro">⚠️ {{ erro }}</div>
-            {% endif %}
-
-            <!-- FORM -->
-            <form method="POST" id="form-login" onsubmit="mostrarLoading()">
-                {% csrf_token %}
-
-                <div class="campo">
-                    <label for="email">E-mail *</label>
-                    <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required autofocus>
+                <div class="polaroid p1">
+                    <img src="{% static 'img/domingas.jpeg' %}" alt="Domingas">
+                    <span class="legenda">Domingas</span>
                 </div>
 
-                <div class="campo">
-                    <label for="senha">Senha *</label>
-                    <div class="campo-senha">
-                        <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
-                        <button type="button" class="btn-olho" onclick="mostrarSenha()" aria-label="Mostrar senha">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                <line x1="1" y1="1" x2="23" y2="23"></line>
-                            </svg>
-                        </button>
+                <div class="polaroid p2">
+                    <img src="{% static 'img/melissa.jpeg' %}" alt="Melissa">
+                    <span class="legenda">Melissa</span>
+                </div>
+
+                <div class="polaroid p3">
+                    <img src="{% static 'img/emmanuel.jpeg' %}" alt="Emmanuel">
+                    <span class="legenda">Emmanuel</span>
+                </div>
+
+                <div class="polaroid p4">
+                    <img src="{% static 'img/layssa.jpeg' %}" alt="Layssa">
+                    <span class="legenda">Layssa</span>
+                </div>
+
+                <div class="polaroid p5">
+                    <img src="{% static 'img/bolsa.jpeg' %}" alt="Bolsa de sangue">
+                    <span class="legenda">Bolsa de sangue 🩸</span>
+                </div>
+
+                <div class="polaroid p6 destaque">
+                    <img src="{% static 'img/equipe.jpeg' %}" alt="Equipe Sangue Bom">
+                    <span class="legenda">Equipe Sangue Bom 💗</span>
+                </div>
+
+            </div>
+
+            <p class="frase-rodape">
+                Uma pequena atitude<br>
+                pode fazer uma grande diferença.
+            </p>
+
+        </div>
+
+        <!-- ========== LADO DIREITO ========== -->
+        <div class="lado-formulario">
+
+            <div class="card-login">
+
+                <h2><em>Bem-vindo de volta</em></h2>
+                <p class="subtitulo">Vamos juntos salvar vidas!</p>
+
+                <div class="passos">
+                    <div class="passo ativo"><span>1</span><p>Login</p></div>
+                    <div class="passo"><span>2</span><p>Doação</p></div>
+                    <div class="passo"><span>3</span><p>Pronto</p></div>
+                </div>
+
+                <div class="secao-titulo">🔐 Acesse sua conta</div>
+                <p class="secao-desc">Entre para agendar sua doação.</p>
+
+                {% if erro %}
+                    <div class="login-erro">⚠️ {{ erro }}</div>
+                {% endif %}
+
+                <form method="POST" id="form-login" onsubmit="mostrarLoading()">
+                    {% csrf_token %}
+
+                    <div class="campo">
+                        <label for="email">E-mail *</label>
+                        <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required autofocus>
                     </div>
+
+                    <div class="campo">
+                        <label for="senha">Senha *</label>
+                        <div class="campo-senha">
+                            <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                            <button type="button" class="btn-olho" onclick="mostrarSenha()" aria-label="Mostrar senha">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="campo-lembrar">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="lembrar" id="lembrar">
+                            <span class="checkmark"></span>
+                            <span class="texto-lembrar">Lembrar de mim</span>
+                        </label>
+                        <a href="{% url 'recuperar_senha' %}" class="link-esqueci-inline">Esqueci minha senha</a>
+                    </div>
+
+                    <button type="submit" class="btn-continuar" id="btn-entrar">
+                        <span class="btn-texto">🔓 Entrar</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Entrando...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="rodape-form">
+                    <span class="icone">🩸</span>
+                    <p>Doar sangue é um gesto de amor.<br>E você pode fazer parte disso.</p>
                 </div>
 
-                <!-- LEMBRAR DE MIM -->
-                <div class="campo-lembrar">
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="lembrar" id="lembrar">
-                        <span class="checkmark"></span>
-                        <span class="texto-lembrar">Lembrar de mim</span>
-                    </label>
-                    <a href="{% url 'recuperar_senha' %}" class="link-esqueci-inline">Esqueci minha senha</a>
+                <div class="criar-conta-box">
+                    <p class="texto-criar">Ainda não tem conta?</p>
+                    <a href="{% url 'cadastro' %}" class="btn-criar-conta-destaque">
+                        ✨ Criar minha conta
+                    </a>
                 </div>
 
-                <button type="submit" class="btn-continuar" id="btn-entrar">
-                    <span class="btn-texto">🔓 Entrar</span>
-                    <span class="btn-loading" style="display: none;">
-                        <span class="spinner"></span> Entrando...
-                    </span>
-                </button>
-            </form>
-
-            <!-- RODAPÉ DO FORM -->
-            <div class="rodape-form">
-                <span class="icone">🩸</span>
-                <p>Doar sangue é um gesto de amor.<br>E você pode fazer parte disso.</p>
-            </div>
-
-            <!-- BOTÃO CRIAR CONTA (DESTACADO) -->
-            <div class="criar-conta-box">
-                <p class="texto-criar">Ainda não tem conta?</p>
-                <a href="{% url 'cadastro' %}" class="btn-criar-conta-destaque">
-                    ✨ Criar minha conta
+                <a href="{% url 'home' %}" class="btn-voltar-card">
+                    <span class="btn-voltar-seta">←</span>
+                    <span>Voltar ao início</span>
                 </a>
-            </div>
 
-            <!-- BOTÃO VOLTAR -->
-            <a href="{% url 'home' %}" class="btn-voltar-card">
-                <span class="btn-voltar-seta">←</span>
-                <span>Voltar ao início</span>
-            </a>
+            </div>
 
         </div>
-         {% block lateral_direita %}{% endblock %}
+
     </div>
 
     <script>
-        // ==========================================
-        // MOSTRAR / OCULTAR SENHA
-        // ==========================================
         function mostrarSenha() {
             const input = document.getElementById('senha');
             const botao = document.querySelector('.btn-olho');
@@ -192,9 +179,6 @@
             }
         }
 
-        // ==========================================
-        // LOADING NO BOTÃO ENTRAR
-        // ==========================================
         function mostrarLoading() {
             const btn = document.getElementById('btn-entrar');
             const texto = btn.querySelector('.btn-texto');

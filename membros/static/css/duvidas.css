@@ -1,101 +1,138 @@
-/* ============================================ */
-/* HEADER                                       */
-/* ============================================ */
+/* =========================================================
+   RESET E VARIÁVEIS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #888;
+    --branco: #ffffff;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(139, 0, 0, 0.12);
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
 
 .duvidas-header {
     text-align: center;
-    margin: 30px 0 20px 0;
+    margin: 30px auto 30px auto;
+    padding: 0 clamp(16px, 2vw, 40px);
+    max-width: 1000px;
 }
 
 .duvidas-header h1 {
-    font-size: 2.2em;
-    color: #b30000;
-    margin-bottom: 10px;
+    color: var(--vermelho-principal);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin: 0 0 12px 0;
+    font-weight: 800;
 }
 
 .duvidas-header p {
-    color: #666;
-    font-size: 1.1em;
+    color: var(--texto-secundario);
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    margin: 0;
+    line-height: 1.5;
 }
 
-/* ============================================ */
-/* NAVEGAÇÃO RÁPIDA                             */
-/* ============================================ */
+/* =========================================================
+   NAVEGAÇÃO RÁPIDA (chips)
+   ========================================================= */
 
 .duvidas-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    background: #fcf9f2;
-    padding: 16px;
-    border-radius: 12px;
-    margin: 20px 0 40px 0;
-    border: 1px solid #f0e6d2;
+    gap: clamp(8px, 1vw, 14px);
+    padding: 0 clamp(16px, 2vw, 40px);
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
 }
 
 .duvidas-nav a {
-    color: #b30000;
+    display: inline-block;
+    background: var(--branco);
+    color: var(--vermelho-principal);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9em;
-    padding: 8px 14px;
-    border-radius: 20px;
-    background: white;
-    border: 1px solid #f0e6d2;
-    transition: all 0.2s;
+    padding: clamp(8px, 1vw, 12px) clamp(14px, 1.5vw, 22px);
+    border-radius: 50px;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    font-weight: 600;
+    border: 2px solid var(--vermelho-borda);
+    transition: all 0.3s;
+    box-shadow: var(--sombra-suave);
+    white-space: nowrap;
 }
 
 .duvidas-nav a:hover {
-    background: #b30000;
+    background: var(--vermelho-principal);
     color: white;
-    transform: translateY(-2px);
+    border-color: var(--vermelho-principal);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-hover);
 }
 
-/* ============================================ */
-/* FAQ (ACCORDION)                              */
-/* ============================================ */
+/* =========================================================
+   SEÇÕES FAQ
+   ========================================================= */
 
 .faq-section {
-    margin: 40px 0;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    padding: 0 clamp(16px, 2vw, 40px);
 }
 
 .faq-section h2 {
-    color: #b30000;
-    font-size: 1.6em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #f0e6d2;
-    padding-bottom: 10px;
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 20px 0;
+    font-weight: 800;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--vermelho-borda);
 }
 
+/* =========================================================
+   ITEM FAQ (details/summary)
+   ========================================================= */
+
 .faq-item {
-    background: white;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    background: var(--branco);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra-suave);
+    border-left: 5px solid var(--vermelho-principal);
+    transition: all 0.3s;
     overflow: hidden;
-    transition: box-shadow 0.2s;
 }
 
 .faq-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--sombra-hover);
 }
 
 .faq-item[open] {
-    border-color: #b30000;
-    box-shadow: 0 4px 16px rgba(179, 0, 0, 0.1);
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
 }
 
 .faq-item summary {
-    padding: 18px 20px;
+    padding: clamp(16px, 2vw, 22px) clamp(20px, 2vw, 26px);
     cursor: pointer;
-    font-weight: bold;
-    color: #333;
-    font-size: 1.05em;
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    font-weight: 700;
+    color: var(--texto-principal);
     list-style: none;
     position: relative;
-    padding-right: 50px;
-    transition: background 0.2s;
+    padding-right: 60px;
+    transition: color 0.2s;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -103,155 +140,321 @@
 }
 
 .faq-item summary::after {
-    content: '+';
+    content: "▼";
     position: absolute;
-    right: 20px;
+    right: clamp(20px, 2vw, 26px);
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.5em;
-    color: #b30000;
-    font-weight: bold;
+    color: var(--vermelho-principal);
+    font-size: 0.8em;
     transition: transform 0.3s;
 }
 
 .faq-item[open] summary::after {
-    content: '−';
     transform: translateY(-50%) rotate(180deg);
 }
 
 .faq-item summary:hover {
-    background: #fcf9f2;
-}
-
-.faq-item[open] summary {
-    background: #fcf9f2;
-    color: #b30000;
+    color: var(--vermelho-principal);
 }
 
 .faq-item p {
-    padding: 0 20px 20px 20px;
-    color: #555;
-    line-height: 1.7;
+    padding: 0 clamp(20px, 2vw, 26px) clamp(16px, 2vw, 22px) clamp(20px, 2vw, 26px);
     margin: 0;
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1rem);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+}
+
+.faq-item p strong {
+    color: var(--vermelho-principal);
 }
 
 .faq-item p a {
-    color: #b30000;
-    font-weight: bold;
+    color: var(--vermelho-claro);
+    font-weight: 700;
     text-decoration: underline;
 }
 
-/* ============================================ */
-/* MITOS E VERDADES                             */
-/* ============================================ */
+/* =========================================================
+   MITOS E VERDADES
+   ========================================================= */
 
 .mitos-section {
-    margin: 60px 0 40px 0;
+    max-width: 1300px;
+    margin: 0 auto 60px auto;
+    padding: 0 clamp(16px, 2vw, 40px);
 }
 
 .mitos-section h2 {
-    color: #b30000;
-    font-size: 1.6em;
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 8px 0;
+    font-weight: 800;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .mitos-sub {
+    color: var(--texto-secundario);
     text-align: center;
-    color: #666;
-    margin-bottom: 30px;
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    margin: 0 0 30px 0;
 }
 
 .mitos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 1.8vw, 24px);
 }
 
+/* TABLET: 2 colunas */
+@media (min-width: 700px) {
+    .mitos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* NOTEBOOK / TV: 3 colunas */
+@media (min-width: 1024px) {
+    .mitos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* TV 4K */
+@media (min-width: 1920px) {
+    .mitos-grid {
+        gap: 28px;
+        max-width: 1700px;
+        margin: 0 auto;
+    }
+}
+
+/* CARD DE MITO */
 .mito-card {
-    background: white;
-    border: 2px solid #f0e6d2;
-    border-radius: 12px;
-    padding: 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-}
-
-.mito-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #ff4444, #4caf50);
+    background: var(--branco);
+    border-radius: 18px;
+    padding: clamp(20px, 2.2vw, 28px);
+    box-shadow: var(--sombra-suave);
+    border-top: 5px solid var(--vermelho-principal);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease both;
+    height: 100%;
 }
 
 .mito-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
 }
 
 .mito {
+    display: inline-block;
     background: #ffebee;
     color: #c62828;
-    font-weight: bold;
-    font-size: 0.85em;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 12px;
+    font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+    font-weight: 800;
     letter-spacing: 1px;
+    align-self: flex-start;
 }
 
 .mito-frase {
-    font-size: 1.05em;
-    color: #333;
+    color: var(--texto-principal);
+    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+    font-weight: 700;
     font-style: italic;
-    margin: 0 0 16px 0;
-    min-height: 50px;
+    margin: 0;
     line-height: 1.4;
+    flex-grow: 1;
 }
 
 .verdade {
+    display: inline-block;
     background: #e8f5e9;
     color: #2e7d32;
-    font-weight: bold;
-    font-size: 0.85em;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 10px;
+    font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+    font-weight: 800;
     letter-spacing: 1px;
+    align-self: flex-start;
+    margin-top: 4px;
 }
 
 .verdade-texto {
-    color: #555;
-    font-size: 0.95em;
+    color: var(--texto-secundario);
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
     line-height: 1.5;
     margin: 0;
 }
 
-/* ============================================ */
-/* RESPONSIVO                                   */
-/* ============================================ */
+/* =========================================================
+   SEÇÃO WHATSAPP
+   ========================================================= */
 
-@media (max-width: 768px) {
-    .duvidas-nav {
-        flex-direction: column;
-        align-items: stretch;
+.wpp-duvidas {
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+    border: 3px solid var(--vermelho-principal);
+    border-radius: 20px;
+    padding: clamp(28px, 3.5vw, 44px);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+    margin-left: clamp(16px, 2vw, 40px);
+    margin-right: clamp(16px, 2vw, 40px);
+    box-shadow: var(--sombra-suave);
+}
+
+.wpp-duvidas h3 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+    margin: 0 0 12px 0;
+    font-weight: 800;
+}
+
+.wpp-duvidas p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.5;
+    margin: 0 0 22px 0;
+}
+
+.btn-wpp {
+    display: inline-block;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3vw, 42px);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+}
+
+.btn-wpp:hover {
+    background: #128c7e;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, 0.45);
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* =========================================================
+   TELAS MUITO GRANDES (TV FULL HD / 4K)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .faq-section {
+        max-width: 1200px;
     }
 
-    .duvidas-nav a {
-        text-align: center;
+    .mitos-section {
+        max-width: 1700px;
+    }
+
+    .duvidas-nav {
+        max-width: 1400px;
+    }
+
+    .faq-item summary {
+        font-size: 1.2rem;
+        padding: 26px 32px;
+    }
+
+    .faq-item p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 2560px) {
+    .faq-section {
+        max-width: 1500px;
+    }
+
+    .mitos-section {
+        max-width: 2200px;
     }
 
     .mitos-grid {
-        grid-template-columns: 1fr;
+        gap: 36px;
     }
 
     .duvidas-header h1 {
-        font-size: 1.7em;
+        font-size: 3.2rem;
+    }
+
+    .duvidas-header p {
+        font-size: 1.3rem;
+    }
+
+    .faq-section h2 {
+        font-size: 2.2rem;
+    }
+
+    .faq-item summary {
+        font-size: 1.35rem;
+        padding: 30px 40px;
+    }
+
+    .faq-item p {
+        font-size: 1.2rem;
+    }
+
+    .mito-card {
+        padding: 34px;
+    }
+
+    .mito-frase {
+        font-size: 1.3rem;
+    }
+
+    .verdade-texto {
+        font-size: 1.1rem;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR PEQUENO
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .duvidas-nav {
+        gap: 6px;
+        padding: 0 12px;
+    }
+
+    .duvidas-nav a {
+        font-size: 0.8rem;
+        padding: 7px 12px;
+    }
+
+    .wpp-duvidas {
+        border-radius: 16px;
+        padding: 24px 18px;
+        margin-bottom: 40px;
     }
 }

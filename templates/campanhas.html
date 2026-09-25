@@ -2,90 +2,40 @@
 {% load static %}
 
 {% block content %}
-      <link rel="stylesheet" href="{% static 'css/campanhas.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/campanhas.css' %}">
 
     <h1>Campanhas</h1>
     <p>Participe das campanhas ativas e faça ainda mais diferença.</p>
 
     <section>
 
-        <!-- CAMPANHA 1 -->
-        <article class="card">
-            <h2>🩸</h2>
-            <span>Ativa</span>
-            <h3>Doe Sangue, Salve Vidas</h3>
-            <p>Campanha permanente de incentivo à doação de sangue. Qualquer tipo sanguíneo é bem-vindo. Venha contribuir!</p>
-            <p>📍 Fundação Hemocentro de Brasília</p>
-            <p>📅 Durante todo o ano</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
+        {% for c in campanhas %}
+            <article class="card">
+                <h2>{{ c.emoji }}</h2>
+                <span>{{ c.get_status_display }}</span>
+                <h3>{{ c.titulo }}</h3>
+                <p>{{ c.descricao }}</p>
 
-        <!-- CAMPANHA 2 -->
-        <article class="card">
-            <h2>💗</h2>
-            <span>Em breve</span>
-            <h3>Doe com Quem Você Ama</h3>
-            <p>Incentive alguém especial a participar da doação de sangue e transforme esse momento em uma atitude de solidariedade.</p>
-            <p>📍 Taguatinga e Gama</p>
-            <p>📅 Próxima campanha</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
+                {% if c.local %}
+                    <p>📍 {{ c.local }}</p>
+                {% endif %}
 
-        <!-- CAMPANHA 3 -->
-        <article class="card">
-            <h2>🌟</h2>
-            <span>Ativa</span>
-            <h3>Doador Nota 10</h3>
-            <p>Valorize sua participação na doação de sangue e incentive outros doadores a fazerem parte dessa corrente do bem.</p>
-            <p>📍 Locais de atendimento participantes</p>
-            <p>📅 Durante o ano</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
+                {% if c.data %}
+                    <p>📅 {{ c.data }}</p>
+                {% endif %}
 
-        <!-- CAMPANHA 4 -->
-        <article class="card">
-            <h2>🚨</h2>
-            <span>Urgente</span>
-            <h3>Doe Quando o Estoque Estiver Crítico</h3>
-            <p>Alguns tipos sanguíneos podem entrar em situação crítica. Sua doação pode ajudar a reforçar os estoques e atender quem precisa.</p>
-            <p>📍 Fundação Hemocentro de Brasília</p>
-            <p>📅 Enquanto houver necessidade</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
-
-        <!-- CAMPANHA 5 -->
-        <article class="card">
-            <h2>🎓</h2>
-            <span>Ativa</span>
-            <h3>Doe Sangue, Compartilhe Solidariedade</h3>
-            <p>Uma campanha de conscientização para incentivar jovens e estudantes a conhecerem a importância da doação de sangue.</p>
-            <p>📍 Brasília, Taguatinga e Gama</p>
-            <p>📅 Durante o ano</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
-
-        <!-- CAMPANHA 6 -->
-        <article class="card">
-            <h2>👶</h2>
-            <span>Ativa</span>
-            <h3>Sangue para Quem Precisa</h3>
-            <p>Crianças, adultos e pacientes em situações delicadas podem precisar de transfusões. Cada doação faz parte dessa corrente de cuidado.</p>
-            <p>📍 Locais de atendimento participantes</p>
-            <p>📅 Contínua</p>
-            <a href="{% url 'agendar_doacao' %}">
-                <button type="button">Participar</button>
-            </a>
-        </article>
+                <a href="{% url 'agendar_doacao' %}">
+                    <button type="button">Participar</button>
+                </a>
+            </article>
+        {% empty %}
+            <div class="campanha-vazia">
+                <span>🩸</span>
+                <p>Nenhuma campanha ativa no momento.</p>
+                <p>Volte em breve!</p>
+            </div>
+        {% endfor %}
 
     </section>
 

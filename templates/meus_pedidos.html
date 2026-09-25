@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Meus Pedidos - Sangue Bom{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+    <header class="preciso-header">
+        <h1>📋 Meus Pedidos</h1>
+        <p>Acompanhe o status dos seus pedidos de doação</p>
+
+        <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
+            ➕ Novo Pedido
+        </a>
+    </header>
+
+    <!-- ESTATÍSTICAS -->
+    <section class="stats-grid">
+        <div class="stat-card total">
+            <span class="stat-icon">📋</span>
+            <span class="stat-numero">{{ total }}</span>
+            <span class="stat-label">Total</span>
+        </div>
+
+        <div class="stat-card media">
+            <span class="stat-icon">⏳</span>
+            <span class="stat-numero">{{ pendentes }}</span>
+            <span class="stat-label">Pendentes</span>
+        </div>
+
+        <div class="stat-card baixa">
+            <span class="stat-icon">✅</span>
+            <span class="stat-numero">{{ aprovados }}</span>
+            <span class="stat-label">Aprovados</span>
+        </div>
+
+        <div class="stat-card urgente">
+            <span class="stat-icon">🎉</span>
+            <span class="stat-numero">{{ atendidos }}</span>
+            <span class="stat-label">Atendidos</span>
+        </div>
+    </section>
+
+    <!-- LISTA -->
+    {% if receptores %}
+        <div class="receptores-grid">
+            {% for r in receptores %}
+                <article class="receptor-card urgencia-{{ r.urgencia }}">
+                    <div class="receptor-header">
+                        <span class="receptor-tipo">{{ r.tipo_sanguineo }}</span>
+                        <span class="receptor-urgencia">
+                            {% if r.status == 'pendente' %}⏳ Pendente
+                            {% elif r.status == 'aprovado' %}✅ Aprovado
+                            {% elif r.status == 'atendido' %}🎉 Atendido
+                            {% elif r.status == 'expirado' %}📅 Expirado
+                            {% else %}❌ Recusado
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <h3>{{ r.nome }}</h3>
+
+                    <p class="receptor-info">
+                        🏥 <strong>{{ r.hospital }}</strong>
+                    </p>
+
+                    <p class="receptor-info">
+                        📍 {{ r.cidade }}
+                    </p>
+
+                    {% if r.descricao %}
+                        <p class="receptor-descricao">{{ r.descricao|truncatewords:20 }}</p>
+                    {% endif %}
+
+                    <div class="receptor-footer">
+                        <span class="receptor-views">👁️ {{ r.visualizacoes }} views</span>
+                        <span class="receptor-dias">⏱️ {{ r.dias_restantes }} dias</span>
+                    </div>
+
+                    <div class="receptor-acoes">
+                        {% if r.status == 'aprovado' %}
+                            <a href="{% url 'detalhes_receptor' r.id %}" class="receptor-btn">
+                                Ver
+                            </a>
+                        {% endif %}
+
+                        {% if r.status == 'pendente' or r.status == 'aprovado' %}
+                            <a href="{% url 'editar_pedido' r.id %}" class="btn-editar">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'excluir_pedido' r.id %}" class="btn-excluir">
+                                🗑️ Excluir
+                            </a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="vazio">
+            <span>📋</span>
+            <p>Você ainda não fez nenhum pedido.</p>
+            <a href="{% url 'cadastrar_receptor' %}" class="btn-cadastrar-receptor">
+                ➕ Cadastrar primeiro pedido
+            </a>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}

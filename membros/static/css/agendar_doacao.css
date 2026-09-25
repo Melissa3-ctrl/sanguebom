@@ -1,145 +1,209 @@
 /* ============================================ */
-/* CABEÇALHO                                     */
+/* VARIÁVEIS                                      */
+/* ============================================ */
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #888;
+    --branco: #ffffff;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(139, 0, 0, 0.12);
+}
+
+/* ============================================ */
+/* CONTAINER PRINCIPAL — 100% ATÉ 4K              */
+/* ============================================ */
+
+.card-etapa,
+.agendamento-cabecalho {
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ============================================ */
+/* CABEÇALHO                                      */
 /* ============================================ */
 
 .agendamento-cabecalho {
     text-align: center;
-    margin: 30px 0 40px 0;
+    margin-top: 30px;
+    margin-bottom: 40px;
 }
 
 .agendamento-cabecalho h1 {
-    font-size: 2.2em;
-    color: #b30000;
-    margin-bottom: 10px;
+    color: var(--vermelho-principal);
+    font-size: clamp(1.6em, 3vw, 2.5em);
+    margin: 0 0 10px 0;
+    font-weight: 800;
 }
 
 .agendamento-cabecalho p {
-    color: #666;
-    font-size: 1.05em;
-    margin-bottom: 30px;
+    color: var(--texto-secundario);
+    font-size: clamp(0.95em, 1.2vw, 1.15em);
+    margin: 0 0 30px 0;
 }
 
 /* ============================================ */
-/* PROGRESSO DE ETAPAS                          */
+/* PROGRESSO EM ETAPAS                            */
 /* ============================================ */
 
 .progresso-etapas {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 30px auto;
-    max-width: 600px;
+    margin: 30px auto 0 auto;
+    width: 100%;
+    max-width: 700px;
+    position: relative;
 }
 
 .etapa {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 8px;
     position: relative;
     flex: 1;
 }
 
-.etapa:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 60%;
-    width: 80%;
-    height: 2px;
-    background: #ddd;
-    z-index: 0;
-}
-
-.etapa.ativa:not(:last-child)::after,
-.etapa.concluida:not(:last-child)::after {
-    background: #b30000;
-}
-
 .etapa-numero {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: #ddd;
-    color: #666;
+    color: #888;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1.1em;
-    z-index: 1;
+    font-size: 1.2em;
     transition: all 0.3s;
-}
-
-.etapa.ativa .etapa-numero {
-    background: #b30000;
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
-}
-
-.etapa.concluida .etapa-numero {
-    background: #4caf50;
-    color: white;
+    border: 3px solid transparent;
+    z-index: 2;
+    position: relative;
 }
 
 .etapa-texto {
-    margin-top: 8px;
-    font-size: 0.85em;
-    color: #666;
-    font-weight: bold;
+    color: var(--texto-claro);
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.etapa.ativa .etapa-numero {
+    background: var(--vermelho-principal);
+    color: white;
+    border-color: var(--vermelho-claro);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+    transform: scale(1.1);
 }
 
 .etapa.ativa .etapa-texto {
-    color: #b30000;
+    color: var(--vermelho-principal);
+}
+
+.etapa.concluida .etapa-numero {
+    background: var(--vermelho-claro);
+    color: white;
+}
+
+.etapa.concluida .etapa-texto {
+    color: var(--vermelho-claro);
+}
+
+.etapa::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    width: 100%;
+    height: 3px;
+    background: #ddd;
+    z-index: 1;
+}
+
+.etapa:last-child::after {
+    display: none;
+}
+
+.etapa.concluida::after {
+    background: var(--vermelho-claro);
 }
 
 /* ============================================ */
-/* CARDS DE ETAPA                               */
+/* CARDS DE ETAPA                                 */
 /* ============================================ */
 
 .card-etapa {
-    background: white;
-    border-radius: 16px;
-    padding: 30px;
-    margin: 20px 0;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
     display: none;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.4s ease;
 }
 
 .card-etapa.ativa {
     display: block;
-    animation: fadeIn 0.4s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.card-conteudo {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(24px, 4vw, 48px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border-top: 5px solid var(--vermelho-principal);
 }
 
 .card-conteudo h2 {
-    color: #b30000;
-    font-size: 1.6em;
+    color: var(--vermelho-principal);
+    font-size: clamp(1.2em, 2vw, 1.6em);
     margin: 0 0 10px 0;
+    font-weight: 700;
 }
 
 .card-conteudo > p {
-    color: #666;
-    margin-bottom: 24px;
+    color: var(--texto-secundario);
+    margin: 0 0 30px 0;
+    font-size: clamp(0.95em, 1.1vw, 1.05em);
 }
 
 /* ============================================ */
-/* CARDS DE HEMOCENTRO                          */
+/* CARDS DE HEMOCENTRO — RESPONSIVO               */
 /* ============================================ */
 
 .bases-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 16px;
-    margin: 24px 0;
+    margin-bottom: 30px;
+}
+
+/* TABLET: 2 colunas */
+@media (min-width: 768px) {
+    .bases-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MONITOR GRANDE: 3 colunas */
+@media (min-width: 1440px) {
+    .bases-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }
 
 .card-base {
+    display: block;
     cursor: pointer;
     position: relative;
 }
@@ -151,371 +215,604 @@
 }
 
 .card-base-conteudo {
-    background: white;
-    border: 2px solid #f0e6d2;
-    border-radius: 12px;
-    padding: 20px;
+    background: var(--branco);
+    border: 3px solid var(--vermelho-borda);
+    border-radius: 14px;
+    padding: 20px 24px;
     transition: all 0.3s;
     position: relative;
-}
-
-.card-base:hover .card-base-conteudo {
-    border-color: #b30000;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(179, 0, 0, 0.1);
-}
-
-.card-base input[type="radio"]:checked + .card-base-conteudo {
-    border-color: #4caf50;
-    background: #f1f8e9;
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+    height: 100%;
 }
 
 .card-base-conteudo h3 {
-    color: #b30000;
-    margin: 0 0 12px 0;
-    font-size: 1.15em;
+    color: var(--vermelho-principal);
+    font-size: clamp(1em, 1.3vw, 1.15em);
+    margin: 0 0 10px 0;
+    font-weight: 700;
 }
 
 .card-base-conteudo p {
-    color: #555;
-    font-size: 0.9em;
+    color: var(--texto-secundario);
+    font-size: 0.95em;
     margin: 6px 0;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
-.check-selecionado {
-    display: none;
-    background: #4caf50;
+.card-base:hover .card-base-conteudo {
+    border-color: var(--vermelho-claro);
+    background: var(--vermelho-suave);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.1);
+}
+
+.card-base input[type="radio"]:checked + .card-base-conteudo {
+    border-color: var(--vermelho-principal);
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.card-base input[type="radio"]:checked + .card-base-conteudo::before {
+    content: '✓';
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: var(--vermelho-principal);
     color: white;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.75em;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-    margin-top: 10px;
-    display: inline-block;
-    opacity: 0;
-    transition: opacity 0.3s;
+    font-size: 1.1em;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
 }
 
-.card-base input[type="radio"]:checked + .card-base-conteudo .check-selecionado {
-    opacity: 1;
+.aviso-vazio {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 20px;
+    border-radius: 10px;
+    color: #856404;
+    text-align: center;
 }
 
 /* ============================================ */
-/* CAMPOS                                       */
+/* TIPO DE DOAÇÃO — RESPONSIVO                    */
 /* ============================================ */
 
 .campo-agendamento {
-    margin: 28px 0;
+    margin-bottom: 32px;
 }
 
 .campo-agendamento h3 {
-    color: #333;
-    margin: 0 0 12px 0;
-    font-size: 1.1em;
+    color: var(--vermelho-principal);
+    font-size: clamp(1em, 1.3vw, 1.15em);
+    margin: 0 0 16px 0;
+    font-weight: 700;
 }
 
 .opcoes-tipo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* TABLET: 4 colunas */
+@media (min-width: 768px) {
+    .opcoes-tipo {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .opcao-radio {
     cursor: pointer;
     position: relative;
+    display: block;
 }
 
 .opcao-radio input[type="radio"] {
     position: absolute;
     opacity: 0;
+    pointer-events: none;
 }
 
 .opcao-radio span {
     display: block;
-    background: white;
-    border: 2px solid #f0e6d2;
-    border-radius: 10px;
-    padding: 12px 16px;
     text-align: center;
-    transition: all 0.2s;
-    font-weight: 500;
-    color: #555;
+    padding: 14px 16px;
+    background: var(--branco);
+    border: 3px solid var(--vermelho-borda);
+    border-radius: 12px;
+    color: var(--texto-secundario);
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: clamp(0.85em, 1vw, 0.95em);
 }
 
 .opcao-radio:hover span {
-    border-color: #b30000;
+    border-color: var(--vermelho-claro);
+    background: var(--vermelho-suave);
 }
 
 .opcao-radio input[type="radio"]:checked + span {
-    background: #b30000;
-    border-color: #b30000;
+    background: var(--vermelho-principal);
     color: white;
-    font-weight: bold;
+    border-color: var(--vermelho-principal);
+    box-shadow: 0 6px 16px rgba(139, 0, 0, 0.3);
+    transform: translateY(-2px);
 }
 
 /* ============================================ */
-/* DATA                                         */
+/* DATA                                           */
 /* ============================================ */
 
-input[type="date"] {
+.campo-agendamento input[type="date"] {
     width: 100%;
     max-width: 300px;
-    padding: 12px 16px;
-    border: 2px solid #f0e6d2;
-    border-radius: 10px;
+    padding: 14px 18px;
     font-size: 1em;
+    border: 3px solid var(--vermelho-borda);
+    border-radius: 12px;
     font-family: inherit;
-    transition: all 0.2s;
+    color: var(--texto-principal);
+    background: white;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 
-input[type="date"]:focus {
+.campo-agendamento input[type="date"]:focus {
     outline: none;
-    border-color: #b30000;
-    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.1);
+    border-color: var(--vermelho-principal);
+    box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.1);
 }
 
 /* ============================================ */
-/* HORÁRIOS                                     */
+/* HORÁRIOS — RESPONSIVO                          */
 /* ============================================ */
 
 .horarios {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+/* TABLET: 5 colunas */
+@media (min-width: 600px) {
+    .horarios {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* NOTEBOOK: 8 colunas */
+@media (min-width: 1024px) {
+    .horarios {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+/* MONITOR GRANDE: 10 colunas */
+@media (min-width: 1440px) {
+    .horarios {
+        grid-template-columns: repeat(10, 1fr);
+    }
 }
 
 .opcao-horario {
     cursor: pointer;
     position: relative;
+    display: block;
 }
 
 .opcao-horario input[type="radio"] {
     position: absolute;
     opacity: 0;
+    pointer-events: none;
 }
 
 .opcao-horario span {
     display: block;
-    background: white;
-    border: 2px solid #f0e6d2;
-    border-radius: 8px;
-    padding: 10px;
     text-align: center;
-    transition: all 0.2s;
+    padding: 12px 4px;
+    background: var(--branco);
+    border: 3px solid var(--vermelho-borda);
+    border-radius: 10px;
+    color: var(--texto-secundario);
+    font-weight: 700;
     font-size: 0.9em;
-    font-weight: 500;
-    color: #555;
+    transition: all 0.2s;
 }
 
 .opcao-horario:hover span {
-    border-color: #b30000;
+    border-color: var(--vermelho-claro);
+    background: var(--vermelho-suave);
+    transform: scale(1.03);
 }
 
 .opcao-horario input[type="radio"]:checked + span {
-    background: #b30000;
-    border-color: #b30000;
+    background: var(--vermelho-principal);
     color: white;
-    font-weight: bold;
+    border-color: var(--vermelho-principal);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
     transform: scale(1.05);
 }
 
 /* ============================================ */
-/* NAVEGAÇÃO                                    */
-/* ============================================ */
-
-.navegacao-etapa {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #f0f0f0;
-}
-
-.btn-voltar,
-.btn-proximo,
-.btn-confirmar {
-    padding: 12px 28px;
-    border-radius: 10px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-    font-family: inherit;
-}
-
-.btn-voltar {
-    background: #f0f0f0;
-    color: #555;
-}
-
-.btn-voltar:hover {
-    background: #e0e0e0;
-    transform: translateX(-2px);
-}
-
-.btn-proximo {
-    background: #b30000;
-    color: white;
-    margin-left: auto;
-}
-
-.btn-proximo:hover {
-    background: #7a0000;
-    transform: translateX(2px);
-}
-
-.btn-confirmar {
-    background: linear-gradient(135deg, #b30000, #7a0000);
-    color: white;
-    padding: 14px 40px;
-    font-size: 1.1em;
-    box-shadow: 0 4px 16px rgba(179, 0, 0, 0.3);
-    margin-left: auto;
-}
-
-.btn-confirmar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(179, 0, 0, 0.4);
-}
-
-/* ============================================ */
-/* RESUMO                                       */
+/* RESUMO E CONFIRMAÇÃO                           */
 /* ============================================ */
 
 .resumo-agendamento {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     gap: 16px;
-    margin: 24px 0;
+    margin-bottom: 32px;
+    background: var(--vermelho-suave);
+    border-radius: 14px;
+    padding: clamp(16px, 2vw, 28px);
+    border-left: 5px solid var(--vermelho-principal);
 }
 
-.resumo-item {
-    background: #fcf9f2;
-    border-left: 4px solid #b30000;
-    padding: 16px 20px;
-    border-radius: 10px;
+/* TABLET: 2 colunas */
+@media (min-width: 768px) {
+    .resumo-agendamento {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MONITOR: 4 colunas */
+@media (min-width: 1440px) {
+    .resumo-agendamento {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .resumo-item h3 {
-    color: #b30000;
-    font-size: 0.9em;
+    color: var(--vermelho-principal);
+    font-size: 0.85em;
     margin: 0 0 8px 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
 }
 
 .resumo-item p {
-    color: #333;
-    font-size: 1.05em;
-    font-weight: 600;
+    color: var(--texto-principal);
+    font-size: clamp(0.95em, 1.2vw, 1.1em);
     margin: 0;
+    font-weight: 600;
+    word-break: break-word;
 }
 
 /* ============================================ */
-/* ORIENTAÇÕES E IMPACTO                        */
+/* ORIENTAÇÕES                                    */
 /* ============================================ */
 
-.orientacoes-doacao,
-.impacto-doacao {
-    background: #fff5f5;
-    border-radius: 12px;
+.orientacoes-doacao {
+    background: #fff8e1;
+    border-left: 5px solid #ffc107;
+    border-radius: 14px;
     padding: 20px 24px;
-    margin: 20px 0;
+    margin-bottom: 24px;
 }
 
-.orientacoes-doacao h3,
-.impacto-doacao h3 {
-    color: #b30000;
-    margin: 0 0 12px 0;
-    font-size: 1.1em;
+.orientacoes-doacao h3 {
+    color: #b8860b;
+    font-size: clamp(1em, 1.3vw, 1.15em);
+    margin: 0 0 14px 0;
+    font-weight: 700;
 }
 
 .orientacoes-doacao ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+/* TABLET: 2 colunas */
+@media (min-width: 600px) {
+    .orientacoes-doacao ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MONITOR: 3 colunas */
+@media (min-width: 1024px) {
+    .orientacoes-doacao ul {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .orientacoes-doacao li {
-    padding: 6px 0;
-    color: #555;
+    color: #856404;
     font-size: 0.95em;
+    padding: 4px 0;
+    font-weight: 500;
 }
+
+/* ============================================ */
+/* IMPACTO                                        */
+/* ============================================ */
 
 .impacto-doacao {
     background: linear-gradient(135deg, #fff5f5, #ffe8e8);
-    border: 2px solid #b30000;
+    border: 3px solid var(--vermelho-principal);
+    border-radius: 14px;
+    padding: clamp(20px, 3vw, 32px);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.impacto-doacao h3 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.15em, 1.8vw, 1.5em);
+    margin: 0 0 10px 0;
+    font-weight: 800;
 }
 
 .impacto-doacao p {
-    color: #555;
+    color: var(--texto-secundario);
+    font-size: clamp(0.9em, 1.1vw, 1em);
     margin: 0;
     line-height: 1.6;
 }
 
 /* ============================================ */
-/* AVISO VAZIO                                  */
+/* BOTÕES — RESPONSIVO                            */
 /* ============================================ */
 
-.aviso-vazio {
-    text-align: center;
-    color: #888;
-    padding: 40px 20px;
-    background: #fafafa;
-    border-radius: 12px;
-    border: 2px dashed #ddd;
-    font-style: italic;
+.navegacao-etapa {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.btn-proximo,
+.btn-voltar,
+.btn-confirmar {
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: clamp(0.9em, 1.1vw, 1em);
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 140px;
+}
+
+.btn-proximo {
+    background: var(--vermelho-principal);
+    color: white;
+    margin-left: auto;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+}
+
+.btn-proximo:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(139, 0, 0, 0.4);
+}
+
+.btn-voltar {
+    background: white;
+    color: var(--vermelho-principal);
+    border: 3px solid var(--vermelho-principal);
+}
+
+.btn-voltar:hover {
+    background: var(--vermelho-principal);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, var(--vermelho-principal), var(--vermelho-claro));
+    color: white;
+    margin-left: auto;
+    font-size: clamp(1em, 1.3vw, 1.15em);
+    padding: 18px 40px;
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.4);
+}
+
+.btn-confirmar:hover {
+    background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho-principal));
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(139, 0, 0, 0.5);
 }
 
 /* ============================================ */
-/* RESPONSIVO                                   */
+/* ANIMAÇÕES                                     */
 /* ============================================ */
 
-@media (max-width: 768px) {
-    .agendamento-cabecalho h1 {
-        font-size: 1.7em;
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-
-    .progresso-etapas {
-        flex-direction: column;
-        gap: 16px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    .etapa:not(:last-child)::after {
-        display: none;
-    }
+/* ============================================ */
+/* RESPONSIVO — CELULAR                           */
+/* ============================================ */
 
-    .etapa {
-        flex-direction: row;
-        gap: 12px;
-        width: 100%;
+@media (max-width: 480px) {
+    .agendamento-cabecalho {
+        padding: 0 12px;
     }
 
     .etapa-numero {
-        width: 32px;
-        height: 32px;
-        font-size: 0.95em;
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
     }
 
-    .card-etapa {
-        padding: 20px;
+    .etapa-texto {
+        font-size: 0.75em;
     }
 
-    .card-conteudo h2 {
-        font-size: 1.3em;
+    .etapa::after {
+        top: 20px;
+    }
+
+    .card-conteudo {
+        padding: 20px 16px;
+    }
+
+    .opcoes-tipo {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .horarios {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .opcao-horario span {
+        font-size: 0.8em;
+        padding: 10px 4px;
+    }
+
+    .resumo-agendamento {
+        grid-template-columns: 1fr;
+    }
+
+    .orientacoes-doacao ul {
+        grid-template-columns: 1fr;
     }
 
     .navegacao-etapa {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 
-    .btn-voltar,
     .btn-proximo,
+    .btn-voltar,
     .btn-confirmar {
         width: 100%;
+        margin-left: 0;
     }
+}
+
+/* ============================================ */
+/* TELAS MUITO GRANDES (4K+)                      */
+/* ============================================ */
+
+@media (min-width: 1920px) {
+    .card-etapa,
+    .agendamento-cabecalho {
+        max-width: 1600px;
+    }
+
+    .progresso-etapas {
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .card-etapa,
+    .agendamento-cabecalho {
+        max-width: 2000px;
+    }
+
+    .etapa-numero {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4em;
+    }
+
+    .etapa-texto {
+        font-size: 1em;
+    }
+}
+/* =========================================================
+   FIX — BARRA DE ETAPAS COLADA NO TOPO
+   ========================================================= */
+
+/* Remove qualquer margin-top que esteja empurrando pra baixo */
+.etapas,
+.barra-etapas,
+.steps,
+.progresso-etapas,
+section.etapas,
+section:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Se a barra estiver dentro de <main>, cola no topo */
+main > section:first-child,
+main > .etapas,
+main > .barra-etapas {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Remove o gap do main, se houver */
+main {
+    gap: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Remove o margin do app-container, se houver */
+.app-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+/* =========================================================
+   FIX — CABEÇALHO COLADO NO TOPO + SEM FUNDO VERMELHO
+   ========================================================= */
+
+.agendamento-cabecalho {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    margin-bottom: clamp(20px, 3vw, 40px) !important;
+    padding-top: clamp(16px, 2vw, 24px) !important;
+    text-align: center !important;
+}
+
+.agendamento-cabecalho h1 {
+    background: transparent !important;
+    color: var(--vermelho-principal) !important;
+    font-size: clamp(1.6rem, 3vw, 2.5rem) !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.agendamento-cabecalho p {
+    background: transparent !important;
+    color: var(--texto-secundario) !important;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem) !important;
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+}
+
+.progresso-etapas {
+    margin: 20px auto 0 auto !important;
+    padding: 0 !important;
+    background: transparent !important;
 }

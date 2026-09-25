@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    #header {
+        background: linear-gradient(135deg, #b30000, #7a0000) !important;
+        color: white !important;
+    }
+    #header a:link, #header a:visited {
+        color: white !important;
+    }
+    #branding h1 {
+        color: white !important;
+        font-weight: bold;
+    }
+    #user-tools a {
+        color: #ffd700 !important;
+    }
+    .module h2, .module caption {
+        background: #b30000 !important;
+    }
+    div.breadcrumbs {
+        background: #7a0000 !important;
+    }
+</style>
+{% endblock %}

@@ -1,5 +1,10 @@
 /* =========================================================
    LOGIN - SANGUE BOM
+   Layout: Polaroids (esquerda) + Formulário (direita) SEMPRE lado a lado
+   ========================================================= */
+
+/* =========================================================
+   RESET
    ========================================================= */
 
 * {
@@ -8,16 +13,41 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fdf1f1;
-    min-height: 100vh;
     display: flex;
+    flex-direction: row;
+    min-height: 100vh;
 }
 
-/* ========== LADO ESQUERDO ========== */
+/* =========================================================
+   WRAPPER — Força lado a lado
+   ========================================================= */
+
+.login-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    min-height: 100vh;
+    align-items: stretch;
+}
+
+/* =========================================================
+   LADO ESQUERDO — POLAROIDS
+   ========================================================= */
+
 .lado-ilustracao {
-    flex: 1.3;
+    flex: 1.2 1 55%;
+    max-width: 55%;
+    min-width: 0;
     background: linear-gradient(160deg, #8b0f22, #c1121f 60%, #e63946);
     color: white;
     padding: 35px 40px;
@@ -32,11 +62,12 @@ body {
     position: absolute;
     width: 600px;
     height: 600px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
     bottom: -200px;
     left: -150px;
+    pointer-events: none;
 }
 
 /* LOGO */
@@ -46,6 +77,7 @@ body {
     gap: 12px;
     margin-bottom: 25px;
     z-index: 2;
+    position: relative;
 }
 
 .logo-gota {
@@ -58,14 +90,27 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
 }
 
 .logo-gota span { transform: rotate(45deg); }
 
-.logo-texto h1 { font-size: 1.3rem; line-height: 1; }
-.logo-texto h1 span { font-weight: 400; font-style: italic; }
-.logo-texto p { font-size: 0.62rem; opacity: 0.85; margin-top: 3px; }
+.logo-texto h1 {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.logo-texto h1 span {
+    font-weight: 400;
+    font-style: italic;
+}
+
+.logo-texto p {
+    font-size: 0.62rem;
+    opacity: 0.85;
+    margin-top: 3px;
+}
 
 /* TÍTULO */
 .lado-ilustracao h2 {
@@ -74,18 +119,26 @@ body {
     margin-bottom: 8px;
     z-index: 2;
     max-width: 320px;
+    position: relative;
 }
 
-.lado-ilustracao h2 em { font-style: italic; font-weight: 400; }
+.lado-ilustracao h2 em {
+    font-style: italic;
+    font-weight: 400;
+}
 
 .subtitulo-ilustracao {
     font-size: 0.9rem;
     opacity: 0.9;
     margin-bottom: 20px;
     z-index: 2;
+    position: relative;
 }
 
-/* ========== MURAL POLAROID ========== */
+/* =========================================================
+   MURAL POLAROID — 3 COLUNAS
+   ========================================================= */
+
 .mural-polaroid {
     flex: 1;
     display: grid;
@@ -94,6 +147,7 @@ body {
     align-content: center;
     padding: 10px 5px;
     z-index: 2;
+    position: relative;
 }
 
 .polaroid {
@@ -101,8 +155,8 @@ body {
     padding: 8px 8px 28px 8px;
     border-radius: 3px;
     box-shadow:
-        0 4px 15px rgba(0,0,0,0.2),
-        0 1px 3px rgba(0,0,0,0.15);
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     cursor: pointer;
@@ -143,15 +197,15 @@ body {
 .polaroid:hover {
     transform: rotate(0deg) scale(1.08);
     box-shadow:
-        0 12px 30px rgba(0,0,0,0.3),
-        0 4px 10px rgba(0,0,0,0.2);
+        0 12px 30px rgba(0, 0, 0, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 10;
 }
 
 .polaroid.destaque {
     box-shadow:
-        0 6px 20px rgba(0,0,0,0.25),
-        0 0 0 3px rgba(255,255,255,0.4);
+        0 6px 20px rgba(0, 0, 0, 0.25),
+        0 0 0 3px rgba(255, 255, 255, 0.4);
 }
 
 /* FRASE FINAL */
@@ -164,13 +218,22 @@ body {
     gap: 10px;
     align-items: flex-start;
     margin-top: 15px;
+    position: relative;
 }
 
-.frase-rodape::before { content: '💧'; font-size: 1.2rem; }
+.frase-rodape::before {
+    content: '💧';
+    font-size: 1.2rem;
+}
 
-/* ========== LADO DIREITO ========== */
+/* =========================================================
+   LADO DIREITO — FORMULÁRIO
+   ========================================================= */
+
 .lado-formulario {
-    flex: 1;
+    flex: 1 1 45%;
+    max-width: 45%;
+    min-width: 0;
     background: #fdf1f1;
     display: flex;
     align-items: center;
@@ -182,7 +245,7 @@ body {
     background: white;
     padding: 40px 35px;
     border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(193,18,31,0.08);
+    box-shadow: 0 20px 50px rgba(193, 18, 31, 0.08);
     width: 100%;
     max-width: 430px;
 }
@@ -193,7 +256,11 @@ body {
     text-align: center;
 }
 
-.card-login h2 em { color: #c1121f; font-style: italic; font-weight: 400; }
+.card-login h2 em {
+    color: #c1121f;
+    font-style: italic;
+    font-weight: 400;
+}
 
 .card-login .subtitulo {
     text-align: center;
@@ -246,9 +313,20 @@ body {
     border: 3px solid #fdf1f1;
 }
 
-.passo.ativo span { background: #c1121f; color: white; }
-.passo p { font-size: 0.7rem; color: #888; }
-.passo.ativo p { color: #c1121f; font-weight: 600; }
+.passo.ativo span {
+    background: #c1121f;
+    color: white;
+}
+
+.passo p {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.passo.ativo p {
+    color: #c1121f;
+    font-weight: 600;
+}
 
 /* SEÇÃO */
 .secao-titulo {
@@ -261,10 +339,16 @@ body {
     margin-bottom: 5px;
 }
 
-.secao-desc { font-size: 0.8rem; color: #888; margin-bottom: 20px; }
+.secao-desc {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 20px;
+}
 
 /* CAMPOS */
-.campo { margin-bottom: 15px; }
+.campo {
+    margin-bottom: 15px;
+}
 
 .campo label {
     display: block;
@@ -285,12 +369,20 @@ body {
     transition: border-color 0.2s;
 }
 
-.campo input:focus { outline: none; border-color: #c1121f; background: white; }
+.campo input:focus {
+    outline: none;
+    border-color: #c1121f;
+    background: white;
+}
 
 /* CAMPO SENHA COM OLHO */
-.campo-senha { position: relative; }
+.campo-senha {
+    position: relative;
+}
 
-.campo-senha input { padding-right: 45px; }
+.campo-senha input {
+    padding-right: 45px;
+}
 
 .btn-olho {
     position: absolute;
@@ -307,11 +399,14 @@ body {
     transition: background 0.2s;
 }
 
-.btn-olho:hover { background: #f0f0f0; }
+.btn-olho:hover {
+    background: #f0f0f0;
+}
 
 /* =========================================
-   LEMBRAR DE MIM + ESQUECI SENHA INLINE
+   LEMBRAR DE MIM + ESQUECI SENHA
    ========================================= */
+
 .campo-lembrar {
     display: flex;
     justify-content: space-between;
@@ -380,6 +475,7 @@ body {
 /* =========================================
    BOTÃO COM LOADING
    ========================================= */
+
 .btn-continuar {
     width: 100%;
     margin-top: 15px;
@@ -400,8 +496,13 @@ body {
     gap: 8px;
 }
 
-.btn-continuar:hover { background: #a01c2e; }
-.btn-continuar:active { transform: scale(0.98); }
+.btn-continuar:hover {
+    background: #a01c2e;
+}
+
+.btn-continuar:active {
+    transform: scale(0.98);
+}
 
 .btn-loading {
     display: inline-flex;
@@ -412,7 +513,7 @@ body {
 .spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;
     animation: girar 0.6s linear infinite;
@@ -434,11 +535,15 @@ body {
     color: #999;
 }
 
-.rodape-form .icone { color: #c1121f; font-size: 1.1rem; }
+.rodape-form .icone {
+    color: #c1121f;
+    font-size: 1.1rem;
+}
 
 /* =========================================
    BOTÃO CRIAR CONTA DESTACADO
    ========================================= */
+
 .criar-conta-box {
     margin-top: 25px;
     padding-top: 20px;
@@ -475,7 +580,7 @@ body {
     box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
 }
 
-/* EXTRAS (caso use) */
+/* EXTRAS */
 .extras {
     text-align: center;
     margin-top: 20px;
@@ -483,8 +588,15 @@ body {
     color: #666;
 }
 
-.extras a { color: #c1121f; text-decoration: none; font-weight: 600; }
-.extras a:hover { text-decoration: underline; }
+.extras a {
+    color: #c1121f;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.extras a:hover {
+    text-decoration: underline;
+}
 
 /* ERRO */
 .login-erro {
@@ -532,37 +644,379 @@ body {
     transform: translateX(-4px);
 }
 
-/* ========== RESPONSIVO ========== */
+/* =========================================================
+   RESPONSIVO — TELA MÉDIA (até 1100px)
+   ========================================================= */
+
 @media (max-width: 1100px) {
-    .lado-ilustracao { padding: 30px; }
-    .lado-ilustracao h2 { font-size: 1.5rem; }
-    .mural-polaroid { gap: 12px 10px; }
-    .polaroid .legenda { font-size: 0.85rem; }
-}
-
-@media (max-width: 900px) {
-    body { flex-direction: column; }
-
     .lado-ilustracao {
-        padding: 30px 20px;
-        min-height: auto;
+        padding: 30px 24px;
+        flex: 1.2 1 55%;
+        max-width: 55%;
     }
 
-    .lado-ilustracao h2 { font-size: 1.4rem; }
+    .lado-ilustracao h2 {
+        font-size: 1.5rem;
+    }
 
     .mural-polaroid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin: 15px 0;
+        gap: 14px 10px;
     }
 
-    .polaroid { padding: 6px 6px 22px 6px; }
-    .polaroid .legenda { font-size: 0.75rem; bottom: 3px; }
+    .polaroid .legenda {
+        font-size: 0.85rem;
+    }
 
-    .lado-formulario { padding: 30px 15px; }
-    .card-login { padding: 30px 20px; }
+    .lado-formulario {
+        padding: 30px 20px;
+        flex: 1 1 45%;
+        max-width: 45%;
+    }
+
+    .card-login {
+        padding: 32px 24px;
+    }
 }
 
-@media (max-width: 500px) {
-    .mural-polaroid { grid-template-columns: repeat(2, 1fr); }
+/* =========================================================
+   RESPONSIVO — TABLET (até 900px)
+   Mantém lado a lado, compacta
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .lado-ilustracao {
+        padding: 24px 18px;
+        flex: 1 1 50%;
+        max-width: 50%;
+    }
+
+    .lado-ilustracao h2 {
+        font-size: 1.3rem;
+        max-width: 100%;
+    }
+
+    .subtitulo-ilustracao {
+        font-size: 0.8rem;
+        margin-bottom: 14px;
+    }
+
+    .logo-gota {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+    }
+
+    .logo-texto h1 {
+        font-size: 1.1rem;
+    }
+
+    .logo-texto p {
+        font-size: 0.58rem;
+    }
+
+    .mural-polaroid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .polaroid {
+        padding: 6px 6px 22px 6px;
+    }
+
+    .polaroid .legenda {
+        font-size: 0.75rem;
+        bottom: 3px;
+    }
+
+    .frase-rodape {
+        font-size: 0.8rem;
+        margin-top: 12px;
+    }
+
+    .lado-formulario {
+        padding: 24px 16px;
+        flex: 1 1 50%;
+        max-width: 50%;
+    }
+
+    .card-login {
+        padding: 26px 20px;
+        max-width: 400px;
+    }
+
+    .card-login h2 {
+        font-size: 1.3rem;
+    }
+
+    .card-login .subtitulo {
+        font-size: 0.78rem;
+        margin-bottom: 18px;
+    }
+
+    .passos {
+        padding: 0 10px;
+        margin-bottom: 18px;
+    }
+
+    .passo span {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .passo p {
+        font-size: 0.62rem;
+    }
+
+    .secao-titulo {
+        font-size: 0.88rem;
+    }
+
+    .secao-desc {
+        font-size: 0.75rem;
+        margin-bottom: 16px;
+    }
+
+    .campo input {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .btn-continuar {
+        padding: 12px;
+        font-size: 0.92rem;
+    }
+
+    .btn-criar-conta-destaque {
+        padding: 12px;
+        font-size: 0.88rem;
+    }
+
+    .rodape-form {
+        font-size: 0.7rem;
+        padding-top: 14px;
+        margin-top: 14px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR (até 600px)
+   Ainda lado a lado, bem compacto
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .lado-ilustracao {
+        padding: 16px 12px;
+        flex: 1 1 45%;
+        max-width: 45%;
+    }
+
+    .lado-formulario {
+        padding: 16px 12px;
+        flex: 1 1 55%;
+        max-width: 55%;
+    }
+
+    .logo-gota {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .logo-texto h1 {
+        font-size: 0.95rem;
+    }
+
+    .logo-texto p {
+        font-size: 0.5rem;
+    }
+
+    .lado-ilustracao h2 {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .subtitulo-ilustracao {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+    }
+
+    .mural-polaroid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        padding: 4px 2px;
+    }
+
+    .polaroid {
+        padding: 4px 4px 16px 4px;
+    }
+
+    .polaroid .legenda {
+        font-size: 0.6rem;
+        bottom: 2px;
+    }
+
+    .frase-rodape {
+        font-size: 0.68rem;
+        margin-top: 8px;
+    }
+
+    .card-login {
+        padding: 18px 12px;
+        border-radius: 16px;
+    }
+
+    .card-login h2 {
+        font-size: 1.05rem;
+    }
+
+    .card-login .subtitulo {
+        font-size: 0.7rem;
+        margin-bottom: 14px;
+    }
+
+    .passos {
+        padding: 0 4px;
+        margin-bottom: 14px;
+    }
+
+    .passos::before {
+        left: 20px;
+        right: 20px;
+        top: 12px;
+    }
+
+    .passo span {
+        width: 22px;
+        height: 22px;
+        font-size: 0.68rem;
+        border-width: 2px;
+    }
+
+    .passo p {
+        font-size: 0.52rem;
+    }
+
+    .secao-titulo {
+        font-size: 0.78rem;
+    }
+
+    .secao-desc {
+        font-size: 0.68rem;
+        margin-bottom: 12px;
+    }
+
+    .campo {
+        margin-bottom: 10px;
+    }
+
+    .campo label {
+        font-size: 0.7rem;
+    }
+
+    .campo input {
+        padding: 8px 10px;
+        font-size: 0.78rem;
+    }
+
+    .campo-lembrar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        font-size: 0.7rem;
+        margin-bottom: 12px;
+    }
+
+    .link-esqueci-inline {
+        font-size: 0.7rem;
+    }
+
+    .btn-continuar {
+        padding: 10px;
+        font-size: 0.82rem;
+    }
+
+    .rodape-form {
+        font-size: 0.65rem;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+
+    .criar-conta-box {
+        padding-top: 12px;
+        margin-top: 14px;
+    }
+
+    .texto-criar {
+        font-size: 0.7rem;
+    }
+
+    .btn-criar-conta-destaque {
+        padding: 10px;
+        font-size: 0.78rem;
+    }
+
+    .btn-voltar-card {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        margin-top: 12px;
+    }
+}
+
+/* =========================================================
+   CELULAR MUITO PEQUENO (até 380px)
+   ========================================================= */
+
+@media (max-width: 380px) {
+    .lado-ilustracao {
+        padding: 12px 8px;
+        flex: 1 1 42%;
+        max-width: 42%;
+    }
+
+    .lado-formulario {
+        padding: 12px 8px;
+        flex: 1 1 58%;
+        max-width: 58%;
+    }
+
+    .mural-polaroid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+    }
+
+    .polaroid {
+        padding: 3px 3px 12px 3px;
+    }
+
+    .polaroid .legenda {
+        font-size: 0.5rem;
+        bottom: 1px;
+    }
+
+    .logo-texto h1 {
+        font-size: 0.85rem;
+    }
+
+    .lado-ilustracao h2 {
+        font-size: 0.9rem;
+    }
+
+    .card-login {
+        padding: 14px 10px;
+    }
+
+    .card-login h2 {
+        font-size: 0.95rem;
+    }
+
+    .campo input {
+        padding: 7px 8px;
+        font-size: 0.72rem;
+    }
+
+    .btn-continuar {
+        padding: 9px;
+        font-size: 0.78rem;
+    }
 }

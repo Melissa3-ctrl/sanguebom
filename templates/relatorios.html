@@ -12,25 +12,100 @@
         <p>Visão geral do sistema Sangue Bom</p>
     </header>
 
-    <!-- CARDS KPI -->
+    <!-- CARDS KPI (agora clicáveis) -->
     <section class="cards-kpi">
-        <div class="card-kpi">
+        <a href="/admin/membros/doador/" class="card-kpi card-link" target="_blank">
             <span class="kpi-icon">👥</span>
             <span class="kpi-numero">{{ total_doadores }}</span>
             <span class="kpi-label">Doadores</span>
-        </div>
+        </a>
 
-        <div class="card-kpi">
+        <a href="/admin/membros/agendamento/" class="card-kpi card-link" target="_blank">
             <span class="kpi-icon">📅</span>
             <span class="kpi-numero">{{ total_agendamentos }}</span>
             <span class="kpi-label">Agendamentos</span>
-        </div>
+        </a>
 
-        <div class="card-kpi">
+        <a href="/admin/membros/hemocentro/" class="card-kpi card-link" target="_blank">
             <span class="kpi-icon">🏥</span>
             <span class="kpi-numero">{{ total_hemocentros }}</span>
             <span class="kpi-label">Hemocentros</span>
-        </div>
+        </a>
+
+        <a href="/admin/membros/receptor/" class="card-kpi card-link" target="_blank">
+            <span class="kpi-icon">📋</span>
+            <span class="kpi-numero">{{ total_receptores }}</span>
+            <span class="kpi-label">Pedidos de Doação</span>
+        </a>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 📋 PEDIDOS DE DOAÇÃO                          -->
+    <!-- ============================================ -->
+    <section class="pedidos-receptores-admin">
+        <h2>📋 Pedidos de Doação (Preciso de Doação)</h2>
+
+        <p>
+            Total: <strong>{{ total_receptores }}</strong> pedidos.
+            {% if receptores_pendentes > 0 %}
+                <strong style="color:#e65100;">⏳ {{ receptores_pendentes }} pendentes de aprovação.</strong>
+            {% endif %}
+            {% if receptores_aprovados > 0 %}
+                <strong style="color:#2e7d32;">✅ {{ receptores_aprovados }} aprovados.</strong>
+            {% endif %}
+        </p>
+
+        {% if receptores %}
+            <div class="receptores-grid">
+                {% for r in receptores %}
+                    <article class="receptor-card urgencia-{{ r.urgencia }}">
+                        <div class="receptor-header">
+                            <span class="receptor-tipo">{{ r.tipo_sanguineo }}</span>
+                            <span class="receptor-status">
+                                {% if r.status == 'pendente' %}⏳ Pendente
+                                {% elif r.status == 'aprovado' %}✅ Aprovado
+                                {% elif r.status == 'atendido' %}🎉 Atendido
+                                {% elif r.status == 'expirado' %}📅 Expirado
+                                {% else %}❌ Recusado
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <h3>{{ r.nome }}</h3>
+
+                        {% if r.idade_paciente %}
+                            <p class="receptor-info">👤 {{ r.idade_paciente }} anos</p>
+                        {% endif %}
+
+                        <p class="receptor-info">
+                            🩸 Tipo de doação:
+                            <strong>{{ r.get_tipo_doacao_display }}</strong>
+                        </p>
+
+                        <p class="receptor-info">🏥 {{ r.hospital }}</p>
+                        <p class="receptor-info">📍 {{ r.cidade }}</p>
+
+                        <p class="receptor-descricao">{{ r.descricao|truncatewords:20 }}</p>
+
+                        <div class="receptor-botoes">
+                            <a href="/admin/membros/receptor/{{ r.id }}/change/" class="btn-ver-admin" target="_blank">
+                                🔍 Ver no admin
+                            </a>
+                            {% if r.laudo %}
+                                <a href="{{ r.laudo.url }}" class="btn-laudo" target="_blank">
+                                    📎 Ver laudo
+                                </a>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="vazio-pedidos">
+                <span>📋</span>
+                <p>Nenhum pedido de doação no momento.</p>
+            </div>
+        {% endif %}
     </section>
 
     <!-- GRÁFICOS -->
@@ -110,6 +185,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: { y: { beginAtZero: true } }
                 }
@@ -132,6 +208,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: { legend: { position: 'bottom' } }
                 }
             });

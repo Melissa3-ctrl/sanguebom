@@ -56,6 +56,22 @@
                     <p>{{ receptor.contato }}</p>
                 </div>
             </div>
+
+            <div class="info-item">
+                <span class="info-icon">👁️</span>
+                <div>
+                    <strong>Visualizações</strong>
+                    <p>{{ receptor.visualizacoes }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-icon">⏱️</span>
+                <div>
+                    <strong>Expira em</strong>
+                    <p>{{ receptor.dias_restantes }} dias</p>
+                </div>
+            </div>
         </div>
 
         {% if receptor.descricao %}
@@ -67,9 +83,19 @@
 
         <div class="receptor-detalhes-cta">
             <h3>💗 Ajude essa pessoa!</h3>
-            <p>Entre em contato com o hospital ou vá até o hemocentro mais próximo.</p>
+            <p>Clique abaixo para demonstrar interesse. O responsável será notificado.</p>
 
-            <a href="{% url 'locais_para_doar' %}" class="btn-cadastrar-receptor">
+            {% if user.is_authenticated %}
+                <a href="{% url 'quero_ajudar' receptor.id %}" class="btn-ajudar">
+                    ❤️ Quero Ajudar
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-ajudar">
+                    🔐 Entre para ajudar
+                </a>
+            {% endif %}
+
+            <a href="{% url 'locais_para_doar' %}" class="btn-cadastrar-receptor" style="margin-left: 10px;">
                 📍 Ver hemocentros
             </a>
         </div>

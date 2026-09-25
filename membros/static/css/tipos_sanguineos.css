@@ -1,0 +1,664 @@
+/* =========================================================
+   TIPOS SANGUÍNEOS — CSS RESPONSIVO
+   ========================================================= */
+
+/* =========================================================
+   RESET E VARIÁVEIS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-suave: #fff5f5;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --texto-claro: #888;
+    --branco: #ffffff;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(139, 0, 0, 0.12);
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.tipos-cabecalho {
+    text-align: center;
+    margin: clamp(20px, 3vw, 40px) auto clamp(24px, 3vw, 40px) auto;
+    padding: 0 clamp(16px, 2vw, 40px);
+    max-width: 1000px;
+}
+
+.tipos-cabecalho h1 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    margin: 0 0 10px 0;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.tipos-cabecalho p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.15vw, 1.1rem);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
+
+.tipos-section,
+.compat-section,
+.curiosidades-section,
+.cta-tipos {
+    max-width: 1300px;
+    margin: 0 auto clamp(30px, 4vw, 50px) auto;
+    padding: 0 clamp(12px, 2vw, 40px);
+}
+
+.tipos-section > h2,
+.compat-section > h2,
+.curiosidades-section > h2,
+.cta-tipos > h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.section-sub {
+    color: var(--texto-secundario);
+    font-size: clamp(0.85rem, 1vw, 0.98rem);
+    text-align: center;
+    margin: 0 0 clamp(20px, 2.5vw, 30px) 0;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   GRID DOS 8 TIPOS
+   ========================================================= */
+
+.tipos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(12px, 1.6vw, 20px);
+}
+
+@media (min-width: 600px) {
+    .tipos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tipos-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1920px) {
+    .tipos-grid {
+        gap: 24px;
+        max-width: 1700px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 2560px) {
+    .tipos-grid {
+        gap: 30px;
+        max-width: 2100px;
+    }
+}
+
+/* =========================================================
+   CARD DE TIPO SANGUÍNEO
+   ========================================================= */
+
+.tipo-card {
+    background: var(--branco);
+    border-radius: 18px;
+    padding: clamp(16px, 1.8vw, 24px);
+    box-shadow: var(--sombra-suave);
+    border-top: 6px solid var(--vermelho-principal);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vw, 14px);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.tipo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
+}
+
+/* Cor de borda por tipo sanguíneo */
+.tipo-a-positivo { border-top-color: #d32f2f; }
+.tipo-a-negativo { border-top-color: #f57c00; }
+.tipo-b-positivo { border-top-color: #1976d2; }
+.tipo-b-negativo { border-top-color: #0288d1; }
+.tipo-ab-positivo { border-top-color: #7b1fa2; }
+.tipo-ab-negativo { border-top-color: #c2185b; }
+.tipo-o-positivo { border-top-color: #388e3c; }
+.tipo-o-negativo { border-top-color: #00796b; }
+
+/* Destaques especiais */
+.tipo-card.receptor-universal {
+    background: linear-gradient(135deg, #faf5ff, #ffffff);
+    border-top-width: 8px;
+    box-shadow: 0 8px 28px rgba(123, 31, 162, 0.15);
+}
+
+.tipo-card.doador-universal {
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+    border-top-width: 8px;
+    box-shadow: 0 8px 28px rgba(0, 121, 107, 0.15);
+}
+
+/* Círculo com tipo sanguíneo */
+.tipo-nome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vermelho-principal);
+    color: white;
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+    width: clamp(64px, 8vw, 90px);
+    height: clamp(64px, 8vw, 90px);
+    border-radius: 50%;
+    align-self: center;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+/* Cor do círculo por tipo */
+.tipo-a-positivo .tipo-nome { background: #d32f2f; }
+.tipo-a-negativo .tipo-nome { background: #f57c00; }
+.tipo-b-positivo .tipo-nome { background: #1976d2; }
+.tipo-b-negativo .tipo-nome { background: #0288d1; }
+.tipo-ab-positivo .tipo-nome { background: #7b1fa2; }
+.tipo-ab-negativo .tipo-nome { background: #c2185b; }
+.tipo-o-positivo .tipo-nome { background: #388e3c; }
+.tipo-o-negativo .tipo-nome { background: #00796b; }
+
+/* Info do card */
+.tipo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.tipo-info p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.tipo-info p strong {
+    color: var(--texto-principal);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.92em;
+}
+
+/* Badge (Comum / Raro / Universal) */
+.tipo-badge {
+    display: inline-block;
+    background: #fcf9f2;
+    color: var(--vermelho-principal);
+    border: 1.5px solid var(--vermelho-borda);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+    font-weight: 800;
+    text-align: center;
+    align-self: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tipo-card.receptor-universal .tipo-badge {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    border-color: #ce93d8;
+}
+
+.tipo-card.doador-universal .tipo-badge {
+    background: #e0f2f1;
+    color: #00796b;
+    border-color: #80cbc4;
+}
+
+/* =========================================================
+   TABELA DE COMPATIBILIDADE
+   ========================================================= */
+
+.tabela-wrapper {
+    background: var(--branco);
+    border-radius: 16px;
+    box-shadow: var(--sombra-suave);
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-top: 5px solid var(--vermelho-principal);
+    -webkit-overflow-scrolling: touch;
+}
+
+.tabela-compat {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+}
+
+.tabela-compat thead {
+    background: #fcf9f2;
+}
+
+.tabela-compat th {
+    color: var(--vermelho-principal);
+    font-weight: 800;
+    text-align: left;
+    padding: clamp(12px, 1.4vw, 16px) clamp(12px, 1.4vw, 20px);
+    white-space: nowrap;
+    border-bottom: 2px solid var(--vermelho-borda);
+    font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tabela-compat td {
+    padding: clamp(12px, 1.4vw, 16px) clamp(12px, 1.4vw, 20px);
+    color: var(--texto-principal);
+    border-bottom: 1px solid #f5f5f5;
+    line-height: 1.4;
+}
+
+.tabela-compat tbody tr:hover {
+    background: #fcf9f2;
+}
+
+.tabela-compat tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Célula do tipo sanguíneo na tabela */
+.tipo-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vermelho-principal);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    min-width: 48px;
+    letter-spacing: 0.5px;
+}
+
+.tipo-cell.tipo-a { background: #d32f2f; }
+.tipo-cell.tipo-b { background: #1976d2; }
+.tipo-cell.tipo-ab { background: #7b1fa2; }
+.tipo-cell.tipo-o { background: #388e3c; }
+
+/* =========================================================
+   CURIOSIDADES
+   ========================================================= */
+
+.curiosidades-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 1.8vw, 22px);
+}
+
+@media (min-width: 700px) {
+    .curiosidades-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .curiosidades-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.curiosidade-card {
+    background: var(--branco);
+    border-radius: 16px;
+    padding: clamp(20px, 2.2vw, 28px);
+    box-shadow: var(--sombra-suave);
+    border-top: 5px solid var(--vermelho-principal);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+.curiosidade-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+}
+
+.curiosidade-icon {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1;
+}
+
+.curiosidade-card h3 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.curiosidade-card p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* =========================================================
+   CTA FINAL
+   ========================================================= */
+
+.cta-tipos {
+    text-align: center;
+    background: linear-gradient(135deg, #fff5f5, #ffffff);
+    border: 3px solid var(--vermelho-principal);
+    border-radius: 20px;
+    padding: clamp(28px, 3.5vw, 44px);
+    max-width: 800px;
+    margin: 0 auto clamp(40px, 5vw, 70px) auto;
+    margin-left: clamp(12px, 2vw, 40px);
+    margin-right: clamp(12px, 2vw, 40px);
+    box-shadow: var(--sombra-suave);
+    animation: fadeInUp 0.5s ease;
+}
+
+.cta-tipos > h2 {
+    margin-bottom: 12px;
+}
+
+.cta-tipos > p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    margin: 0 0 22px 0;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.btn-cta {
+    display: inline-block;
+    background: var(--vermelho-principal);
+    color: white;
+    text-decoration: none;
+    padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3vw, 46px);
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.btn-cta:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(139, 0, 0, 0.45);
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (TV FULL HD — 1920px)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .tipos-cabecalho h1 {
+        font-size: 3rem;
+    }
+
+    .tipos-cabecalho p {
+        font-size: 1.3rem;
+    }
+
+    .tipos-section > h2,
+    .compat-section > h2,
+    .curiosidades-section > h2,
+    .cta-tipos > h2 {
+        font-size: 2.2rem;
+    }
+
+    .tipo-nome {
+        width: 100px;
+        height: 100px;
+        font-size: 2.4rem;
+    }
+
+    .tipo-info p {
+        font-size: 1.05rem;
+    }
+
+    .tipo-badge {
+        font-size: 0.95rem;
+        padding: 6px 16px;
+    }
+
+    .tabela-compat {
+        font-size: 1.05rem;
+    }
+
+    .tabela-compat th {
+        font-size: 1rem;
+    }
+
+    .curiosidade-card h3 {
+        font-size: 1.35rem;
+    }
+
+    .curiosidade-card p {
+        font-size: 1.1rem;
+    }
+
+    .btn-cta {
+        font-size: 1.3rem;
+        padding: 22px 56px;
+    }
+}
+
+/* =========================================================
+   TELAS ENORMES (TV 4K — 2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .tipos-cabecalho h1 {
+        font-size: 3.6rem;
+    }
+
+    .tipos-cabecalho p {
+        font-size: 1.5rem;
+    }
+
+    .tipos-section > h2,
+    .compat-section > h2,
+    .curiosidades-section > h2,
+    .cta-tipos > h2 {
+        font-size: 2.8rem;
+    }
+
+    .tipo-card {
+        padding: 30px;
+        border-radius: 22px;
+    }
+
+    .tipo-nome {
+        width: 120px;
+        height: 120px;
+        font-size: 3rem;
+    }
+
+    .tipo-info p {
+        font-size: 1.2rem;
+    }
+
+    .tipo-badge {
+        font-size: 1.05rem;
+        padding: 8px 20px;
+    }
+
+    .tabela-compat {
+        font-size: 1.2rem;
+    }
+
+    .tabela-compat th,
+    .tabela-compat td {
+        padding: 22px 28px;
+    }
+
+    .curiosidade-card h3 {
+        font-size: 1.6rem;
+    }
+
+    .curiosidade-card p {
+        font-size: 1.25rem;
+    }
+
+    .curiosidade-icon {
+        font-size: 3.5rem;
+    }
+
+    .cta-tipos {
+        max-width: 1200px;
+        padding: 70px;
+    }
+
+    .cta-tipos > p {
+        font-size: 1.3rem;
+    }
+
+    .btn-cta {
+        font-size: 1.5rem;
+        padding: 26px 64px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .tipo-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .tipo-nome {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+
+    .tipo-badge {
+        font-size: 0.68rem;
+        padding: 4px 10px;
+    }
+
+    .tabela-compat {
+        font-size: 0.78rem;
+        min-width: 500px;
+    }
+
+    .tabela-compat th,
+    .tabela-compat td {
+        padding: 10px 12px;
+    }
+
+    .curiosidade-card {
+        padding: 18px 14px;
+    }
+
+    .cta-tipos {
+        padding: 24px 18px;
+        border-radius: 16px;
+    }
+
+    .btn-cta {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* =========================================================
+   FIX — CABEÇALHO SEM FUNDO VERMELHO
+   ========================================================= */
+
+.tipos-cabecalho {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 clamp(16px, 2vw, 40px) !important;
+    margin: clamp(20px, 3vw, 40px) auto clamp(24px, 3vw, 40px) auto !important;
+    max-width: 1000px !important;
+    text-align: center !important;
+}
+
+.tipos-cabecalho h1 {
+    background: transparent !important;
+    color: #8b0000 !important;
+    font-size: clamp(1.6rem, 3vw, 2.5rem) !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    line-height: 1.2 !important;
+}
+
+.tipos-cabecalho p {
+    background: transparent !important;
+    color: #666 !important;
+    font-size: clamp(0.9rem, 1.15vw, 1.1rem) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    line-height: 1.5 !important;
+}

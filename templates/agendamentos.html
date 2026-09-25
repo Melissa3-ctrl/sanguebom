@@ -1,110 +1,138 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block title %}Meus Agendamentos - Sangue Bom{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>Meus Agendamentos - Sangue Bom</title>
- 
-   
     <link rel="stylesheet" href="{% static 'css/agendamentos.css' %}">
-</head>
 
-<body>
-    
-    <main>
+    <!-- CABEÇALHO -->
+    <header class="agendamentos-header">
+        <h1>📅 Meus Agendamentos</h1>
+        <p>Consulte, edite ou exclua seus agendamentos de doação.</p>
+    </header>
 
-        <h1>Meus Agendamentos</h1>
-
-        <p>
-            Consulte, edite ou exclua seus agendamentos de doação.
-        </p>
-
-        <br>
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="agendamentos-container">
 
         {% if agendamentos %}
 
-            {% for agendamento in agendamentos %}
+            <!-- GRID RESPONSIVO -->
+            <div class="agendamentos-grid">
 
-                <section>
+                {% for agendamento in agendamentos %}
+                    <article class="card-agendamento">
 
-                    <h2>🩸 Agendamento</h2>
+                        <!-- CABEÇALHO DO CARD -->
+                        <div class="card-agendamento-header">
+                            <h2 class="card-agendamento-titulo">🩸 Doação Agendada</h2>
+                            <span class="badge-status {{ agendamento.status }}">
+                                {% if agendamento.status == 'agendado' %}⏳ Agendado
+                                {% elif agendamento.status == 'realizado' %}✅ Realizado
+                                {% elif agendamento.status == 'cancelado' %}❌ Cancelado
+                                {% elif agendamento.status == 'faltou' %}⚠️ Faltou
+                                {% else %}{{ agendamento.status }}
+                                {% endif %}
+                            </span>
+                        </div>
 
-                    <p>
-                        <strong>Doador:</strong>
-                        {{ agendamento.doador.nome }}
-                    </p>
+                        <!-- INFORMAÇÕES -->
+                        <div class="card-agendamento-info">
 
-                    <p>
-                        <strong>Hemocentro responsável:</strong>
-                        {{ agendamento.hemocentro.nome }}
-                    </p>
+                            <div class="info-item">
+                                <span class="info-icon">👤</span>
+                                <div>
+                                    <strong>Doador</strong>
+                                    <p>{{ agendamento.doador.nome }}</p>
+                                </div>
+                            </div>
 
-                    <p>
-                        <strong>Base:</strong>
-                        {{ agendamento.base }}
-                    </p>
+                            <div class="info-item">
+                                <span class="info-icon">🏥</span>
+                                <div>
+                                    <strong>Hemocentro</strong>
+                                    <p>{{ agendamento.hemocentro.nome }}</p>
+                                </div>
+                            </div>
 
-                    <p>
-                        <strong>Data:</strong>
-                        {{ agendamento.data|date:"d/m/Y" }}
-                    </p>
+                            <div class="info-item">
+                                <span class="info-icon">📅</span>
+                                <div>
+                                    <strong>Data</strong>
+                                    <p>{{ agendamento.data|date:"d/m/Y" }}</p>
+                                </div>
+                            </div>
 
-                    <p>
-                        <strong>Horário:</strong>
-                        {{ agendamento.horario|time:"H:i" }}
-                    </p>
+                            <div class="info-item">
+                                <span class="info-icon">🕐</span>
+                                <div>
+                                    <strong>Horário</strong>
+                                    <p>{{ agendamento.horario|time:"H:i" }}</p>
+                                </div>
+                            </div>
 
-                    <p>
-                        <strong>Tipo de doação:</strong>
-                        {{ agendamento.tipo_doacao }}
-                    </p>
+                            <div class="info-item">
+                                <span class="info-icon">🩸</span>
+                                <div>
+                                    <strong>Tipo de doação</strong>
+                                    <p>{{ agendamento.tipo_doacao }}</p>
+                                </div>
+                            </div>
 
-                    <br>
+                            <div class="info-item">
+                                <span class="info-icon">📍</span>
+                                <div>
+                                    <strong>Base</strong>
+                                    <p>{{ agendamento.base }}</p>
+                                </div>
+                            </div>
 
-                    <a href="{% url 'editar_agendamento' agendamento.id %}">
-                        <button type="button">
-                            ✏️ Editar
-                        </button>
-                    </a>
+                        </div>
 
-                    <a href="{% url 'excluir_agendamento' agendamento.id %}">
-                        <button type="button">
-                            🗑️ Excluir
-                        </button>
-                    </a>
+                        <!-- AÇÕES -->
+                        <div class="card-agendamento-acoes">
+                            <a href="{% url 'editar_agendamento' agendamento.id %}" class="btn-acao btn-editar">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'excluir_agendamento' agendamento.id %}" class="btn-acao btn-excluir">
+                                🗑️ Excluir
+                            </a>
+                        </div>
 
-                </section>
+                    </article>
+                {% endfor %}
 
-                <hr>
-
-            {% endfor %}
+            </div>
 
         {% else %}
 
-            <p>
-                Você ainda não possui nenhum agendamento.
-            </p>
+            <!-- VAZIO -->
+            <div class="vazio-agendamentos">
+                <span>🩸</span>
+                <h2>Nenhum agendamento ainda</h2>
+                <p>Você ainda não possui nenhum agendamento de doação.</p>
+                <a href="{% url 'agendar_doacao' %}" class="btn-novo-agendamento">
+                    ➕ Fazer meu primeiro agendamento
+                </a>
+            </div>
 
         {% endif %}
 
-        <br>
+        <!-- AÇÕES FINAIS -->
+        {% if agendamentos %}
+            <div class="acoes-finais">
+                <a href="{% url 'agendar_doacao' %}" class="btn-novo-agendamento">
+                    ➕ Novo agendamento
+                </a>
+                <a href="{% url 'home' %}" class="btn-voltar-inicio">
+                    🏠 Voltar para o início
+                </a>
+            </div>
+        {% endif %}
 
-        <a href="{% url 'agendar_doacao' %}">
-            ➕ Novo agendamento
-        </a>
+    </div>
 
-        <br><br>
+{% endblock %}
 
-        <a href="{% url 'home' %}">
-            🏠 Voltar para o início
-        </a>
-
-    </main>
-
-</body>
-
-</html>
+{% block lateral_direita %}{% endblock %}

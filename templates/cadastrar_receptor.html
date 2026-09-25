@@ -1,147 +1,175 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/sangue.svg' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/cadastrar_receptor.css' %}">
-    <title>Cadastrar Pedido de Doação - Sangue Bom</title>
-</head>
-<body class="pagina-cadastro">
+{% block title %}Cadastrar Pedido de Doação - Sangue Bom{% endblock %}
 
-    <div class="cadastro-container">
+{% block content %}
 
-        <a href="{% url 'preciso_doacao' %}" class="btn-voltar">← Voltar</a>
+    <link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
 
-        <!-- CABEÇALHO -->
-        <header class="cadastro-cabecalho">
-            <h1>🩸 Cadastrar Pedido</h1>
-            <p>Preencha os dados do paciente</p>
-        </header>
+    <a href="{% url 'preciso_doacao' %}" class="btn-voltar">← Voltar</a>
 
-        {% if sucesso %}
-            <div class="cadastro-sucesso">
-                <div class="caixa-sucesso">
-                    <div class="icone-sucesso">✅</div>
-                    <h1>Pedido enviado!</h1>
-                    <p>{{ sucesso }}</p>
-                    <a href="{% url 'preciso_doacao' %}" class="btn-continuar">
-                        Ver lista de pedidos
-                    </a>
-                </div>
+    <header class="preciso-header">
+        <h1>➕ Cadastrar Pedido de Doação</h1>
+        <p>Preencha os dados do paciente. O hemocentro analisará e entrará em contato.</p>
+    </header>
+
+    {% if sucesso %}
+        <div class="alerta sucesso">
+            ✅ {{ sucesso }}
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'preciso_doacao' %}" class="btn-cadastrar-receptor">
+                ← Voltar
+            </a>
+        </div>
+    {% else %}
+
+        {% if erro %}
+            <div class="alerta erro">
+                ⚠️ {{ erro }}
             </div>
-        {% else %}
-
-            {% if erro %}
-                <div class="cadastro-erro">
-                    ⚠️ {{ erro }}
-                </div>
-            {% endif %}
-
-            <form method="POST" class="cadastro-form">
-                {% csrf_token %}
-
-                <div class="campo">
-                    <label for="nome">Nome do paciente *</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Nome completo"
-                        required
-                    >
-                </div>
-
-                <div class="duas-colunas">
-                    <div class="campo">
-                        <label for="tipo_sanguineo">Tipo sanguíneo *</label>
-                        <select id="tipo_sanguineo" name="tipo_sanguineo" required>
-                            <option value="">Selecionar...</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                        </select>
-                    </div>
-
-                    <div class="campo">
-                        <label for="urgencia">Urgência *</label>
-                        <select id="urgencia" name="urgencia" required>
-                            <option value="baixa">🟢 Baixa</option>
-                            <option value="media" selected>🟡 Média</option>
-                            <option value="alta">🔴 Alta</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="campo">
-                    <label for="hospital">Hospital *</label>
-                    <input
-                        type="text"
-                        id="hospital"
-                        name="hospital"
-                        placeholder="Nome do hospital"
-                        required
-                    >
-                </div>
-
-                <div class="campo">
-                    <label for="cidade">Cidade *</label>
-                    <input
-                        type="text"
-                        id="cidade"
-                        name="cidade"
-                        placeholder="Cidade"
-                        required
-                    >
-                </div>
-
-                <div class="campo">
-                    <label for="descricao">Descrição</label>
-                    <textarea
-                        id="descricao"
-                        name="descricao"
-                        rows="4"
-                        placeholder="Conte um pouco sobre o caso..."
-                    ></textarea>
-                </div>
-
-                <div class="campo">
-                    <label for="contato">Contato *</label>
-                    <input
-                        type="text"
-                        id="contato"
-                        name="contato"
-                        placeholder="Telefone ou e-mail"
-                        required
-                    >
-                </div>
-
-                <div class="aviso">
-                    ⚠️ Seu pedido será analisado pelo administrador antes de aparecer no site.
-                </div>
-
-                <div class="botoes-cadastro">
-                    <a href="{% url 'preciso_doacao' %}" class="btn-voltar-cadastro">
-                        ← Cancelar
-                    </a>
-                    <button type="submit" class="btn-continuar">
-                        📩 Enviar Pedido
-                    </button>
-                </div>
-
-            </form>
-
         {% endif %}
 
-    </div>
+        <form method="POST" class="form-receptor" enctype="multipart/form-data">
+            {% csrf_token %}
 
-</body>
-</html>
+            <!-- DADOS DO PACIENTE -->
+            <h3 class="form-secao">👤 Dados do Paciente</h3>
+
+            <div class="campo">
+                <label for="nome">Nome do paciente *</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+            </div>
+
+            <div class="duas-colunas">
+                <div class="campo">
+                    <label for="idade_paciente">Idade</label>
+                    <input type="number" id="idade_paciente" name="idade_paciente" placeholder="Ex: 25" min="0" max="120">
+                </div>
+
+                <div class="campo">
+                    <label for="sexo_paciente">Sexo</label>
+                    <select id="sexo_paciente" name="sexo_paciente">
+                        <option value="">Não informar</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                        <option value="O">Outro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="duas-colunas">
+                <div class="campo">
+                    <label for="tipo_sanguineo">Tipo sanguíneo *</label>
+                    <select id="tipo_sanguineo" name="tipo_sanguineo" required>
+                        <option value="">Selecionar...</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="tipo_doacao">Tipo de doação *</label>
+                    <select id="tipo_doacao" name="tipo_doacao" required>
+                        <option value="sangue" selected>🩸 Sangue Total</option>
+                        <option value="plaquetas">🟡 Plaquetas</option>
+                        <option value="plasma">🟠 Plasma</option>
+                        <option value="medula">🦴 Medula Óssea</option>
+                        <option value="hemacias">🔴 Concentrado de Hemácias</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- LOCALIZAÇÃO -->
+            <h3 class="form-secao">🏥 Localização</h3>
+
+            <div class="campo">
+                <label for="hospital">Hospital / Hemocentro *</label>
+                <select id="hospital" name="hospital" required>
+                    <option value="">Selecionar...</option>
+                    {% for h in hemocentros %}
+                        <option value="{{ h.nome }}">{{ h.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="cidade">Cidade *</label>
+                <select id="cidade" name="cidade" required>
+                    <option value="">Selecionar...</option>
+                    {% for c in cidades %}
+                        <option value="{{ c }}">{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- URGÊNCIA E DETALHES -->
+            <h3 class="form-secao">🚨 Urgência e Detalhes</h3>
+
+            <div class="campo">
+                <label for="urgencia">Urgência *</label>
+                <select id="urgencia" name="urgencia" required>
+                    <option value="baixa">🟢 Baixa</option>
+                    <option value="media" selected>🟡 Média</option>
+                    <option value="alta">🔴 Alta</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="descricao">Descrição do caso * (mínimo 20 caracteres)</label>
+                <textarea id="descricao" name="descricao" rows="4" placeholder="Conte um pouco sobre o caso: diagnóstico, cirurgia, tempo de tratamento..." required></textarea>
+            </div>
+
+            <!-- LAUDO MÉDICO -->
+            <h3 class="form-secao">📎 Laudo Médico</h3>
+
+            <div class="campo">
+                <label for="laudo">Laudo médico * (PDF, JPG ou PNG — máx. 5MB)</label>
+                <input type="file" id="laudo" name="laudo" accept=".pdf,.jpg,.jpeg,.png" required>
+                <p class="campo-ajuda">
+                    📄 Anexe o laudo, pedido médico, exame ou receita que comprove a necessidade da doação.
+                    <br>Isso é <b>obrigatório</b> para evitar fraudes. O arquivo fica <b>privado</b> — só o hemocentro e o admin veem.
+                </p>
+            </div>
+
+            <!-- CONTATO -->
+            <h3 class="form-secao">📞 Contato do Responsável</h3>
+
+            <div class="duas-colunas">
+                <div class="campo">
+                    <label for="email_contato">E-mail</label>
+                    <input type="email" id="email_contato" name="email_contato" placeholder="seu@email.com">
+                </div>
+
+                <div class="campo">
+                    <label for="celular_contato">Celular</label>
+                    <input type="tel" id="celular_contato" name="celular_contato" placeholder="(61) 99999-9999">
+                </div>
+            </div>
+
+            <div class="aviso">
+                🔒 Seu pedido + laudo serão enviados <b>apenas para o hemocentro e o administrador</b>. <b>Nada fica visível publicamente.</b> Preencha pelo menos um contato (e-mail ou celular).
+            </div>
+
+            <div class="botoes-cadastro">
+                <a href="{% url 'preciso_doacao' %}" class="btn-voltar-cadastro">
+                    ← Cancelar
+                </a>
+                <button type="submit" class="btn-enviar">
+                    📩 Enviar Pedido
+                </button>
+            </div>
+        </form>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block lateral_direita %}{% endblock %}
