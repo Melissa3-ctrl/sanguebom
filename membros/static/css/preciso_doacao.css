@@ -1247,3 +1247,82 @@
         font-size: 0.8rem;
     }
 }
+/* =========================================================
+   FIX FORÇADO — CTA CENTRALIZADO
+   ========================================================= */
+
+section.preciso-cta,
+.preciso-cta {
+    display: block !important;
+    width: 100% !important;
+    max-width: 700px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 40px !important;
+    margin-bottom: 60px !important;
+    padding: 40px 30px !important;
+    text-align: center !important;
+    background: linear-gradient(135deg, #fff5f5, #ffffff) !important;
+    border: 3px solid #8b0000 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+    clear: both !important;
+    transform: none !important;
+    grid-column: auto !important;
+    justify-self: center !important;
+    align-self: center !important;
+}
+
+.preciso-cta > p {
+    text-align: center !important;
+    margin: 0 auto 20px auto !important;
+    display: block !important;
+    width: 100% !important;
+    color: #666 !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+}
+
+.preciso-cta > .btn-cadastrar-receptor {
+    display: inline-block !important;
+    margin: 0 auto !important;
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+    text-align: center !important;
+    background: #8b0000 !important;
+    color: white !important;
+    padding: 16px 40px !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    text-decoration: none !important;
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.3) !important;
+    transition: all 0.3s !important;
+}
+
+.preciso-cta > .btn-cadastrar-receptor:hover {
+    background: #5c0000 !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Celular */
+@media (max-width: 480px) {
+    .preciso-cta {
+        padding: 24px 18px !important;
+        margin-bottom: 40px !important;
+        max-width: 100% !important;
+        border-radius: 16px !important;
+    }
+
+    .preciso-cta > .btn-cadastrar-receptor {
+        width: 100% !important;
+        display: block !important;
+    }
+}
