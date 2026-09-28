@@ -483,3 +483,34 @@ main > br {
         display: block;
     }
 }
+/* =========================================================
+   ESCONDE O ÍCONE DE OLHO NATIVO DO NAVEGADOR
+   ========================================================= */
+
+input[type="password"] {
+    padding-right: 40px !important;
+    background-image: none !important;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-strong-password-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container,
+input[type="password"]::-webkit-reveal,
+input[type="password"]::-webkit-caps-lock-indicator,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    right: -9999px !important;
+}
+
+/* Edge / IE */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
