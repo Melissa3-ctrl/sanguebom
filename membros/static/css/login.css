@@ -1020,3 +1020,13 @@ body {
         font-size: 0.78rem;
     }
 }
+/* BALA DE PRATA — força visibilidade */
+header.relatorios-header,
+header.relatorios-header *,
+header.relatorios-header h1,
+header.relatorios-header h2,
+header.relatorios-header p,
+header.relatorios-header span {
+    color: #ffffff !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}

@@ -39,10 +39,10 @@ body {
 }
 
 /* =========================================================
-   TOPO (HEADER)
+   TOPO (HEADER) — SÓ aplica no header do site (sem classe)
    ========================================================= */
 
-header {
+body > header:not([class]) {
     background-color: var(--vermelho-claro);
     color: white;
     display: flex;
@@ -54,12 +54,12 @@ header {
     flex-wrap: wrap;
 }
 
-header h2 {
+body > header:not([class]) h2 {
     font-size: clamp(0.85rem, 1.1vw, 1.15rem);
     font-weight: 500;
 }
 
-header a {
+body > header:not([class]) a {
     color: white;
     text-decoration: none;
     background-color: rgba(255,255,255,0.2);
@@ -69,8 +69,19 @@ header a {
     font-size: clamp(0.8rem, 1vw, 0.95rem);
 }
 
-header a:hover {
+body > header:not([class]) a:hover {
     background-color: rgba(255,255,255,0.4);
+}
+
+/* Header com classe — reseta o estilo global */
+header[class] {
+    background: transparent;
+    color: inherit;
+    display: block;
+    padding: 0;
+    box-shadow: none;
+    gap: 0;
+    flex-wrap: nowrap;
 }
 
 /* =========================================================
@@ -278,7 +289,6 @@ main {
     gap: clamp(25px, 2.5vw, 40px);
     min-width: 0;
 }
-
 /* =========================================================
    BANNER
    ========================================================= */
@@ -492,7 +502,7 @@ main {
 }
 
 /* =========================================================
-   CARDS — COM ESPAÇAMENTO BOM
+   CARDS
    ========================================================= */
 
 .cards {
@@ -1235,13 +1245,11 @@ input.botao-mostrar-senha {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-}
+}   /* 👈 ADICIONA ESSA CHAVE AQUI */
 
 /* =========================================================
    RESPONSIVIDADE — TABLET / CELULAR (992px)
-   Menu hamburguer + banner empilhado
    ========================================================= */
-
 @media (max-width: 992px) {
     .app-container {
         grid-template-columns: 1fr;
@@ -1260,7 +1268,6 @@ input.botao-mostrar-senha {
         min-height: auto;
     }
 
-    /* MENU HAMBURGUER */
     .menu-toggle-label {
         display: flex;
         align-items: center;
@@ -1327,7 +1334,6 @@ input.botao-mostrar-senha {
         background-color: var(--vermelho-escuro);
     }
 
-    /* BANNER EMPILHADO */
     .banner {
         flex-direction: column;
         text-align: center;
@@ -1379,50 +1385,50 @@ input.botao-mostrar-senha {
    ========================================================= */
 
 @media (max-width: 480px) {
-    .banner {
-        padding: 24px 16px;
-        border-radius: 16px;
-        gap: 16px;
+    body > header:not([class]) {
+        padding: 12px 14px;
+        gap: 10px;
     }
 
-    .icone-banner svg { width: 75px; }
+    body > header:not([class]) h2 { font-size: 0.8rem; }
 
-    .conteudo-banner h1 {
-        font-size: 1.4rem;
-        letter-spacing: 1.5px;
-    }
-
-    .conteudo-banner h2 { font-size: 1.05rem; }
-
-    .conteudo-banner .descricao {
+    body > header:not([class]) a {
+        padding: 6px 12px;
         font-size: 0.78rem;
     }
 
-    .botoes-banner {
-        width: 100%;
-        flex-direction: column;
+    .app-container {
+        padding: 0 10px;
+        margin: 10px 0;
+        gap: 10px;
     }
 
-    .botoes-banner a {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .foto-banner {
-        width: clamp(180px, 70vw, 220px);
-        height: clamp(180px, 70vw, 220px);
-        border-radius: 14px;
-    }
-
-    .salve-vidas {
-        font-size: 0.7rem;
-        padding: 5px 12px;
-        bottom: 10px;
-        right: 10px;
-    }
-
-    .duas-colunas { grid-template-columns: 1fr; }
-    .dados-cadastro { grid-template-columns: 1fr; }
+    .lateral-esquerda { padding: 12px; border-radius: 12px; }
+    .logo-menu { padding: 6px 0 16px 0; margin-bottom: 14px; }
+    .logo-icone { width: 36px; height: 36px; font-size: 1.1rem; }
+    .logo-texto strong { font-size: 0.85rem; }
+    .menu-item { padding: 10px 12px; font-size: 0.85rem; gap: 12px; }
+    .menu-item-icone { font-size: 1rem; width: 20px; }
+    .dados-protegidos { padding: 12px; gap: 10px; margin-top: 18px; }
+    .dados-protegidos-texto strong { font-size: 0.78rem; }
+    .dados-protegidos-texto p { font-size: 0.7rem; }
+    .btn-sair { padding: 10px 16px; font-size: 0.85rem; }
+    .lateral-direita section { padding: 14px; border-radius: 12px; }
+    .lateral-direita h2 { font-size: 0.95rem; }
+    .tipo-sangue { padding: 6px; }
+    .tipo-sangue h3 { font-size: 0.9rem; }
+    .tipo-sangue p { font-size: 0.65rem; }
+    .campanha img { height: 90px; }
+    .cadastro-container { padding: 20px 14px; border-radius: 16px; }
+    .cadastro-cabecalho h1 { font-size: 1.3rem; }
+    .etapa .numero { width: 38px; height: 38px; font-size: 0.95rem; }
+    .etapa span { font-size: 0.72rem; }
+    .campo input,
+    .campo select { padding: 11px 13px; font-size: 0.92rem; }
+    .btn-continuar { padding: 12px 20px; font-size: 0.95rem; }
+    .btn-voltar-cadastro { padding: 11px 16px; font-size: 0.88rem; }
+    .duas-colunas { grid-template-columns: 1fr; gap: 12px; }
+    .dados-cadastro { grid-template-columns: 1fr; gap: 12px; }
 }
 
 /* =========================================================
@@ -1430,46 +1436,44 @@ input.botao-mostrar-senha {
    ========================================================= */
 
 @media (max-width: 400px) {
-    .banner {
-        padding: 20px 14px;
-        gap: 14px;
+    body > header:not([class]) {
+        padding: 10px 12px;
+        gap: 8px;
     }
 
-    .icone-banner svg { width: 60px; }
+    body > header:not([class]) h2 { font-size: 0.75rem; }
+    body > header:not([class]) a { padding: 5px 10px; font-size: 0.72rem; }
 
-    .conteudo-banner h1 {
-        font-size: 1.25rem;
-        letter-spacing: 1px;
-    }
-
-    .conteudo-banner .subtitulo { font-size: 0.75rem; }
-    .conteudo-banner h2 { font-size: 0.95rem; }
-
-    .conteudo-banner .descricao {
-        font-size: 0.72rem;
-        line-height: 1.5;
-    }
-
-    .botoes-banner a {
-        padding: 10px 16px;
-        font-size: 0.78rem;
-    }
-
-    .foto-banner {
-        width: 160px;
-        height: 160px;
-        border-radius: 12px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-        gap: 14px;
-    }
-
-    a.card, .card {
-        min-height: 130px;
-        padding: 20px;
-    }
+    .app-container { padding: 0 8px; margin: 8px 0; gap: 8px; }
+    .lateral-esquerda { padding: 10px; border-radius: 10px; }
+    .logo-menu { padding: 4px 0 12px 0; margin-bottom: 10px; gap: 8px; }
+    .logo-icone { width: 32px; height: 32px; font-size: 1rem; }
+    .logo-texto strong { font-size: 0.78rem; }
+    .menu-item { padding: 9px 10px; font-size: 0.8rem; gap: 10px; border-radius: 8px; }
+    .menu-item-icone { font-size: 0.95rem; width: 18px; }
+    .dados-protegidos { padding: 10px; gap: 8px; }
+    .dados-protegidos-icone { font-size: 1rem; }
+    .dados-protegidos-texto strong { font-size: 0.72rem; }
+    .dados-protegidos-texto p { font-size: 0.65rem; line-height: 1.35; }
+    .btn-sair { padding: 9px 14px; font-size: 0.8rem; }
+    .lateral-direita section { padding: 12px; }
+    .lateral-direita h2 { font-size: 0.9rem; }
+    .estoque { gap: 6px; }
+    .tipo-sangue { padding: 5px; border-radius: 6px; }
+    .tipo-sangue h3 { font-size: 0.85rem; }
+    .tipo-sangue p { font-size: 0.6rem; }
+    .cadastro-container { padding: 18px 12px; }
+    .cadastro-cabecalho h1 { font-size: 1.15rem; }
+    .cadastro-cabecalho p { font-size: 0.85rem; }
+    .etapa .numero { width: 34px; height: 34px; font-size: 0.88rem; }
+    .etapa span { font-size: 0.68rem; }
+    .campo input,
+    .campo select { padding: 10px 12px; font-size: 0.88rem; border-radius: 10px; }
+    .campo label { font-size: 0.85rem; }
+    .btn-continuar { padding: 11px 18px; font-size: 0.9rem; border-radius: 10px; }
+    .btn-voltar-cadastro { padding: 10px 14px; font-size: 0.82rem; border-radius: 10px; }
+    .cards { grid-template-columns: 1fr; gap: 14px; }
+    a.card, .card { min-height: 130px; padding: 20px; }
 }
 
 /* =========================================================
@@ -1477,43 +1481,84 @@ input.botao-mostrar-senha {
    ========================================================= */
 
 @media (max-width: 340px) {
-    .banner {
-        padding: 16px 12px;
-        gap: 12px;
+    body > header:not([class]) {
+        padding: 6px 8px;
+        gap: 5px;
     }
 
-    .icone-banner svg { width: 50px; }
+    body > header:not([class]) h2 { font-size: 0.65rem; }
+    body > header:not([class]) a { padding: 4px 8px; font-size: 0.62rem; border-radius: 14px; }
 
-    .conteudo-banner h1 {
-        font-size: 1.1rem;
-        letter-spacing: 0.5px;
-    }
-
-    .conteudo-banner .subtitulo { font-size: 0.68rem; }
-    .conteudo-banner h2 { font-size: 0.85rem; }
-
-    .conteudo-banner .descricao {
-        font-size: 0.68rem;
-        line-height: 1.45;
-    }
-
-    .botoes-banner a {
-        padding: 9px 14px;
-        font-size: 0.72rem;
-    }
-
-    .foto-banner {
-        width: 140px;
-        height: 140px;
-        border-radius: 10px;
-    }
-
-    .salve-vidas {
-        font-size: 0.6rem;
-        padding: 4px 9px;
-        bottom: 6px;
-        right: 6px;
-    }
+    .app-container { padding: 0 5px; margin: 5px 0; gap: 5px; }
+    .lateral-esquerda { padding: 7px; border-radius: 8px; }
+    .logo-menu { padding: 2px 0 8px 0; margin-bottom: 6px; gap: 5px; }
+    .logo-icone { width: 26px; height: 26px; font-size: 0.82rem; }
+    .logo-texto strong { font-size: 0.65rem; letter-spacing: 0.3px; }
+    .menu-nav { gap: 1px; }
+    .menu-item { padding: 7px 8px; font-size: 0.7rem; gap: 7px; border-radius: 6px; }
+    .menu-item-icone { font-size: 0.8rem; width: 14px; }
+    .menu-item-texto { font-size: 0.7rem; }
+    .dados-protegidos { padding: 7px; gap: 5px; margin-top: 10px; border-radius: 6px; border-left-width: 3px; }
+    .dados-protegidos-icone { font-size: 0.85rem; }
+    .dados-protegidos-texto strong { font-size: 0.62rem; }
+    .dados-protegidos-texto p { font-size: 0.55rem; line-height: 1.25; }
+    .area-btn-sair { padding-top: 12px; }
+    .btn-sair { padding: 7px 10px; font-size: 0.7rem; gap: 6px; border-radius: 7px; }
+    .btn-sair-icone { font-size: 0.8rem; }
+    .lateral-direita { gap: 8px; }
+    .lateral-direita section { padding: 9px; border-radius: 8px; }
+    .lateral-direita h2 { font-size: 0.78rem; margin-bottom: 6px; }
+    .estoque { gap: 4px; }
+    .tipo-sangue { padding: 4px 3px; border-radius: 5px; }
+    .tipo-sangue h3 { font-size: 0.72rem; }
+    .tipo-sangue p { font-size: 0.5rem; }
+    .doacao h3 { font-size: 0.72rem; }
+    .doacao h2 { font-size: 1rem; margin: 6px 0; }
+    .mensagem h3 { font-size: 0.78rem; margin-bottom: 6px; }
+    .mensagem p { font-size: 0.7rem; }
+    .campanha img { height: 60px; margin-bottom: 8px; }
+    .campanha h3 { font-size: 0.72rem; margin-bottom: 8px; }
+    .campanha a { padding: 5px 10px; font-size: 0.65rem; }
+    .cadastro-container { padding: 14px 9px; border-radius: 12px; }
+    .cadastro-cabecalho { margin-bottom: 18px; }
+    .cadastro-cabecalho h1 { font-size: 0.95rem; }
+    .cadastro-cabecalho p { font-size: 0.72rem; }
+    .etapas { gap: 6px; margin-bottom: 18px; }
+    .etapa { gap: 4px; }
+    .etapa .numero { width: 26px; height: 26px; font-size: 0.72rem; }
+    .etapa span { font-size: 0.55rem; }
+    .linha { height: 2px; margin-bottom: 16px; }
+    .cadastro-erro { padding: 10px 12px; font-size: 0.8rem; margin-bottom: 16px; }
+    .cadastro-form h2 { font-size: 1.1rem; margin-bottom: 16px; padding-bottom: 10px; }
+    .campo { margin-bottom: 12px; gap: 5px; }
+    .campo label { font-size: 0.72rem; }
+    .campo input,
+    .campo select { padding: 8px 10px; font-size: 0.78rem; border-radius: 8px; }
+    .campo small { font-size: 0.7rem; }
+    .campo-senha input { padding-right: 40px; }
+    .btn-olho { right: 10px; padding: 4px; }
+    .btn-olho svg { width: 18px; height: 18px; }
+    .btn-continuar { padding: 9px 14px; font-size: 0.82rem; border-radius: 8px; }
+    .botoes-cadastro { gap: 8px; margin-top: 16px; }
+    .btn-voltar-cadastro { padding: 8px 10px; font-size: 0.72rem; border-radius: 8px; }
+    .resumo-cadastro { padding: 12px; border-radius: 10px; margin-bottom: 18px; }
+    .resumo-cadastro h3 { font-size: 0.72rem; margin-bottom: 12px; }
+    .dados-cadastro { gap: 10px; }
+    .dados-cadastro strong { font-size: 0.65rem; }
+    .dados-cadastro p { font-size: 0.78rem; }
+    .termos { padding: 12px; gap: 10px; }
+    .termos label { font-size: 0.72rem; gap: 8px; }
+    .perfil-header { padding: 16px 12px; border-radius: 12px; }
+    .perfil-header h1 { font-size: 1.15rem; }
+    .perfil-nome { font-size: 0.95rem; }
+    .perfil-info { font-size: 0.8rem; }
+    .perfil-item { padding: 10px; gap: 8px; border-radius: 10px; }
+    .perfil-item-info strong { font-size: 0.82rem; }
+    .perfil-item-info span { font-size: 0.72rem; }
+    .perfil-item-botoes { gap: 6px; }
+    .btn-editar,
+    .btn-excluir { padding: 5px 9px; font-size: 0.68rem; border-radius: 6px; }
+    .btn-voltar { font-size: 0.8rem; margin-bottom: 10px; }
 }
 
 /* =========================================================
@@ -1532,15 +1577,9 @@ input.botao-mostrar-senha {
     .conteudo-banner { padding-left: 260px; }
     .conteudo-banner h1 { font-size: 3.4rem; }
     .conteudo-banner h2 { font-size: 2.4rem; }
-    .conteudo-banner .descricao {
-        font-size: 1.15rem;
-        max-width: 650px;
-    }
+    .conteudo-banner .descricao { font-size: 1.15rem; max-width: 650px; }
 
-    .botoes-banner a {
-        font-size: 1.1rem;
-        padding: 16px 36px;
-    }
+    .botoes-banner a { font-size: 1.1rem; padding: 16px 36px; }
 
     .foto-banner {
         width: 380px;
@@ -1548,22 +1587,11 @@ input.botao-mostrar-senha {
         border-radius: 22px;
     }
 
-    .cards {
-        gap: 32px;
-    }
+    .cards { gap: 32px; }
 
-    a.card, .card {
-        padding: 40px;
-        min-height: 190px;
-    }
-
-    a.card h3, .card h3 {
-        font-size: 1.4rem;
-    }
-
-    a.card p, .card p {
-        font-size: 1.1rem;
-    }
+    a.card, .card { padding: 40px; min-height: 190px; }
+    a.card h3, .card h3 { font-size: 1.4rem; }
+    a.card p, .card p { font-size: 1.1rem; }
 }
 
 /* =========================================================
@@ -1583,15 +1611,9 @@ input.botao-mostrar-senha {
     .conteudo-banner { padding-left: 340px; }
     .conteudo-banner h1 { font-size: 4.2rem; }
     .conteudo-banner h2 { font-size: 3rem; }
-    .conteudo-banner .descricao {
-        font-size: 1.4rem;
-        max-width: 800px;
-    }
+    .conteudo-banner .descricao { font-size: 1.4rem; max-width: 800px; }
 
-    .botoes-banner a {
-        font-size: 1.3rem;
-        padding: 20px 44px;
-    }
+    .botoes-banner a { font-size: 1.3rem; padding: 20px 44px; }
 
     .foto-banner {
         width: 480px;
@@ -1599,897 +1621,9 @@ input.botao-mostrar-senha {
         border-radius: 26px;
     }
 
-    .cards {
-        gap: 40px;
-    }
-
-    a.card, .card {
-        padding: 50px;
-        min-height: 230px;
-    }
-
-    a.card h3, .card h3 {
-        font-size: 1.7rem;
-    }
-
-    a.card p, .card p {
-        font-size: 1.3rem;
-    }
-}
-/* =========================================================
-   RESPONSIVO — 480px (CELULAR PEQUENO)
-   ========================================================= */
-
-@media (max-width: 480px) {
-    /* Header menor */
-    header {
-        padding: 12px 14px;
-        gap: 10px;
-    }
-
-    header h2 {
-        font-size: 0.8rem;
-    }
-
-    header a {
-        padding: 6px 12px;
-        font-size: 0.78rem;
-    }
-
-    /* Container com menos padding */
-    .app-container {
-        padding: 0 10px;
-        margin: 10px 0;
-        gap: 10px;
-    }
-
-    /* Menu lateral mais enxuto */
-    .lateral-esquerda {
-        padding: 12px;
-        border-radius: 12px;
-    }
-
-    .logo-menu {
-        padding: 6px 0 16px 0;
-        margin-bottom: 14px;
-    }
-
-    .logo-icone {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
-    }
-
-    .logo-texto strong {
-        font-size: 0.85rem;
-    }
-
-    .menu-item {
-        padding: 10px 12px;
-        font-size: 0.85rem;
-        gap: 12px;
-    }
-
-    .menu-item-icone {
-        font-size: 1rem;
-        width: 20px;
-    }
-
-    .dados-protegidos {
-        padding: 12px;
-        gap: 10px;
-        margin-top: 18px;
-    }
-
-    .dados-protegidos-texto strong {
-        font-size: 0.78rem;
-    }
-
-    .dados-protegidos-texto p {
-        font-size: 0.7rem;
-    }
-
-    .btn-sair {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
-    /* Lateral direita mais compacta */
-    .lateral-direita section {
-        padding: 14px;
-        border-radius: 12px;
-    }
-
-    .lateral-direita h2 {
-        font-size: 0.95rem;
-    }
-
-    .tipo-sangue {
-        padding: 6px;
-    }
-
-    .tipo-sangue h3 {
-        font-size: 0.9rem;
-    }
-
-    .tipo-sangue p {
-        font-size: 0.65rem;
-    }
-
-    .campanha img {
-        height: 90px;
-    }
-
-    /* Formulários e cadastro */
-    .cadastro-container {
-        padding: 20px 14px;
-        border-radius: 16px;
-    }
-
-    .cadastro-cabecalho h1 {
-        font-size: 1.3rem;
-    }
-
-    .etapa .numero {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95rem;
-    }
-
-    .etapa span {
-        font-size: 0.72rem;
-    }
-
-    .campo input,
-    .campo select {
-        padding: 11px 13px;
-        font-size: 0.92rem;
-    }
-
-    .btn-continuar {
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
-
-    .btn-voltar-cadastro {
-        padding: 11px 16px;
-        font-size: 0.88rem;
-    }
-
-    .duas-colunas {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .dados-cadastro {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-}
-
-/* =========================================================
-   RESPONSIVO — 400px (CELULAR PEQUENO)
-   ========================================================= */
-
-@media (max-width: 400px) {
-    header {
-        padding: 10px 12px;
-        gap: 8px;
-    }
-
-    header h2 {
-        font-size: 0.75rem;
-    }
-
-    header a {
-        padding: 5px 10px;
-        font-size: 0.72rem;
-    }
-
-    .app-container {
-        padding: 0 8px;
-        margin: 8px 0;
-        gap: 8px;
-    }
-
-    .lateral-esquerda {
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    .logo-menu {
-        padding: 4px 0 12px 0;
-        margin-bottom: 10px;
-        gap: 8px;
-    }
-
-    .logo-icone {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
-    }
-
-    .logo-texto strong {
-        font-size: 0.78rem;
-    }
-
-    .menu-item {
-        padding: 9px 10px;
-        font-size: 0.8rem;
-        gap: 10px;
-        border-radius: 8px;
-    }
-
-    .menu-item-icone {
-        font-size: 0.95rem;
-        width: 18px;
-    }
-
-    .dados-protegidos {
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .dados-protegidos-icone {
-        font-size: 1rem;
-    }
-
-    .dados-protegidos-texto strong {
-        font-size: 0.72rem;
-    }
-
-    .dados-protegidos-texto p {
-        font-size: 0.65rem;
-        line-height: 1.35;
-    }
-
-    .btn-sair {
-        padding: 9px 14px;
-        font-size: 0.8rem;
-    }
-
-    .lateral-direita section {
-        padding: 12px;
-    }
-
-    .lateral-direita h2 {
-        font-size: 0.9rem;
-    }
-
-    .estoque {
-        gap: 6px;
-    }
-
-    .tipo-sangue {
-        padding: 5px;
-        border-radius: 6px;
-    }
-
-    .tipo-sangue h3 {
-        font-size: 0.85rem;
-    }
-
-    .tipo-sangue p {
-        font-size: 0.6rem;
-    }
-
-    .cadastro-container {
-        padding: 18px 12px;
-    }
-
-    .cadastro-cabecalho h1 {
-        font-size: 1.15rem;
-    }
-
-    .cadastro-cabecalho p {
-        font-size: 0.85rem;
-    }
-
-    .etapa .numero {
-        width: 34px;
-        height: 34px;
-        font-size: 0.88rem;
-    }
-
-    .etapa span {
-        font-size: 0.68rem;
-    }
-
-    .campo input,
-    .campo select {
-        padding: 10px 12px;
-        font-size: 0.88rem;
-        border-radius: 10px;
-    }
-
-    .campo label {
-        font-size: 0.85rem;
-    }
-
-    .btn-continuar {
-        padding: 11px 18px;
-        font-size: 0.9rem;
-        border-radius: 10px;
-    }
-
-    .btn-voltar-cadastro {
-        padding: 10px 14px;
-        font-size: 0.82rem;
-        border-radius: 10px;
-    }
-}
-
-/* =========================================================
-   RESPONSIVO — 360px (CELULAR COMUM)
-   ========================================================= */
-
-@media (max-width: 360px) {
-    header {
-        padding: 8px 10px;
-        gap: 6px;
-    }
-
-    header h2 {
-        font-size: 0.7rem;
-    }
-
-    header a {
-        padding: 4px 9px;
-        font-size: 0.68rem;
-    }
-
-    .app-container {
-        padding: 0 6px;
-        margin: 6px 0;
-        gap: 6px;
-    }
-
-    .lateral-esquerda {
-        padding: 8px;
-        border-radius: 8px;
-    }
-
-    .logo-menu {
-        padding: 2px 0 10px 0;
-        margin-bottom: 8px;
-        gap: 6px;
-    }
-
-    .logo-icone {
-        width: 28px;
-        height: 28px;
-        font-size: 0.9rem;
-    }
-
-    .logo-texto strong {
-        font-size: 0.7rem;
-        letter-spacing: 0.5px;
-    }
-
-    .menu-nav {
-        gap: 2px;
-    }
-
-    .menu-item {
-        padding: 8px 9px;
-        font-size: 0.75rem;
-        gap: 8px;
-        border-radius: 6px;
-    }
-
-    .menu-item-icone {
-        font-size: 0.85rem;
-        width: 16px;
-    }
-
-    .dados-protegidos {
-        padding: 8px;
-        gap: 6px;
-        border-radius: 8px;
-        margin-top: 12px;
-    }
-
-    .dados-protegidos-icone {
-        font-size: 0.9rem;
-    }
-
-    .dados-protegidos-texto strong {
-        font-size: 0.68rem;
-        margin-bottom: 2px;
-    }
-
-    .dados-protegidos-texto p {
-        font-size: 0.6rem;
-        line-height: 1.3;
-    }
-
-    .btn-sair {
-        padding: 8px 12px;
-        font-size: 0.75rem;
-        border-radius: 8px;
-    }
-
-    .lateral-direita {
-        gap: 10px;
-    }
-
-    .lateral-direita section {
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    .lateral-direita h2 {
-        font-size: 0.85rem;
-        margin-bottom: 8px;
-    }
-
-    .estoque {
-        gap: 5px;
-    }
-
-    .tipo-sangue {
-        padding: 4px;
-    }
-
-    .tipo-sangue h3 {
-        font-size: 0.78rem;
-    }
-
-    .tipo-sangue p {
-        font-size: 0.55rem;
-    }
-
-    .campanha img {
-        height: 70px;
-        border-radius: 8px;
-    }
-
-    .campanha h3 {
-        font-size: 0.78rem;
-    }
-
-    .campanha a {
-        padding: 6px 12px;
-        font-size: 0.72rem;
-    }
-
-    .cadastro-container {
-        padding: 16px 10px;
-        border-radius: 14px;
-    }
-
-    .cadastro-cabecalho {
-        margin-bottom: 24px;
-    }
-
-    .cadastro-cabecalho h1 {
-        font-size: 1.05rem;
-    }
-
-    .cadastro-cabecalho p {
-        font-size: 0.78rem;
-    }
-
-    .etapas {
-        gap: 8px;
-        margin-bottom: 24px;
-    }
-
-    .etapa .numero {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
-
-    .etapa span {
-        font-size: 0.6rem;
-    }
-
-    .campo {
-        margin-bottom: 14px;
-    }
-
-    .campo label {
-        font-size: 0.78rem;
-    }
-
-    .campo input,
-    .campo select {
-        padding: 9px 11px;
-        font-size: 0.82rem;
-    }
-
-    .btn-continuar {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
-    .btn-voltar-cadastro {
-        padding: 9px 12px;
-        font-size: 0.78rem;
-    }
-
-    .resumo-cadastro {
-        padding: 14px;
-    }
-
-    .dados-cadastro strong {
-        font-size: 0.72rem;
-    }
-
-    .dados-cadastro p {
-        font-size: 0.85rem;
-    }
-
-    .perfil-item {
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .perfil-item-info strong {
-        font-size: 0.9rem;
-    }
-
-    .perfil-item-info span {
-        font-size: 0.78rem;
-    }
-
-    .btn-editar,
-    .btn-excluir {
-        padding: 6px 11px;
-        font-size: 0.72rem;
-    }
-}
-
-/* =========================================================
-   RESPONSIVO — 340px (CELULAR MINI)
-   ========================================================= */
-
-@media (max-width: 340px) {
-    header {
-        padding: 6px 8px;
-        gap: 5px;
-    }
-
-    header h2 {
-        font-size: 0.65rem;
-    }
-
-    header a {
-        padding: 4px 8px;
-        font-size: 0.62rem;
-        border-radius: 14px;
-    }
-
-    .app-container {
-        padding: 0 5px;
-        margin: 5px 0;
-        gap: 5px;
-    }
-
-    .lateral-esquerda {
-        padding: 7px;
-        border-radius: 8px;
-    }
-
-    .logo-menu {
-        padding: 2px 0 8px 0;
-        margin-bottom: 6px;
-        gap: 5px;
-    }
-
-    .logo-icone {
-        width: 26px;
-        height: 26px;
-        font-size: 0.82rem;
-    }
-
-    .logo-texto strong {
-        font-size: 0.65rem;
-        letter-spacing: 0.3px;
-    }
-
-    .menu-nav {
-        gap: 1px;
-    }
-
-    .menu-item {
-        padding: 7px 8px;
-        font-size: 0.7rem;
-        gap: 7px;
-        border-radius: 6px;
-    }
-
-    .menu-item-icone {
-        font-size: 0.8rem;
-        width: 14px;
-    }
-
-    .menu-item-texto {
-        font-size: 0.7rem;
-    }
-
-    .dados-protegidos {
-        padding: 7px;
-        gap: 5px;
-        margin-top: 10px;
-        border-radius: 6px;
-        border-left-width: 3px;
-    }
-
-    .dados-protegidos-icone {
-        font-size: 0.85rem;
-    }
-
-    .dados-protegidos-texto strong {
-        font-size: 0.62rem;
-    }
-
-    .dados-protegidos-texto p {
-        font-size: 0.55rem;
-        line-height: 1.25;
-    }
-
-    .area-btn-sair {
-        padding-top: 12px;
-    }
-
-    .btn-sair {
-        padding: 7px 10px;
-        font-size: 0.7rem;
-        gap: 6px;
-        border-radius: 7px;
-    }
-
-    .btn-sair-icone {
-        font-size: 0.8rem;
-    }
-
-    .lateral-direita {
-        gap: 8px;
-    }
-
-    .lateral-direita section {
-        padding: 9px;
-        border-radius: 8px;
-    }
-
-    .lateral-direita h2 {
-        font-size: 0.78rem;
-        margin-bottom: 6px;
-    }
-
-    .estoque {
-        gap: 4px;
-    }
-
-    .tipo-sangue {
-        padding: 4px 3px;
-        border-radius: 5px;
-    }
-
-    .tipo-sangue h3 {
-        font-size: 0.72rem;
-    }
-
-    .tipo-sangue p {
-        font-size: 0.5rem;
-    }
-
-    .doacao h3 {
-        font-size: 0.72rem;
-    }
-
-    .doacao h2 {
-        font-size: 1rem;
-        margin: 6px 0;
-    }
-
-    .mensagem h3 {
-        font-size: 0.78rem;
-        margin-bottom: 6px;
-    }
-
-    .mensagem p {
-        font-size: 0.7rem;
-    }
-
-    .campanha img {
-        height: 60px;
-        margin-bottom: 8px;
-    }
-
-    .campanha h3 {
-        font-size: 0.72rem;
-        margin-bottom: 8px;
-    }
-
-    .campanha a {
-        padding: 5px 10px;
-        font-size: 0.65rem;
-    }
-
-    .cadastro-container {
-        padding: 14px 9px;
-        border-radius: 12px;
-    }
-
-    .cadastro-cabecalho {
-        margin-bottom: 18px;
-    }
-
-    .cadastro-cabecalho h1 {
-        font-size: 0.95rem;
-    }
-
-    .cadastro-cabecalho p {
-        font-size: 0.72rem;
-    }
-
-    .etapas {
-        gap: 6px;
-        margin-bottom: 18px;
-    }
-
-    .etapa {
-        gap: 4px;
-    }
-
-    .etapa .numero {
-        width: 26px;
-        height: 26px;
-        font-size: 0.72rem;
-    }
-
-    .etapa span {
-        font-size: 0.55rem;
-    }
-
-    .linha {
-        height: 2px;
-        margin-bottom: 16px;
-    }
-
-    .cadastro-erro {
-        padding: 10px 12px;
-        font-size: 0.8rem;
-        margin-bottom: 16px;
-    }
-
-    .cadastro-form h2 {
-        font-size: 1.1rem;
-        margin-bottom: 16px;
-        padding-bottom: 10px;
-    }
-
-    .campo {
-        margin-bottom: 12px;
-        gap: 5px;
-    }
-
-    .campo label {
-        font-size: 0.72rem;
-    }
-
-    .campo input,
-    .campo select {
-        padding: 8px 10px;
-        font-size: 0.78rem;
-        border-radius: 8px;
-    }
-
-    .campo small {
-        font-size: 0.7rem;
-    }
-
-    .campo-senha input {
-        padding-right: 40px;
-    }
-
-    .btn-olho {
-        right: 10px;
-        padding: 4px;
-    }
-
-    .btn-olho svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .btn-continuar {
-        padding: 9px 14px;
-        font-size: 0.82rem;
-        border-radius: 8px;
-    }
-
-    .botoes-cadastro {
-        gap: 8px;
-        margin-top: 16px;
-    }
-
-    .btn-voltar-cadastro {
-        padding: 8px 10px;
-        font-size: 0.72rem;
-        border-radius: 8px;
-    }
-
-    .resumo-cadastro {
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 18px;
-    }
-
-    .resumo-cadastro h3 {
-        font-size: 0.72rem;
-        margin-bottom: 12px;
-    }
-
-    .dados-cadastro {
-        gap: 10px;
-    }
-
-    .dados-cadastro strong {
-        font-size: 0.65rem;
-    }
-
-    .dados-cadastro p {
-        font-size: 0.78rem;
-    }
-
-    .termos {
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .termos label {
-        font-size: 0.72rem;
-        gap: 8px;
-    }
-
-    .perfil-header {
-        padding: 16px 12px;
-        border-radius: 12px;
-    }
-
-    .perfil-header h1 {
-        font-size: 1.15rem;
-    }
-
-    .perfil-nome {
-        font-size: 0.95rem;
-    }
-
-    .perfil-info {
-        font-size: 0.8rem;
-    }
-
-    .perfil-item {
-        padding: 10px;
-        gap: 8px;
-        border-radius: 10px;
-    }
-
-    .perfil-item-info strong {
-        font-size: 0.82rem;
-    }
-
-    .perfil-item-info span {
-        font-size: 0.72rem;
-    }
-
-    .perfil-item-botoes {
-        gap: 6px;
-    }
-
-    .btn-editar,
-    .btn-excluir {
-        padding: 5px 9px;
-        font-size: 0.68rem;
-        border-radius: 6px;
-    }
-
-    .btn-voltar {
-        font-size: 0.8rem;
-        margin-bottom: 10px;
-    }
+    .cards { gap: 40px; }
+
+    a.card, .card { padding: 50px; min-height: 230px; }
+    a.card h3, .card h3 { font-size: 1.7rem; }
+    a.card p, .card p { font-size: 1.3rem; }
 }
