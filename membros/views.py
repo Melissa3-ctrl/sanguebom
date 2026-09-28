@@ -90,25 +90,29 @@ def locais_para_doar(request):
 
 
 def campanhas(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            return redirect('relatorios')
-        if hasattr(request.user, 'hemocentro'):
-            return redirect('painel_hemocentro')
+    # Se for staff → relatórios
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('relatorios')
 
-    if not request.user.is_authenticated:
-        return redirect('login')
+    # Se for hemocentro → painel
+    if request.user.is_authenticated and hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
 
-    doador = get_object_or_404(Doador, usuario=request.user)
-    hoje = timezone.localdate()
-
-    proximo_agendamento = Agendamento.objects.filter(
-        doador=doador,
-        data__gte=hoje
-    ).order_by('data', 'horario').first()
-
-    # Busca as campanhas ativas do banco
+    # 🔓 CAMPANHAS SÃO PÚBLICAS — qualquer pessoa vê
     campanhas_lista = Campanha.objects.filter(ativa=True)
+
+    # Se tá logado como doador, mostra dados extras (próximo agendamento)
+    doador = None
+    proximo_agendamento = None
+
+    if request.user.is_authenticated:
+        doador = Doador.objects.filter(usuario=request.user).first()
+        if doador:
+            hoje = timezone.localdate()
+            proximo_agendamento = Agendamento.objects.filter(
+                doador=doador,
+                data__gte=hoje
+            ).order_by('data', 'horario').first()
 
     return render(request, 'campanhas.html', {
         'doador': doador,

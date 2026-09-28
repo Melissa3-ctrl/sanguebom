@@ -90,6 +90,11 @@
     max-width: 1000px;
     margin: 0 auto 50px auto;
     padding: 0 clamp(16px, 2vw, 40px);
+
+    /* Grid pras perguntas ficarem lado a lado */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
 }
 
 .faq-section h2 {
@@ -99,6 +104,22 @@
     font-weight: 800;
     padding-bottom: 12px;
     border-bottom: 3px solid var(--vermelho-borda);
+    grid-column: 1 / -1;   /* Título ocupa a linha toda */
+}
+
+/* Tablet: 2 colunas */
+@media (min-width: 768px) {
+    .faq-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop/TV: 3 colunas */
+@media (min-width: 1200px) {
+    .faq-section {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1400px;
+    }
 }
 
 /* =========================================================
@@ -108,11 +129,12 @@
 .faq-item {
     background: var(--branco);
     border-radius: 14px;
-    margin-bottom: 14px;
     box-shadow: var(--sombra-suave);
     border-left: 5px solid var(--vermelho-principal);
     transition: all 0.3s;
     overflow: hidden;
+    margin-bottom: 0;   /* gap do grid cuida */
+    height: 100%;
 }
 
 .faq-item:hover {
@@ -178,7 +200,7 @@
 }
 
 /* =========================================================
-   MITOS E VERDADES
+   MITOS E VERDADES — FLEX CENTRALIZADO ✨
    ========================================================= */
 
 .mitos-section {
@@ -202,37 +224,23 @@
     margin: 0 0 30px 0;
 }
 
+/* Flexbox centralizado — funciona com QUALQUER número de cards */
 .mitos-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;     /* 👈 CENTRALIZA automaticamente */
     gap: clamp(16px, 1.8vw, 24px);
-}
-
-/* TABLET: 2 colunas */
-@media (min-width: 700px) {
-    .mitos-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* NOTEBOOK / TV: 3 colunas */
-@media (min-width: 1024px) {
-    .mitos-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* TV 4K */
-@media (min-width: 1920px) {
-    .mitos-grid {
-        gap: 28px;
-        max-width: 1700px;
-        margin: 0 auto;
-    }
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 /* CARD DE MITO */
 .mito-card {
+    /* 3 por linha no desktop */
+    flex: 0 1 calc((100% - 2 * clamp(16px, 1.8vw, 24px)) / 3);
+    min-width: 280px;
+    max-width: 420px;
+
     background: var(--branco);
     border-radius: 18px;
     padding: clamp(20px, 2.2vw, 28px);
@@ -243,7 +251,7 @@
     gap: 10px;
     transition: all 0.3s;
     animation: fadeInUp 0.5s ease both;
-    height: 100%;
+    height: auto;
 }
 
 .mito-card:hover {
@@ -291,6 +299,21 @@
     font-size: clamp(0.85rem, 1vw, 0.95rem);
     line-height: 1.5;
     margin: 0;
+}
+
+/* Tablet: 2 por linha */
+@media (max-width: 1024px) {
+    .mito-card {
+        flex: 0 1 calc((100% - clamp(16px, 1.8vw, 24px)) / 2);
+    }
+}
+
+/* Celular: 1 por linha */
+@media (max-width: 700px) {
+    .mito-card {
+        flex: 0 1 100%;
+        max-width: 100%;
+    }
 }
 
 /* =========================================================
@@ -364,12 +387,12 @@
 }
 
 /* =========================================================
-   TELAS MUITO GRANDES (TV FULL HD / 4K)
+   TV FULL HD / 4K
    ========================================================= */
 
 @media (min-width: 1920px) {
     .faq-section {
-        max-width: 1200px;
+        max-width: 1400px;
     }
 
     .mitos-section {
@@ -388,19 +411,25 @@
     .faq-item p {
         font-size: 1.1rem;
     }
+
+    .mitos-grid {
+        max-width: 1700px;
+        gap: 28px;
+    }
+
+    .mito-card {
+        flex: 0 1 calc((100% - 2 * 28px) / 3);
+        max-width: 500px;
+    }
 }
 
 @media (min-width: 2560px) {
     .faq-section {
-        max-width: 1500px;
+        max-width: 1600px;
     }
 
     .mitos-section {
         max-width: 2200px;
-    }
-
-    .mitos-grid {
-        gap: 36px;
     }
 
     .duvidas-header h1 {
@@ -438,7 +467,7 @@
 }
 
 /* =========================================================
-   RESPONSIVO — CELULAR PEQUENO
+   CELULAR PEQUENO
    ========================================================= */
 
 @media (max-width: 480px) {

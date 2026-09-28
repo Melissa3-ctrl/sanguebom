@@ -718,3 +718,43 @@
 
     .tabela-wrapper { border-radius: 14px; }
 }
+/* =========================================================
+   BALA DE PRATA — HEADER VISÍVEL (v2)
+   ========================================================= */
+
+header.relatorios-header {
+    all: unset !important;              /* Reseta TUDO */
+    display: block !important;
+    background: transparent !important;
+    text-align: center !important;
+    padding: 30px 20px !important;
+    margin: 0 auto 30px auto !important;
+    max-width: 1200px !important;
+    box-sizing: border-box !important;
+}
+
+header.relatorios-header h1 {
+    all: unset !important;
+    display: block !important;
+    color: #8b0000 !important;
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    font-family: inherit !important;
+}
+
+header.relatorios-header p {
+    all: unset !important;
+    display: block !important;
+    color: #666666 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    font-family: inherit !important;
+}
