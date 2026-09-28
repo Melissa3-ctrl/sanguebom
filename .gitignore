@@ -1,7 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
 venv/
 .venv/
-__pycache__/
-*.pyc
+env/
+ENV/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Env
 .env
-# Uploads de arquivos (não commitar - dados sensíveis)
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Media/Static
 media/
+staticfiles/
