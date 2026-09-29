@@ -1,0 +1,1 @@
+web: gunicorn sanguebom.wsgi --log-file -

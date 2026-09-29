@@ -11,13 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # CONFIGURAÇÕES PRINCIPAIS
 # =========================================================
 
-# Lê do .env se existir, senão usa fallback (dev)
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-sua-chave-aqui')
 
-# Lê DEBUG do .env (padrão True em dev)
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# Lê ALLOWED_HOSTS do .env (separado por vírgula)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
 
@@ -42,6 +39,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -134,19 +132,22 @@ USE_TZ = True
 
 
 # =========================================================
-# ARQUIVOS ESTÁTICOS (CSS, JS, imagens do site)
+# ARQUIVOS ESTÁTICOS
 # =========================================================
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-# A pasta static fica DENTRO do app "membros"
 STATICFILES_DIRS = [
     BASE_DIR / 'membros' / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # =========================================================
-# MEDIA (uploads de arquivos — laudos médicos)
+# MEDIA
 # =========================================================
 
 MEDIA_URL = '/media/'
@@ -154,7 +155,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # =========================================================
-# CONFIGURAÇÃO PADRÃO DO BANCO
+# CONFIGURAÇÃO PADRÃO
 # =========================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -165,14 +166,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # =========================================================
 
 LOGIN_URL = 'login'
-
 LOGIN_REDIRECT_URL = 'agendar_doacao'
-
 LOGOUT_REDIRECT_URL = 'login'
 
 
 # =========================================================
-# CONFIGURAÇÃO DE E-MAIL (ATIVO - Gmail SMTP)
+# E-MAIL (Gmail SMTP)
 # =========================================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -182,10 +181,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# ---------------------------------------------------------
-# PARA VOLTAR AO MODO CONSOLE (dev), COMENTE O BLOCO ACIMA
-# E DESCOMENTE A LINHA ABAIXO:
-# ---------------------------------------------------------
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
