@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'anymail',                     # 👈 ADICIONADO (Resend)
+    'anymail',                     # 👈 ADICIONADO (Brevo)
     'membros',
 ]
 
@@ -172,11 +172,11 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # =========================================================
-# E-MAIL (Resend)
+# E-MAIL (Brevo)
 # =========================================================
 
-EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
 ANYMAIL = {
-    "RESEND_API_KEY": os.getenv('RESEND_API_KEY', ''),
+    "BREVO_API_KEY": os.getenv('BREVO_API_KEY', ''),
 }
-DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
+DEFAULT_FROM_EMAIL = "sanguebom.hemocentro@gmail.com"
