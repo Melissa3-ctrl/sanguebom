@@ -204,7 +204,14 @@ class Receptor(models.Model):
 
     descricao = models.TextField()
 
-    # CONTATO SEPARADO (email + celular)
+    # CONTATO DO RESPONSÁVEL
+    nome_responsavel = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name='Nome do responsável',
+        help_text='Nome de quem está cuidando do paciente'
+    )
+
     email_contato = models.EmailField(
         blank=True,
         verbose_name='E-mail do responsável'

@@ -34,12 +34,14 @@
         <form method="POST" class="form-receptor" enctype="multipart/form-data">
             {% csrf_token %}
 
+            <!-- ============================================ -->
             <!-- DADOS DO PACIENTE -->
+            <!-- ============================================ -->
             <h3 class="form-secao">👤 Dados do Paciente</h3>
 
             <div class="campo">
                 <label for="nome">Nome do paciente *</label>
-                <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                <input type="text" id="nome" name="nome" placeholder="Nome completo do paciente" required>
             </div>
 
             <div class="duas-colunas">
@@ -87,21 +89,27 @@
                 </div>
             </div>
 
+            <!-- ============================================ -->
             <!-- LOCALIZAÇÃO -->
+            <!-- ============================================ -->
             <h3 class="form-secao">🏥 Localização</h3>
 
             <div class="campo">
-                <label for="hospital">Hospital / Hemocentro *</label>
+                <label for="hospital">Hemocentro que vai receber o pedido *</label>
                 <select id="hospital" name="hospital" required>
-                    <option value="">Selecionar...</option>
+                    <option value="">Selecione o hemocentro mais próximo...</option>
                     {% for h in hemocentros %}
                         <option value="{{ h.nome }}">{{ h.nome }}</option>
                     {% endfor %}
                 </select>
+                <p class="campo-ajuda">
+                    📍 Escolha o <b>hemocentro mais próximo</b> de onde o paciente está.
+                    É pra lá que o pedido será enviado e onde a <b>doação vai acontecer</b>.
+                </p>
             </div>
 
             <div class="campo">
-                <label for="cidade">Cidade *</label>
+                <label for="cidade">Cidade do paciente *</label>
                 <select id="cidade" name="cidade" required>
                     <option value="">Selecionar...</option>
                     {% for c in cidades %}
@@ -110,7 +118,9 @@
                 </select>
             </div>
 
+            <!-- ============================================ -->
             <!-- URGÊNCIA E DETALHES -->
+            <!-- ============================================ -->
             <h3 class="form-secao">🚨 Urgência e Detalhes</h3>
 
             <div class="campo">
@@ -127,29 +137,44 @@
                 <textarea id="descricao" name="descricao" rows="4" placeholder="Conte um pouco sobre o caso: diagnóstico, cirurgia, tempo de tratamento..." required></textarea>
             </div>
 
+            <!-- ============================================ -->
             <!-- LAUDO MÉDICO -->
+            <!-- ============================================ -->
             <h3 class="form-secao">📎 Laudo Médico</h3>
 
             <div class="campo">
                 <label for="laudo">Laudo médico * (PDF, JPG ou PNG — máx. 5MB)</label>
                 <input type="file" id="laudo" name="laudo" accept=".pdf,.jpg,.jpeg,.png" required>
                 <p class="campo-ajuda">
-                    📄 Anexe o laudo, pedido médico, exame ou receita que comprove a necessidade da doação.
+                    📄 Anexe o <b>laudo médico com carimbo e assinatura</b>, ou o <b>pedido de transfusão</b> emitido pelo hospital.
                     <br>Isso é <b>obrigatório</b> para evitar fraudes. O arquivo fica <b>privado</b> — só o hemocentro e o admin veem.
                 </p>
             </div>
 
-            <!-- CONTATO -->
+            <!-- ============================================ -->
+            <!-- CONTATO DO RESPONSÁVEL -->
+            <!-- ============================================ -->
             <h3 class="form-secao">📞 Contato do Responsável</h3>
+
+            <p class="campo-ajuda" style="margin-bottom: 16px;">
+                👤 Informe o contato de <b>quem está cuidando do paciente</b> (familiar ou responsável).
+                É por aqui que o hemocentro vai entrar em contato.
+            </p>
+
+            <div class="campo">
+                <label for="nome_responsavel">Nome do responsável *</label>
+                <input type="text" id="nome_responsavel" name="nome_responsavel"
+                       placeholder="Ex: Maria Silva (mãe)" required>
+            </div>
 
             <div class="duas-colunas">
                 <div class="campo">
-                    <label for="email_contato">E-mail</label>
+                    <label for="email_contato">E-mail do responsável</label>
                     <input type="email" id="email_contato" name="email_contato" placeholder="seu@email.com">
                 </div>
 
                 <div class="campo">
-                    <label for="celular_contato">Celular</label>
+                    <label for="celular_contato">Celular / WhatsApp do responsável</label>
                     <input type="tel" id="celular_contato" name="celular_contato" placeholder="(61) 99999-9999">
                 </div>
             </div>

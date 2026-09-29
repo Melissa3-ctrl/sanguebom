@@ -1206,6 +1206,7 @@ def cadastrar_receptor(request):
         cidade = request.POST.get('cidade', '').strip()
         urgencia = request.POST.get('urgencia', 'media')
         descricao = request.POST.get('descricao', '').strip()
+        nome_responsavel = request.POST.get('nome_responsavel', '').strip()
         email_contato = request.POST.get('email_contato', '').strip()
         celular_contato = request.POST.get('celular_contato', '').strip()
         laudo = request.FILES.get('laudo')
@@ -1214,6 +1215,8 @@ def cadastrar_receptor(request):
         erros = []
         if not nome:
             erros.append('Nome é obrigatório.')
+        if not nome_responsavel:
+            erros.append('Nome do responsável é obrigatório.')
         if not tipo_sanguineo:
             erros.append('Tipo sanguíneo é obrigatório.')
         if not hospital:
@@ -1249,6 +1252,7 @@ def cadastrar_receptor(request):
             cidade=cidade,
             urgencia=urgencia,
             descricao=descricao,
+            nome_responsavel=nome_responsavel,
             email_contato=email_contato,
             celular_contato=celular_contato,
             contato=contato,
@@ -1271,6 +1275,7 @@ Tipo de doação: {tipo_doacao}
 Hospital: {hospital}
 Cidade: {cidade}
 Urgência: {urgencia}
+Responsável: {nome_responsavel}
 E-mail: {email_contato or 'Não informado'}
 Celular: {celular_contato or 'Não informado'}
 Laudo anexado: {'Sim' if laudo else 'Não'}
@@ -1296,7 +1301,6 @@ Acesse o admin pra aprovar.
         'hemocentros': hemocentros,
         'cidades': cidades,
     })
-
 
 @login_required(login_url='login')
 def detalhes_receptor_hemocentro(request, id):
