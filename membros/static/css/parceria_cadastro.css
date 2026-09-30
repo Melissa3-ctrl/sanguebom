@@ -521,3 +521,22 @@ body.pagina-auth {
         font-size: 1.35rem;
     }
 }
+/* =========================================================
+   CENTRALIZAÇÃO DO CARD NA TELA
+   ========================================================= */
+
+body.pagina-auth {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    min-height: 100vh;
+    padding: clamp(20px, 3vw, 50px) clamp(16px, 2vw, 30px);
+    margin: 0;
+    background: linear-gradient(160deg, #fafafa 0%, #f0f0f0 100%);
+}
+
+.parceria-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto !important;
+}
