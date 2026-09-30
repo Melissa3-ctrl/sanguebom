@@ -1684,3 +1684,33 @@ input.botao-mostrar-senha {
 .menu-item[href*="parceria"] .menu-item-icone {
     color: #ff9800;
 }
+/* =========================================================
+   BOTÃO "SEJA PARCEIRO" NO TOPO
+   ========================================================= */
+
+.header-parceria {
+    color: white !important;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ff9800, #f57c00) !important;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.35);
+    white-space: nowrap;
+}
+
+.header-parceria:hover {
+    background: linear-gradient(135deg, #f57c00, #e65100) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 152, 0, 0.5);
+}
+
+/* Celular: esconde o texto longo */
+@media (max-width: 600px) {
+    .header-parceria {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+}
