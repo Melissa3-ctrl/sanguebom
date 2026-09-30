@@ -1,0 +1,310 @@
+/* =========================================================
+   LOGIN DO HEMOCENTRO — CSS PRÓPRIO
+   ========================================================= */
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --vermelho-borda: #f0e6d2;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --branco: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   LAYOUT — Centralizado na tela
+   ========================================================= */
+
+.login-hemocentro-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    padding: 30px 20px;
+    width: 100%;
+}
+
+.login-hemocentro-card {
+    width: 100%;
+    max-width: 700px;
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.login-hemocentro-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-hemocentro-header h1 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    margin: 0 0 10px 0;
+    font-weight: 800;
+}
+
+.login-hemocentro-header p {
+    color: var(--texto-secundario);
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    margin: 0;
+}
+
+/* =========================================================
+   CARD DO FORMULÁRIO
+   ========================================================= */
+
+.login-hemocentro-form {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: clamp(40px, 5vw, 70px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border-top: 5px solid var(--vermelho-principal);
+    animation: fadeInUp 0.5s ease;
+}
+
+.login-hemocentro-form h2 {
+    color: var(--vermelho-principal);
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 40px 0;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--vermelho-borda);
+}
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.login-hemocentro-form .campo {
+    margin-bottom: 32px;
+}
+
+.login-hemocentro-form .campo label {
+    display: block;
+    color: #444;
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-size: 1.15rem;
+}
+
+.login-hemocentro-form .campo input {
+    width: 100%;
+    padding: 24px 28px;
+    border: 2px solid var(--vermelho-borda);
+    border-radius: 14px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    background: white;
+    color: var(--texto-principal);
+    transition: all 0.2s;
+}
+
+.login-hemocentro-form .campo input:focus {
+    outline: none;
+    border-color: var(--vermelho-principal);
+    box-shadow: 0 0 0 5px rgba(139, 0, 0, 0.1);
+}
+
+/* =========================================================
+   CAMPO SENHA COM OLHO
+   ========================================================= */
+
+.login-hemocentro-form .campo-senha {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-hemocentro-form .campo-senha input {
+    padding-right: 70px;
+}
+
+.login-hemocentro-form .btn-olho {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.login-hemocentro-form .btn-olho:hover {
+    background: #f0f0f0;
+}
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.login-hemocentro-form .alerta {
+    padding: 16px 22px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.login-hemocentro-form .alerta.erro {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 5px solid #d32f2f;
+}
+
+/* =========================================================
+   BOTÃO
+   ========================================================= */
+
+.login-hemocentro-form .btn-enviar {
+    width: 100%;
+    padding: 26px 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 16px;
+    background: var(--vermelho-principal);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+    margin-top: 20px;
+}
+
+.login-hemocentro-form .btn-enviar:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(139, 0, 0, 0.4);
+}
+
+/* =========================================================
+   RODAPÉ DO FORM
+   ========================================================= */
+
+.login-hemocentro-form .rodape {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--texto-secundario);
+    font-size: 1rem;
+}
+
+.login-hemocentro-form .rodape a {
+    color: var(--vermelho-principal);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-hemocentro-form .rodape a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .login-hemocentro-wrapper {
+        min-height: auto;
+        padding: 20px 10px;
+        align-items: flex-start;
+    }
+
+    .login-hemocentro-form {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    .login-hemocentro-form h2 {
+        font-size: 1.35rem;
+        margin-bottom: 25px;
+    }
+
+    .login-hemocentro-form .campo {
+        margin-bottom: 22px;
+    }
+
+    .login-hemocentro-form .campo label {
+        font-size: 1rem;
+    }
+
+    .login-hemocentro-form .campo input {
+        padding: 18px 20px;
+        font-size: 1.05rem;
+    }
+
+    .login-hemocentro-form .campo-senha input {
+        padding-right: 60px;
+    }
+
+    .login-hemocentro-form .btn-olho {
+        right: 14px;
+        padding: 8px;
+    }
+
+    .login-hemocentro-form .btn-enviar {
+        padding: 20px 30px;
+        font-size: 1.15rem;
+    }
+}
+
+/* =========================================================
+   TV 4K
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .login-hemocentro-card {
+        max-width: 1000px;
+    }
+
+    .login-hemocentro-form {
+        padding: 100px 120px;
+    }
+
+    .login-hemocentro-form h2 {
+        font-size: 2.8rem;
+    }
+
+    .login-hemocentro-form .campo label {
+        font-size: 1.5rem;
+    }
+
+    .login-hemocentro-form .campo input {
+        padding: 32px 40px;
+        font-size: 1.5rem;
+    }
+
+    .login-hemocentro-form .btn-enviar {
+        padding: 32px 60px;
+        font-size: 1.6rem;
+    }
+}

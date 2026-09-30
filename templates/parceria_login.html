@@ -4,40 +4,82 @@
 {% block title %}Login Hemocentro - Sangue Bom{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
 
-<a href="{% url 'parceria' %}" class="btn-voltar">← Voltar</a>
+<link rel="stylesheet" href="{% static 'css/parceria_login.css' %}">
 
-<header class="preciso-header">
-    <h1>🏥 Área do Hemocentro</h1>
-    <p>Acesso exclusivo para hemocentros parceiros.</p>
-</header>
+<div class="login-hemocentro-wrapper">
+    <div class="login-hemocentro-card">
 
-<form method="POST" class="form-receptor form-login-hemocentro">
-    {% csrf_token %}
+        <header class="login-hemocentro-header">
+            <h1>🏥 Área do Hemocentro</h1>
+            <p>Acesso exclusivo para hemocentros parceiros.</p>
+        </header>
 
-    {% if erro %}
-        <div class="alerta erro">⚠️ {{ erro }}</div>
-    {% endif %}
+        <form method="POST" class="login-hemocentro-form">
+            {% csrf_token %}
 
-    <h3 class="form-secao">🔐 Login do Hemocentro</h3>
+            {% if erro %}
+                <div class="alerta erro">⚠️ {{ erro }}</div>
+            {% endif %}
 
-    <div class="campo">
-        <label>E-mail institucional *</label>
-        <input type="email" name="email" required>
+            <h2>🔐 Login do Hemocentro</h2>
+
+            <div class="campo">
+                <label>E-mail institucional *</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="campo">
+                <label>Senha *</label>
+                <div class="campo-senha">
+                    <input type="password" name="senha" id="senha-parceria" required>
+                    <button type="button" class="btn-olho" onclick="mostrarSenha()" aria-label="Mostrar senha">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-enviar">🔓 Entrar no painel</button>
+
+            <p class="rodape">
+                Não é cadastrado?
+                <a href="{% url 'parceria' %}">Solicite parceria</a>
+            </p>
+        </form>
+
     </div>
+</div>
 
-    <div class="campo">
-        <label>Senha *</label>
-        <input type="password" name="senha" required>
-    </div>
+<script>
+    function mostrarSenha() {
+        const input = document.getElementById('senha-parceria');
+        const botao = document.querySelector('.btn-olho');
 
-    <div class="botoes-cadastro">
-        <button type="submit" class="btn-enviar">🔓 Entrar no painel</button>
-    </div>
+        const svgOlhoAberto = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c1121f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        `;
 
-    <p style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">
-        Não é cadastrado? <a href="{% url 'parceria' %}" style="color: #8b0000; font-weight: 700;">Solicite parceria</a>
-    </p>
-</form>
+        const svgOlhoCortado = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+        `;
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            botao.innerHTML = svgOlhoAberto;
+        } else {
+            input.type = 'password';
+            botao.innerHTML = svgOlhoCortado;
+        }
+    }
+</script>
+
 {% endblock %}

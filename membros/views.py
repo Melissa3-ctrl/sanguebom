@@ -11,7 +11,7 @@ from django.http import HttpResponse
 import csv
 import random
 from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor, Campanha
-from .emails import enviar_email_agendamento, enviar_email_doacao_realizada, enviar_email_pedido_aprovado, enviar_email_pedido_atendido
+from .emails import enviar_email_agendamento, enviar_email_doacao_realizada, enviar_email_pedido_aprovado, enviar_email_pedido_atendido Pedido_Parceria
 # =========================================================
 # PÁGINAS DO SITE
 # =========================================================
