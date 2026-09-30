@@ -1,6 +1,8 @@
 /* =========================================================
    LOGIN - SANGUE BOM
-   Layout: Polaroids (esquerda) + Formulário (direita) SEMPRE lado a lado
+   Layout: Polaroids (esquerda) + Formulário (direita)
+   Desktop: lado a lado
+   Celular: EMPILHADO
    ========================================================= */
 
 /* =========================================================
@@ -28,7 +30,7 @@ body {
 }
 
 /* =========================================================
-   WRAPPER — Força lado a lado
+   WRAPPER — lado a lado no desktop
    ========================================================= */
 
 .login-wrapper {
@@ -403,10 +405,7 @@ body {
     background: #f0f0f0;
 }
 
-/* =========================================
-   LEMBRAR DE MIM + ESQUECI SENHA
-   ========================================= */
-
+/* LEMBRAR DE MIM + ESQUECI SENHA */
 .campo-lembrar {
     display: flex;
     justify-content: space-between;
@@ -472,10 +471,7 @@ body {
     text-decoration: underline;
 }
 
-/* =========================================
-   BOTÃO COM LOADING
-   ========================================= */
-
+/* BOTÃO COM LOADING */
 .btn-continuar {
     width: 100%;
     margin-top: 15px;
@@ -540,10 +536,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* =========================================
-   BOTÃO CRIAR CONTA DESTACADO
-   ========================================= */
-
+/* BOTÃO CRIAR CONTA DESTACADO */
 .criar-conta-box {
     margin-top: 25px;
     padding-top: 20px;
@@ -608,7 +601,7 @@ body {
     margin-bottom: 15px;
 }
 
-/* ========== BOTÃO VOLTAR ========== */
+/* BOTÃO VOLTAR */
 .btn-voltar-card {
     display: flex;
     align-items: center;
@@ -645,42 +638,7 @@ body {
 }
 
 /* =========================================================
-   RESPONSIVO — TELA MÉDIA (até 1100px)
-   ========================================================= */
-
-@media (max-width: 1100px) {
-    .lado-ilustracao {
-        padding: 30px 24px;
-        flex: 1.2 1 55%;
-        max-width: 55%;
-    }
-
-    .lado-ilustracao h2 {
-        font-size: 1.5rem;
-    }
-
-    .mural-polaroid {
-        gap: 14px 10px;
-    }
-
-    .polaroid .legenda {
-        font-size: 0.85rem;
-    }
-
-    .lado-formulario {
-        padding: 30px 20px;
-        flex: 1 1 45%;
-        max-width: 45%;
-    }
-
-    .card-login {
-        padding: 32px 24px;
-    }
-}
-
-/* =========================================================
-   RESPONSIVO — TABLET (até 900px)
-   Mantém lado a lado, compacta
+   RESPONSIVO — TABLET (até 900px) — lado a lado compacto
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -706,32 +664,18 @@ body {
         font-size: 17px;
     }
 
-    .logo-texto h1 {
-        font-size: 1.1rem;
-    }
-
-    .logo-texto p {
-        font-size: 0.58rem;
-    }
+    .logo-texto h1 { font-size: 1.1rem; }
+    .logo-texto p { font-size: 0.58rem; }
 
     .mural-polaroid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
 
-    .polaroid {
-        padding: 6px 6px 22px 6px;
-    }
+    .polaroid { padding: 6px 6px 22px 6px; }
+    .polaroid .legenda { font-size: 0.75rem; bottom: 3px; }
 
-    .polaroid .legenda {
-        font-size: 0.75rem;
-        bottom: 3px;
-    }
-
-    .frase-rodape {
-        font-size: 0.8rem;
-        margin-top: 12px;
-    }
+    .frase-rodape { font-size: 0.8rem; margin-top: 12px; }
 
     .lado-formulario {
         padding: 24px 16px;
@@ -739,323 +683,195 @@ body {
         max-width: 50%;
     }
 
-    .card-login {
-        padding: 26px 20px;
-        max-width: 400px;
-    }
+    .card-login { padding: 26px 20px; max-width: 400px; }
+    .card-login h2 { font-size: 1.3rem; }
+    .card-login .subtitulo { font-size: 0.78rem; margin-bottom: 18px; }
 
-    .card-login h2 {
-        font-size: 1.3rem;
-    }
+    .passos { padding: 0 10px; margin-bottom: 18px; }
+    .passo span { width: 28px; height: 28px; font-size: 0.8rem; }
+    .passo p { font-size: 0.62rem; }
 
-    .card-login .subtitulo {
-        font-size: 0.78rem;
-        margin-bottom: 18px;
-    }
+    .secao-titulo { font-size: 0.88rem; }
+    .secao-desc { font-size: 0.75rem; margin-bottom: 16px; }
 
-    .passos {
-        padding: 0 10px;
-        margin-bottom: 18px;
-    }
-
-    .passo span {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-    }
-
-    .passo p {
-        font-size: 0.62rem;
-    }
-
-    .secao-titulo {
-        font-size: 0.88rem;
-    }
-
-    .secao-desc {
-        font-size: 0.75rem;
-        margin-bottom: 16px;
-    }
-
-    .campo input {
-        padding: 10px 12px;
-        font-size: 0.85rem;
-    }
-
-    .btn-continuar {
-        padding: 12px;
-        font-size: 0.92rem;
-    }
-
-    .btn-criar-conta-destaque {
-        padding: 12px;
-        font-size: 0.88rem;
-    }
-
-    .rodape-form {
-        font-size: 0.7rem;
-        padding-top: 14px;
-        margin-top: 14px;
-    }
+    .campo input { padding: 10px 12px; font-size: 0.85rem; }
+    .btn-continuar { padding: 12px; font-size: 0.92rem; }
+    .btn-criar-conta-destaque { padding: 12px; font-size: 0.88rem; }
+    .rodape-form { font-size: 0.7rem; padding-top: 14px; margin-top: 14px; }
 }
 
 /* =========================================================
-   RESPONSIVO — CELULAR (até 600px)
-   Ainda lado a lado, bem compacto
+   RESPONSIVO — CELULAR (até 768px) — EMPILHA
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    /* Força empilhar */
+    .login-wrapper {
+        flex-direction: column !important;
+        flex-wrap: wrap !important;
+    }
+
+    /* Polaroids em cima, largura total */
     .lado-ilustracao {
-        padding: 16px 12px;
-        flex: 1 1 45%;
-        max-width: 45%;
+        flex: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 24px 16px !important;
+        min-height: auto !important;
+    }
+
+    /* Formulário embaixo, largura total */
+    .lado-formulario {
+        flex: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 24px 16px !important;
+        min-height: auto !important;
+    }
+
+    /* Mural polaroid em 3 colunas pequenas */
+    .mural-polaroid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+        padding: 8px 0 !important;
+    }
+
+    .polaroid { padding: 5px 5px 20px 5px !important; }
+    .polaroid .legenda { font-size: 0.7rem !important; }
+
+    /* Card de login ocupa 100% */
+    .card-login {
+        max-width: 100% !important;
+        padding: 24px 18px !important;
+    }
+
+    /* Título menor */
+    .lado-ilustracao h2 { font-size: 1.4rem; }
+    .subtitulo-ilustracao { font-size: 0.85rem; margin-bottom: 14px; }
+    .frase-rodape { font-size: 0.8rem; margin-top: 12px; }
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .lado-ilustracao {
+        padding: 18px 12px !important;
     }
 
     .lado-formulario {
-        padding: 16px 12px;
-        flex: 1 1 55%;
-        max-width: 55%;
-    }
-
-    .logo-gota {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-    }
-
-    .logo-texto h1 {
-        font-size: 0.95rem;
-    }
-
-    .logo-texto p {
-        font-size: 0.5rem;
-    }
-
-    .lado-ilustracao h2 {
-        font-size: 1rem;
-        max-width: 100%;
-    }
-
-    .subtitulo-ilustracao {
-        font-size: 0.7rem;
-        margin-bottom: 10px;
+        padding: 18px 12px !important;
     }
 
     .mural-polaroid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        padding: 4px 2px;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
     }
 
-    .polaroid {
-        padding: 4px 4px 16px 4px;
-    }
+    .polaroid { padding: 4px 4px 16px 4px !important; }
+    .polaroid .legenda { font-size: 0.6rem !important; }
 
-    .polaroid .legenda {
-        font-size: 0.6rem;
-        bottom: 2px;
-    }
+    .logo-gota { width: 32px; height: 32px; font-size: 15px; }
+    .logo-texto h1 { font-size: 1rem !important; }
+    .logo-texto p { font-size: 0.55rem; }
 
-    .frase-rodape {
-        font-size: 0.68rem;
-        margin-top: 8px;
-    }
+    .lado-ilustracao h2 { font-size: 1.2rem !important; }
+    .subtitulo-ilustracao { font-size: 0.75rem; }
 
-    .card-login {
-        padding: 18px 12px;
-        border-radius: 16px;
-    }
+    .card-login { padding: 20px 14px !important; }
+    .card-login h2 { font-size: 1.15rem; }
+    .card-login .subtitulo { font-size: 0.75rem; margin-bottom: 16px; }
 
-    .card-login h2 {
-        font-size: 1.05rem;
-    }
+    .passos { padding: 0 4px; margin-bottom: 14px; }
+    .passos::before { left: 20px; right: 20px; top: 12px; }
+    .passo span { width: 24px; height: 24px; font-size: 0.72rem; border-width: 2px; }
+    .passo p { font-size: 0.58rem; }
 
-    .card-login .subtitulo {
-        font-size: 0.7rem;
-        margin-bottom: 14px;
-    }
+    .secao-titulo { font-size: 0.82rem; }
+    .secao-desc { font-size: 0.7rem; margin-bottom: 12px; }
 
-    .passos {
-        padding: 0 4px;
-        margin-bottom: 14px;
-    }
-
-    .passos::before {
-        left: 20px;
-        right: 20px;
-        top: 12px;
-    }
-
-    .passo span {
-        width: 22px;
-        height: 22px;
-        font-size: 0.68rem;
-        border-width: 2px;
-    }
-
-    .passo p {
-        font-size: 0.52rem;
-    }
-
-    .secao-titulo {
-        font-size: 0.78rem;
-    }
-
-    .secao-desc {
-        font-size: 0.68rem;
-        margin-bottom: 12px;
-    }
-
-    .campo {
-        margin-bottom: 10px;
-    }
-
-    .campo label {
-        font-size: 0.7rem;
-    }
-
-    .campo input {
-        padding: 8px 10px;
-        font-size: 0.78rem;
-    }
+    .campo { margin-bottom: 10px; }
+    .campo label { font-size: 0.75rem; }
+    .campo input { padding: 9px 11px; font-size: 0.82rem; }
 
     .campo-lembrar {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         margin-bottom: 12px;
     }
 
-    .link-esqueci-inline {
-        font-size: 0.7rem;
-    }
+    .link-esqueci-inline { font-size: 0.75rem; }
 
-    .btn-continuar {
-        padding: 10px;
-        font-size: 0.82rem;
-    }
+    .btn-continuar { padding: 11px; font-size: 0.88rem; }
+    .rodape-form { font-size: 0.68rem; padding-top: 12px; margin-top: 12px; }
 
-    .rodape-form {
-        font-size: 0.65rem;
-        padding-top: 12px;
-        margin-top: 12px;
-    }
+    .criar-conta-box { padding-top: 12px; margin-top: 14px; }
+    .texto-criar { font-size: 0.75rem; }
+    .btn-criar-conta-destaque { padding: 11px; font-size: 0.82rem; }
 
-    .criar-conta-box {
-        padding-top: 12px;
-        margin-top: 14px;
-    }
-
-    .texto-criar {
-        font-size: 0.7rem;
-    }
-
-    .btn-criar-conta-destaque {
-        padding: 10px;
-        font-size: 0.78rem;
-    }
-
-    .btn-voltar-card {
-        padding: 8px 12px;
-        font-size: 0.75rem;
-        margin-top: 12px;
-    }
+    .btn-voltar-card { padding: 9px 14px; font-size: 0.78rem; margin-top: 12px; }
 }
 
 /* =========================================================
-   CELULAR MUITO PEQUENO (até 380px)
+   RESPONSIVO — CELULAR MINI (até 380px)
    ========================================================= */
 
 @media (max-width: 380px) {
-    .lado-ilustracao {
-        padding: 12px 8px;
-        flex: 1 1 42%;
-        max-width: 42%;
-    }
-
-    .lado-formulario {
-        padding: 12px 8px;
-        flex: 1 1 58%;
-        max-width: 58%;
-    }
+    .lado-ilustracao { padding: 14px 10px !important; }
+    .lado-formulario { padding: 14px 10px !important; }
 
     .mural-polaroid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 4px;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 4px !important;
     }
 
-    .polaroid {
-        padding: 3px 3px 12px 3px;
-    }
+    .polaroid { padding: 3px 3px 12px 3px !important; }
+    .polaroid .legenda { font-size: 0.5rem !important; bottom: 1px; }
 
-    .polaroid .legenda {
-        font-size: 0.5rem;
-        bottom: 1px;
-    }
+    .logo-gota { width: 28px; height: 28px; font-size: 13px; }
+    .logo-texto h1 { font-size: 0.9rem !important; }
+    .logo-texto p { font-size: 0.5rem; }
 
-    .logo-texto h1 {
-        font-size: 0.85rem;
-    }
+    .lado-ilustracao h2 { font-size: 1.05rem !important; }
+    .subtitulo-ilustracao { font-size: 0.7rem; }
 
-    .lado-ilustracao h2 {
-        font-size: 0.9rem;
-    }
+    .card-login { padding: 16px 12px !important; }
+    .card-login h2 { font-size: 1rem; }
+    .card-login .subtitulo { font-size: 0.7rem; margin-bottom: 14px; }
 
-    .card-login {
-        padding: 14px 10px;
-    }
+    .passos { padding: 0 2px; margin-bottom: 12px; }
+    .passo span { width: 22px; height: 22px; font-size: 0.68rem; }
+    .passo p { font-size: 0.54rem; }
 
-    .card-login h2 {
-        font-size: 0.95rem;
-    }
+    .secao-titulo { font-size: 0.75rem; }
+    .secao-desc { font-size: 0.65rem; margin-bottom: 10px; }
 
-    .campo input {
-        padding: 7px 8px;
-        font-size: 0.72rem;
-    }
+    .campo { margin-bottom: 9px; }
+    .campo label { font-size: 0.7rem; }
+    .campo input { padding: 8px 10px; font-size: 0.78rem; }
 
-    .btn-continuar {
-        padding: 9px;
-        font-size: 0.78rem;
-    }
+    .btn-continuar { padding: 10px; font-size: 0.82rem; }
+    .btn-criar-conta-destaque { padding: 10px; font-size: 0.78rem; }
+    .btn-voltar-card { padding: 8px 12px; font-size: 0.75rem; }
 }
-/* BALA DE PRATA — força visibilidade */
-header.relatorios-header,
-header.relatorios-header *,
-header.relatorios-header h1,
-header.relatorios-header h2,
-header.relatorios-header p,
-header.relatorios-header span {
-    color: #ffffff !important;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
-}
+
 /* =========================================================
    ESCONDE O ÍCONE DE OLHO NATIVO DO NAVEGADOR
    ========================================================= */
 
-/* Edge / IE */
+input[type="password"] {
+    padding-right: 40px !important;
+    background-image: none !important;
+}
+
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
-}
-
-/* Chrome / Safari / Edge (Chromium) */
-input[type="password"]::-webkit-credentials-auto-fill-button,
-input[type="password"]::-webkit-strong-password-auto-fill-button,
-input[type="password"]::-webkit-textfield-decoration-container,
-input[type="password"]::-webkit-reveal {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-input[type="password"] {
-    padding-right: 40px !important;
-    background-image: none !important;
 }
 
 input[type="password"]::-webkit-credentials-auto-fill-button,
