@@ -1670,3 +1670,17 @@ input.botao-mostrar-senha {
         margin: 8px 0 !important;
     }
 }
+/* Destacar o "Seja parceiro" */
+.menu-item[href*="parceria"] {
+    background: linear-gradient(135deg, #fff8e1, #ffe0b2);
+    border-left: 4px solid #ff9800;
+    margin-top: 8px;
+}
+
+.menu-item[href*="parceria"]:hover {
+    background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+}
+
+.menu-item[href*="parceria"] .menu-item-icone {
+    color: #ff9800;
+}

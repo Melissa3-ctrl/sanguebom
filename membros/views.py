@@ -1465,3 +1465,82 @@ def limpar_notificacoes(request):
     Notificacao.objects.filter(doador=doador).delete()
 
     return redirect('notificacoes')
+def parceria(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+        cnpj = request.POST.get('cnpj', '').strip()
+        cidade = request.POST.get('cidade', '').strip()
+        telefone = request.POST.get('telefone', '').strip()
+        endereco = request.POST.get('endereco', '').strip()
+        responsavel = request.POST.get('responsavel', '').strip()
+        cargo = request.POST.get('cargo', '').strip()
+        email = request.POST.get('email', '').strip()
+        mensagem = request.POST.get('mensagem', '').strip()
+
+        if not all([nome, cnpj, cidade, telefone, endereco, responsavel, cargo, email]):
+            return render(request, 'parceria.html', {
+                'erro': 'Preencha todos os campos obrigatórios.',
+                'lateral_direita': False,
+            })
+
+        try:
+            send_mail(
+                subject='🏥 Novo hemocentro quer ser parceiro',
+                message=f'''Um hemocentro quer se cadastrar no Sangue Bom.
+
+Nome: {nome}
+CNPJ: {cnpj}
+Cidade: {cidade}
+Telefone: {telefone}
+Endereço: {endereco}
+
+Responsável: {responsavel}
+Cargo: {cargo}
+E-mail: {email}
+
+Mensagem:
+{mensagem}
+
+Para aprovar:
+1. Acesse /admin/
+2. Crie um User (username = e-mail, senha provisória)
+3. Crie o Hemocentro vinculado a esse User
+''',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
+                fail_silently=True
+            )
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
+
+        return render(request, 'parceria.html', {
+            'sucesso': 'Recebemos seu pedido! Nossa equipe entrará em contato em breve.',
+            'lateral_direita': False,
+        })
+
+    return render(request, 'parceria.html', {'lateral_direita': False})
+
+
+def parceria_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+        senha = request.POST.get('senha', '').strip()
+
+        usuario = authenticate(request, username=email, password=senha)
+
+        if usuario is None:
+            return render(request, 'parceria_login.html', {
+                'erro': 'E-mail ou senha incorretos.',
+                'lateral_direita': False,
+            })
+
+        if not hasattr(usuario, 'hemocentro'):
+            return render(request, 'parceria_login.html', {
+                'erro': 'Esta área é exclusiva para hemocentros parceiros.',
+                'lateral_direita': False,
+            })
+
+        login(request, usuario)
+        return redirect('painel_hemocentro')
+
+    return render(request, 'parceria_login.html', {'lateral_direita': False})

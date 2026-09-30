@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login Hemocentro - Sangue Bom{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+<a href="{% url 'parceria' %}" class="btn-voltar">← Voltar</a>
+
+<header class="preciso-header">
+    <h1>🏥 Área do Hemocentro</h1>
+    <p>Acesso exclusivo para hemocentros parceiros.</p>
+</header>
+
+<form method="POST" class="form-receptor" style="max-width: 500px;">
+    {% csrf_token %}
+
+    {% if erro %}
+        <div class="alerta erro">⚠️ {{ erro }}</div>
+    {% endif %}
+
+    <h3 class="form-secao">🔐 Login do Hemocentro</h3>
+
+    <div class="campo">
+        <label>E-mail institucional *</label>
+        <input type="email" name="email" required>
+    </div>
+
+    <div class="campo">
+        <label>Senha *</label>
+        <input type="password" name="senha" required>
+    </div>
+
+    <div class="botoes-cadastro">
+        <button type="submit" class="btn-enviar">🔓 Entrar no painel</button>
+    </div>
+
+    <p style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">
+        Não é cadastrado? <a href="{% url 'parceria' %}" style="color: #8b0000; font-weight: 700;">Solicite parceria</a>
+    </p>
+</form>
+{% endblock %}

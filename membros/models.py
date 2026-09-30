@@ -323,3 +323,36 @@ class Campanha(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+# =========================================================
+# PEDIDO DE PARCERIA (Hemocentros parceiros)
+# =========================================================
+
+class PedidoParceria(models.Model):
+
+    STATUS = [
+        ('pendente', '⏳ Pendente'),
+        ('aprovado', '✅ Aprovado'),
+        ('recusado', '❌ Recusado'),
+    ]
+
+    nome = models.CharField(max_length=200, verbose_name='Nome do Hemocentro')
+    cnpj = models.CharField(max_length=20, verbose_name='CNPJ')
+    cidade = models.CharField(max_length=100, verbose_name='Cidade')
+    telefone = models.CharField(max_length=20, verbose_name='Telefone')
+    endereco = models.CharField(max_length=200, verbose_name='Endereço')
+    responsavel = models.CharField(max_length=200, verbose_name='Responsável')
+    cargo = models.CharField(max_length=100, verbose_name='Cargo')
+    email = models.EmailField(verbose_name='E-mail institucional')
+    mensagem = models.TextField(blank=True, verbose_name='Mensagem')
+    status = models.CharField(max_length=20, choices=STATUS, default='pendente', verbose_name='Status')
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name='Criado em')
+
+    class Meta:
+        ordering = ['-criado_em']
+        verbose_name = 'Pedido de Parceria'
+        verbose_name_plural = 'Pedidos de Parceria'
+
+    def __str__(self):
+        return f"{self.nome} - {self.cidade}"

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Seja Parceiro - Sangue Bom{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/preciso_doacao.css' %}">
+
+<header class="preciso-header">
+    <h1>🏥 Seja um Hemocentro Parceiro</h1>
+    <p>Junte-se ao Sangue Bom e ajude a salvar mais vidas.</p>
+</header>
+
+<div style="text-align: center; margin: 20px auto 30px auto; padding: 20px; background: #fcf9f2; border-radius: 12px; max-width: 700px; border-left: 5px solid #8b0000;">
+    <p style="margin: 0 0 12px 0; color: #666; font-size: 0.95rem;">
+        🏥 Já é um hemocentro parceiro?
+    </p>
+    <a href="{% url 'parceria_login' %}"
+       style="display: inline-block; padding: 12px 28px; background: #8b0000; color: white; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);">
+        🔐 Fazer login no painel
+    </a>
+</div>
+
+{% if sucesso %}
+    <div class="alerta sucesso" style="max-width: 700px; margin: 0 auto 30px auto;">✅ {{ sucesso }}</div>
+{% else %}
+
+{% if erro %}
+    <div class="alerta erro" style="max-width: 700px; margin: 0 auto 30px auto;">⚠️ {{ erro }}</div>
+{% endif %}
+
+<form method="POST" class="form-receptor">
+    {% csrf_token %}
+
+    <h3 class="form-secao">🏥 Dados do Hemocentro</h3>
+
+    <div class="campo">
+        <label>Nome do hemocentro *</label>
+        <input type="text" name="nome" required>
+    </div>
+
+    <div class="duas-colunas">
+        <div class="campo">
+            <label>CNPJ *</label>
+            <input type="text" name="cnpj" required placeholder="00.000.000/0000-00">
+        </div>
+        <div class="campo">
+            <label>Cidade *</label>
+            <input type="text" name="cidade" required>
+        </div>
+    </div>
+
+    <div class="duas-colunas">
+        <div class="campo">
+            <label>Telefone *</label>
+            <input type="tel" name="telefone" required>
+        </div>
+        <div class="campo">
+            <label>Endereço *</label>
+            <input type="text" name="endereco" required>
+        </div>
+    </div>
+
+    <h3 class="form-secao">👤 Responsável</h3>
+
+    <div class="duas-colunas">
+        <div class="campo">
+            <label>Nome do responsável *</label>
+            <input type="text" name="responsavel" required>
+        </div>
+        <div class="campo">
+            <label>Cargo *</label>
+            <input type="text" name="cargo" required>
+        </div>
+    </div>
+
+    <div class="campo">
+        <label>E-mail institucional *</label>
+        <input type="email" name="email" required>
+    </div>
+
+    <div class="campo">
+        <label>Mensagem (opcional)</label>
+        <textarea name="mensagem" rows="3"></textarea>
+    </div>
+
+    <div class="aviso">
+        🔒 Após enviar, nossa equipe vai analisar e entrar em contato em até 3 dias úteis.
+    </div>
+
+    <div class="botoes-cadastro">
+        <a href="{% url 'home' %}" class="btn-voltar-cadastro">← Cancelar</a>
+        <button type="submit" class="btn-enviar">📩 Enviar pedido</button>
+    </div>
+</form>
+
+{% endif %}
+{% endblock %}

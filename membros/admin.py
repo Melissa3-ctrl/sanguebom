@@ -6,7 +6,10 @@ from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.db.models import Count
 from django.utils import timezone
-from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor, Campanha
+from .models import (
+    Doador, Hemocentro, Agendamento, CodigoRecuperacao,
+    Notificacao, Receptor, Campanha, PedidoParceria
+)
 
 
 # =========================================================
@@ -454,3 +457,44 @@ class CampanhaAdmin(admin.ModelAdmin):
     @admin.action(description='❌ Marcar como Encerrada')
     def marcar_encerrada(self, request, queryset):
         queryset.update(status='encerrada')
+
+
+# =========================================================
+# PEDIDO DE PARCERIA (Hemocentros parceiros)
+# =========================================================
+
+@admin.register(PedidoParceria)
+class PedidoParceriaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cidade', 'email', 'responsavel', 'status', 'criado_em')
+    list_filter = ('status', 'cidade', 'criado_em')
+    search_fields = ('nome', 'cnpj', 'email', 'cidade', 'responsavel')
+    list_editable = ('status',)
+    readonly_fields = ('criado_em',)
+    list_per_page = 25
+    ordering = ('-criado_em',)
+
+    fieldsets = (
+        ('Dados do Hemocentro', {
+            'fields': ('nome', 'cnpj', 'cidade', 'telefone', 'endereco')
+        }),
+        ('Responsável', {
+            'fields': ('responsavel', 'cargo', 'email')
+        }),
+        ('Mensagem', {
+            'fields': ('mensagem',)
+        }),
+        ('Status', {
+            'fields': ('status', 'criado_em'),
+            'description': '✅ Aprove marcando como "Aprovado" e crie o usuário + hemocentro manualmente.'
+        }),
+    )
+
+    actions = ['marcar_aprovado', 'marcar_recusado']
+
+    @admin.action(description='✅ Aprovar selecionados')
+    def marcar_aprovado(self, request, queryset):
+        queryset.update(status='aprovado')
+
+    @admin.action(description='❌ Recusar selecionados')
+    def marcar_recusado(self, request, queryset):
+        queryset.update(status='recusado')
