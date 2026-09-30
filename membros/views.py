@@ -1453,3 +1453,15 @@ def excluir_pedido(request, id):
         'receptor': receptor,
         'lateral_direita': False,
     })
+
+@login_required(login_url='login')
+def limpar_notificacoes(request):
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
+    doador = get_object_or_404(Doador, usuario=request.user)
+    Notificacao.objects.filter(doador=doador).delete()
+
+    return redirect('notificacoes')

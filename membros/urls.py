@@ -245,4 +245,10 @@ urlpatterns = [
         views.excluir_agendamento,
         name='excluir_agendamento'
     ),
+    
+    path(
+    'notificacoes/limpar/',
+    views.limpar_notificacoes,
+    name='limpar_notificacoes'
+),
 ]

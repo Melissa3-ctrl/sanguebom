@@ -17,11 +17,21 @@
             {% endif %}
         </p>
 
-        {% if nao_lidas > 0 %}
-            <a href="{% url 'marcar_todas_lidas' %}" class="btn-marcar-todas">
-                ✓ Marcar todas como lidas
-            </a>
-        {% endif %}
+        <div class="notificacoes-acoes-topo">
+            {% if nao_lidas > 0 %}
+                <a href="{% url 'marcar_todas_lidas' %}" class="btn-marcar-todas">
+                    ✓ Marcar todas como lidas
+                </a>
+            {% endif %}
+
+            {% if notificacoes %}
+                <a href="{% url 'limpar_notificacoes' %}"
+                   class="btn-limpar-notif"
+                   onclick="return confirm('⚠️ Tem certeza que quer APAGAR todas as notificações? Essa ação não pode ser desfeita.')">
+                    🗑️ Limpar todas
+                </a>
+            {% endif %}
+        </div>
     </section>
 
     <section class="notificacoes-lista">
@@ -68,4 +78,5 @@
     </section>
 
 {% endblock %}
-          {% block lateral_direita %}{% endblock %}
+
+{% block lateral_direita %}{% endblock %}

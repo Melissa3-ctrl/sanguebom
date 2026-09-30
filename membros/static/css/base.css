@@ -1627,3 +1627,46 @@ input.botao-mostrar-senha {
     a.card h3, .card h3 { font-size: 1.7rem; }
     a.card p, .card p { font-size: 1.3rem; }
 }
+/* =========================================================
+   CELULAR — tira espaço branco do menu
+   ========================================================= */
+
+@media (max-width: 992px) {
+    .lateral-esquerda {
+        min-height: auto !important;
+        height: auto !important;
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Quando o menu tá fechado, esconde tudo */
+    .menu-toggle-input:not(:checked) ~ .menu-nav,
+    .menu-toggle-input:not(:checked) ~ .logo-menu,
+    .menu-toggle-input:not(:checked) ~ .dados-protegidos,
+    .menu-toggle-input:not(:checked) ~ .area-btn-sair {
+        display: none !important;
+    }
+
+    /* Container sem gap grande */
+    .app-container {
+        gap: 10px !important;
+        margin: 10px 0 !important;
+    }
+
+    /* Banner sobe */
+    .banner {
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .lateral-esquerda {
+        padding: 10px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .app-container {
+        gap: 8px !important;
+        margin: 8px 0 !important;
+    }
+}
