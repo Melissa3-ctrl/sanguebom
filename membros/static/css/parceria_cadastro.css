@@ -1,0 +1,523 @@
+/* =========================================================
+   CADASTRO DE HEMOCENTRO — CSS CLARO E MODERNO
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-suave: #c62828;
+    --vermelho-hover: #a01818;
+    --vermelho-claro: #ffebee;
+    --texto-principal: #2c2c2c;
+    --texto-secundario: #6b6b6b;
+    --borda: #e4e4e4;
+    --fundo-card: #ffffff;
+    --fundo-input: #fafafa;
+    --sombra-leve: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --sombra-media: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body.pagina-auth {
+    background: linear-gradient(160deg, #fafafa 0%, #f0f0f0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: clamp(20px, 3vw, 50px) clamp(16px, 2vw, 30px);
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    margin: 0;
+    color: var(--texto-principal);
+}
+
+.parceria-wrapper {
+    width: 100%;
+    max-width: 900px;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* =========================================================
+   BOTÃO VOLTAR
+   ========================================================= */
+
+.btn-voltar-auth {
+    display: inline-block;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 24px;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    transition: 0.25s;
+}
+
+.btn-voltar-auth:hover {
+    color: var(--vermelho-suave);
+    transform: translateX(-3px);
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.parceria-header {
+    text-align: center;
+    margin-bottom: clamp(24px, 3vw, 40px);
+    color: var(--texto-principal);
+}
+
+.parceria-logo {
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    margin-bottom: 12px;
+    display: inline-block;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+.parceria-header h1 {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    color: var(--texto-principal);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.parceria-header p {
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+    margin: 0;
+    color: var(--texto-secundario);
+    line-height: 1.5;
+}
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+.parceria-form {
+    background: var(--fundo-card);
+    border-radius: clamp(16px, 2vw, 24px);
+    padding: clamp(24px, 3.5vw, 45px);
+    box-shadow: var(--sombra-media);
+    border: 1px solid var(--borda);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 1.8vw, 22px);
+}
+
+/* =========================================================
+   SEÇÕES DO FORMULÁRIO
+   ========================================================= */
+
+.parceria-form-secao {
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    color: var(--vermelho-suave);
+    font-weight: 700;
+    margin: 8px 0 4px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--vermelho-claro);
+    line-height: 1.3;
+}
+
+.parceria-form-secao:first-child {
+    margin-top: 0;
+}
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo label {
+    font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+    font-weight: 600;
+    color: var(--texto-principal);
+    line-height: 1.3;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+    padding: clamp(12px, 1.2vw, 15px) clamp(14px, 1.3vw, 18px);
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-family: inherit;
+    color: var(--texto-principal);
+    background: var(--fundo-input);
+    transition: all 0.25s;
+    outline: none;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #b0b0b0;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: var(--vermelho-suave);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.08);
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   DUAS COLUNAS (RESPONSIVO)
+   ========================================================= */
+
+.duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 1.5vw, 18px);
+}
+
+@media (min-width: 700px) {
+    .duas-colunas {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =========================================================
+   TERMOS + LGPD (CHECKBOXES)
+   ========================================================= */
+
+.termos-lgpd {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f8f9fa;
+    border-left: 4px solid var(--vermelho-suave);
+    border-radius: 10px;
+    padding: clamp(16px, 1.8vw, 22px);
+    margin-top: 6px;
+}
+
+.termos-lgpd label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: clamp(0.85rem, 0.95vw, 0.92rem);
+    color: var(--texto-secundario);
+    line-height: 1.5;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.termos-lgpd input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--vermelho-suave);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.termos-lgpd a {
+    color: var(--vermelho-suave);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.termos-lgpd a:hover {
+    border-bottom-color: var(--vermelho-suave);
+}
+
+/* =========================================================
+   AVISO LGPD
+   ========================================================= */
+
+.parceria-aviso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+    padding: clamp(12px, 1.3vw, 16px) clamp(14px, 1.5vw, 20px);
+    border-radius: 10px;
+    font-size: clamp(0.82rem, 0.92vw, 0.9rem);
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.botoes-cadastro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+@media (min-width: 500px) {
+    .botoes-cadastro {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}
+
+.btn-voltar-cadastro,
+.btn-enviar {
+    display: inline-block;
+    padding: clamp(13px, 1.3vw, 16px) clamp(24px, 2.4vw, 32px);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn-voltar-cadastro {
+    background: #f5f5f5;
+    color: var(--texto-secundario);
+    border: 2px solid var(--borda);
+}
+
+.btn-voltar-cadastro:hover {
+    background: #ebebeb;
+    color: var(--texto-principal);
+    transform: translateY(-2px);
+}
+
+.btn-enviar {
+    background: var(--vermelho-suave);
+    color: white;
+    box-shadow: 0 6px 18px rgba(198, 40, 40, 0.25);
+}
+
+.btn-enviar:hover {
+    background: var(--vermelho-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(198, 40, 40, 0.35);
+}
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.alerta {
+    padding: clamp(14px, 1.6vw, 20px) clamp(18px, 2vw, 24px);
+    border-radius: 12px;
+    margin: 0 0 24px 0;
+    font-weight: 600;
+    text-align: center;
+    font-size: clamp(0.88rem, 1vw, 0.98rem);
+    line-height: 1.4;
+    animation: fadeInUp 0.4s ease;
+}
+
+.alerta.sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 5px solid #4caf50;
+}
+
+.alerta.erro {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 5px solid #ef5350;
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    body.pagina-auth {
+        padding: 20px 12px;
+    }
+
+    .parceria-form {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .parceria-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .btn-voltar-cadastro,
+    .btn-enviar {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (TV FULL HD — 1920px+)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .parceria-wrapper {
+        max-width: 1100px;
+    }
+
+    .parceria-form {
+        padding: 55px;
+    }
+
+    .parceria-form-secao {
+        font-size: 1.3rem;
+    }
+
+    .campo input,
+    .campo textarea {
+        padding: 18px 22px;
+        font-size: 1.1rem;
+    }
+}
+
+/* =========================================================
+   TELAS ENORMES (TV 4K — 2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .parceria-wrapper {
+        max-width: 1500px;
+    }
+
+    .parceria-header h1 {
+        font-size: 2.8rem;
+    }
+
+    .parceria-header p {
+        font-size: 1.3rem;
+    }
+
+    .parceria-logo {
+        font-size: 4.5rem;
+    }
+
+    .parceria-form {
+        padding: 70px 60px;
+        border-radius: 28px;
+    }
+
+    .parceria-form-secao {
+        font-size: 1.7rem;
+    }
+
+    .campo label {
+        font-size: 1.25rem;
+    }
+
+    .campo input,
+    .campo textarea {
+        padding: 22px 26px;
+        font-size: 1.3rem;
+        border-radius: 16px;
+    }
+
+    .btn-voltar-cadastro,
+    .btn-enviar {
+        padding: 22px 44px;
+        font-size: 1.3rem;
+    }
+
+    .termos-lgpd label {
+        font-size: 1.15rem;
+    }
+}
+/* =========================================================
+   ULTRA-WIDE (2560px+ — 4K)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    /* Trava o tamanho — não deixa esticar infinitamente */
+    .parceria-wrapper {
+        max-width: 1400px;   /* em vez de 1500px */
+    }
+
+    body.pagina-auth {
+        /* Centraliza vertical também pra não sobrar espaço em cima */
+        align-items: center;
+    }
+
+    .parceria-form {
+        padding: 60px 55px;
+        border-radius: 28px;
+    }
+
+    .parceria-header h1 {
+        font-size: 2.4rem;      /* já é grande o suficiente */
+    }
+
+    .parceria-header p {
+        font-size: 1.2rem;
+    }
+
+    .campo input,
+    .campo textarea {
+        padding: 20px 24px;
+        font-size: 1.15rem;      /* não exagera pra não quebrar */
+    }
+
+    .parceria-form-secao {
+        font-size: 1.5rem;
+    }
+
+    .btn-voltar-cadastro,
+    .btn-enviar {
+        padding: 20px 40px;
+        font-size: 1.2rem;
+    }
+}
+
+/* =========================================================
+   4K ULTRA (3840px+)
+   ========================================================= */
+
+@media (min-width: 3840px) {
+    .parceria-wrapper {
+        max-width: 1800px;
+    }
+
+    .parceria-form {
+        padding: 80px 70px;
+    }
+
+    .campo input,
+    .campo textarea {
+        padding: 24px 28px;
+        font-size: 1.35rem;
+    }
+}

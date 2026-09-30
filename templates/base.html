@@ -234,6 +234,23 @@
         {% endif %}
 
     </div>
+    <!-- 👆 FIM do app-container -->
+
+    <!-- ========================= -->
+    <!-- RODAPÉ (FOOTER) -->
+    <!-- ========================= -->
+    <footer style="text-align: center; padding: 25px 20px; background: #fcf9f2; border-top: 2px solid #f0e6d2; margin-top: 40px;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <a href="{% url 'termos_uso' %}" style="color: #8b0000; text-decoration: none; font-weight: 600; margin: 0 10px; font-size: 0.9rem;">📋 Termos de Uso</a>
+            <span style="color: #ccc;">•</span>
+            <a href="{% url 'politica_privacidade' %}" style="color: #8b0000; text-decoration: none; font-weight: 600; margin: 0 10px; font-size: 0.9rem;">🔒 Política de Privacidade</a>
+            <span style="color: #ccc;">•</span>
+            <a href="{% url 'parceria' %}" style="color: #8b0000; text-decoration: none; font-weight: 600; margin: 0 10px; font-size: 0.9rem;">🏥 Seja Parceiro</a>
+            <p style="color: #999; margin: 12px 0 0 0; font-size: 0.85rem;">
+                © 2026 Sangue Bom — Projeto Transforme-se / Senac-DF
+            </p>
+        </div>
+    </footer>
 
     <script src="{% static 'js/script.js' %}"></script>
 

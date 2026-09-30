@@ -7,11 +7,22 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.conf import settings
 from django.db.models import Count
+from django.db.models.functions import ExtractMonth
 from django.http import HttpResponse
+from datetime import date, timedelta, datetime
 import csv
 import random
-from .models import Doador, Hemocentro, Agendamento, CodigoRecuperacao, Notificacao, Receptor, Campanha
-from .emails import enviar_email_agendamento, enviar_email_doacao_realizada, enviar_email_pedido_aprovado, enviar_email_pedido_atendido Pedido_Parceria
+
+from .models import (
+    Doador, Hemocentro, Agendamento, CodigoRecuperacao,
+    Notificacao, Receptor, Campanha, PedidoParceria
+)
+from .emails import (
+    enviar_email_agendamento, enviar_email_doacao_realizada,
+    enviar_email_pedido_aprovado, enviar_email_pedido_atendido
+)
+
+
 # =========================================================
 # PÁGINAS DO SITE
 # =========================================================
@@ -20,6 +31,8 @@ def home(request):
     return render(request, 'home.html', {
         'lateral_direita': True,
     })
+
+
 def quero_doar(request):
     return render(request, 'quero_doar.html', {'lateral_direita': True})
 
@@ -39,7 +52,9 @@ def beneficios(request):
     if request.user.is_authenticated:
         try:
             doador = Doador.objects.get(usuario=request.user)
-            total_agendamentos = Agendamento.objects.filter(doador=doador, status='realizado').count()
+            total_agendamentos = Agendamento.objects.filter(
+                doador=doador, status='realizado'
+            ).count()
 
             if total_agendamentos >= 6:
                 nivel = 'Ouro'
@@ -90,18 +105,14 @@ def locais_para_doar(request):
 
 
 def campanhas(request):
-    # Se for staff → relatórios
     if request.user.is_authenticated and request.user.is_staff:
         return redirect('relatorios')
 
-    # Se for hemocentro → painel
     if request.user.is_authenticated and hasattr(request.user, 'hemocentro'):
         return redirect('painel_hemocentro')
 
-    # 🔓 CAMPANHAS SÃO PÚBLICAS — qualquer pessoa vê
     campanhas_lista = Campanha.objects.filter(ativa=True)
 
-    # Se tá logado como doador, mostra dados extras (próximo agendamento)
     doador = None
     proximo_agendamento = None
 
@@ -120,6 +131,8 @@ def campanhas(request):
         'campanhas': campanhas_lista,
         'lateral_direita': True,
     })
+
+
 # =========================================================
 # NOTIFICAÇÕES (DINÂMICAS)
 # =========================================================
@@ -168,6 +181,19 @@ def marcar_todas_lidas(request):
 
     doador = get_object_or_404(Doador, usuario=request.user)
     Notificacao.objects.filter(doador=doador, lida=False).update(lida=True)
+
+    return redirect('notificacoes')
+
+
+@login_required(login_url='login')
+def limpar_notificacoes(request):
+    if request.user.is_staff:
+        return redirect('relatorios')
+    if hasattr(request.user, 'hemocentro'):
+        return redirect('painel_hemocentro')
+
+    doador = get_object_or_404(Doador, usuario=request.user)
+    Notificacao.objects.filter(doador=doador).delete()
 
     return redirect('notificacoes')
 
@@ -242,13 +268,11 @@ def relatorios(request):
     receptores_pendentes = Receptor.objects.filter(status='pendente').count()
     receptores_aprovados = Receptor.objects.filter(status='aprovado', ativo=True).count()
 
-        # Lista dos últimos receptores aprovados
-        # Lista dos últimos receptores (todos os status)
     receptores = Receptor.objects.all().order_by('-urgencia', '-criado_em')[:6]
-    
+
     doacoes_por_mes = (
         Agendamento.objects
-        .extra(select={'mes': "strftime('%%m', data)"})
+        .annotate(mes=ExtractMonth('data'))
         .values('mes')
         .annotate(total=Count('id'))
         .order_by('mes')
@@ -271,6 +295,7 @@ def relatorios(request):
     proximos = Agendamento.objects.filter(
         data__gte=hoje
     ).order_by('data', 'horario')[:10]
+
     return render(request, 'relatorios.html', {
         'total_doadores': total_doadores,
         'total_agendamentos': total_agendamentos,
@@ -327,7 +352,7 @@ def painel_hemocentro(request):
 
     doacoes_por_mes = (
         agendamentos
-        .extra(select={'mes': "strftime('%%m', data)"})
+        .annotate(mes=ExtractMonth('data'))
         .values('mes')
         .annotate(total=Count('id'))
         .order_by('mes')
@@ -346,16 +371,9 @@ def painel_hemocentro(request):
         .values_list('tipo_doacao', flat=True)
         .distinct()
     )
-         # ==========================================
-    # 📋 PEDIDOS DE DOAÇÃO (RECEPTORES)
+
     # ==========================================
-    receptores = Receptor.objects.filter(
-        hospital__icontains=hemocentro.nome,
-        ativo=True,
-        status='aprovado'
-    ).order_by('-urgencia', '-criado_em')
-        # ==========================================
-    # 📋 PEDIDOS DE DOAÇÃO (TODOS, inclusive pendentes)
+    # 📋 PEDIDOS DE DOAÇÃO (RECEPTORES) — TODOS os status
     # ==========================================
     receptores = Receptor.objects.filter(
         hospital__icontains=hemocentro.nome
@@ -364,7 +382,6 @@ def painel_hemocentro(request):
     total_receptores = receptores.count()
     receptores_pendentes = receptores.filter(status='pendente').count()
 
-    total_receptores = receptores.count()
     return render(request, 'painel_hemocentro.html', {
         'hemocentro': hemocentro,
         'agendamentos': agendamentos,
@@ -383,7 +400,7 @@ def painel_hemocentro(request):
         'tipo_filtro': tipo_filtro,
         'status_filtro': status_filtro,
         'lateral_direita': False,
-         'receptores': receptores,
+        'receptores': receptores,
         'total_receptores': total_receptores,
         'receptores_pendentes': receptores_pendentes,
     })
@@ -412,19 +429,12 @@ def alterar_status(request, id):
 
             doador = agendamento.doador
 
-            # Se tá marcando como REALIZADO
             if novo_status == 'realizado' and status_antigo != 'realizado':
 
-                # Conta só doações realizadas
                 total_doacoes = Agendamento.objects.filter(
                     doador=doador,
                     status='realizado'
                 ).count()
-
-                # ==========================================
-                # 📅 CALCULA PRÓXIMA DOAÇÃO E EXAME
-                # ==========================================
-                from datetime import timedelta, datetime
 
                 if doador.sexo == 'M':
                     dias_espera = 60
@@ -443,7 +453,6 @@ def alterar_status(request, id):
                 proxima_doacao_fmt = proxima_doacao.strftime('%d/%m/%Y')
                 data_exame_fmt = data_exame.strftime('%d/%m/%Y')
 
-                # Define o nível
                 if total_doacoes >= 6:
                     nivel = 'Ouro'
                     proximo = None
@@ -473,9 +482,6 @@ Faltam {faltam} doações pro nível PRATA! 🥈'''
 
                 emoji_nivel = {'Bronze': '🥉', 'Prata': '🥈', 'Ouro': '🥇'}.get(nivel, '')
 
-                # ==========================================
-                # 📧 NOTIFICAÇÃO 1: CONFIRMAÇÃO + PROGRESSO
-                # ==========================================
                 Notificacao.objects.create(
                     doador=doador,
                     tipo='confirmado',
@@ -492,9 +498,6 @@ Faltam {faltam} doações pro nível PRATA! 🥈'''
 Obrigado por salvar vidas! 🩸'''
                 )
 
-                # ==========================================
-                # 📧 NOTIFICAÇÃO 2: BENEFÍCIOS
-                # ==========================================
                 Notificacao.objects.create(
                     doador=doador,
                     tipo='nivel',
@@ -502,13 +505,11 @@ Obrigado por salvar vidas! 🩸'''
                     mensagem=beneficios
                 )
 
-                # Envia e-mail de agradecimento
                 try:
                     enviar_email_doacao_realizada(doador, agendamento)
                 except Exception as e:
                     print(f"Erro ao enviar e-mail de doação realizada: {e}")
 
-            # Se tá marcando outro status (não realizado)
             else:
                 Notificacao.objects.create(
                     doador=doador,
@@ -518,6 +519,7 @@ Obrigado por salvar vidas! 🩸'''
                 )
 
     return redirect('painel_hemocentro')
+
 
 # =========================================================
 # EXPORTAR CSV
@@ -678,7 +680,8 @@ def cadastro(request):
                 email=dados['email'],
                 telefone=dados.get('telefone', ''),
                 tipo_sanguineo=dados.get('tipo_sanguineo', ''),
-                data_nascimento=dados['data_nascimento']
+                data_nascimento=dados['data_nascimento'],
+                sexo=dados.get('sexo', ''),
             )
 
             request.session.pop('cadastro_dados', None)
@@ -805,7 +808,7 @@ Equipe Sangue Bom ❤️
     email_msg = EmailMultiAlternatives(
         subject=assunto,
         body=mensagem_texto,
-        from_email=settings.EMAIL_HOST_USER,
+        from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
         to=[email]
     )
     email_msg.attach_alternative(mensagem_html, "text/html")
@@ -1020,11 +1023,39 @@ def agendar_doacao(request):
 
     doador = get_object_or_404(Doador, usuario=request.user)
 
+    hemocentros = Hemocentro.objects.filter(ativo=True)
+    hoje = timezone.localdate()
+
+    proximo_agendamento = Agendamento.objects.filter(
+        doador=doador,
+        data__gte=hoje
+    ).order_by('data', 'horario').first()
+
     if request.method == 'POST':
         hemocentro_id = request.POST.get('hemocentro')
         data = request.POST.get('data')
         horario = request.POST.get('horario')
         tipo_doacao = request.POST.get('tipo_doacao')
+
+        # Valida data no passado
+        try:
+            data_obj = date.fromisoformat(data)
+            if data_obj < date.today():
+                return render(request, 'agendar_doacao.html', {
+                    'doador': doador,
+                    'hemocentros': hemocentros,
+                    'proximo_agendamento': proximo_agendamento,
+                    'lateral_direita': False,
+                    'erro': 'Não é possível agendar para datas passadas.',
+                })
+        except (TypeError, ValueError):
+            return render(request, 'agendar_doacao.html', {
+                'doador': doador,
+                'hemocentros': hemocentros,
+                'proximo_agendamento': proximo_agendamento,
+                'lateral_direita': False,
+                'erro': 'Data inválida.',
+            })
 
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
@@ -1075,14 +1106,6 @@ def agendar_doacao(request):
 
         return redirect('listar_agendamentos')
 
-    hemocentros = Hemocentro.objects.filter(ativo=True)
-    hoje = timezone.localdate()
-
-    proximo_agendamento = Agendamento.objects.filter(
-        doador=doador,
-        data__gte=hoje
-    ).order_by('data', 'horario').first()
-
     return render(request, 'agendar_doacao.html', {
         'doador': doador,
         'hemocentros': hemocentros,
@@ -1126,11 +1149,31 @@ def editar_agendamento(request, id):
     doador = get_object_or_404(Doador, usuario=request.user)
     agendamento = get_object_or_404(Agendamento, id=id, doador=doador)
 
+    hemocentros = Hemocentro.objects.filter(ativo=True)
+
     if request.method == 'POST':
         hemocentro_id = request.POST.get('hemocentro')
         data = request.POST.get('data')
         horario = request.POST.get('horario')
         tipo_doacao = request.POST.get('tipo_doacao')
+
+        # Valida data no passado
+        try:
+            data_obj = date.fromisoformat(data)
+            if data_obj < date.today():
+                return render(request, 'editar_agendamento.html', {
+                    'agendamento': agendamento,
+                    'hemocentros': hemocentros,
+                    'lateral_direita': False,
+                    'erro': 'Não é possível agendar para datas passadas.',
+                })
+        except (TypeError, ValueError):
+            return render(request, 'editar_agendamento.html', {
+                'agendamento': agendamento,
+                'hemocentros': hemocentros,
+                'lateral_direita': False,
+                'erro': 'Data inválida.',
+            })
 
         hemocentro = get_object_or_404(Hemocentro, id=hemocentro_id, ativo=True)
 
@@ -1147,8 +1190,6 @@ def editar_agendamento(request, id):
             print(f"Erro ao enviar e-mail: {e}")
 
         return redirect('listar_agendamentos')
-
-    hemocentros = Hemocentro.objects.filter(ativo=True)
 
     return render(request, 'editar_agendamento.html', {
         'agendamento': agendamento,
@@ -1191,6 +1232,7 @@ def preciso_doacao(request):
         'lateral_direita': False,
     })
 
+
 @login_required(login_url='login')
 def cadastrar_receptor(request):
     hemocentros = Hemocentro.objects.filter(ativo=True).order_by('nome')
@@ -1211,7 +1253,6 @@ def cadastrar_receptor(request):
         celular_contato = request.POST.get('celular_contato', '').strip()
         laudo = request.FILES.get('laudo')
 
-        # Validações
         erros = []
         if not nome:
             erros.append('Nome é obrigatório.')
@@ -1235,12 +1276,11 @@ def cadastrar_receptor(request):
                 'erro': ' '.join(erros),
                 'hemocentros': hemocentros,
                 'cidades': cidades,
+                'lateral_direita': False,
             })
 
-        # Monta o campo "contato" unificado
         contato = f"{celular_contato} | {email_contato}"
 
-        # Cria o receptor com TODOS os campos
         receptor = Receptor.objects.create(
             usuario=request.user,
             nome=nome,
@@ -1261,7 +1301,6 @@ def cadastrar_receptor(request):
             ativo=False
         )
 
-        # Envia e-mail pro admin
         try:
             send_mail(
                 subject='🩸 Novo pedido de doação',
@@ -1284,8 +1323,8 @@ Descrição: {descricao}
 
 Acesse o admin pra aprovar.
 ''',
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.EMAIL_HOST_USER],
+                from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER],
                 fail_silently=True
             )
         except Exception as e:
@@ -1295,12 +1334,15 @@ Acesse o admin pra aprovar.
             'sucesso': 'Pedido enviado com sucesso! O hemocentro entrará em contato.',
             'hemocentros': hemocentros,
             'cidades': cidades,
+            'lateral_direita': False,
         })
 
     return render(request, 'cadastrar_receptor.html', {
         'hemocentros': hemocentros,
         'cidades': cidades,
+        'lateral_direita': False,
     })
+
 
 @login_required(login_url='login')
 def detalhes_receptor_hemocentro(request, id):
@@ -1312,7 +1354,6 @@ def detalhes_receptor_hemocentro(request, id):
 
     receptor = get_object_or_404(Receptor, id=id)
 
-    # Só deixa ver se o hospital bate com o hemocentro
     if hemocentro.nome not in receptor.hospital:
         return redirect('painel_hemocentro')
 
@@ -1324,21 +1365,18 @@ def detalhes_receptor_hemocentro(request, id):
             receptor.ativo = (novo_status == 'aprovado')
             receptor.save()
 
-            # Se foi APROVADO → envia e-mail pro responsável
             if novo_status == 'aprovado':
                 try:
                     enviar_email_pedido_aprovado(receptor, hemocentro)
                 except Exception as e:
                     print(f"Erro ao enviar e-mail de aprovação: {e}")
 
-            # Se foi marcado como ATENDIDO → envia e-mail pro responsável
             if novo_status == 'atendido':
                 try:
                     enviar_email_pedido_atendido(receptor, hemocentro)
                 except Exception as e:
                     print(f"Erro ao enviar e-mail de 'atendido': {e}")
 
-            # Notifica o doador no site
             if receptor.usuario:
                 try:
                     doador_destino = Doador.objects.get(usuario=receptor.usuario)
@@ -1358,6 +1396,7 @@ def detalhes_receptor_hemocentro(request, id):
         'receptor': receptor,
         'lateral_direita': False,
     })
+
 
 @login_required(login_url='login')
 def quero_ajudar(request, id):
@@ -1387,7 +1426,7 @@ Contato de quem quer ajudar: {request.user.email}
 
 Entre em contato!
 ''',
-                    from_email=settings.EMAIL_HOST_USER,
+                    from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
                     recipient_list=[receptor.usuario.email],
                     fail_silently=True
                 )
@@ -1454,74 +1493,18 @@ def excluir_pedido(request, id):
         'lateral_direita': False,
     })
 
-@login_required(login_url='login')
-def limpar_notificacoes(request):
-    if request.user.is_staff:
-        return redirect('relatorios')
-    if hasattr(request.user, 'hemocentro'):
-        return redirect('painel_hemocentro')
 
-    doador = get_object_or_404(Doador, usuario=request.user)
-    Notificacao.objects.filter(doador=doador).delete()
+# =========================================================
+# PARCERIA (Hemocentros)
+# =========================================================
 
-    return redirect('notificacoes')
 def parceria(request):
-    if request.method == 'POST':
-        nome = request.POST.get('nome', '').strip()
-        cnpj = request.POST.get('cnpj', '').strip()
-        cidade = request.POST.get('cidade', '').strip()
-        telefone = request.POST.get('telefone', '').strip()
-        endereco = request.POST.get('endereco', '').strip()
-        responsavel = request.POST.get('responsavel', '').strip()
-        cargo = request.POST.get('cargo', '').strip()
-        email = request.POST.get('email', '').strip()
-        mensagem = request.POST.get('mensagem', '').strip()
-
-        if not all([nome, cnpj, cidade, telefone, endereco, responsavel, cargo, email]):
-            return render(request, 'parceria.html', {
-                'erro': 'Preencha todos os campos obrigatórios.',
-                'lateral_direita': False,
-            })
-
-        try:
-            send_mail(
-                subject='🏥 Novo hemocentro quer ser parceiro',
-                message=f'''Um hemocentro quer se cadastrar no Sangue Bom.
-
-Nome: {nome}
-CNPJ: {cnpj}
-Cidade: {cidade}
-Telefone: {telefone}
-Endereço: {endereco}
-
-Responsável: {responsavel}
-Cargo: {cargo}
-E-mail: {email}
-
-Mensagem:
-{mensagem}
-
-Para aprovar:
-1. Acesse /admin/
-2. Crie um User (username = e-mail, senha provisória)
-3. Crie o Hemocentro vinculado a esse User
-''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],
-                fail_silently=True
-            )
-        except Exception as e:
-            print(f"Erro ao enviar e-mail: {e}")
-
-        return render(request, 'parceria.html', {
-            'sucesso': 'Recebemos seu pedido! Nossa equipe entrará em contato em breve.',
-            'lateral_direita': False,
-        })
-
+    """Página de escolha: login ou cadastro."""
     return render(request, 'parceria.html', {'lateral_direita': False})
 
 
 def parceria_login(request):
+    """Login exclusivo do hemocentro."""
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
         senha = request.POST.get('senha', '').strip()
@@ -1544,3 +1527,83 @@ def parceria_login(request):
         return redirect('painel_hemocentro')
 
     return render(request, 'parceria_login.html', {'lateral_direita': False})
+
+
+def parceria_cadastro(request):
+    """Cadastro de novo hemocentro parceiro."""
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+        cnpj = request.POST.get('cnpj', '').strip()
+        cidade = request.POST.get('cidade', '').strip()
+        telefone = request.POST.get('telefone', '').strip()
+        endereco = request.POST.get('endereco', '').strip()
+        responsavel = request.POST.get('responsavel', '').strip()
+        cargo = request.POST.get('cargo', '').strip()
+        email = request.POST.get('email', '').strip()
+        mensagem = request.POST.get('mensagem', '').strip()
+
+        termos = request.POST.get('termos')
+        lgpd = request.POST.get('lgpd')
+        veracidade = request.POST.get('veracidade')
+
+        erros = []
+        if not all([nome, cnpj, cidade, telefone, endereco, responsavel, cargo, email]):
+            erros.append('Preencha todos os campos obrigatórios.')
+        if not termos:
+            erros.append('Você precisa aceitar os Termos de Uso.')
+        if not lgpd:
+            erros.append('Você precisa aceitar a Política de Privacidade (LGPD).')
+        if not veracidade:
+            erros.append('Você precisa declarar a veracidade das informações.')
+
+        if erros:
+            return render(request, 'parceria_cadastro.html', {
+                'erro': ' '.join(erros),
+                'lateral_direita': False,
+            })
+
+        PedidoParceria.objects.create(
+            nome=nome,
+            cnpj=cnpj,
+            cidade=cidade,
+            telefone=telefone,
+            endereco=endereco,
+            responsavel=responsavel,
+            cargo=cargo,
+            email=email,
+            mensagem=mensagem,
+        )
+
+        try:
+            send_mail(
+                subject='🏥 Novo hemocentro quer ser parceiro',
+                message=f'Nome: {nome}\nCNPJ: {cnpj}\nE-mail: {email}',
+                from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER],
+                fail_silently=True
+            )
+        except Exception as e:
+            print(f"Erro ao enviar e-mail: {e}")
+
+        return render(request, 'parceria_cadastro.html', {
+            'sucesso': 'Recebemos seu pedido! Entraremos em contato em breve.',
+            'lateral_direita': False,
+        })
+
+    return render(request, 'parceria_cadastro.html', {'lateral_direita': False})
+
+
+# =========================================================
+# TERMOS E PRIVACIDADE (LGPD)
+# =========================================================
+
+def termos_uso(request):
+    return render(request, 'termos_uso.html', {
+        'lateral_direita': False,
+    })
+
+
+def politica_privacidade(request):
+    return render(request, 'politica_privacidade.html', {
+        'lateral_direita': False,
+    })

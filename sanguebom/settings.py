@@ -144,7 +144,20 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# =========================================================
+# ⚠️ CORREÇÃO IMPORTANTE
+# =========================================================
+# Em DESENVOLVIMENTO (DEBUG=True) → Django serve o CSS direto.
+# Em PRODUÇÃO (DEBUG=False) → Whitenoise comprime e gera manifest.
+#
+# Sem isso, o ManifestStaticFilesStorage tenta procurar um
+# staticfiles.json que só existe após rodar `collectstatic`.
+# Em dev, isso quebra o carregamento do CSS.
+
+if DEBUG:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # =========================================================

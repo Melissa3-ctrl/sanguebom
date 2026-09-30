@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Política de Privacidade - Sangue Bom{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/politica_privacidade.css' %}">
+
+<header class="preciso-header">
+    <h1>🔒 Política de Privacidade</h1>
+    <p>Última atualização: 30 de setembro de 2026</p>
+</header>
+
+<section class="preciso-info" style="max-width: 900px; margin: 0 auto; display: block;">
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>1. Quem Somos</h2>
+        <p>O <b>Sangue Bom</b> é uma plataforma digital sem fins lucrativos que conecta doadores de sangue, hemocentros e pacientes. Nosso compromisso é com a vida — e com a proteção dos seus dados.</p>
+        <p style="margin-top: 10px;"><b>🏫 Projeto:</b> Transforme-se / Senac-DF</p>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>2. Quais Dados Coletamos</h2>
+        <p>Coletamos apenas os dados necessários para o funcionamento da plataforma:</p>
+        <ul class="preciso-passos" style="margin-top: 10px;">
+            <li><b>👤 Dados pessoais:</b> nome, CPF, e-mail, telefone, data de nascimento, endereço.</li>
+            <li><b>🩸 Dados de saúde:</b> tipo sanguíneo, histórico de doações, laudo médico (quando aplicável).</li>
+            <li><b>📊 Dados de uso:</b> agendamentos, notificações lidas, páginas acessadas.</li>
+        </ul>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>3. Para Que Usamos Seus Dados</h2>
+        <ul class="preciso-passos">
+            <li><b>✅</b> Gerenciar agendamentos de doação.</li>
+            <li><b>✅</b> Conectar doadores a hemocentros e pacientes.</li>
+            <li><b>✅</b> Enviar notificações sobre campanhas, estoque e lembretes.</li>
+            <li><b>✅</b> Gerar relatórios anônimos para hemocentros.</li>
+            <li><b>✅</b> Melhorar a plataforma com base no uso.</li>
+        </ul>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>4. O Que NÃO Fazemos</h2>
+        <ul class="preciso-passos">
+            <li><b>❌</b> Não vendemos seus dados.</li>
+            <li><b>❌</b> Não compartilhamos com terceiros sem seu consentimento.</li>
+            <li><b>❌</b> Não usamos para fins publicitários.</li>
+            <li><b>❌</b> Não transferimos para fora do Brasil.</li>
+        </ul>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>5. Seus Direitos (LGPD)</h2>
+        <p>Conforme a <b>Lei Geral de Proteção de Dados (Lei 13.709/2018)</b>, você tem o direito de:</p>
+        <ul class="preciso-passos" style="margin-top: 10px;">
+            <li><b>📖 Acessar</b> seus dados armazenados.</li>
+            <li><b>✏️ Corrigir</b> dados incompletos ou desatualizados.</li>
+            <li><b>🗑️ Excluir</b> sua conta e todos os dados associados.</li>
+            <li><b>📤 Solicitar portabilidade</b> dos seus dados.</li>
+            <li><b>🚫 Revogar consentimento</b> a qualquer momento.</li>
+        </ul>
+        <p style="margin-top: 15px;">Para exercer esses direitos, envie e-mail para <b>sanguebom.hemocentro@gmail.com</b>.</p>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>6. Segurança dos Dados</h2>
+        <p>Adotamos medidas técnicas e administrativas para proteger seus dados:</p>
+        <ul class="preciso-passos" style="margin-top: 10px;">
+            <li><b>🔐 HTTPS</b> em todas as comunicações.</li>
+            <li><b>🔑 Senhas criptografadas</b> no banco de dados.</li>
+            <li><b>🛡️ Servidores seguros</b> (Render).</li>
+            <li><b>📋 Política de acesso restrito</b> aos dados.</li>
+        </ul>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>7. Retenção de Dados</h2>
+        <p>Mantemos seus dados enquanto sua conta estiver ativa. Após exclusão, removemos todas as informações em até <b>30 dias</b>, exceto quando a lei exigir retenção.</p>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>8. Notificação de Vazamento</h2>
+        <p>Em caso de vazamento de dados, notificaremos os usuários afetados e a Autoridade Nacional de Proteção de Dados (ANPD) em até <b>72 horas</b>, conforme exige a LGPD.</p>
+    </div>
+
+    <div class="preciso-card" style="margin-bottom: 24px;">
+        <h2>9. Contato do Encarregado (DPO)</h2>
+        <p>Para questões sobre privacidade e proteção de dados:</p>
+        <p style="margin-top: 10px;"><b>📧 E-mail:</b> sanguebom.hemocentro@gmail.com</p>
+        <p><b>🏫 Projeto:</b> Transforme-se / Senac-DF</p>
+    </div>
+
+</section>
+
+<div style="text-align: center; margin: 40px auto;">
+    <a href="{% url 'home' %}" class="btn-cadastrar-receptor">
+        ← Voltar ao site
+    </a>
+</div>
+
+{% endblock %}

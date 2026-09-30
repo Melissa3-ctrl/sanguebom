@@ -1,0 +1,368 @@
+/* =========================================================
+   SEJA PARCEIRO — CSS PRÓPRIO RESPONSIVO
+   Celular → TV 4K
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-principal: #8b0000;
+    --vermelho-escuro: #5c0000;
+    --vermelho-claro: #b30000;
+    --texto-principal: #333;
+    --texto-secundario: #666;
+    --branco: #ffffff;
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body.pagina-auth {
+    background: linear-gradient(135deg, #7a0000 0%, #b30000 50%, #7a0000 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.parceria-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* =========================================================
+   BOTÃO VOLTAR
+   ========================================================= */
+
+.btn-voltar-auth {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    transition: 0.3s;
+}
+
+.btn-voltar-auth:hover {
+    color: white;
+    transform: translateX(-3px);
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.parceria-header {
+    text-align: center;
+    margin-bottom: clamp(30px, 4vw, 50px);
+    color: white;
+}
+
+.parceria-logo {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    margin-bottom: clamp(12px, 1.5vw, 20px);
+    animation: pulse 2s ease-in-out infinite;
+    display: inline-block;
+}
+
+.parceria-header h1 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0 0 clamp(10px, 1.2vw, 15px) 0;
+    font-weight: 800;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.parceria-header p {
+    font-size: clamp(0.9rem, 1.2vw, 1.15rem);
+    margin: 0;
+    opacity: 0.95;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+}
+
+/* =========================================================
+   CARDS DE ESCOLHA
+   ========================================================= */
+
+.parceria-escolha {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 3vw, 30px);
+    margin-top: clamp(30px, 4vw, 50px);
+}
+
+/* TABLET: 2 colunas */
+@media (min-width: 700px) {
+    .parceria-escolha {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =========================================================
+   CARD INDIVIDUAL
+   ========================================================= */
+
+.parceria-card {
+    background: white;
+    border-radius: clamp(16px, 2vw, 24px);
+    padding: clamp(25px, 3.5vw, 45px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1.5vw, 18px);
+    border-top: 6px solid #8b0000;
+}
+
+.parceria-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.parceria-card.destaque {
+    border-top: 6px solid #ff9800;
+    background: linear-gradient(135deg, #fff8e1, #ffffff);
+}
+
+.parceria-card-icone {
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    line-height: 1;
+}
+
+.parceria-card h2 {
+    color: #8b0000;
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.parceria-card p {
+    color: #666;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    line-height: 1.6;
+    margin: 0;
+    flex-grow: 1;
+}
+
+/* =========================================================
+   BOTÕES DOS CARDS
+   ========================================================= */
+
+.btn-parceria {
+    display: inline-block;
+    padding: clamp(14px, 1.5vw, 18px) clamp(24px, 2.5vw, 34px);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s;
+    background: #8b0000;
+    color: white;
+    box-shadow: 0 8px 24px rgba(139, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    white-space: nowrap;
+}
+
+.btn-parceria:hover {
+    background: #5c0000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(139, 0, 0, 0.45);
+}
+
+.btn-parceria-secundario {
+    background: white;
+    color: #8b0000;
+    border: 3px solid #8b0000;
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.15);
+}
+
+.btn-parceria-secundario:hover {
+    background: #8b0000;
+    color: white;
+}
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.alerta {
+    padding: clamp(16px, 2vw, 22px) clamp(20px, 2.5vw, 28px);
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 700px;
+    font-weight: 700;
+    text-align: center;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    animation: fadeInUp 0.4s ease;
+}
+
+.alerta.sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 5px solid #4caf50;
+}
+
+.alerta.erro {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 5px solid #d32f2f;
+}
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    body.pagina-auth {
+        padding: 20px 12px;
+        align-items: flex-start;
+    }
+
+    .parceria-header {
+        margin-bottom: 25px;
+    }
+
+    .parceria-logo {
+        font-size: 2.2rem;
+    }
+
+    .parceria-card {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .btn-parceria {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 0.92rem;
+    }
+}
+
+/* =========================================================
+   CELULAR MUITO PEQUENO (até 380px)
+   ========================================================= */
+
+@media (max-width: 380px) {
+    .parceria-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .parceria-card h2 {
+        font-size: 1rem;
+    }
+
+    .parceria-card p {
+        font-size: 0.8rem;
+    }
+
+    .parceria-card-icone {
+        font-size: 2rem;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (TV FULL HD — 1920px)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .parceria-wrapper {
+        max-width: 1300px;
+    }
+
+    .parceria-card {
+        padding: 55px;
+    }
+
+    .parceria-card h2 {
+        font-size: 1.7rem;
+    }
+
+    .parceria-card p {
+        font-size: 1.1rem;
+    }
+
+    .btn-parceria {
+        padding: 20px 42px;
+        font-size: 1.15rem;
+    }
+}
+
+/* =========================================================
+   TELAS ENORMES (TV 4K — 2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .parceria-wrapper {
+        max-width: 1800px;
+    }
+
+    .parceria-logo {
+        font-size: 5.5rem;
+    }
+
+    .parceria-header h1 {
+        font-size: 3.5rem;
+    }
+
+    .parceria-header p {
+        font-size: 1.6rem;
+    }
+
+    .parceria-card {
+        padding: 80px 60px;
+        border-radius: 30px;
+        gap: 24px;
+    }
+
+    .parceria-card-icone {
+        font-size: 4.5rem;
+    }
+
+    .parceria-card h2 {
+        font-size: 2.2rem;
+    }
+
+    .parceria-card p {
+        font-size: 1.4rem;
+    }
+
+    .btn-parceria {
+        padding: 28px 56px;
+        font-size: 1.5rem;
+        border-radius: 60px;
+    }
+}

@@ -251,6 +251,40 @@ urlpatterns = [
     views.limpar_notificacoes,
     name='limpar_notificacoes'
 ),
-path('parceria/', views.parceria, name='parceria'),
-path('parceria/login/', views.parceria_login, name='parceria_login'),
+# =========================================================
+# PARCERIA (Hemocentros)
+# =========================================================
+
+path(
+    'parceria/',
+    views.parceria,
+    name='parceria'
+),
+
+path(
+    'parceria/login/',
+    views.parceria_login,
+    name='parceria_login'
+),
+
+path(
+    'parceria/cadastro/',
+    views.parceria_cadastro,
+    name='parceria_cadastro'
+),
+    # =========================================================
+    # TERMOS E PRIVACIDADE (LGPD)
+    # =========================================================
+
+    path(
+        'termos/',
+        views.termos_uso,
+        name='termos_uso'
+    ),
+
+    path(
+        'privacidade/',
+        views.politica_privacidade,
+        name='politica_privacidade'
+    ),
 ]

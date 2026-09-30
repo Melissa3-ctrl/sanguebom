@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_auth.html' %}
 {% load static %}
 
 {% block title %}Login Hemocentro - Sangue Bom{% endblock %}
@@ -49,6 +49,11 @@
                 <a href="{% url 'parceria' %}">Solicite parceria</a>
             </p>
         </form>
+
+        <!-- 👇 BOTÃO VOLTAR — LOGO ABAIXO DO FORM, DENTRO DO CARD -->
+        <div class="voltar-baixo-form">
+            <a href="{% url 'parceria' %}" class="btn-voltar-auth">← Voltar</a>
+        </div>
 
     </div>
 </div>

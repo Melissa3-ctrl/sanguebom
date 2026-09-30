@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Termos de Uso - Sangue Bom{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/termos_uso.css' %}">
+
+<div class="politica-wrapper">
+
+    <header class="politica-header">
+        <h1>📋 Termos de Uso</h1>
+        <p class="atualizacao">Última atualização: 30 de setembro de 2026</p>
+    </header>
+
+    <section class="politica-secao">
+        <h2>1. Aceitação dos Termos</h2>
+        <p>Ao criar uma conta ou usar a plataforma <b>Sangue Bom</b>, você concorda integralmente com estes Termos de Uso. Caso não concorde, pedimos que não utilize nossos serviços.</p>
+    </section>
+
+    <section class="politica-secao">
+        <h2>2. Sobre a Plataforma</h2>
+        <p>O <b>Sangue Bom</b> é uma plataforma digital sem fins lucrativos que conecta:</p>
+        <ul class="politica-lista">
+            <li><b>•</b> Doadores de sangue</li>
+            <li><b>•</b> Hemocentros parceiros</li>
+            <li><b>•</b> Pacientes que precisam de doação</li>
+        </ul>
+        <div class="politica-destaque">
+            ⚠️ <b>Importante:</b> O Sangue Bom <b>NÃO</b> substitui o hemocentro, hospital ou atendimento médico. Serve apenas como <b>canal de contato</b> e gestão.
+        </div>
+    </section>
+
+    <section class="politica-secao">
+        <h2>3. Cadastro e Responsabilidades</h2>
+        <p>Ao se cadastrar, você se compromete a:</p>
+        <ul class="politica-lista">
+            <li><b>1.</b> Fornecer informações <b>verdadeiras, precisas e atualizadas</b>.</li>
+            <li><b>2.</b> Manter sua senha em sigilo e não compartilhá-la.</li>
+            <li><b>3.</b> Não usar a plataforma para fins ilegais ou fraudulentos.</li>
+            <li><b>4.</b> Respeitar outros usuários e a equipe do Sangue Bom.</li>
+        </ul>
+    </section>
+
+    <section class="politica-secao">
+        <h2>4. Proibições</h2>
+        <p>É expressamente <b>proibido</b>:</p>
+        <ul class="politica-lista">
+            <li><b>❌</b> Cadastrar informações falsas ou de terceiros sem autorização.</li>
+            <li><b>❌</b> Usar a plataforma para assédio, discriminação ou spam.</li>
+            <li><b>❌</b> Tentar invadir, modificar ou prejudicar o sistema.</li>
+            <li><b>❌</b> Vender, compartilhar ou explorar comercialmente dados de outros usuários.</li>
+        </ul>
+    </section>
+
+    <section class="politica-secao">
+        <h2>5. Limitação de Responsabilidade</h2>
+        <p>O Sangue Bom <b>não se responsabiliza</b> por:</p>
+        <ul class="politica-lista">
+            <li><b>•</b> Atendimentos médicos ou doações em si (responsabilidade dos hemocentros).</li>
+            <li><b>•</b> Informações incorretas fornecidas por usuários.</li>
+            <li><b>•</b> Danos indiretos decorrentes do uso da plataforma.</li>
+        </ul>
+    </section>
+
+    <section class="politica-secao">
+        <h2>6. Encerramento de Conta</h2>
+        <p>O Sangue Bom pode suspender ou encerrar contas que violem estes Termos, sem aviso prévio. Você também pode excluir sua conta a qualquer momento.</p>
+    </section>
+
+    <section class="politica-secao">
+        <h2>7. Alterações nos Termos</h2>
+        <p>Estes Termos podem ser atualizados a qualquer momento. Recomendamos revisá-los periodicamente. O uso contínuo da plataforma implica aceitação das mudanças.</p>
+    </section>
+
+    <section class="politica-secao">
+        <h2>8. Contato</h2>
+        <p>Dúvidas sobre estes Termos? Entre em contato:</p>
+        <p>📧 <b>E-mail:</b> <a href="mailto:sanguebom.hemocentro@gmail.com">sanguebom.hemocentro@gmail.com</a></p>
+        <p>🏫 <b>Projeto:</b> Transforme-se / Senac-DF</p>
+    </section>
+
+    <div class="politica-voltar">
+        <a href="{% url 'home' %}" class="btn-voltar-politica">← Voltar ao site</a>
+    </div>
+
+</div>
+
+{% endblock %}

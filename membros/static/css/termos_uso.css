@@ -1,0 +1,320 @@
+/* =========================================================
+   TERMOS DE USO + POLÍTICA DE PRIVACIDADE
+   Estilo limpo, claro, confortável de ler
+   Responsivo: celular → TV 4K
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --vermelho-suave: #c62828;
+    --vermelho-claro: #ffebee;
+    --texto-principal: #2c2c2c;
+    --texto-secundario: #6b6b6b;
+    --borda: #ececec;
+    --fundo-card: #ffffff;
+    --fundo-pagina: #fafafa;
+    --sombra-leve: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   WRAPPER GERAL
+   ========================================================= */
+
+.politica-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(30px, 4vw, 60px) clamp(16px, 3vw, 40px);
+    animation: fadeIn 0.4s ease;
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.politica-header {
+    text-align: left;
+    margin-bottom: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(16px, 2vw, 24px);
+    border-bottom: 3px solid var(--vermelho-claro);
+}
+
+.politica-header h1 {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: var(--texto-principal);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.politica-header .atualizacao {
+    font-size: clamp(0.82rem, 1vw, 0.92rem);
+    color: var(--texto-secundario);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
+
+.politica-secao {
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    padding: clamp(20px, 2.5vw, 32px);
+    margin-bottom: clamp(16px, 2vw, 22px);
+    box-shadow: var(--sombra-leve);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.politica-secao:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.politica-secao h2 {
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    font-weight: 700;
+    color: var(--vermelho-suave);
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+}
+
+.politica-secao p {
+    font-size: clamp(0.92rem, 1.05vw, 1.02rem);
+    line-height: 1.7;
+    color: var(--texto-principal);
+    margin: 0 0 12px 0;
+}
+
+.politica-secao p:last-child {
+    margin-bottom: 0;
+}
+
+.politica-secao b,
+.politica-secao strong {
+    color: var(--texto-principal);
+    font-weight: 700;
+}
+
+/* =========================================================
+   LISTAS
+   ========================================================= */
+
+.politica-lista {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.politica-lista li {
+    font-size: clamp(0.9rem, 1vw, 0.98rem);
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    padding: 10px 14px;
+    background: #fafafa;
+    border-left: 3px solid var(--vermelho-suave);
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.politica-lista li:hover {
+    background: #f5f5f5;
+}
+
+.politica-lista li b {
+    color: var(--texto-principal);
+}
+
+/* =========================================================
+   DESTAQUE (⚠️ Importante)
+   ========================================================= */
+
+.politica-destaque {
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-top: 14px;
+    font-size: clamp(0.88rem, 1vw, 0.95rem);
+    color: #7a5b00;
+    line-height: 1.6;
+}
+
+.politica-destaque b {
+    color: #5c4400;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.politica-secao a {
+    color: var(--vermelho-suave);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.politica-secao a:hover {
+    border-bottom-color: var(--vermelho-suave);
+}
+
+/* =========================================================
+   BOTÃO VOLTAR
+   ========================================================= */
+
+.politica-voltar {
+    text-align: center;
+    margin: clamp(30px, 4vw, 50px) 0 20px 0;
+}
+
+.btn-voltar-politica {
+    display: inline-block;
+    padding: clamp(13px, 1.3vw, 16px) clamp(28px, 3vw, 40px);
+    background: var(--vermelho-suave);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    box-shadow: 0 6px 18px rgba(198, 40, 40, 0.22);
+    transition: all 0.25s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-voltar-politica:hover {
+    background: #a01818;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(198, 40, 40, 0.32);
+}
+
+/* =========================================================
+   ANIMAÇÃO
+   ========================================================= */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   CELULAR PEQUENO (até 480px)
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .politica-wrapper {
+        padding: 24px 14px;
+    }
+
+    .politica-secao {
+        padding: 18px 16px;
+        border-radius: 12px;
+    }
+
+    .politica-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .btn-voltar-politica {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   FULL HD (1920px+)
+   ========================================================= */
+
+@media (min-width: 1920px) {
+    .politica-wrapper {
+        max-width: 1100px;
+        padding: 70px 40px;
+    }
+
+    .politica-header h1 {
+        font-size: 2.6rem;
+    }
+
+    .politica-secao {
+        padding: 38px;
+    }
+
+    .politica-secao h2 {
+        font-size: 1.5rem;
+    }
+
+    .politica-secao p,
+    .politica-lista li {
+        font-size: 1.08rem;
+    }
+}
+
+/* =========================================================
+   TV 4K (2560px+)
+   ========================================================= */
+
+@media (min-width: 2560px) {
+    .politica-wrapper {
+        max-width: 1400px;
+        padding: 90px 50px;
+    }
+
+    .politica-header h1 {
+        font-size: 3.2rem;
+    }
+
+    .politica-header .atualizacao {
+        font-size: 1.15rem;
+    }
+
+    .politica-secao {
+        padding: 50px;
+        border-radius: 22px;
+        margin-bottom: 30px;
+    }
+
+    .politica-secao h2 {
+        font-size: 1.9rem;
+        margin-bottom: 20px;
+    }
+
+    .politica-secao p,
+    .politica-lista li {
+        font-size: 1.3rem;
+        line-height: 1.8;
+    }
+
+    .politica-lista li {
+        padding: 14px 20px;
+    }
+
+    .btn-voltar-politica {
+        padding: 22px 48px;
+        font-size: 1.3rem;
+    }
+}
+
+/* =========================================================
+   4K REAL (3840px+)
+   ========================================================= */
+
+@media (min-width: 3840px) {
+    .politica-wrapper {
+        max-width: 1800px;
+    }
+
+    .politica-secao p,
+    .politica-lista li {
+        font-size: 1.5rem;
+    }
+}
